@@ -9,7 +9,7 @@ import VectorMap, {
 	Border,
 	Font,
 } from 'devextreme-react/vector-map'
-import MapCoords from '../../../../../@types/MapCoords'
+import MapCoords from '../../../../@types/MapCoords'
 import styles from './VectorMap.module.scss'
 
 // @ts-ignore

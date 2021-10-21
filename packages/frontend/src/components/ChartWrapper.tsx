@@ -1,9 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 import styles from './ChartWrapper.module.scss'
-import DoughnutChart from '../DoughnutChart/DoughnutChart'
-import RangeSelector from '../RangeSelector/RangeSelector'
-import MultipleAxesChart from '../MultipleAxesChart/MultipleAxesChart'
+import DoughnutChart from './DoughnutChart'
+import RangeSelector from './RangeSelector'
+import MultipleAxesChart from './MultipleAxesChart'
 
 const ChartWrapper = () => {
 	React.useEffect(() => {

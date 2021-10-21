@@ -5,7 +5,7 @@ import { Toolbar, Item } from 'devextreme-react/toolbar'
 import notify from 'devextreme/ui/notify'
 import styles from './ToolBar.module.scss'
 import Logo from './Logo'
-import Search from '../Search/Search'
+import Search from '../Search'
 
 // const autocompleteOptions = {
 // 	dataSource: [

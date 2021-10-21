@@ -3,9 +3,9 @@ import './App.module.scss'
 // import themes from 'devextreme/ui/themes'
 import themes from 'devextreme/ui/themes'
 import ToolBar from './components/ToolBar/ToolBar'
-import VectorMapRComponent from './components/VectorMap/VectorMap'
-import RangeSelector from './components/RangeSelector/RangeSelector'
-import ChartWrapper from './components/ChartWrapper/ChartWrapper'
+import VectorMapRComponent from './components/VectorMap'
+import RangeSelector from './components/RangeSelector'
+import ChartWrapper from './components/ChartWrapper'
 
 const appMainHeader = 'Росстат'
 
