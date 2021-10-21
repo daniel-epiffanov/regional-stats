@@ -10,7 +10,7 @@ import Chart, {
 	Grid,
 	Format,
 } from 'devextreme-react/chart'
-import styles from './MultipleAxesChart.module.scss'
+import styles from '../styles/MultipleAxesChart.module.scss'
 
 const continentSources = [
 	{ value: 'africa', name: 'Africa' },

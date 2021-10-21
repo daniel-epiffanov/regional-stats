@@ -10,7 +10,7 @@ import VectorMap, {
 	Font,
 } from 'devextreme-react/vector-map'
 import MapCoords from '../../../../@types/MapCoords'
-import styles from './VectorMap.module.scss'
+import styles from '../styles/VectorMap.module.scss'
 
 // @ts-ignore
 // import MapToolbar from './MapToolbar'

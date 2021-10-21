@@ -1,6 +1,6 @@
 import { Autocomplete } from 'devextreme-react'
 import React from 'react'
-import styles from './Search.module.scss'
+import styles from '../styles/Search.module.scss'
 
 const autocompleteData = [
 	'Afghanistan',
