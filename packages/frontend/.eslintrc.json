@@ -1,0 +1,68 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"extends": [
+		"plugin:react/recommended",
+		"airbnb"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": 12,
+		"sourceType": "module"
+	},
+	"plugins": [
+		"react",
+		"react-hooks",
+		"@typescript-eslint"
+	],
+	"rules": {
+		"semi": [
+			"error",
+			"never"
+		],
+		"no-tabs": "off",
+		"indent": [
+			2,
+			"tab"
+		],
+		"react/jsx-indent": "off",
+		"react/jsx-indent-props": "off",
+		// "prettier/prettier": "error",
+		"no-unused-vars": "warn",
+		"react/jsx-filename-extension": [
+			"warn",
+			{
+				"extensions": [
+					".tsx"
+				]
+			}
+		],
+		"react/react-in-jsx-scope": "off",
+		"no-use-before-define": "off",
+		"@typescript-eslint/no-use-before-define": [
+			"error"
+		],
+		"import/extensions": [
+			"error",
+			"ignorePackages",
+			{
+				"ts": "never",
+				"tsx": "never"
+			}
+		],
+		"linebreak-style": "off",
+		"no-debugger": "warn",
+		"no-underscore-dangle": "warn",
+		"camelcase": "warn"
+	},
+	"settings": {
+		"import/resolver": {
+			"typescript": {}
+		}
+	}
+}

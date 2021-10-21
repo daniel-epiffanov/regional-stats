@@ -1,0 +1,22 @@
+type Geometry {
+	type: String,
+	coordinates: [[[String]]],
+}
+
+input MapCoordsInput {
+	type: String,
+	name_en: String,
+	name_ru: String,
+}
+
+type Properties {
+	name_en: String,
+	name_ru: String,
+	alt_names: [String],
+}
+
+type MapCoords {
+	type: String,
+	properties: Properties,
+	geometry: Geometry
+}

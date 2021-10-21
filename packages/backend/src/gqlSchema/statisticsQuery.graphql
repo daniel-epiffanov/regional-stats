@@ -1,0 +1,22 @@
+type yearValue {
+  year: Int,
+	value: String
+}
+
+type SubSection {
+  orderNumber: String,
+	title: String,
+	children: [SubSection],
+	yearValues: [yearValue]
+}
+
+type MainSection {
+  fullFilename: String,
+	name: String,
+	subSections: [SubSection]
+}
+
+type ExcelFile {
+  regionName: String,
+  mainSections: [MainSection],
+}

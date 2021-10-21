@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#000000" />
+	<meta name="description" content="Web site created using create-react-app" />
+	<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+	<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+	<title>Росстат</title>
+
+	<!-- DevExtreme Generic themes -->
+	<!-- <link rel="dx-theme" data-theme="generic.light" href="themes/dx.light.css" data-active="true">
+	<link rel="dx-theme" data-theme="generic.dark" href="themes/dx.dark.css" data-active="false"> -->
+	<link rel="dx-theme" data-theme="material.blue.light" href="themes/dx.material.blue.light.css" data-active="true">
+	<link rel="dx-theme" data-theme="material.blue.dark" href="themes/dx.material.blue.dark.css" data-active="false">
+
+
+</head>
+
+<body class="dx-viewport">
+
+
+	<noscript>You need to enable JavaScript to run this app.</noscript>
+	<div id="root"></div>
+
+
+	<!-- Google Identity -->
+	<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+	<div class="g_id_signout">Sign Out</div>
+
+	<script>
+		function handleCredentialResponse(response) {
+			console.log('handleCredentialResponse is evoked')
+			console.log(response)
+			// decodeJwtResponse() is a custom function defined by you
+			// to decode the credential response.
+			const responsePayload = decodeJwtResponse(response.credential);
+
+			console.log("ID: " + responsePayload.sub);
+			console.log('Full Name: ' + responsePayload.name);
+			console.log('Given Name: ' + responsePayload.given_name);
+			console.log('Family Name: ' + responsePayload.family_name);
+			console.log("Image URL: " + responsePayload.picture);
+			console.log("Email: " + responsePayload.email);
+		}
+	</script>
+
+</body>
+
+<script src="https://kit.fontawesome.com/1377997385.js" crossorigin="anonymous"></script>
+
+</html>
