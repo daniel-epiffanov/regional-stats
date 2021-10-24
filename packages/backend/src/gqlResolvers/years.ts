@@ -1,10 +1,15 @@
 /* eslint-disable max-len */
+import { ResolverFn } from 'graphql-subscriptions'
+import { IResolverObject, IResolversParameter } from 'graphql-tools'
 import statisticsModel from '../mongooseModels/statistics'
 
-const years = async (args: any) => {
-	console.log({ args })
-	// const mongoRes = await statisticsModel.find({ regionName: 'Центральный федеральный округ' }).select({ 'mainSections.name': 'Население' })
-	return [1, 2, 3]
+const years: ResolverFn = async (parent, args) => {
+	// const { regionName } = args
+	// console.log({ args })
+	// console.log({ a })
+	// console.log({ b })
+	const mongoRes = await statisticsModel.distinct('mainSections.subSections.yearValues.year')
+	return mongoRes
 }
 
 export default years

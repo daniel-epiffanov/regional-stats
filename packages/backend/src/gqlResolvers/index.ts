@@ -2,11 +2,14 @@
 // import graphqlFields from 'graphql-fields'
 // import mapCoordsModel from '../mongooseModels/mapCoords'
 // import statisticsModel from '../mongooseModels/statistics'
+import { IResolvers } from 'graphql-tools'
 import years from './years'
+import regionNames from './regionNames'
 
-const gqlResolvers = {
+const gqlResolvers: IResolvers = {
 	Query: {
 		years,
+		regionNames,
 		// statistics: async (args: any) => {
 		// 	console.log({ args })
 		// 	const mongoRes = await statisticsModel.find({ regionName: 'Центральный федеральный округ' }).select({ 'mainSections.name': 'Население' })

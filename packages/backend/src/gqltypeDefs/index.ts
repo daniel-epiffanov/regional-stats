@@ -5,7 +5,8 @@ import path from 'path'
 export default gql`
 
 	type Query {
-		years: [Int],
+		years(regionName: String): [Int],
+		regionNames(regionName: String): [String],
 	}
 `
 
