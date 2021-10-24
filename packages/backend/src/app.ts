@@ -9,9 +9,9 @@ import cookieParser from 'cookie-parser'
 import typeDefs from './gqlSchema'
 import mapCoordsModel from './mongooseModels/mapCoords'
 import statisticsModel from './mongooseModels/statistics'
-import isLoggedIn from './auth/isLoggedIn'
+// import isLoggedIn from './auth/isLoggedIn'
 
-require('./auth/passport-setup')
+// require('./auth/passport-setup')
 
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config()
@@ -31,31 +31,31 @@ app.use(cookieSession({
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.get('/', (req: any, res: any) => {
-	res.send('you are not logged in!')
-})
-app.get('/failed', isLoggedIn, (req: any, res: any) => {
-	res.send('authentication failed')
-})
-app.get('/good', isLoggedIn, (req: any, res: any) => {
-	res.send(`welcome, mr ${req.user.given_name}`)
-})
-app.get('/logout', (req: any, res: any) => {
-	req.session = null
-	req.logout()
-	res.redirect('/')
-})
+// app.get('/', (req: any, res: any) => {
+// 	res.send('you are not logged in!')
+// })
+// app.get('/failed', isLoggedIn, (req: any, res: any) => {
+// 	res.send('authentication failed')
+// })
+// app.get('/good', isLoggedIn, (req: any, res: any) => {
+// 	res.send(`welcome, mr ${req.user.given_name}`)
+// })
+// app.get('/logout', (req: any, res: any) => {
+// 	req.session = null
+// 	req.logout()
+// 	res.redirect('/')
+// })
 
-app.get('/login', passport.authenticate('google', {
-	scope: ['profile', 'email'],
-}))
-app.get('/login/callback', passport.authenticate('google',
-	{ failureRedirect: '/failed' }),
-	(req: any, res: any) => {
-		const { user } = req
-		console.log({ user })
-		res.redirect('/good')
-	})
+// app.get('/login', passport.authenticate('google', {
+// 	scope: ['profile', 'email'],
+// }))
+// app.get('/login/callback', passport.authenticate('google',
+// 	{ failureRedirect: '/failed' }),
+// 	(req: any, res: any) => {
+// 		const { user } = req
+// 		console.log({ user })
+// 		res.redirect('/good')
+// 	})
 
 const resolvers = {
 	Query: {

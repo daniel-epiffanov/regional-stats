@@ -6,11 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "start": "ts-node-dev --respawn src/app.ts",
-    "start2": "ts-node-dev --respawn src/appcopy.ts",
-    "stat": "ts-node-dev --respawn src/statistics/statistics.ts",
-    "coords": "ts-node-dev --respawn src/devFiles/parsingCoordsModel.ts",
-    "parser": "ts-node-dev --respawn src/devFiles/osmParser/parser.ts"
+    "start": "ts-node-dev --respawn src/app.ts"
   },
   "author": "",
   "license": "ISC",
