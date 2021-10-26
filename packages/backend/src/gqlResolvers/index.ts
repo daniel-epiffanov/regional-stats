@@ -5,11 +5,15 @@
 import { IResolvers } from 'graphql-tools'
 import years from './years'
 import regionNames from './regionNames'
+import mainSectionNames from './mainSectionNames'
+import subSectionTitles from './subSectionTitles'
 
 const gqlResolvers: IResolvers = {
 	Query: {
 		years,
 		regionNames,
+		mainSectionNames,
+		subSectionTitles,
 		// statistics: async (args: any) => {
 		// 	console.log({ args })
 		// 	const mongoRes = await statisticsModel.find({ regionName: 'Центральный федеральный округ' }).select({ 'mainSections.name': 'Население' })
