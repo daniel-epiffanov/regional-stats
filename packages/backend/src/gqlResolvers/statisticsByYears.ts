@@ -6,7 +6,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const statisticsByYears = async (parent: any, args: any) => {
-	const { mainSectionName } = args
+	const {
+		mainSectionName, subSectionTitle, startYear, endYear,
+	} = args
 	const defaultRegion = process.env.DEFAULT_REGION
 	console.log({ defaultRegion })
 	console.log({ mainSectionName })
