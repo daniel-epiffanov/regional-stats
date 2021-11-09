@@ -1,29 +1,32 @@
 import { Schema, model } from 'mongoose'
+import {
+	MainSection, Statistics, SubSection, YearValue,
+} from '../../../../@types/statistics'
 
-const dataSchema = new Schema({
+const YearValueSchema = new Schema<YearValue>({
 	year: Number,
 	value: String,
 })
 
-const subSectionSchema = new Schema()
-subSectionSchema.add({
+const SubSectionSchema = new Schema<SubSection>()
+SubSectionSchema.add({
 	orderNumber: String,
 	title: String,
-	children: [subSectionSchema],
+	children: [SubSectionSchema],
 	yearValues: {
-		type: [dataSchema],
+		type: [YearValueSchema],
 	},
 })
 
-const mainSectionSchema = new Schema({
+const MainSectionSchema = new Schema<MainSection>({
 	name: String,
 	fullFilename: String,
-	subSections: [subSectionSchema],
+	subSections: [SubSectionSchema],
 })
 
-const statisticsSchema = new Schema({
+const StatisticsSchema = new Schema<Statistics>({
 	regionName: String,
-	mainSections: [mainSectionSchema],
+	mainSections: [MainSectionSchema],
 })
 
-export default model('Statistics', statisticsSchema)
+export default model('Statistics', StatisticsSchema)
