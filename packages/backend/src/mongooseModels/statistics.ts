@@ -1,23 +1,14 @@
 import { Schema, model } from 'mongoose'
 
 const dataSchema = new Schema({
-	year: {
-		type: Number,
-		required: true,
-	},
+	year: Number,
 	value: String,
 })
 
 const subSectionSchema = new Schema()
 subSectionSchema.add({
-	orderNumber: {
-		type: String,
-		required: true,
-	},
-	title: {
-		type: String,
-		required: true,
-	},
+	orderNumber: String,
+	title: String,
 	children: [subSectionSchema],
 	yearValues: {
 		type: [dataSchema],
@@ -25,29 +16,14 @@ subSectionSchema.add({
 })
 
 const mainSectionSchema = new Schema({
-	name: {
-		type: String,
-		required: true,
-	},
-	fullFilename: {
-		type: String,
-		required: true,
-	},
-	subSections: {
-		type: [subSectionSchema],
-		required: true,
-	},
+	name: String,
+	fullFilename: String,
+	subSections: [subSectionSchema],
 })
 
 const statisticsSchema = new Schema({
-	regionName: {
-		type: String,
-		required: true,
-	},
-	mainSections: {
-		type: [mainSectionSchema],
-		required: true,
-	},
+	regionName: String,
+	mainSections: [mainSectionSchema],
 })
 
 export default model('Statistics', statisticsSchema)
