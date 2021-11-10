@@ -26,29 +26,6 @@
 	<noscript>You need to enable JavaScript to run this app.</noscript>
 	<div id="root"></div>
 
-
-	<!-- Google Identity -->
-	<script src="https://accounts.google.com/gsi/client" async defer></script>
-
-	<div class="g_id_signout">Sign Out</div>
-
-	<script>
-		function handleCredentialResponse(response) {
-			console.log('handleCredentialResponse is evoked')
-			console.log(response)
-			// decodeJwtResponse() is a custom function defined by you
-			// to decode the credential response.
-			const responsePayload = decodeJwtResponse(response.credential);
-
-			console.log("ID: " + responsePayload.sub);
-			console.log('Full Name: ' + responsePayload.name);
-			console.log('Given Name: ' + responsePayload.given_name);
-			console.log('Family Name: ' + responsePayload.family_name);
-			console.log("Image URL: " + responsePayload.picture);
-			console.log("Email: " + responsePayload.email);
-		}
-	</script>
-
 </body>
 
 <script src="https://kit.fontawesome.com/1377997385.js" crossorigin="anonymous"></script>

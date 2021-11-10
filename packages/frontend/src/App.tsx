@@ -2,7 +2,7 @@ import React from 'react'
 import './styles/App.module.scss'
 // import themes from 'devextreme/ui/themes'
 import themes from 'devextreme/ui/themes'
-import ToolBar from './components/ToolBar/ToolBar'
+// import ToolBar from './components/layout/Header/ToolBar'
 import VectorMapRComponent from './components/VectorMap'
 import RangeSelector from './components/RangeSelector'
 import ChartWrapper from './components/Charts/ChartWrapper'
@@ -26,7 +26,7 @@ function App() {
 	return (
 		<div>
 			<h1 className="display-none">{appMainHeader}</h1>
-			<ToolBar />
+			{/* <ToolBar /> */}
 			<ChartWrapper />
 			<VectorMapRComponent changeSelectedRegion={changeSelectedRegion} />
 		</div>
