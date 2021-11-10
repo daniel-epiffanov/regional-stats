@@ -1,10 +1,11 @@
+import { ResolverFnAsync, SubSectionTitles } from '../../../../@types/gqlResolvers'
 import statisticsModel from '../mongooseModels/statistics'
 
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config()
 }
 
-const subSectionNames = async (parent: any, args: any) => {
+const subSectionTitles: ResolverFnAsync<SubSectionTitles> = async (parent: any, args: any) => {
 	const { mainSectionName } = args
 	const defaultRegion = process.env.DEFAULT_REGION
 	// console.log({ defaultRegion })
@@ -52,4 +53,4 @@ const subSectionNames = async (parent: any, args: any) => {
 	return mongoRes[0].titles
 }
 
-export default subSectionNames
+export default subSectionTitles

@@ -1,18 +1,19 @@
-import { YearValues } from '../../../../@types/statisticsByYear'
+import { ResolverFnAsync, StatisticsByYears } from '../../../../@types/gqlResolvers'
+import { YearValue } from '../../../../@types/statistics'
 import statisticsModel from '../mongooseModels/statistics'
 
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config()
 }
 
-const statisticsByYears = async (parent: any, args: any) => {
+const statisticsByYears: ResolverFnAsync<StatisticsByYears> = async (parent: any, args: any) => {
 	const {
 		mainSectionName, subSectionTitle, startYear, endYear,
 	} = args
 	const defaultRegion = process.env.DEFAULT_REGION
 	console.log({ defaultRegion })
 	console.log({ mainSectionName })
-	const mongoRes = await statisticsModel.aggregate<{ yearValues: YearValues }>([
+	const mongoRes = await statisticsModel.aggregate<{ yearValues: YearValue[] }>([
 		{ $match: { regionName: 'Центральный федеральный округ' } },
 
 		{
