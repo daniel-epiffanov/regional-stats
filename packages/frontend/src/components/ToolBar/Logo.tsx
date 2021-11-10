@@ -1,5 +1,5 @@
 import LogoSvg from '../../img/logo.svg'
-import styles from './ToolBar.module.scss'
+import styles from '../../styles/ToolBar.module.scss'
 
 const LOGO_TXT = 'рос|стат'.toUpperCase()
 

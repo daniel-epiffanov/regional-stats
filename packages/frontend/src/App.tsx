@@ -1,11 +1,11 @@
 import React from 'react'
-import './App.module.scss'
+import './styles/App.module.scss'
 // import themes from 'devextreme/ui/themes'
 import themes from 'devextreme/ui/themes'
 import ToolBar from './components/ToolBar/ToolBar'
 import VectorMapRComponent from './components/VectorMap'
 import RangeSelector from './components/RangeSelector'
-import ChartWrapper from './components/ChartWrapper'
+import ChartWrapper from './components/Charts/ChartWrapper'
 
 const appMainHeader = 'Росстат'
 

@@ -121,7 +121,7 @@ const VectorMapRComponent = (props: PropsInterface) => {
 				id="vector-map"
 				loadingIndicator={{ enabled: true }}
 				bounds={bounds}
-				onClick={clickHandler}
+				// onClick={clickHandler}
 				maxZoomFactor={4}
 				onSelectionChanged={onSelectionChangedHandler}
 			>
