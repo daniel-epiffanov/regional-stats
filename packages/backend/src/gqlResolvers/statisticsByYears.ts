@@ -8,13 +8,13 @@ if (process.env.NODE_ENV !== 'production') {
 
 const statisticsByYears: ResolverFnAsync<StatisticsByYears> = async (parent: any, args: any) => {
 	const {
-		mainSectionName, subSectionTitle, startYear, endYear,
+		regionName, mainSectionName, subSectionTitle, startYear, endYear,
 	} = args
 	const defaultRegion = process.env.DEFAULT_REGION
-	console.log({ defaultRegion })
-	console.log({ mainSectionName })
+	// console.log({ defaultRegion })
+	// console.log({ mainSectionName })
 	const mongoRes = await statisticsModel.aggregate<{ yearValues: YearValue[] }>([
-		{ $match: { regionName: 'Центральный федеральный округ' } },
+		{ $match: { regionName: regionName || defaultRegion } },
 
 		{
 			$project: {
@@ -26,7 +26,7 @@ const statisticsByYears: ResolverFnAsync<StatisticsByYears> = async (parent: any
 							$filter: {
 								input: '$mainSections',
 								as: 'mainSection',
-								cond: { $eq: ['$$mainSection.name', 'Население'] },
+								cond: { $eq: ['$$mainSection.name', mainSectionName] },
 							},
 						},
 						as: 'mainSection',
@@ -38,7 +38,7 @@ const statisticsByYears: ResolverFnAsync<StatisticsByYears> = async (parent: any
 										$filter: {
 											input: '$$mainSection.subSections',
 											as: 'subSection',
-											cond: { $eq: ['$$subSection.title', 'Численность населения'] },
+											cond: { $eq: ['$$subSection.title', subSectionTitle] },
 										},
 									},
 									as: 'subSection',
@@ -54,8 +54,8 @@ const statisticsByYears: ResolverFnAsync<StatisticsByYears> = async (parent: any
 														as: 'yearValue',
 														cond: {
 															$and: [
-																{ $gte: ['$$yearValue.year', 2015] },
-																{ $lte: ['$$yearValue.year', 2019] },
+																{ $gte: ['$$yearValue.year', startYear] },
+																{ $lte: ['$$yearValue.year', endYear] },
 															],
 														},
 													},

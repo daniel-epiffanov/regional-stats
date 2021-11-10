@@ -10,6 +10,6 @@ export default gql`
 		regionNames(regionName: String): [String],
 		mainSectionNames: [String],
 		subSectionTitles(mainSectionName: String): [String],
-		statisticsByYears(mainSectionName: String, subSectionTitle: String, startYear: Int, endYear: Int): [YearValue]
+		statisticsByYears(regionName: String, mainSectionName: String, subSectionTitle: String, startYear: Int, endYear: Int): [YearValue]
 	}
 `

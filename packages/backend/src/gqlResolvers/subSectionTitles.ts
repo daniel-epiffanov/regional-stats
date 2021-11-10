@@ -10,7 +10,7 @@ const subSectionTitles: ResolverFnAsync<SubSectionTitles> = async (parent: any, 
 	const defaultRegion = process.env.DEFAULT_REGION
 	// console.log({ defaultRegion })
 	// console.log({ mainSectionName })
-	const mongoRes = await statisticsModel.aggregate<{ titles: string[] }>([
+	const mongoRes = await statisticsModel.aggregate<{ titles: SubSectionTitles }>([
 		{ $match: { regionName: defaultRegion } },
 
 		{
