@@ -1,5 +1,8 @@
 import React from 'react'
 import axios from 'axios'
+import ResponsiveBox, {
+	Row, Col, Item, Location,
+} from 'devextreme-react/responsive-box'
 import styles from '../../styles/Charts/ChartWrapper.module.scss'
 import DoughnutChart from '../DoughnutChart'
 import RangeSelector from '../RangeSelector'
@@ -39,13 +42,25 @@ const ChartWrapper = () => {
 	})
 
 	return (
-		<div className={styles.ChartWrapper}>
-			<div className={styles.chartsContainer}>
-				<DoughnutChart />
-				<MultipleAxesChart />
-			</div>
+		<>
+
+			<Item>
+				<Location screen="md lg" row={0} col={1} />
+				<Location screen="xs sm" row={1} col={0} />
+				<div className="left-side-bar item">
+					<DoughnutChart />
+				</div>
+			</Item>
+
+			<Item>
+				<Location screen="md lg" row={0} col={2} />
+				<Location screen="xs sm" row={2} col={0} />
+				<div className="right-side-bar item">
+					<MultipleAxesChart />
+				</div>
+			</Item>
 			<RangeSelector />
-		</div>
+		</>
 	)
 }
 
