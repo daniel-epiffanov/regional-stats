@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import Layout from './components/layout/Layout'
+import Layout from './layout/Desktop'
 import './styles/globals.scss'
 import './styles/dxOverrides.scss'
 

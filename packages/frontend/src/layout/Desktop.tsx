@@ -1,14 +1,12 @@
-import ResponsiveBox, {
-	Row, Col, Item, Location,
-} from 'devextreme-react/responsive-box'
 import { FC } from 'react'
 import Header from './Header'
+import styles from './styles/Desktop.module.scss'
 
 const Layout: FC = (props) => {
 	const { children } = props
 
 	return (
-		<>
+		<div className={styles.root}>
 			<header>
 				<Header />
 			</header>
@@ -22,7 +20,7 @@ const Layout: FC = (props) => {
 					<p>Footer</p>
 				</div>
 			</footer>
-		</>
+		</div>
 	)
 }
 

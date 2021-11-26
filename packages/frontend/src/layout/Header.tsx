@@ -3,9 +3,9 @@ import themes from 'devextreme/ui/themes'
 import { Toolbar, Item } from 'devextreme-react/toolbar'
 // import { Switch } from 'devextreme-react/switch'
 import notify from 'devextreme/ui/notify'
-import styles from '../../styles/layout/Header.module.scss'
+import styles from './styles/Header.module.scss'
 import Logo from './Logo'
-import Search from '../Search'
+// import Search from '../Search'
 
 // const autocompleteOptions = {
 // 	dataSource: [
