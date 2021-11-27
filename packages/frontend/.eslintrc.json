@@ -58,7 +58,8 @@
 		"linebreak-style": "off",
 		"no-debugger": "warn",
 		"no-underscore-dangle": "warn",
-		"camelcase": "warn"
+		"camelcase": "warn",
+		"react/jsx-no-bind": "off"
 	},
 	"settings": {
 		"import/resolver": {

@@ -3,12 +3,6 @@ type Geometry {
 	coordinates: [[[String]]],
 }
 
-input MapCoordsInput {
-	type: String,
-	name_en: String,
-	name_ru: String,
-}
-
 type Properties {
 	name_en: String,
 	name_ru: String,

@@ -11,6 +11,7 @@ import VectorMap, {
 } from 'devextreme-react/vector-map'
 // @ts-ignore
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js'
+import { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
 import MapCoords from '../../../../../@types/MapCoords'
 import styles from './styles/VectorMap.module.scss'
 
@@ -46,12 +47,6 @@ const VectorMapRComponent = (props: PropsInterface) => {
 		type: 'FeatureCollection',
 		features: [],
 	})
-
-	function clickHandler({ target }: { target: any }) {
-		// if (target && mapCoords[target.attribute('name_ru')]) {
-		target.selected(!target.selected())
-		// }
-	}
 
 	React.useEffect(() => {
 		if (process.env.REACT_APP_API_URL) {
@@ -98,6 +93,17 @@ const VectorMapRComponent = (props: PropsInterface) => {
 		// changeSelectedRegion(selectedObjectNameRu)
 	}
 
+	function onMapClick(e: MapClickEvent) {
+		console.log({ e })
+		// @ts-ignore
+		const attributes = e.target.attribute()
+		console.log({ attributes })
+		// if (a.target && mapCoords[target.attribute('name_ru')]) {
+
+		e.target.selected(true)
+		// }
+	}
+
 	return (
 		<div style={{ position: 'relative' }}>
 			{/* <MapToolbar /> */}
@@ -123,9 +129,10 @@ const VectorMapRComponent = (props: PropsInterface) => {
 				id="vector-map"
 				loadingIndicator={{ enabled: true }}
 				bounds={bounds}
-				// onClick={clickHandler}
+				// eslint-disable-next-line react/jsx-no-bind
+				onClick={onMapClick}
 				maxZoomFactor={4}
-				onSelectionChanged={onSelectionChangedHandler}
+			// onSelectionChanged={onSelectionChangedHandler}
 			>
 				<Layer
 					// dataSource={mapCoords}

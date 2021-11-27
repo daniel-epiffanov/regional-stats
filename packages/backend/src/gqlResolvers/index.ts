@@ -8,6 +8,7 @@ import regionNames from './regionNames'
 import mainSectionNames from './mainSectionNames'
 import subSectionTitles from './subSectionTitles'
 import statisticsByYears from './statisticsByYears'
+import multipleRegionsCoords from './multipleRegionsCoords'
 
 const gqlResolvers: IResolvers = {
 	Query: {
@@ -16,6 +17,7 @@ const gqlResolvers: IResolvers = {
 		mainSectionNames,
 		subSectionTitles,
 		statisticsByYears,
+		multipleRegionsCoords,
 		// statistics: async (args: any) => {
 		// 	console.log({ args })
 		// 	const mongoRes = await statisticsModel.find({ regionName: 'Центральный федеральный округ' }).select({ 'mainSections.name': 'Население' })
