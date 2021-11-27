@@ -1,10 +1,14 @@
-import { MainSectionNames, ResolverFnAsync } from '../../../../@types/gqlResolvers'
-import { MainSection } from '../../../../@types/statistics'
-import statisticsModel from '../mongooseModels/statistics'
+import { MultipleRegionCoords, ResolverFnAsync } from '../../../../@types/gqlResolvers'
+import regionsCoords from '../mongooseModels/regionsCoords'
 
-const mainSectionNames: ResolverFnAsync<MainSectionNames> = async () => {
-	const mongoRes: MainSection['name'][] = await statisticsModel.distinct('mainSections.name')
+const multipleRegionsCoords: ResolverFnAsync<MultipleRegionCoords> = async (
+	parent: any,
+	args: any,
+) => {
+	const { type } = args
+
+	const mongoRes: MultipleRegionCoords = await regionsCoords.find({ type })
 	return mongoRes
 }
 
-export default mainSectionNames
+export default multipleRegionsCoords

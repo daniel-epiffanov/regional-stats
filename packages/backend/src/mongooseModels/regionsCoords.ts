@@ -1,8 +1,7 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, models } from 'mongoose'
+import { MultipleRegionCoordsModel } from '../../../../@types/mongoModels'
 
-const validateBboxLength = (val: number[]) => val.length === 4
-
-const mapCoordsSchema = new Schema({
+const regionsCoordsSchema = new Schema<MultipleRegionCoordsModel>({
 	type: {
 		type: String,
 		required: true,
@@ -27,4 +26,4 @@ const mapCoordsSchema = new Schema({
 	},
 })
 
-export default model('MapCoords', mapCoordsSchema)
+export default models.MapCoords || model('MapCoords', regionsCoordsSchema)

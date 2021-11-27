@@ -1,4 +1,4 @@
-export interface RegionCoordsMongo {
+export interface MultipleRegionCoordsModel {
 	type: string,
 	geometry: {
 		type: 'Polygon',
@@ -9,11 +9,4 @@ export interface RegionCoordsMongo {
 		name_en: string,
 		alt_names: string[]
 	}
-}
-
-
-
-export interface RegionCoordsGraphql {
-	type: 'FeatureCollection',
-	features: RegionCoordsMongo[]
 }
