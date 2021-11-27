@@ -2,10 +2,12 @@ import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
 import React from 'react'
-import ChartWrapper from '../../components/Charts/ChartWrapper'
+// import ChartWrapper from '../../components/Charts/ChartWrapper'
 import DoughnutChart from '../../components/DoughnutChart'
-import MultipleAxesChart from '../../components/MultipleAxesChart'
-import RangeSelector from '../../components/RangeSelector'
+// import MultipleAxesChart from '../../components/MultipleAxesChart'
+// import RangeSelector from '../../components/RangeSelector'
+import styles from './styles/Home.module.scss'
+import VectorMap from './VectorMap'
 
 const Home = () => {
 	const [selectedRegion, setSelectedRegion] = React
@@ -43,7 +45,7 @@ const Home = () => {
 				<Location screen="md lg" row={1} col={0} />
 				{/* <Location screen="xs sm" row={1} col={0} /> */}
 				<div className="left-side-bar item">
-					<p>map</p>
+					<VectorMap />
 				</div>
 			</Item>
 

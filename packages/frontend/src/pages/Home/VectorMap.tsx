@@ -9,14 +9,16 @@ import VectorMap, {
 	Border,
 	Font,
 } from 'devextreme-react/vector-map'
-import MapCoords from '../../../../@types/MapCoords'
-import styles from '../styles/VectorMap.module.scss'
+// @ts-ignore
+import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js'
+import MapCoords from '../../../../../@types/MapCoords'
+import styles from './styles/VectorMap.module.scss'
 
 // @ts-ignore
 // import MapToolbar from './MapToolbar'
 
 interface PropsInterface {
-	changeSelectedRegion: (newSelectedRegion: string) => void
+	// changeSelectedRegion: (newSelectedRegion: string) => void
 }
 
 const bounds = [71, 97, 45, 26]
@@ -38,7 +40,7 @@ function customizeLayer(elements: any) {
 // console.log({ testData })
 
 const VectorMapRComponent = (props: PropsInterface) => {
-	const { changeSelectedRegion } = props
+	// const { changeSelectedRegion } = props
 
 	const [mapCoords, setMapCoords] = React.useState<MapCoords>({
 		type: 'FeatureCollection',
@@ -93,20 +95,20 @@ const VectorMapRComponent = (props: PropsInterface) => {
 		const selectedObjectNameRu = selectedObject.properties.name_ru
 
 		console.log({ selectedObjectNameRu })
-		changeSelectedRegion(selectedObjectNameRu)
+		// changeSelectedRegion(selectedObjectNameRu)
 	}
 
 	return (
 		<div style={{ position: 'relative' }}>
 			{/* <MapToolbar /> */}
 
-			<LoadIndicator
+			{/* <LoadIndicator
 				id="large-indicator"
 				height={20}
 				width={20}
 				visible={mapCoords.features.length === 0}
 				className={styles.LoadIndicator}
-			/>
+			/> */}
 			{/* <LoadPanel
 				shadingColor="rgba(0,0,0,0.4)"
 				// position={position}
@@ -126,7 +128,8 @@ const VectorMapRComponent = (props: PropsInterface) => {
 				onSelectionChanged={onSelectionChangedHandler}
 			>
 				<Layer
-					dataSource={mapCoords}
+					// dataSource={mapCoords}
+					dataSource={mapsData.world}
 					customize={customizeLayer}
 				/>
 				<Tooltip
