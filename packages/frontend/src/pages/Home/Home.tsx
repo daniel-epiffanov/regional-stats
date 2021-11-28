@@ -32,7 +32,7 @@ const Home = () => {
 				{/* <Location screen="xs sm" row={0} col={0} /> */}
 				<div className="content item">
 					<DoughnutChart
-						regionName="Приволжский федеральный округ"
+						regionName={selectedRegion}
 						mainSectionName="Население"
 						subSectionTitle="Численность населения"
 					/>
