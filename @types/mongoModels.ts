@@ -1,4 +1,4 @@
-export interface MultipleRegionCoordsModel {
+export interface MultipleRegionsCoordsModel {
 	type: string,
 	geometry: {
 		type: 'Polygon',

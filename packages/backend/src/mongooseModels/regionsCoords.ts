@@ -1,7 +1,7 @@
 import { Schema, model, models } from 'mongoose'
-import { MultipleRegionCoordsModel } from '../../../../@types/mongoModels'
+import { MultipleRegionsCoordsModel } from '../../../../@types/mongoModels'
 
-const regionsCoordsSchema = new Schema<MultipleRegionCoordsModel>({
+const regionsCoordsSchema = new Schema<MultipleRegionsCoordsModel>({
 	type: {
 		type: String,
 		required: true,

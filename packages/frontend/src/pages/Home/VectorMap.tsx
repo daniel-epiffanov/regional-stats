@@ -12,7 +12,7 @@ import VectorMap, {
 // @ts-ignore
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js'
 import { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
-import MapCoords from '../../../../../@types/MapCoords'
+import { GqlResponse, MultipleRegionsCoords } from '../../../../../@types/gqlResolvers'
 import styles from './styles/VectorMap.module.scss'
 
 // @ts-ignore
@@ -22,57 +22,64 @@ interface PropsInterface {
 	// changeSelectedRegion: (newSelectedRegion: string) => void
 }
 
+type Response = GqlResponse<{ multipleRegionsCoords: MultipleRegionsCoords }>
+
 const bounds = [71, 97, 45, 26]
 
-function customizeLayer(elements: any) {
-	elements.forEach((element: any) => {
-		// console.log(element.attribute('name_ru'))
-		// const country = countries[element.attribute('name')]
-		// if (country) {
-		element.applySettings({
-			color: '#004a8c61',
-			hoveredColor: '#002e8324',
-			selectedColor: '#004a8c61',
-		})
-		// }
-	})
-}
+// function customizeLayer(elements: any) {
+// 	elements.forEach((element: any) => {
+// 		// console.log(element.attribute('name_ru'))
+// 		// const country = countries[element.attribute('name')]
+// 		// if (country) {
+// 		element.applySettings({
+// 			color: '#004a8c61',
+// 			hoveredColor: '#002e8324',
+// 			selectedColor: '#004a8c61',
+// 		})
+// 		// }
+// 	})
+// }
 
 // console.log({ testData })
 
 const VectorMapRComponent = (props: PropsInterface) => {
 	// const { changeSelectedRegion } = props
 
-	const [mapCoords, setMapCoords] = React.useState<MapCoords>({
-		type: 'FeatureCollection',
-		features: [],
-	})
+	const [mapCoords, setMapCoords] = React.useState<MultipleRegionsCoords>([])
+
+	// const getCoords = () => ({
+	// 	type: 'FeatureCollection',
+	// 	features: mapCoords,
+	// })
 
 	React.useEffect(() => {
+		console.log('process.env.REACT_APP_API_URL: ', process.env.REACT_APP_API_URL)
 		if (process.env.REACT_APP_API_URL) {
 			const query = `
-				query {
-					mapCoords(sort: "name_ru", input: {type: "federalDistrict"}) {
-						properties {
-              name_ru
-            },
-						geometry {
-							type
-							coordinates
-						}
+			query {
+				multipleRegionsCoords(type: "federalDistrict") {
+					type,
+					geometry {
+						type,
+						coordinates
+					},
+					properties {
+						name_en
+						name_ru
 					}
-		}`
+				},
+				
+			}`
 
 			axios
-				.post(process.env.REACT_APP_API_URL, { query })
+				.post<Response>(process.env.REACT_APP_API_URL, { query })
 				.then((res) => {
-					const { data } = res
+					const { multipleRegionsCoords } = res.data.data
+					// console.log({ data })
+					// console.log({ res })
 					// console.log(data.data.mapCoords)
-					const changedData = data.data.mapCoords
-					setMapCoords({
-						type: 'FeatureCollection',
-						features: changedData,
-					})
+					// const changedData = data.data.mapCoords
+					setMapCoords(multipleRegionsCoords)
 					// eslint-disable-next-line no-debugger
 					// debugger
 					// if (Array.isArray(res.data)) scndTopLvlData(data)
@@ -84,14 +91,14 @@ const VectorMapRComponent = (props: PropsInterface) => {
 		console.log({ mapCoords })
 	}, [mapCoords])
 
-	const onSelectionChangedHandler = (e: any) => {
-		// @ts-ignore
-		const selectedObject = mapCoords.features[e.target.index]
-		const selectedObjectNameRu = selectedObject.properties.name_ru
+	// const onSelectionChangedHandler = (e: any) => {
+	// 	// @ts-ignore
+	// 	const selectedObject = mapCoords.features[e.target.index]
+	// 	const selectedObjectNameRu = selectedObject.properties.name_ru
 
-		console.log({ selectedObjectNameRu })
-		// changeSelectedRegion(selectedObjectNameRu)
-	}
+	// 	console.log({ selectedObjectNameRu })
+	// 	// changeSelectedRegion(selectedObjectNameRu)
+	// }
 
 	function onMapClick(e: MapClickEvent) {
 		console.log({ e })
@@ -135,17 +142,24 @@ const VectorMapRComponent = (props: PropsInterface) => {
 			// onSelectionChanged={onSelectionChangedHandler}
 			>
 				<Layer
-					// dataSource={mapCoords}
-					dataSource={mapsData.world}
-					customize={customizeLayer}
+					dataSource={{
+						type: 'FeatureCollection',
+						features: mapCoords,
+					}}
+				// dataSource={mapsData.world}
+				// customize={customizeLayer}
 				/>
-				<Tooltip
+				{/* <Layer
+					dataSource={getCoords()}
+					customize={customizeLayer}
+				/> */}
+				{/* <Tooltip
 					enabled
 				// customizeTooltip={customizeTooltip}
 				>
 					<Border visible />
 					<Font color="#fff" />
-				</Tooltip>
+				</Tooltip> */}
 			</VectorMap>
 		</div>
 	)

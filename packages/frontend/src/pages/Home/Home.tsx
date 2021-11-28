@@ -24,14 +24,20 @@ const Home = () => {
 	// <ChartWrapper />
 	// <VectorMapRComponent changeSelectedRegion={changeSelectedRegion} />
 
+	// return (
+	// 	<div>
+	// 		<h1>Yo</h1>
+	// 	</div>
+	// )
+
 	return (
 		<ResponsiveBox>
 			<Row ratio={1} />
 			<Row ratio={1} />
-			{/* <Row ratio={0.7} /> */}
-			<Col ratio={1} screen="md lg" />
-			{/* <Col ratio={2} />
-			<Col ratio={0.5} screen="md lg" /> */}
+			<Row ratio={0.7} />
+			<Col ratio={1} />
+			{/* <Col ratio={1} screen="md lg" /> */}
+			{/* <Col ratio={0.5} screen="md lg" /> */}
 
 			<Item>
 				<Location screen="md lg" row={0} col={0} />
@@ -43,35 +49,11 @@ const Home = () => {
 
 			<Item>
 				<Location screen="md lg" row={1} col={0} />
-				{/* <Location screen="xs sm" row={1} col={0} /> */}
 				<div className="left-side-bar item">
 					<VectorMap />
 				</div>
 			</Item>
 
-			{/* <Item>
-				<Location screen="md lg" row={0} col={2} />
-				<Location screen="xs sm" row={2} col={0} />
-				<div className="right-side-bar item">
-					<MultipleAxesChart />
-				</div>
-			</Item> */}
-
-			{/* <Item>
-				<Location screen="md lg" row={0} col={1} />
-				<Location screen="xs sm" row={1} col={0} />
-				<div className="left-side-bar item">
-					<p>Left Bar</p>
-				</div>
-			</Item>
-
-			<Item>
-				<Location screen="md lg" row={0} col={2} />
-				<Location screen="xs sm" row={2} col={0} />
-				<div className="right-side-bar item">
-					<p>Right Bar</p>
-				</div>
-			</Item> */}
 		</ResponsiveBox>
 	)
 }
