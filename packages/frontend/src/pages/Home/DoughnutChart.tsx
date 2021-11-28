@@ -8,7 +8,7 @@ import PieChart, {
 	Connector,
 	Export,
 } from 'devextreme-react/pie-chart'
-import styles from '../styles/DoughnutChart.module.scss'
+import styles from './styles/DoughnutChart.module.scss'
 
 const populationByRegions = [{
 	region: 'Asia',

@@ -2,12 +2,13 @@ import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
 import { useState, useEffect } from 'react'
-import DoughnutChart from '../../components/DoughnutChart'
+import { SelectedRegion } from '../../@types/states'
+import DoughnutChart from './DoughnutChart'
 import styles from './styles/Home.module.scss'
 import VectorMap from './VectorMap'
 
 const Home = () => {
-	const [selectedRegion, setSelectedRegion] = useState<string>(process.env.INITIAL_REGION || '')
+	const [selectedRegion, setSelectedRegion] = useState<SelectedRegion>(process.env.INITIAL_REGION || '')
 
 	const selectedRegionHandler = (newSelectedRegion: string) => {
 		setSelectedRegion(newSelectedRegion)

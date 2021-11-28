@@ -110,7 +110,8 @@ const VectorMapRComponent: FC<Props> = (props) => {
 		e.target.selected(true)
 		// }
 		const name_en = e.target.attribute('name_en')
-		selectedRegionHandler(name_en)
+		const name_ru = e.target.attribute('name_ru')
+		selectedRegionHandler(name_ru)
 	}
 
 	return (
