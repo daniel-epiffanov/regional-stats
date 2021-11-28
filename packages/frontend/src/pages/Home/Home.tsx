@@ -1,34 +1,21 @@
 import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
-import React from 'react'
-// import ChartWrapper from '../../components/Charts/ChartWrapper'
+import { useState, useEffect } from 'react'
 import DoughnutChart from '../../components/DoughnutChart'
-// import MultipleAxesChart from '../../components/MultipleAxesChart'
-// import RangeSelector from '../../components/RangeSelector'
 import styles from './styles/Home.module.scss'
 import VectorMap from './VectorMap'
 
 const Home = () => {
-	const [selectedRegion, setSelectedRegion] = React
-		.useState(process.env.INITIAL_MAP_VALUE || '')
+	const [selectedRegion, setSelectedRegion] = useState<string>(process.env.INITIAL_REGION || '')
 
-	const changeSelectedRegion = (newSelectedRegion: string) => {
+	const selectedRegionHandler = (newSelectedRegion: string) => {
 		setSelectedRegion(newSelectedRegion)
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
 		console.log({ selectedRegion })
 	}, [selectedRegion])
-
-	// <ChartWrapper />
-	// <VectorMapRComponent changeSelectedRegion={changeSelectedRegion} />
-
-	// return (
-	// 	<div>
-	// 		<h1>Yo</h1>
-	// 	</div>
-	// )
 
 	return (
 		<ResponsiveBox>
@@ -50,7 +37,7 @@ const Home = () => {
 			<Item>
 				<Location screen="md lg" row={1} col={0} />
 				<div className="left-side-bar item">
-					<VectorMap />
+					<VectorMap selectedRegionHandler={selectedRegionHandler} />
 				</div>
 			</Item>
 

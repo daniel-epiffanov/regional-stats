@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import React from 'react'
+import React, { FC } from 'react'
 import axios from 'axios'
 // import { LoadPanel } from 'devextreme-react/load-panel'
 import { LoadIndicator } from 'devextreme-react/load-indicator'
@@ -18,8 +18,8 @@ import styles from './styles/VectorMap.module.scss'
 // @ts-ignore
 // import MapToolbar from './MapToolbar'
 
-interface PropsInterface {
-	// changeSelectedRegion: (newSelectedRegion: string) => void
+interface Props {
+	selectedRegionHandler: (newSelectedRegion: string) => void
 }
 
 type Response = GqlResponse<{ multipleRegionsCoords: MultipleRegionsCoords }>
@@ -42,8 +42,8 @@ const bounds = [71, 97, 45, 26]
 
 // console.log({ testData })
 
-const VectorMapRComponent = (props: PropsInterface) => {
-	// const { changeSelectedRegion } = props
+const VectorMapRComponent: FC<Props> = (props) => {
+	const { selectedRegionHandler } = props
 
 	const [mapCoords, setMapCoords] = React.useState<MultipleRegionsCoords>([])
 
@@ -101,37 +101,20 @@ const VectorMapRComponent = (props: PropsInterface) => {
 	// }
 
 	function onMapClick(e: MapClickEvent) {
-		console.log({ e })
+		if (!e.target) return
 		// @ts-ignore
-		const attributes = e.target.attribute()
-		console.log({ attributes })
-		// if (a.target && mapCoords[target.attribute('name_ru')]) {
-
+		// const attributes = e.target.attribute()
+		// console.log({ attributes })
+		// debugger
+		// if (e.target && mapCoords[e.target.attribute('name_en')]) {
 		e.target.selected(true)
 		// }
+		const name_en = e.target.attribute('name_en')
+		selectedRegionHandler(name_en)
 	}
 
 	return (
 		<div style={{ position: 'relative' }}>
-			{/* <MapToolbar /> */}
-
-			{/* <LoadIndicator
-				id="large-indicator"
-				height={20}
-				width={20}
-				visible={mapCoords.features.length === 0}
-				className={styles.LoadIndicator}
-			/> */}
-			{/* <LoadPanel
-				shadingColor="rgba(0,0,0,0.4)"
-				// position={position}
-				// onHiding={this.hideLoadPanel}
-				visible={!mapCoords}
-				showIndicator
-				shading
-				showPane
-				closeOnOutsideClick
-			/> */}
 			<VectorMap
 				id="vector-map"
 				loadingIndicator={{ enabled: true }}
@@ -146,13 +129,9 @@ const VectorMapRComponent = (props: PropsInterface) => {
 						type: 'FeatureCollection',
 						features: mapCoords,
 					}}
-				// dataSource={mapsData.world}
+					type="area"
 				// customize={customizeLayer}
 				/>
-				{/* <Layer
-					dataSource={getCoords()}
-					customize={customizeLayer}
-				/> */}
 				{/* <Tooltip
 					enabled
 				// customizeTooltip={customizeTooltip}
