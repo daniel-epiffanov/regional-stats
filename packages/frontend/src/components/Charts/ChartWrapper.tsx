@@ -48,7 +48,7 @@ const ChartWrapper = () => {
 				<Location screen="md lg" row={0} col={1} />
 				<Location screen="xs sm" row={1} col={0} />
 				<div className="left-side-bar item">
-					<DoughnutChart />
+					{/* <DoughnutChart /> */}
 				</div>
 			</Item>
 

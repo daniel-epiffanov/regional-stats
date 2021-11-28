@@ -8,7 +8,6 @@ export type RegionNames = string[]
 export type MainSectionNames = string[]
 export type SubSectionTitles = string[]
 export type StatisticsByYears = YearValue[]
-export type StatisticsByYears = YearValue[]
 export type MultipleRegionsCoords = MultipleRegionsCoordsModel[]
 
 // export interface MultipleRegionsCoords {
