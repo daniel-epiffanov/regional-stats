@@ -4,6 +4,7 @@ import ResponsiveBox, {
 import { useState, useEffect } from 'react'
 import { SelectedRegion } from '../../@types/states'
 import DoughnutChart from './DoughnutChart'
+import SectionsTree from './SectionsTree'
 import styles from './styles/Home.module.scss'
 import VectorMap from './VectorMap'
 
@@ -20,6 +21,7 @@ const Home = () => {
 
 	return (
 		<ResponsiveBox>
+			<Row ratio={1} />
 			<Row ratio={1} />
 			<Row ratio={1} />
 			<Row ratio={0.7} />
@@ -46,6 +48,13 @@ const Home = () => {
 						mainSectionName="Население"
 						subSectionTitle="Численность населения"
 					/>
+				</div>
+			</Item>
+			<Item>
+				<Location screen="md lg" row={2} col={0} />
+				{/* <Location screen="xs sm" row={0} col={0} /> */}
+				<div>
+					<SectionsTree />
 				</div>
 			</Item>
 
