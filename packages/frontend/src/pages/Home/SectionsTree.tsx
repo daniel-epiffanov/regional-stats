@@ -1,9 +1,9 @@
 /* eslint-disable import/extensions */
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import axios from 'axios'
 import { TreeView } from 'devextreme-react/tree-view'
 import styles from './styles/SectionsTree.module.scss'
-import { GqlResponse } from '../../../../../@types/gqlResolvers'
+import { GqlResponse, MainSectionNames } from '../../../../../@types/gqlResolvers'
 import { hostApi } from '../../helpers/host'
 
 interface Props {
@@ -14,41 +14,49 @@ interface Props {
 type Response = GqlResponse<{
 	// multipleRegionsCoords: MultipleRegionsCoords,
 	// regionNames: RegionNames
+	mainSectionNames: MainSectionNames
 }>
 
-const bounds = [71, 97, 45, 26]
+// const bounds = [71, 97, 45, 26]
 
 const SectionsTree: FC<Props> = (props) => {
 	// const {  } = props
 
-	// const [mapCoords, setMapCoords] = useState<MultipleRegionsCoords>([])
+	const [mainSectionNames, setMainSectionNames] = useState<MainSectionNames>([])
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const query = `
 			query {
-				multipleRegionsCoords(type: "federalDistrict") {
-					type,
-					geometry {
-						type,
-						coordinates
-					},
-					properties {
-						name_en
-						name_ru
-					}
-				},
-				regionNames
-				
+				mainSectionNames,
 			}`
 
 		axios
 			.post<Response>(hostApi, { query })
 			.then((res) => {
-				// const { multipleRegionsCoords, regionNames } = res.data.data
+				const _mainSectionNames = res.data.data.mainSectionNames
+				setMainSectionNames(_mainSectionNames)
 				// setMapCoords(multipleRegionsCoords)
 				// setAvailableRgions(regionNames)
 			})
 	}, [])
+
+	useEffect(() => {
+		if (!mainSectionNames.length) return
+
+		const query = `
+			query {
+				${mainSectionNames.map((name, i) => `var${i}: subSectionTitles(mainSectionName:"${name}")`)}
+			}`
+
+		axios
+			.post<Response>(hostApi, { query })
+			.then((res) => {
+				const _mainSectionNames = res.data.data.mainSectionNames
+				setMainSectionNames(_mainSectionNames)
+				// setMapCoords(multipleRegionsCoords)
+				// setAvailableRgions(regionNames)
+			})
+	}, [mainSectionNames])
 
 	const products = [{
 		id: '1',
