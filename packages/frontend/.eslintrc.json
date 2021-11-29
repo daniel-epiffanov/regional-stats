@@ -59,7 +59,8 @@
 		"no-debugger": "warn",
 		"no-underscore-dangle": "warn",
 		"camelcase": "warn",
-		"react/jsx-no-bind": "off"
+		"react/jsx-no-bind": "off",
+		"no-unused-expressions": "off"
 	},
 	"settings": {
 		"import/resolver": {

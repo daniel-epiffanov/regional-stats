@@ -8,18 +8,23 @@ import VectorMap, {
 	Tooltip,
 	Border,
 	Font,
+	Label,
+	Legend,
+	Source,
 } from 'devextreme-react/vector-map'
 // @ts-ignore
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js'
 import { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
 import { GqlResponse, MultipleRegionsCoords, RegionNames } from '../../../../../@types/gqlResolvers'
 import styles from './styles/VectorMap.module.scss'
+import { SelectedRegion } from '../../@types/states'
 
 // @ts-ignore
 // import MapToolbar from './MapToolbar'
 
 interface Props {
-	selectedRegionHandler: (newSelectedRegion: string) => void
+	selectedRegionHandler: (newSelectedRegion: string) => void,
+	selectedRegion: SelectedRegion
 }
 
 type Response = GqlResponse<{
@@ -32,7 +37,7 @@ const bounds = [71, 97, 45, 26]
 // console.log({ testData })
 
 const VectorMapRComponent: FC<Props> = (props) => {
-	const { selectedRegionHandler } = props
+	const { selectedRegionHandler, selectedRegion } = props
 
 	const [mapCoords, setMapCoords] = useState<MultipleRegionsCoords>([])
 	const [availableRgions, setAvailableRgions] = useState<RegionNames>(['Центральный федеральный округ'])
@@ -40,16 +45,13 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	function customizeLayer(elements: any) {
 		elements.forEach((element: any) => {
 			const name_ru = element.attribute('name_ru')
-			if (!availableRgions.includes(name_ru)) {
-				element.applySettings({
-					hoverEnabled: false,
-					opacity: 0.2,
-					label: {
-						enabled: true,
-						dataField: 'yo',
-					},
-				})
-			}
+
+			selectedRegion === name_ru && element.selected(true)
+
+			if (availableRgions.includes(name_ru)) return
+			element.applySettings({
+				opacity: 0.2,
+			})
 		})
 	}
 
@@ -87,21 +89,19 @@ const VectorMapRComponent: FC<Props> = (props) => {
 		console.log({ mapCoords })
 	}, [mapCoords])
 
-	// const onSelectionChangedHandler = (e: any) => {
-	// 	// @ts-ignore
-	// 	const selectedObject = mapCoords.features[e.target.index]
-	// 	const selectedObjectNameRu = selectedObject.properties.name_ru
-
-	// 	console.log({ selectedObjectNameRu })
-	// 	// changeSelectedRegion(selectedObjectNameRu)
-	// }
+	function customizeTooltip(element: any) {
+		return {
+			text: element.attribute('name_ru'),
+		}
+	}
 
 	function onMapClick(e: MapClickEvent) {
 		if (!e.target) return
-		e.target.selected(true)
-		const name_en = e.target.attribute('name_en')
 		const name_ru = e.target.attribute('name_ru')
+		if (!availableRgions.includes(name_ru)) return
+
 		selectedRegionHandler(name_ru)
+		e.target.selected(true)
 	}
 
 	return (
@@ -112,8 +112,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 				bounds={bounds}
 				// eslint-disable-next-line react/jsx-no-bind
 				onClick={onMapClick}
-				maxZoomFactor={4}
-			// onSelectionChanged={onSelectionChangedHandler}
+			// maxZoomFactor={5}
 			>
 				<Layer
 					dataSource={{
@@ -122,14 +121,20 @@ const VectorMapRComponent: FC<Props> = (props) => {
 					}}
 					type="area"
 					customize={customizeLayer}
-				/>
-				{/* <Tooltip
+				>
+					<Label enabled dataField="name_ru">
+						<Font size={16} />
+					</Label>
+				</Layer>
+
+				<Tooltip
 					enabled
-				// customizeTooltip={customizeTooltip}
+					customizeTooltip={customizeTooltip}
 				>
 					<Border visible />
 					<Font color="#fff" />
-				</Tooltip> */}
+				</Tooltip>
+
 			</VectorMap>
 		</div>
 	)

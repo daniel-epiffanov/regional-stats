@@ -29,6 +29,16 @@ const Home = () => {
 
 			<Item>
 				<Location screen="md lg" row={0} col={0} />
+				<div className="left-side-bar item">
+					<VectorMap
+						selectedRegionHandler={selectedRegionHandler}
+						selectedRegion={selectedRegion}
+					/>
+				</div>
+			</Item>
+
+			<Item>
+				<Location screen="md lg" row={1} col={0} />
 				{/* <Location screen="xs sm" row={0} col={0} /> */}
 				<div className="content item">
 					<DoughnutChart
@@ -36,13 +46,6 @@ const Home = () => {
 						mainSectionName="Население"
 						subSectionTitle="Численность населения"
 					/>
-				</div>
-			</Item>
-
-			<Item>
-				<Location screen="md lg" row={1} col={0} />
-				<div className="left-side-bar item">
-					<VectorMap selectedRegionHandler={selectedRegionHandler} />
 				</div>
 			</Item>
 
