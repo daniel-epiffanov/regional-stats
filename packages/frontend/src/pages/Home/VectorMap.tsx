@@ -45,8 +45,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	function customizeLayer(elements: any) {
 		elements.forEach((element: any) => {
 			const name_ru = element.attribute('name_ru')
-
-			selectedRegion === name_ru && element.selected(true)
+			// selectedRegion === name_ru && element.selected(true)
 
 			if (availableRgions.includes(name_ru)) return
 			element.applySettings({
@@ -100,8 +99,9 @@ const VectorMapRComponent: FC<Props> = (props) => {
 		const name_ru = e.target.attribute('name_ru')
 		if (!availableRgions.includes(name_ru)) return
 
-		selectedRegionHandler(name_ru)
 		e.target.selected(true)
+
+		selectedRegionHandler(name_ru)
 	}
 
 	return (
