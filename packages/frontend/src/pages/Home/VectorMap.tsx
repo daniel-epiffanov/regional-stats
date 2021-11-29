@@ -18,6 +18,7 @@ import { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
 import { GqlResponse, MultipleRegionsCoords, RegionNames } from '../../../../../@types/gqlResolvers'
 import styles from './styles/VectorMap.module.scss'
 import { SelectedRegion } from '../../@types/states'
+import { hostApi } from '../../helpers/host'
 
 // @ts-ignore
 // import MapToolbar from './MapToolbar'
@@ -55,11 +56,9 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	}
 
 	React.useEffect(() => {
-		console.log('process.env.REACT_APP_API_URL: ', process.env.REACT_APP_API_URL)
-		if (process.env.REACT_APP_API_URL) {
-			const query = `
+		const query = `
 			query {
-				multipleRegionsCoords(type: "federalDistrict") {
+				multipleRegionsCoords(type: "region") {
 					type,
 					geometry {
 						type,
@@ -74,14 +73,17 @@ const VectorMapRComponent: FC<Props> = (props) => {
 				
 			}`
 
-			axios
-				.post<Response>(process.env.REACT_APP_API_URL, { query })
-				.then((res) => {
-					const { multipleRegionsCoords, regionNames } = res.data.data
-					setMapCoords(multipleRegionsCoords)
-					setAvailableRgions(regionNames)
-				})
-		}
+		console.log({ hostApi })
+
+		axios
+			.post<Response>(hostApi, { query })
+			.then((res) => {
+				const { multipleRegionsCoords, regionNames } = res.data.data
+				console.log({ multipleRegionsCoords })
+				console.log({ regionNames })
+				setMapCoords(multipleRegionsCoords)
+				setAvailableRgions(regionNames)
+			})
 	}, [])
 
 	React.useEffect(() => {
