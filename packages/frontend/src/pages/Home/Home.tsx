@@ -8,11 +8,24 @@ import SectionsTree from './SectionsTree'
 import styles from './styles/Home.module.scss'
 import VectorMap from './VectorMap'
 
+interface SelectedSections {
+
+}
+
 const Home = () => {
-	const [selectedRegion, setSelectedRegion] = useState<SelectedRegion>(process.env.INITIAL_REGION || '')
+	const [selectedRegion, setSelectedRegion] = useState<SelectedRegion>('')
+	const [selectedMainSectionName, setSelectedMainSectionName] = useState<string>('')
+	const [selectedSubSectionTitle, setSelectedSubSectionTitle] = useState<string>('')
 
 	const selectedRegionHandler = (newSelectedRegion: string) => {
 		setSelectedRegion(newSelectedRegion)
+	}
+	const selectedSectionsHandler = (
+		_selectedMainSectionName: string,
+		_selectedSubSectionTitle: string,
+	) => {
+		setSelectedMainSectionName(_selectedMainSectionName)
+		setSelectedSubSectionTitle(_selectedSubSectionTitle)
 	}
 
 	useEffect(() => {
@@ -45,8 +58,8 @@ const Home = () => {
 				<div className="content item">
 					<DoughnutChart
 						regionName={selectedRegion}
-						mainSectionName="Население"
-						subSectionTitle="Численность населения"
+						mainSectionName={selectedMainSectionName}
+						subSectionTitle={selectedSubSectionTitle}
 					/>
 				</div>
 			</Item>
@@ -54,7 +67,7 @@ const Home = () => {
 				<Location screen="md lg" row={2} col={0} />
 				{/* <Location screen="xs sm" row={0} col={0} /> */}
 				<div>
-					<SectionsTree />
+					<SectionsTree selectedSectionsHandler={selectedSectionsHandler} />
 				</div>
 			</Item>
 
