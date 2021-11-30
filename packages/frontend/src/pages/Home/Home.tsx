@@ -24,6 +24,8 @@ const Home = () => {
 		_selectedMainSectionName: string,
 		_selectedSubSectionTitle: string,
 	) => {
+		console.log({ _selectedMainSectionName })
+		console.log({ _selectedSubSectionTitle })
 		setSelectedMainSectionName(_selectedMainSectionName)
 		setSelectedSubSectionTitle(_selectedSubSectionTitle)
 	}

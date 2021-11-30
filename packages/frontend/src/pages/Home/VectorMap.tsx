@@ -58,7 +58,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	React.useEffect(() => {
 		const query = `
 			query {
-				multipleRegionsCoords(type: "region") {
+				multipleRegionsCoords(type: "federalDistrict") {
 					type,
 					geometry {
 						type,

@@ -57,7 +57,9 @@ const DoughnutChart: FC<Props> = (props) => {
 	const [dataSource, setDataSource] = useState<DataSource[]>([])
 
 	useEffect(() => {
-		console.log('changed')
+		console.log({ regionName })
+		console.log({ mainSectionName })
+		console.log({ subSectionTitle })
 		if (!regionName || !mainSectionName || !subSectionTitle) return
 
 		const query = `
@@ -84,7 +86,7 @@ const DoughnutChart: FC<Props> = (props) => {
 				setDataSource(parsedStatisticsByYears)
 				console.log({ statisticsByYears })
 			})
-	}, [regionName])
+	}, [regionName, mainSectionName, subSectionTitle])
 
 	return (
 		<div className={styles.PieChart}>

@@ -2,7 +2,9 @@
 import React, { FC, useEffect, useState } from 'react'
 import axios from 'axios'
 import { TreeView } from 'devextreme-react/tree-view'
-import { Item, ItemClickEvent, SelectionChangedEvent } from 'devextreme/ui/tree_view'
+import {
+	Item, ItemClickEvent, ItemSelectionChangedEvent, SelectionChangedEvent,
+} from 'devextreme/ui/tree_view'
 import styles from './styles/SectionsTree.module.scss'
 import { GqlResponse, MainSectionNames } from '../../../../../@types/gqlResolvers'
 import { hostApi } from '../../helpers/host'
@@ -94,7 +96,36 @@ const SectionsTree: FC<Props> = (props) => {
 
 		await e.component.unselectAll()
 
-		selectedSectionsHandler(node?.text || '', node?.parent?.text || '')
+		const parentText = node?.parent?.text || ''
+		const text = node?.text || ''
+
+		selectedSectionsHandler(parentText, text)
+
+		return null
+	}
+
+	const onItemSelectionChanged = async (e: ItemSelectionChangedEvent) => {
+		// console.log({ e })
+		const itemData: Item = e.itemData
+		const { node } = e
+		// console.log(itemData)
+		// console.log({ e })
+		// // debugger
+		if (itemData.items) {
+			// debugger
+			await e.component.unselectAll()
+			// @ts-ignore
+			// e.event?.preventDefault()
+			// e.component.selectItem(itemData.items[0])
+			return null
+		}
+
+		// await e.component.unselectAll()
+
+		const parentText = node?.parent?.text || ''
+		const text = node?.text || ''
+
+		selectedSectionsHandler(parentText, text)
 
 		return null
 	}
@@ -106,15 +137,15 @@ const SectionsTree: FC<Props> = (props) => {
 	return (
 		<div>
 			<TreeView
-				id="simple-treeview"
+				// id="simple-treeview"
 				items={items}
-				width={300}
-				searchEnabled
+				// width={300}
+				// searchEnabled
 				selectByClick
 				showCheckBoxesMode="normal"
-				// selectionMode="single"
+				selectionMode="single"
 				expandEvent="click"
-				onItemClick={onItemClick}
+				onItemSelectionChanged={onItemSelectionChanged}
 			// onSelectionChanged={onSelectionChanged}
 			/>
 		</div>
