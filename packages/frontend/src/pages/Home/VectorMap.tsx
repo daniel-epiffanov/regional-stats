@@ -44,8 +44,12 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	const [availableRgions, setAvailableRgions] = useState<RegionNames>(['Центральный федеральный округ'])
 
 	function customizeLayer(elements: any) {
+		console.log({ elements })
 		elements.forEach((element: any) => {
-			const name_ru = element.attribute('name_ru')
+			const name_ru: string = element.attribute('name_ru')
+			// console.log({ selectedRegion })
+			// console.log({ name_ru })
+			// element.selected()
 			// selectedRegion === name_ru && element.selected(true)
 
 			if (availableRgions.includes(name_ru)) return
@@ -58,7 +62,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	React.useEffect(() => {
 		const query = `
 			query {
-				multipleRegionsCoords(type: "region") {
+				multipleRegionsCoords(type: "federalDistrict") {
 					type,
 					geometry {
 						type,
@@ -101,8 +105,13 @@ const VectorMapRComponent: FC<Props> = (props) => {
 		const name_ru = e.target.attribute('name_ru')
 		if (!availableRgions.includes(name_ru)) return
 
-		e.target.selected(true)
+		e.target.selected(!e.target.selected())
 
+		// selectedRegionHandler(name_ru)
+	}
+	const onSelectionChanged = (e: MapClickEvent) => {
+		if (!e.target) return
+		const name_ru = e.target.attribute('name_ru')
 		selectedRegionHandler(name_ru)
 	}
 
@@ -114,7 +123,8 @@ const VectorMapRComponent: FC<Props> = (props) => {
 				bounds={bounds}
 				// eslint-disable-next-line react/jsx-no-bind
 				onClick={onMapClick}
-			// maxZoomFactor={5}
+				// maxZoomFactor={5}
+				onSelectionChanged={onSelectionChanged}
 			>
 				<Layer
 					dataSource={{
@@ -123,6 +133,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 					}}
 					type="area"
 					customize={customizeLayer}
+					selectionMode="single"
 				>
 					<Label enabled dataField="name_ru">
 						<Font size={16} />

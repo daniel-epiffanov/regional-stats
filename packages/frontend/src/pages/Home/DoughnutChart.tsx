@@ -93,7 +93,7 @@ const DoughnutChart: FC<Props> = (props) => {
 			<PieChart
 				id="pie"
 				type="doughnut"
-				title='Параметр "население" в разные годы'
+				title={`"${subSectionTitle}" в разные годы`}
 				palette="Soft Pastel"
 				dataSource={dataSource}
 			>
