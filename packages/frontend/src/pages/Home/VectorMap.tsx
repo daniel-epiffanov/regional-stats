@@ -40,17 +40,18 @@ const bounds = [71, 97, 45, 26]
 const VectorMapRComponent: FC<Props> = (props) => {
 	const { selectedRegionHandler, selectedRegion } = props
 
+	const [sR, setSr] = useState<SelectedRegion>('')
+
 	const [mapCoords, setMapCoords] = useState<MultipleRegionsCoords>([])
 	const [availableRgions, setAvailableRgions] = useState<RegionNames>(['Центральный федеральный округ'])
 
 	function customizeLayer(elements: any) {
-		console.log({ elements })
+		// console.log({ elements })
 		elements.forEach((element: any) => {
 			const name_ru: string = element.attribute('name_ru')
-			// console.log({ selectedRegion })
-			// console.log({ name_ru })
-			// element.selected()
+			if (name_ru === selectedRegion) element.selected(true)
 			// selectedRegion === name_ru && element.selected(true)
+			// element.selected(true)
 
 			if (availableRgions.includes(name_ru)) return
 			element.applySettings({
@@ -112,7 +113,9 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	const onSelectionChanged = (e: MapClickEvent) => {
 		if (!e.target) return
 		const name_ru = e.target.attribute('name_ru')
+		// debugger
 		selectedRegionHandler(name_ru)
+		// setSr(name_ru)
 	}
 
 	return (
@@ -133,7 +136,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 					}}
 					type="area"
 					customize={customizeLayer}
-					selectionMode="single"
+					selectionMode="multiple"
 				>
 					<Label enabled dataField="name_ru">
 						<Font size={16} />
