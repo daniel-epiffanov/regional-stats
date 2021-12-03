@@ -88,14 +88,28 @@ const DoughnutChart: FC<Props> = (props) => {
 			})
 	}, [regionName, mainSectionName, subSectionTitle])
 
+	function legendClickHandler(e: any) {
+		const arg = e.target
+		const item = e.component.getAllSeries()[0].getPointsByArg(arg)[0]
+		item.isVisible() ? item.hide() : item.show()
+		// item.setInvisibility(!item.isVisible())
+		// console.log({ e })
+		// console.log({ item })
+		// console.log({ arg })
+		// debugger
+
+		// this.toggleVisibility(item);
+	}
+
 	return (
 		<div className={styles.PieChart}>
 			<PieChart
 				id="pie"
 				type="doughnut"
-				title='Параметр "население" в разные годы'
+				title={`"${subSectionTitle}" в разные годы`}
 				palette="Soft Pastel"
 				dataSource={dataSource}
+				onLegendClick={legendClickHandler}
 			>
 				<Series argumentField="year">
 					<Label visible format="decimal">
@@ -103,11 +117,11 @@ const DoughnutChart: FC<Props> = (props) => {
 					</Label>
 				</Series>
 				<Export enabled />
-				{/* <Legend
+				<Legend
 					// margin={0}
 					horizontalAlignment="center"
 					verticalAlignment="bottom"
-				/> */}
+				/>
 				{/* <Tooltip enabled customizeTooltip={this.customizeTooltip}>
 				<Format type="millions" />
 			</Tooltip> */}
