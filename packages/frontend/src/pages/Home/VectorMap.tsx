@@ -1,5 +1,7 @@
 /* eslint-disable import/extensions */
-import React, { FC, useState } from 'react'
+import React, {
+	FC, useEffect, useRef, useState,
+} from 'react'
 import axios from 'axios'
 // import { LoadPanel } from 'devextreme-react/load-panel'
 import { LoadIndicator } from 'devextreme-react/load-indicator'
@@ -20,6 +22,7 @@ import styles from './styles/VectorMap.module.scss'
 import { SelectedRegion } from '../../@types/states'
 import { hostApi } from '../../helpers/host'
 import { SelectionMode } from './Home'
+import statisticsByYearsQuery from '../../queries/statisticsByYears'
 
 // @ts-ignore
 // import MapToolbar from './MapToolbar'
@@ -27,9 +30,8 @@ import { SelectionMode } from './Home'
 interface Props {
 	selectedRegionHandler: (newSelectedRegion: string) => void,
 	selectedRegion: SelectedRegion,
-	selectedRegionsHandler: (newSelectedRegion: string) => void,
-	selectedRegions: SelectedRegion[],
-	selectionMode: SelectionMode
+	mainSectionName: string,
+	subSectionTitle: string,
 }
 
 type Response = GqlResponse<{
@@ -43,19 +45,53 @@ const bounds = [71, 97, 45, 26]
 
 const VectorMapRComponent: FC<Props> = (props) => {
 	const {
-		selectedRegionHandler, selectedRegion, selectedRegionsHandler, selectedRegions, selectionMode,
+		selectedRegionHandler, selectedRegion, mainSectionName, subSectionTitle,
 	} = props
 	const [mapCoords, setMapCoords] = useState<MultipleRegionsCoords>([])
 	const [availableRegions, setAvailableRegions] = useState<RegionNames>([])
+	const [year, setYear] = useState<number>(2007)
+
+	React.useEffect(() => {
+		console.log({ availableRegions })
+	}, [availableRegions])
+
+	// const vectorMapRef = useRef(null)
+
+	// useEffect(() => {
+	// 	console.log({ selectedRegion })
+	// 	console.log({ mainSectionName })
+	// 	console.log({ subSectionTitle })
+	// }, [selectedRegion, mainSectionName, subSectionTitle])
 
 	function customizeLayer(elements: any) {
 		// console.log({ elements })
-		elements.forEach((element: any) => {
+		elements.forEach((element: any, i: number) => {
 			const name_ru: string = element.attribute('name_ru')
-			if (selectionMode === 'single' && name_ru === selectedRegion) element.selected(true)
-			else if (selectedRegions.includes(name_ru)) element.selected(true)
+			if (name_ru === selectedRegion) element.selected(true)
 
-			if (availableRegions.includes(name_ru)) return
+			if (availableRegions.includes(name_ru)) {
+				// element.attribute('population', i * 5)
+				// console.log({ vectorMapRef })
+				// debugger
+
+				if (!mainSectionName || !subSectionTitle) return
+
+				const queryOptions = {
+					selectedRegion: name_ru, mainSectionName, subSectionTitle, startYear: year, endYear: year,
+				};
+				(async () => {
+					element.attribute('value', i * 2)
+					const statisticsByYears = await statisticsByYearsQuery(queryOptions)
+					if (!statisticsByYears) return
+					const value = statisticsByYears[0].value
+					console.log({ value })
+					element.attribute('value', value)
+					// if (!statisticsByYears) return
+					// setDataSource(statisticsByYears)
+				})()
+				return
+			}
+
 			element.applySettings({
 				opacity: 0.2,
 			})
@@ -86,20 +122,14 @@ const VectorMapRComponent: FC<Props> = (props) => {
 			.post<Response>(hostApi, { query })
 			.then((res) => {
 				const { multipleRegionsCoords, regionNames } = res.data.data
-				console.log({ multipleRegionsCoords })
-				console.log({ regionNames })
 				setMapCoords(multipleRegionsCoords)
 				setAvailableRegions(regionNames)
 			})
 	}, [])
 
-	React.useEffect(() => {
-		console.log({ mapCoords })
-	}, [mapCoords])
-
 	function customizeTooltip(element: any) {
 		return {
-			text: element.attribute('name_ru'),
+			text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
 		}
 	}
 
@@ -116,13 +146,10 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	const onSelectionChanged = (e: MapClickEvent) => {
 		if (!e.target) return
 		const name_ru: string = e.target.attribute('name_ru')
-		if (selectionMode === 'single') {
-			selectedRegionHandler(name_ru)
-			return
-		}
-
-		selectedRegionsHandler(name_ru)
+		selectedRegionHandler(name_ru)
 	}
+
+	const colorGroups = [0, 200, 400, 600, 800, 900, 1000]
 
 	return (
 		<div style={{ position: 'relative' }}>
@@ -130,6 +157,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 				bounds={bounds}
 				onClick={onMapClick}
 				onSelectionChanged={onSelectionChanged}
+			// ref={vectorMapRef}
 			>
 				<Layer
 					dataSource={{
@@ -138,7 +166,11 @@ const VectorMapRComponent: FC<Props> = (props) => {
 					}}
 					type="area"
 					customize={customizeLayer}
-					selectionMode={selectionMode}
+					selectionMode="single"
+					name="regions"
+					colorGroupingField="value"
+					colorGroups={colorGroups}
+					palette="Violet"
 				>
 					<Label enabled dataField="name_ru">
 						<Font size={16} />
@@ -152,6 +184,12 @@ const VectorMapRComponent: FC<Props> = (props) => {
 					<Border visible />
 					<Font color="#fff" />
 				</Tooltip>
+
+				<Legend
+					customizeText="yo"
+				>
+					<Source layer="regions" grouping="color" />
+				</Legend>
 
 			</VectorMap>
 		</div>

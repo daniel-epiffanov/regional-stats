@@ -13,12 +13,11 @@ import styles from './styles/DoughnutChart.module.scss'
 import { GqlResponse, StatisticsByYears } from '../../../../../@types/gqlResolvers'
 import { hostApi } from '../../helpers/host'
 import { SelectionMode } from './Home'
+import statisticsByYearsQuery from '../../queries/statisticsByYears'
 
 interface Props {
 	mainSectionName: string,
 	subSectionTitle: string,
-	selectionMode: SelectionMode,
-	selectedRegions: string[],
 	selectedRegion: string,
 }
 
@@ -26,94 +25,27 @@ type SingleSelectionResponse = GqlResponse<{ statisticsByYears: StatisticsByYear
 type MultipleSelectionResponse = GqlResponse<{ [key: string]: StatisticsByYears }>
 
 interface DataSource {
-	[key: string]: string | number,
+	value: string,
 	year: number,
 }
 
-const test = [
-	{ year: 2004, val: 30678.7 },
-	{ year: 2005, val: 30453.2 },
-]
-
 const DoughnutChart: FC<Props> = (props) => {
-	const {
-		mainSectionName, subSectionTitle, selectionMode, selectedRegions, selectedRegion,
-	} = props
+	const { mainSectionName, subSectionTitle, selectedRegion } = props
 
 	const [dataSource, setDataSource] = useState<DataSource[]>([])
 
 	useEffect(() => {
-		if (!mainSectionName || !subSectionTitle) return
+		if (!mainSectionName || !subSectionTitle || !selectedRegion) return
+		const queryOptions = {
+			selectedRegion, mainSectionName, subSectionTitle, startYear: 2000, endYear: 2005,
+		};
 
-		if (selectionMode === 'single') {
-			if (!selectedRegion) return
-			const query = `
-			query {
-				statisticsByYears (
-					regionName: "${selectedRegion}",
-					mainSectionName: "${mainSectionName}",
-					subSectionTitle: "${subSectionTitle}",
-					startYear: 2000,
-					endYear: 2005
-				) {
-					year,
-					value
-				}
-			}`
-
-			axios
-				.post<SingleSelectionResponse>(hostApi, { query })
-				.then((res) => {
-					const { statisticsByYears } = res.data.data
-					if (!statisticsByYears) return
-					const parsedStatisticsByYears = statisticsByYears
-						.map(({ year, value }) => ({ year, [selectedRegion]: value }))
-					setDataSource(parsedStatisticsByYears)
-					console.log({ statisticsByYears })
-				})
-		} else {
-			if (!selectedRegions.length) return
-			const query = `
-			query {
-				${selectedRegions.map((region, i) => `region${i}: statisticsByYears (
-					regionName: "${selectedRegion}",
-					mainSectionName: "${mainSectionName}",
-					subSectionTitle: "${subSectionTitle}",
-					startYear: 2000,
-					endYear: 2005
-				) {
-					year,
-					value
-				}`)}
-			}`
-
-			axios
-				.post<MultipleSelectionResponse>(hostApi, { query })
-				.then((res) => {
-					const data = res.data.data
-					console.log({ data })
-					if (!data) return
-					const newDataSource: DataSource[] = []
-					selectedRegions.forEach((region, regionIdx) => {
-						const regionsData = data[`region${regionIdx}`]
-						console.log({ regionsData })
-						regionsData.forEach(({ year, value }, yearValueIdx) => {
-							newDataSource[yearValueIdx] = {
-								...regionsData[yearValueIdx],
-								year,
-								[region]: value,
-							}
-						})
-					})
-					// debugger
-					setDataSource(newDataSource)
-				})
-		}
-	}, [selectedRegion, mainSectionName, subSectionTitle, selectionMode, selectedRegions])
-
-	useEffect(() => {
-		console.log({ dataSource })
-	}, [dataSource])
+		(async () => {
+			const statisticsByYears = await statisticsByYearsQuery(queryOptions)
+			if (!statisticsByYears) return
+			setDataSource(statisticsByYears)
+		})()
+	}, [selectedRegion, mainSectionName, subSectionTitle])
 
 	function legendClickHandler(e: any) {
 		const arg = e.target
@@ -131,23 +63,13 @@ const DoughnutChart: FC<Props> = (props) => {
 				dataSource={dataSource}
 				onLegendClick={legendClickHandler}
 			>
-				{selectionMode === 'single' && (
-					<Series argumentField="year" valueField={selectedRegion}>
-						<Label visible format="decimal">
-							<Connector visible />
-						</Label>
-					</Series>
-				)}
-				{selectionMode === 'multiple' && selectedRegions.map((region) => (
-					<Series argumentField="year" valueField={region}>
-						<Label visible format="decimal">
-							<Connector visible />
-						</Label>
-					</Series>
-				))}
+				<Series argumentField="year" valueField="value">
+					<Label visible format="decimal">
+						<Connector visible />
+					</Label>
+				</Series>
 				<Export enabled />
 				<Legend
-					// margin={0}
 					horizontalAlignment="center"
 					verticalAlignment="bottom"
 				/>

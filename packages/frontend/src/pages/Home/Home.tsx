@@ -15,17 +15,12 @@ interface SelectedSections {
 export type SelectionMode = 'multiple' | 'single'
 
 const Home = () => {
-	const [selectionMode, setSelectionMode] = useState<SelectionMode>('multiple')
 	const [selectedRegion, setSelectedRegion] = useState<SelectedRegion>('')
-	const [selectedRegions, setSelectedRegions] = useState<SelectedRegion[]>([])
 	const [selectedMainSectionName, setSelectedMainSectionName] = useState<string>('')
 	const [selectedSubSectionTitle, setSelectedSubSectionTitle] = useState<string>('')
 
 	const selectedRegionHandler = (newSelectedRegion: string) => {
 		setSelectedRegion(newSelectedRegion)
-	}
-	const selectedRegionsHandler = (newSelectedRegion: string) => {
-		setSelectedRegions([...selectedRegions, newSelectedRegion])
 	}
 	const selectedSectionsHandler = (
 		_selectedMainSectionName: string,
@@ -57,9 +52,8 @@ const Home = () => {
 					<VectorMap
 						selectedRegionHandler={selectedRegionHandler}
 						selectedRegion={selectedRegion}
-						selectedRegionsHandler={selectedRegionsHandler}
-						selectedRegions={selectedRegions}
-						selectionMode={selectionMode}
+						mainSectionName={selectedMainSectionName}
+						subSectionTitle={selectedSubSectionTitle}
 					/>
 				</div>
 			</Item>
@@ -68,8 +62,6 @@ const Home = () => {
 				<Location screen="md lg" row={1} col={0} />
 				<div className="content item">
 					<DoughnutChart
-						selectionMode={selectionMode}
-						selectedRegions={selectedRegions}
 						selectedRegion={selectedRegion}
 						mainSectionName={selectedMainSectionName}
 						subSectionTitle={selectedSubSectionTitle}
