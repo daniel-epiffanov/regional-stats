@@ -61,7 +61,8 @@
 		"camelcase": "warn",
 		"react/jsx-no-bind": "off",
 		"no-unused-expressions": "off",
-		"prefer-destructuring": "off"
+		"prefer-destructuring": "off",
+		"arrow-parens": "warn"
 	},
 	"settings": {
 		"import/resolver": {

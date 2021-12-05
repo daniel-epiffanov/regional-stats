@@ -12,38 +12,22 @@ import axios from 'axios'
 import styles from './styles/DoughnutChart.module.scss'
 import { GqlResponse, StatisticsByYears } from '../../../../../@types/gqlResolvers'
 import { hostApi } from '../../helpers/host'
+import { SelectionMode } from './Home'
 
 interface Props {
-	regionName: string,
 	mainSectionName: string,
 	subSectionTitle: string,
+	selectionMode: SelectionMode,
+	selectedRegions: string[],
+	selectedRegion: string,
 }
 
-type Response = GqlResponse<{ statisticsByYears: StatisticsByYears }>
-
-const populationByRegions = [{
-	region: 'Asia',
-	val: 4119626293,
-}, {
-	region: 'Africa',
-	val: 1012956064,
-}, {
-	region: 'Northern America',
-	val: 344124520,
-}, {
-	region: 'Latin America and the Caribbean',
-	val: 590946440,
-}, {
-	region: 'Europe',
-	val: 727082222,
-}, {
-	region: 'Oceania',
-	val: 35104756,
-}]
+type SingleSelectionResponse = GqlResponse<{ statisticsByYears: StatisticsByYears }>
+type MultipleSelectionResponse = GqlResponse<{ [key: string]: StatisticsByYears }>
 
 interface DataSource {
+	[key: string]: string | number,
 	year: number,
-	val: string,
 }
 
 const test = [
@@ -52,20 +36,21 @@ const test = [
 ]
 
 const DoughnutChart: FC<Props> = (props) => {
-	const { regionName, mainSectionName, subSectionTitle } = props
+	const {
+		mainSectionName, subSectionTitle, selectionMode, selectedRegions, selectedRegion,
+	} = props
 
 	const [dataSource, setDataSource] = useState<DataSource[]>([])
 
 	useEffect(() => {
-		console.log({ regionName })
-		console.log({ mainSectionName })
-		console.log({ subSectionTitle })
-		if (!regionName || !mainSectionName || !subSectionTitle) return
+		if (!mainSectionName || !subSectionTitle) return
 
-		const query = `
+		if (selectionMode === 'single') {
+			if (!selectedRegion) return
+			const query = `
 			query {
 				statisticsByYears (
-					regionName: "${regionName}",
+					regionName: "${selectedRegion}",
 					mainSectionName: "${mainSectionName}",
 					subSectionTitle: "${subSectionTitle}",
 					startYear: 2000,
@@ -75,30 +60,65 @@ const DoughnutChart: FC<Props> = (props) => {
 					value
 				}
 			}`
-		console.log({ query })
 
-		axios
-			.post<Response>(hostApi, { query })
-			.then((res) => {
-				const { statisticsByYears } = res.data.data
-				const parsedStatisticsByYears = statisticsByYears
-					.map(({ year, value }) => ({ year, val: value }))
-				setDataSource(parsedStatisticsByYears)
-				console.log({ statisticsByYears })
-			})
-	}, [regionName, mainSectionName, subSectionTitle])
+			axios
+				.post<SingleSelectionResponse>(hostApi, { query })
+				.then((res) => {
+					const { statisticsByYears } = res.data.data
+					if (!statisticsByYears) return
+					const parsedStatisticsByYears = statisticsByYears
+						.map(({ year, value }) => ({ year, [selectedRegion]: value }))
+					setDataSource(parsedStatisticsByYears)
+					console.log({ statisticsByYears })
+				})
+		} else {
+			if (!selectedRegions.length) return
+			const query = `
+			query {
+				${selectedRegions.map((region, i) => `region${i}: statisticsByYears (
+					regionName: "${selectedRegion}",
+					mainSectionName: "${mainSectionName}",
+					subSectionTitle: "${subSectionTitle}",
+					startYear: 2000,
+					endYear: 2005
+				) {
+					year,
+					value
+				}`)}
+			}`
+
+			axios
+				.post<MultipleSelectionResponse>(hostApi, { query })
+				.then((res) => {
+					const data = res.data.data
+					console.log({ data })
+					if (!data) return
+					const newDataSource: DataSource[] = []
+					selectedRegions.forEach((region, regionIdx) => {
+						const regionsData = data[`region${regionIdx}`]
+						console.log({ regionsData })
+						regionsData.forEach(({ year, value }, yearValueIdx) => {
+							newDataSource[yearValueIdx] = {
+								...regionsData[yearValueIdx],
+								year,
+								[region]: value,
+							}
+						})
+					})
+					// debugger
+					setDataSource(newDataSource)
+				})
+		}
+	}, [selectedRegion, mainSectionName, subSectionTitle, selectionMode, selectedRegions])
+
+	useEffect(() => {
+		console.log({ dataSource })
+	}, [dataSource])
 
 	function legendClickHandler(e: any) {
 		const arg = e.target
 		const item = e.component.getAllSeries()[0].getPointsByArg(arg)[0]
 		item.isVisible() ? item.hide() : item.show()
-		// item.setInvisibility(!item.isVisible())
-		// console.log({ e })
-		// console.log({ item })
-		// console.log({ arg })
-		// debugger
-
-		// this.toggleVisibility(item);
 	}
 
 	return (
@@ -111,11 +131,20 @@ const DoughnutChart: FC<Props> = (props) => {
 				dataSource={dataSource}
 				onLegendClick={legendClickHandler}
 			>
-				<Series argumentField="year">
-					<Label visible format="decimal">
-						<Connector visible />
-					</Label>
-				</Series>
+				{selectionMode === 'single' && (
+					<Series argumentField="year" valueField={selectedRegion}>
+						<Label visible format="decimal">
+							<Connector visible />
+						</Label>
+					</Series>
+				)}
+				{selectionMode === 'multiple' && selectedRegions.map((region) => (
+					<Series argumentField="year" valueField={region}>
+						<Label visible format="decimal">
+							<Connector visible />
+						</Label>
+					</Series>
+				))}
 				<Export enabled />
 				<Legend
 					// margin={0}

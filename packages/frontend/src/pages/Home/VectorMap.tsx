@@ -19,13 +19,17 @@ import { GqlResponse, MultipleRegionsCoords, RegionNames } from '../../../../../
 import styles from './styles/VectorMap.module.scss'
 import { SelectedRegion } from '../../@types/states'
 import { hostApi } from '../../helpers/host'
+import { SelectionMode } from './Home'
 
 // @ts-ignore
 // import MapToolbar from './MapToolbar'
 
 interface Props {
 	selectedRegionHandler: (newSelectedRegion: string) => void,
-	selectedRegion: SelectedRegion
+	selectedRegion: SelectedRegion,
+	selectedRegionsHandler: (newSelectedRegion: string) => void,
+	selectedRegions: SelectedRegion[],
+	selectionMode: SelectionMode
 }
 
 type Response = GqlResponse<{
@@ -38,22 +42,20 @@ const bounds = [71, 97, 45, 26]
 // console.log({ testData })
 
 const VectorMapRComponent: FC<Props> = (props) => {
-	const { selectedRegionHandler, selectedRegion } = props
-
-	const [sR, setSr] = useState<SelectedRegion>('')
-
+	const {
+		selectedRegionHandler, selectedRegion, selectedRegionsHandler, selectedRegions, selectionMode,
+	} = props
 	const [mapCoords, setMapCoords] = useState<MultipleRegionsCoords>([])
-	const [availableRgions, setAvailableRgions] = useState<RegionNames>(['Центральный федеральный округ'])
+	const [availableRegions, setAvailableRegions] = useState<RegionNames>([])
 
 	function customizeLayer(elements: any) {
 		// console.log({ elements })
 		elements.forEach((element: any) => {
 			const name_ru: string = element.attribute('name_ru')
-			if (name_ru === selectedRegion) element.selected(true)
-			// selectedRegion === name_ru && element.selected(true)
-			// element.selected(true)
+			if (selectionMode === 'single' && name_ru === selectedRegion) element.selected(true)
+			else if (selectedRegions.includes(name_ru)) element.selected(true)
 
-			if (availableRgions.includes(name_ru)) return
+			if (availableRegions.includes(name_ru)) return
 			element.applySettings({
 				opacity: 0.2,
 			})
@@ -87,7 +89,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 				console.log({ multipleRegionsCoords })
 				console.log({ regionNames })
 				setMapCoords(multipleRegionsCoords)
-				setAvailableRgions(regionNames)
+				setAvailableRegions(regionNames)
 			})
 	}, [])
 
@@ -104,29 +106,29 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	function onMapClick(e: MapClickEvent) {
 		if (!e.target) return
 		const name_ru = e.target.attribute('name_ru')
-		if (!availableRgions.includes(name_ru)) return
+		if (!availableRegions.includes(name_ru)) return
 
 		e.target.selected(!e.target.selected())
 
 		// selectedRegionHandler(name_ru)
 	}
+
 	const onSelectionChanged = (e: MapClickEvent) => {
 		if (!e.target) return
-		const name_ru = e.target.attribute('name_ru')
-		// debugger
-		selectedRegionHandler(name_ru)
-		// setSr(name_ru)
+		const name_ru: string = e.target.attribute('name_ru')
+		if (selectionMode === 'single') {
+			selectedRegionHandler(name_ru)
+			return
+		}
+
+		selectedRegionsHandler(name_ru)
 	}
 
 	return (
 		<div style={{ position: 'relative' }}>
 			<VectorMap
-				// id="vector-map"
-				// loadingIndicator={{ enabled: true }}
 				bounds={bounds}
-				// eslint-disable-next-line react/jsx-no-bind
 				onClick={onMapClick}
-				// maxZoomFactor={5}
 				onSelectionChanged={onSelectionChanged}
 			>
 				<Layer
@@ -136,7 +138,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 					}}
 					type="area"
 					customize={customizeLayer}
-					selectionMode="multiple"
+					selectionMode={selectionMode}
 				>
 					<Label enabled dataField="name_ru">
 						<Font size={16} />
