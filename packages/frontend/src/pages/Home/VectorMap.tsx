@@ -16,7 +16,7 @@ import VectorMap, {
 } from 'devextreme-react/vector-map'
 // @ts-ignore
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js'
-import { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
+import dxVectorMap, { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
 import { GqlResponse, MultipleRegionsCoords, RegionNames } from '../../../../../@types/gqlResolvers'
 import styles from './styles/VectorMap.module.scss'
 import { SelectedRegion } from '../../@types/states'
@@ -50,22 +50,50 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	const [mapCoords, setMapCoords] = useState<MultipleRegionsCoords>([])
 	const [availableRegions, setAvailableRegions] = useState<RegionNames>([])
 	const [year, setYear] = useState<number>(2007)
+	const [colorGroups, setColorGroups] = useState<number[]>([0, 5, 10])
+	const [component, setComponent] = useState<dxVectorMap>()
 
 	React.useEffect(() => {
 		console.log({ availableRegions })
 	}, [availableRegions])
+	// React.useEffect(() => {
+	// 	if (!availableRegions || !mainSectionName || !subSectionTitle) return
 
-	// const vectorMapRef = useRef(null)
+	// 	availableRegions
+	// 	const statisticsByYears = await statisticsByYearsQuery(queryOptions)
+	// 	if (!statisticsByYears) return
+	// 	const value = parseFloat(statisticsByYears[0].value)
+	// }, [availableRegions, mainSectionName, subSectionTitle])
 
-	// useEffect(() => {
-	// 	console.log({ selectedRegion })
-	// 	console.log({ mainSectionName })
-	// 	console.log({ subSectionTitle })
-	// }, [selectedRegion, mainSectionName, subSectionTitle])
+	const onInitialized = (e: {
+		component?: dxVectorMap | undefined;
+		element?: HTMLElement | undefined;
+	}) => {
+		if (e.component) setComponent(e.component)
+	}
 
-	function customizeLayer(elements: any) {
-		// console.log({ elements })
-		elements.forEach((element: any, i: number) => {
+	useEffect(() => {
+		if (!mainSectionName || !subSectionTitle || !component) return
+
+		const elements = component.getLayers()[0].getElements()
+
+		const values: number[] = []
+
+		elements.forEach((element) => {
+			const name_ru = element.attribute('name_ru')
+			if (availableRegions.includes(name_ru)) values.push(element.attribute('value'))
+		})
+		if (values.length === 2) values.push(values[1] / 2)
+		const sortedValues = values.sort()
+		setColorGroups(sortedValues)
+		console.log({ sortedValues })
+	}, [mainSectionName, subSectionTitle])
+
+	async function customizeLayer(elements: any) {
+		// const values: number[] = []
+
+		// await Promise.all(
+		elements.map(async (element: any, i: number) => {
 			const name_ru: string = element.attribute('name_ru')
 			if (name_ru === selectedRegion) element.selected(true)
 
@@ -77,18 +105,18 @@ const VectorMapRComponent: FC<Props> = (props) => {
 				if (!mainSectionName || !subSectionTitle) return
 
 				const queryOptions = {
-					selectedRegion: name_ru, mainSectionName, subSectionTitle, startYear: year, endYear: year,
-				};
-				(async () => {
-					element.attribute('value', i * 2)
-					const statisticsByYears = await statisticsByYearsQuery(queryOptions)
-					if (!statisticsByYears) return
-					const value = statisticsByYears[0].value
-					console.log({ value })
-					element.attribute('value', value)
-					// if (!statisticsByYears) return
-					// setDataSource(statisticsByYears)
-				})()
+					selectedRegion: name_ru,
+					mainSectionName,
+					subSectionTitle,
+					startYear: year,
+					endYear: year,
+				}
+				element.attribute('value', i * 2)
+				const statisticsByYears = await statisticsByYearsQuery(queryOptions)
+				if (!statisticsByYears) return
+				const value = parseFloat(statisticsByYears[0].value)
+				element.attribute('value', value)
+				// values.push(value)
 				return
 			}
 
@@ -96,6 +124,10 @@ const VectorMapRComponent: FC<Props> = (props) => {
 				opacity: 0.2,
 			})
 		})
+		// )
+
+		// setColorGroups(values.sort())
+		// console.log({ values })
 	}
 
 	React.useEffect(() => {
@@ -149,7 +181,12 @@ const VectorMapRComponent: FC<Props> = (props) => {
 		selectedRegionHandler(name_ru)
 	}
 
-	const colorGroups = [0, 200, 400, 600, 800, 900, 1000]
+	// const colorGroups = [0, 5, 10]
+
+	const customizeText = (args: any) => {
+		console.log()
+		return 'yo'
+	}
 
 	return (
 		<div style={{ position: 'relative' }}>
@@ -157,6 +194,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 				bounds={bounds}
 				onClick={onMapClick}
 				onSelectionChanged={onSelectionChanged}
+				onInitialized={onInitialized}
 			// ref={vectorMapRef}
 			>
 				<Layer
@@ -170,7 +208,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 					name="regions"
 					colorGroupingField="value"
 					colorGroups={colorGroups}
-					palette="Violet"
+				// palette="Violet"
 				>
 					<Label enabled dataField="name_ru">
 						<Font size={16} />
@@ -185,9 +223,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 					<Font color="#fff" />
 				</Tooltip>
 
-				<Legend
-					customizeText="yo"
-				>
+				<Legend customizeText={customizeText}>
 					<Source layer="regions" grouping="color" />
 				</Legend>
 
