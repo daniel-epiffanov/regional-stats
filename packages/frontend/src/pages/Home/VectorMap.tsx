@@ -77,13 +77,16 @@ const VectorMapRComponent: FC<Props> = (props) => {
 
 		const elements = component.getLayers()[0].getElements()
 
-		const values: number[] = []
+		let values: number[] = []
 
 		elements.forEach((element) => {
 			const name_ru = element.attribute('name_ru')
 			if (availableRegions.includes(name_ru)) values.push(element.attribute('value'))
 		})
 		if (values.length === 2) values.push(values[1] / 2)
+		if (values.length > 5) {
+			values = [values[0], values[values.length - 1] / 2, values[values.length - 1]]
+		}
 		const sortedValues = values.sort()
 		setColorGroups(sortedValues)
 		console.log({ sortedValues })
@@ -131,9 +134,11 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	}
 
 	React.useEffect(() => {
+		// federalDistrict
+		// region
 		const query = `
 			query {
-				multipleRegionsCoords(type: "federalDistrict") {
+				multipleRegionsCoords(type: "region") {
 					type,
 					geometry {
 						type,
