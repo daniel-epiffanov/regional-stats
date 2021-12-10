@@ -1,5 +1,5 @@
-import { MainSectionNames, ResolverFnAsync } from '../../../../@types/gqlResolvers'
-import { MainSection } from '../../../../@types/statistics'
+import { MainSectionNames, ResolverFnAsync } from '../../../../sharedTypes/gqlResolvers'
+import { MainSection } from '../../../../sharedTypes/statistics'
 import statisticsModel from '../mongooseModels/statistics'
 
 const mainSectionNames: ResolverFnAsync<MainSectionNames> = async () => {

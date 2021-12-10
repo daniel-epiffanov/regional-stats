@@ -1,4 +1,4 @@
-import { ResolverFnAsync, Years } from '../../../../@types/gqlResolvers.d'
+import { ResolverFnAsync, Years } from '../../../../sharedTypes/gqlResolvers.d'
 import statisticsModel from '../mongooseModels/statistics'
 
 const years: ResolverFnAsync<Years> = async (parent, args, ctx) => {

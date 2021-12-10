@@ -17,9 +17,9 @@ import VectorMap, {
 // @ts-ignore
 import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js'
 import dxVectorMap, { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
-import { GqlResponse, MultipleRegionsCoords, RegionNames } from '../../../../../@types/gqlResolvers'
+import { GqlResponse, MultipleRegionsCoords, RegionNames } from '../../../../../sharedTypes/gqlResolvers'
 import styles from './styles/VectorMap.module.scss'
-import { SelectedRegion } from '../../@types/states'
+import { SelectedRegion } from '../../sharedTypes/states'
 import { hostApi } from '../../helpers/host'
 import { SelectionMode } from './Home'
 import statisticsByYearsQuery from '../../queries/statisticsByYears'

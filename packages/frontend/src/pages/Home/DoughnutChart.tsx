@@ -10,7 +10,7 @@ import PieChart, {
 } from 'devextreme-react/pie-chart'
 import axios from 'axios'
 import styles from './styles/DoughnutChart.module.scss'
-import { GqlResponse, StatisticsByYears } from '../../../../../@types/gqlResolvers'
+import { GqlResponse, StatisticsByYears } from '../../../../../sharedTypes/gqlResolvers'
 import { hostApi } from '../../helpers/host'
 import { SelectionMode } from './Home'
 import statisticsByYearsQuery from '../../queries/statisticsByYears'

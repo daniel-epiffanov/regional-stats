@@ -6,7 +6,7 @@ import {
 	Item, ItemClickEvent, ItemSelectionChangedEvent, SelectionChangedEvent,
 } from 'devextreme/ui/tree_view'
 import styles from './styles/SectionsTree.module.scss'
-import { GqlResponse, MainSectionNames } from '../../../../../@types/gqlResolvers'
+import { GqlResponse, MainSectionNames } from '../../../../../sharedTypes/gqlResolvers'
 import { hostApi } from '../../helpers/host'
 
 interface Props {

@@ -2,7 +2,7 @@ import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
 import { useState, useEffect } from 'react'
-import { SelectedRegion } from '../../@types/states'
+import { SelectedRegion } from '../../sharedTypes/states'
 import DoughnutChart from './DoughnutChart'
 import SectionsTree from './SectionsTree'
 import styles from './styles/Home.module.scss'

@@ -1,5 +1,5 @@
 import { MultipleRegionsCoordsModel } from './mongoModels';
-import { YearValue } from './statistics.d';
+import { YearValue } from './statistics';
 export type ResolverFn<ReturnValue> = (parent: any, args: any, ctx: any) => ReturnValue
 export type ResolverFnAsync<ReturnValue> = (parent: any, args: any, ctx: any) => Promise<ReturnValue>
 

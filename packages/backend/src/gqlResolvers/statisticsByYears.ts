@@ -1,5 +1,5 @@
-import { ResolverFnAsync, StatisticsByYears } from '../../../../@types/gqlResolvers'
-import { YearValue } from '../../../../@types/statistics'
+import { ResolverFnAsync, StatisticsByYears } from '../../../../sharedTypes/gqlResolvers'
+import { YearValue } from '../../../../sharedTypes/statistics'
 import statisticsModel from '../mongooseModels/statistics'
 
 if (process.env.NODE_ENV !== 'production') {

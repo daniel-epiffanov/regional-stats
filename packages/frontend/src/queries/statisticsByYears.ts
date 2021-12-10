@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { StatisticsByYears, GqlResponse } from '../../../../@types/gqlResolvers.d'
+import { StatisticsByYears, GqlResponse } from '../../../../sharedTypes/gqlResolvers'
 
 import { hostApi } from '../helpers/host'
 
