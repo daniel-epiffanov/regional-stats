@@ -83,11 +83,22 @@ const VectorMapRComponent: FC<Props> = (props) => {
 			const name_ru = element.attribute('name_ru')
 			if (availableRegions.includes(name_ru)) values.push(element.attribute('value'))
 		})
+
+		values = values.sort((a, b) => a - b)
+
+		// debugger
 		if (values.length === 2) values.push(values[1] / 2)
 		if (values.length > 5) {
-			values = [values[0], values[values.length - 1] / 2, values[values.length - 1]]
+			values = [
+				values[0],
+				Math.round(values[values.length - 1] / 2),
+				Math.round(values[values.length - 1] / 3),
+				Math.round(values[values.length - 1] / 4),
+				Math.round(values[values.length - 1] / 5),
+				values[values.length - 1],
+			]
 		}
-		const sortedValues = values.sort()
+		const sortedValues = values.sort((a, b) => a - b)
 		setColorGroups(sortedValues)
 		console.log({ sortedValues })
 	}, [mainSectionName, subSectionTitle])
@@ -103,7 +114,6 @@ const VectorMapRComponent: FC<Props> = (props) => {
 			if (availableRegions.includes(name_ru)) {
 				// element.attribute('population', i * 5)
 				// console.log({ vectorMapRef })
-				// debugger
 
 				if (!mainSectionName || !subSectionTitle) return
 
@@ -138,7 +148,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 		// region
 		const query = `
 			query {
-				multipleRegionsCoords(type: "federalDistrict") {
+				multipleRegionsCoords(type: "region") {
 					type,
 					geometry {
 						type,
