@@ -4,12 +4,10 @@ export interface YearValue {
 }
 
 export interface SubSection {
+	name: string,
 	orderNumber: string,
-	title: string,
 	children: SubSection[],
-	yearValues: {
-		type: YearValue[],
-	},
+	yearValues: YearValue[],
 }
 
 export interface MainSection {

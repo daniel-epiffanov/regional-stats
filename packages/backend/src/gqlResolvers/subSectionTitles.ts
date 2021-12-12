@@ -1,4 +1,4 @@
-import { ResolverFnAsync, SubSectionTitles } from '../../../../sharedTypes/gqlResolvers'
+import { ResolverFnAsync, SubSectionTitles } from '../../../../sharedTypes/gqlQueries'
 import statisticsModel from '../mongooseModels/statistics'
 
 if (process.env.NODE_ENV !== 'production') {

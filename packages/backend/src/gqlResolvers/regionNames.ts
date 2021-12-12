@@ -1,4 +1,4 @@
-import { RegionNames, ResolverFnAsync } from '../../../../sharedTypes/gqlResolvers'
+import { RegionNames, ResolverFnAsync } from '../../../../sharedTypes/gqlQueries'
 import statisticsModel from '../mongooseModels/statistics'
 
 const regionNames: ResolverFnAsync<RegionNames> = async () => {

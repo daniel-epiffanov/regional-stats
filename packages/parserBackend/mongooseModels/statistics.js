@@ -1,14 +1,11 @@
-import { Schema, model } from 'mongoose'
-import {
-	MainSection, Statistics, SubSection, YearValue,
-} from '../../../../sharedTypes/statistics'
+const { Schema, model, models } = require('mongoose')
 
-const YearValueSchema = new Schema < YearValue > ({
+const YearValueSchema = new Schema({
 	year: Number,
 	value: String,
 })
 
-const SubSectionSchema = new Schema < SubSection > ()
+const SubSectionSchema = new Schema();
 SubSectionSchema.add({
 	orderNumber: String,
 	title: String,
@@ -18,13 +15,13 @@ SubSectionSchema.add({
 	},
 })
 
-const MainSectionSchema = new Schema < MainSection > ({
+const MainSectionSchema = new Schema({
 	name: String,
 	fullFilename: String,
 	subSections: [SubSectionSchema],
 })
 
-const StatisticsSchema = new Schema < Statistics > ({
+const StatisticsSchema = new Schema({
 	regionName: String,
 	mainSections: [MainSectionSchema],
 })

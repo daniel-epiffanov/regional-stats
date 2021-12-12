@@ -1,4 +1,4 @@
-import { MultipleRegionsCoords, ResolverFnAsync } from '../../../../sharedTypes/gqlResolvers'
+import { MultipleRegionsCoords, ResolverFnAsync } from '../../../../sharedTypes/gqlQueries'
 import regionsCoords from '../mongooseModels/regionsCoords'
 
 const multipleRegionsCoords: ResolverFnAsync<MultipleRegionsCoords> = async (

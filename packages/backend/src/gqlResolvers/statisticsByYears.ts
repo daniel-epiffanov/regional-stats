@@ -1,4 +1,4 @@
-import { ResolverFnAsync, StatisticsByYears } from '../../../../sharedTypes/gqlResolvers'
+import { ResolverFnAsync, StatisticsByYears } from '../../../../sharedTypes/gqlQueries'
 import { YearValue } from '../../../../sharedTypes/statistics'
 import statisticsModel from '../mongooseModels/statistics'
 

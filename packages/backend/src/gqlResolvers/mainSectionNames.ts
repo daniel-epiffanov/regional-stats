@@ -1,4 +1,4 @@
-import { MainSectionNames, ResolverFnAsync } from '../../../../sharedTypes/gqlResolvers'
+import { MainSectionNames, ResolverFnAsync } from '../../../../sharedTypes/gqlQueries'
 import { MainSection } from '../../../../sharedTypes/statistics'
 import statisticsModel from '../mongooseModels/statistics'
 
