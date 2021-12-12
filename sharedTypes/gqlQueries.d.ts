@@ -1,5 +1,5 @@
-import Coordinates from './coordinates';
-import { YearValue } from './statistics';
+import Coordinates from './regionCoordinates';
+import { YearValue } from './regionStatistics';
 
 export type YearsQuery = number[]
 export type RegionNamesQuery = string[]

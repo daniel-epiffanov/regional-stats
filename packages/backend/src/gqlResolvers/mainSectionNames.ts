@@ -1,5 +1,5 @@
 import { MainSectionNamesQuery } from '../../../../sharedTypes/gqlQueries'
-import { MainSection } from '../../../../sharedTypes/statistics'
+import { MainSection } from '../../../../sharedTypes/regionStatistics'
 import statisticsModel from '../mongooseModels/statistics'
 import { ResolverFnAsync } from './@types/ResolverFn'
 

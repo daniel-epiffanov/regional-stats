@@ -1,7 +1,7 @@
 import { Schema, model, models } from 'mongoose'
-import { Coordintates } from '../../../../sharedTypes/coordinates'
+import RegionCoordinates from '../../../../sharedTypes/regionCoordinates'
 
-const regionsCoordsSchema = new Schema<Coordintates>({
+const regionsCoordsSchema = new Schema<RegionCoordinates>({
 	type: {
 		type: String,
 		required: true,

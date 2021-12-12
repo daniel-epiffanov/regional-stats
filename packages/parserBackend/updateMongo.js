@@ -25,11 +25,13 @@ const updateMongo = async () => {
 		const newStatistics = {
 			mainSections: [
 				...stat.mainSections.map(ms => {
+					console.log({ ms })
 					return {
 						...ms,
 						subSections: [
 							...ms.subSections.map(ss => ({
-								orderNumber: ss.orderNumber,
+								orderNumber: 9,
+								yo: 1,
 								name: 'yo',
 								children: ss.children,
 								yearValues: ss.yearValues,
@@ -40,7 +42,7 @@ const updateMongo = async () => {
 			]
 		}
 
-		console.log(JSON.stringify(newStatistics))
+		// console.log(JSON.stringify(newStatistics))
 		// console.log(newStatistics.mainSections[0].subSections)
 
 		const filter = { regionName: "Российская Федерация" };
