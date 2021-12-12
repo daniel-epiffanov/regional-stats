@@ -9,11 +9,9 @@ const SubSectionSchema = new Schema();
 SubSectionSchema.add({
 	orderNumber: String,
 	name: String,
-	yo: Number,
+	title: String,
 	children: [SubSectionSchema],
-	yearValues: {
-		type: [YearValueSchema],
-	},
+	yearValues: [YearValueSchema]
 })
 
 const MainSectionSchema = new Schema({

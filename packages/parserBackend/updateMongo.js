@@ -17,44 +17,46 @@ const StatisticsModel = require('./mongooseModels/statistics')
 
 const updateMongo = async () => {
 	console.log('updating ...')
-	const statistics = await StatisticsModel.find({ regionName: "Российская Федерация" })
+	const statistics = await StatisticsModel.find({ regionName: "Центральный федеральный округ" })
 	// const years = await StatisticsModel.distinct('regionName')
 	console.log({ statistics })
-	statistics.forEach(async (stat) => {
+	statistics.forEach(async (stat, i) => {
+		console.log({ stat })
 
-		const newStatistics = {
-			...stat,
-			mainSections: [
-				...stat.mainSections.map(ms => {
-					// console.log({ ms })
-					return {
-						...ms,
-						subSections: [
-							...ms.subSections.map(ss => {
-								// console.log({ ss })
-								return {
-									...ss,
-									yo: 1,
-									name: 'yo',
-									title: 'wow'
-								}
-							})
-						]
-					}
+		const newStat = {
+			// ...stat.toObject(),
+			mainSections: stat.mainSections.map((ms, msIdx) => {
+				// console.log({ ms })
+				return ({
+					...ms.toObject(),
+					subSections: ms.subSections.map((ss, ssIdx) => {
+						console.log(ss.title)
+						return ({
+							...ss.toObject(),
+							name: ss.title,
+							title: ss.title || statistics[i + 1].mainSections[msIdx].subSections[ssIdx].title
+						})
+					})
 				})
-			]
+			})
 		}
 
+		const newStatistics = new StatisticsModel(newStat)
+
+		console.log({ newStat })
 		console.log({ newStatistics })
+		console.log(newStatistics.mainSections[0])
 
 		// console.log(JSON.stringify(newStatistics))
 		// console.log(newStatistics.mainSections[0].subSections)
 
-		const filter = { regionName: "Российская Федерация" };
-		const update = newStatistics
+		const filter = { regionName: stat.regionName };
+		const update = newStat
 
-		await StatisticsModel.findOneAndReplace(filter, update)
+		await StatisticsModel.findOneAndUpdate(filter, update)
+		// newStatistics.save()
 		// console.log(statistics.mainSections[0].subSections)
+
 	})
 
 
