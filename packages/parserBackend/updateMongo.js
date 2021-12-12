@@ -23,24 +23,29 @@ const updateMongo = async () => {
 	statistics.forEach(async (stat) => {
 
 		const newStatistics = {
+			...stat,
 			mainSections: [
 				...stat.mainSections.map(ms => {
-					console.log({ ms })
+					// console.log({ ms })
 					return {
 						...ms,
 						subSections: [
-							...ms.subSections.map(ss => ({
-								orderNumber: 9,
-								yo: 1,
-								name: 'yo',
-								children: ss.children,
-								yearValues: ss.yearValues,
-							}))
+							...ms.subSections.map(ss => {
+								// console.log({ ss })
+								return {
+									...ss,
+									yo: 1,
+									name: 'yo',
+									title: 'wow'
+								}
+							})
 						]
 					}
 				})
 			]
 		}
+
+		console.log({ newStatistics })
 
 		// console.log(JSON.stringify(newStatistics))
 		// console.log(newStatistics.mainSections[0].subSections)
@@ -48,7 +53,7 @@ const updateMongo = async () => {
 		const filter = { regionName: "Российская Федерация" };
 		const update = newStatistics
 
-		const statistics = await StatisticsModel.findOneAndUpdate(filter, update)
+		await StatisticsModel.findOneAndReplace(filter, update)
 		// console.log(statistics.mainSections[0].subSections)
 	})
 
