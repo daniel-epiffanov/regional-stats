@@ -8,7 +8,7 @@ const YearValueSchema = new Schema({
 const SubSectionSchema = new Schema();
 SubSectionSchema.add({
 	orderNumber: String,
-	title: String,
+	name: String,
 	children: [SubSectionSchema],
 	yearValues: {
 		type: [YearValueSchema],

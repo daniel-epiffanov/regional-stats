@@ -1,4 +1,4 @@
-export interface Coords {
+export default interface Coordintates {
 	type: string,
 	geometry: {
 		type: 'Polygon',

@@ -10,7 +10,7 @@ export default gql`
 		years(regionName: String): [Int],
 		regionNames(regionName: String): [String],
 		mainSectionNames: [String],
-		subSectionTitles(mainSectionName: String): [String],
+		subSectionNames(mainSectionName: String): [String],
 		statisticsByYears(regionName: String, mainSectionName: String, subSectionTitle: String, startYear: Int, endYear: Int): [YearValue],
 		multipleRegionsCoords(type: String): [regionCoords]
 	}

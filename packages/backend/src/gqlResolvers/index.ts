@@ -2,7 +2,7 @@
 import years from './years'
 import regionNames from './regionNames'
 import mainSectionNames from './mainSectionNames'
-import subSectionTitles from './subSectionTitles'
+import subSectionNames from './subSectionTitles'
 import statisticsByYears from './statisticsByYears'
 import multipleRegionsCoords from './multipleRegionsCoords'
 
@@ -11,7 +11,7 @@ const gqlResolvers = {
 		years,
 		regionNames,
 		mainSectionNames,
-		subSectionTitles,
+		subSectionNames,
 		statisticsByYears,
 		multipleRegionsCoords,
 	},
