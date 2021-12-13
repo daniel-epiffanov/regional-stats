@@ -1,5 +1,5 @@
 import { StatisticsByYearsQuery } from '../../../../sharedTypes/gqlQueries'
-import { YearValue } from '../../../../sharedTypes/regionStatistics'
+import { YearValue } from '../../../../sharedTypes/mongoModels'
 import statisticsModel from '../mongooseModels/statistics'
 import { ResolverFnAsync } from './@types/ResolverFn'
 
