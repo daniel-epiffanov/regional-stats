@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
 import {
 	MainSection, Statistics, SubSection, YearValue,
-} from '../../../../sharedTypes/regionStatistics'
+} from '../../../../sharedTypes/mongoModels'
 
 const YearValueSchema = new Schema<YearValue>({
 	year: Number,

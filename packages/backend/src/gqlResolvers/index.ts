@@ -4,7 +4,7 @@ import regionNames from './regionNames'
 import mainSectionNames from './mainSectionNames'
 import subSectionNames from './subSectionTitles'
 import statisticsByYears from './statisticsByYears'
-import multipleRegionsCoords from './multipleRegionsCoords'
+import coordsByRegionType from './coordsByRegionType'
 
 const gqlResolvers = {
 	Query: {
@@ -13,7 +13,7 @@ const gqlResolvers = {
 		mainSectionNames,
 		subSectionNames,
 		statisticsByYears,
-		multipleRegionsCoords,
+		coordsByRegionType,
 	},
 }
 

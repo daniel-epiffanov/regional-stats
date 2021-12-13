@@ -1,3 +1,22 @@
+// RegionsCoords schema
+
+export interface RegionCoords {
+	type: string,
+	geometry: {
+		type: 'Polygon' | 'MultiPolygon',
+		coordinates: string[][][]
+	},
+	properties: {
+		name_ru: string,
+		name_en: string,
+		alt_names: string[]
+	}
+}
+
+
+
+// statistics schema
+
 export interface YearValue {
 	year: number,
 	value: string,

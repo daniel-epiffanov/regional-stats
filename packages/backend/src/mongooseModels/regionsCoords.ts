@@ -1,7 +1,7 @@
 import { Schema, model, models } from 'mongoose'
-import RegionCoordinates from '../../../../sharedTypes/regionCoordinates'
+import { RegionCoords } from '../../../../sharedTypes/mongoModels'
 
-const regionsCoordsSchema = new Schema<RegionCoordinates>({
+const regionsCoordsSchema = new Schema<RegionCoords>({
 	type: {
 		type: String,
 		required: true,
@@ -10,6 +10,7 @@ const regionsCoordsSchema = new Schema<RegionCoordinates>({
 	geometry: {
 		type: {
 			type: String,
+			enum: ['Polygon', 'MultiPolygon'],
 		},
 		coordinates: [[[Number]]],
 	},
@@ -26,4 +27,4 @@ const regionsCoordsSchema = new Schema<RegionCoordinates>({
 	},
 })
 
-export default models.MapCoords || model('MapCoords', regionsCoordsSchema)
+export default models.MapCoords || model('RegionsCoords', regionsCoordsSchema)

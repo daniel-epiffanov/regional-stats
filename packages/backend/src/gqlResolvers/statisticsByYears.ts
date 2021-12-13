@@ -11,7 +11,7 @@ const statisticsByYears: ResolverFnAsync<StatisticsByYearsQuery> = async (
 	parent: any, args: any,
 ) => {
 	const {
-		regionName, mainSectionName, subSectionTitle, startYear, endYear,
+		regionName, mainSectionName, subSectionName, startYear, endYear,
 	} = args
 	const defaultRegion = process.env.DEFAULT_REGION
 	// console.log({ defaultRegion })
@@ -41,7 +41,7 @@ const statisticsByYears: ResolverFnAsync<StatisticsByYearsQuery> = async (
 										$filter: {
 											input: '$$mainSection.subSections',
 											as: 'subSection',
-											cond: { $eq: ['$$subSection.title', subSectionTitle] },
+											cond: { $eq: ['$$subSection.title', subSectionName] },
 										},
 									},
 									as: 'subSection',
@@ -88,8 +88,6 @@ const statisticsByYears: ResolverFnAsync<StatisticsByYearsQuery> = async (
 		},
 	])
 
-	// console.log({ mongoRes })
-	// console.log(mongoRes[0].yearValues)
 	return mongoRes[0].yearValues
 }
 
