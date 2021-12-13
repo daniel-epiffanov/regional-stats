@@ -2,9 +2,8 @@ import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
 import { useState, useEffect } from 'react'
-import { SelectedRegion } from '../../sharedTypes/states'
-import DoughnutChart from './DoughnutChart'
-import SectionsTree from './SectionsTree'
+// import DoughnutChart from './DoughnutChart'
+// import SectionsTree from './SectionsTree'
 import styles from './styles/Home.module.scss'
 import VectorMap from './VectorMap'
 
@@ -15,7 +14,7 @@ interface SelectedSections {
 export type SelectionMode = 'multiple' | 'single'
 
 const Home = () => {
-	const [selectedRegion, setSelectedRegion] = useState<SelectedRegion>('')
+	const [selectedRegion, setSelectedRegion] = useState<string>('')
 	const [selectedMainSectionName, setSelectedMainSectionName] = useState<string>('')
 	const [selectedSubSectionTitle, setSelectedSubSectionTitle] = useState<string>('')
 

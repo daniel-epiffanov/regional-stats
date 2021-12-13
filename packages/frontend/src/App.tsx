@@ -6,7 +6,7 @@ import {
 	Routes,
 } from 'react-router-dom'
 import Home from './pages/Home/Home'
-import CustomApolloProvider from './providers/CustomApolloProvider'
+import CustomApolloProvider from './contexts/CustomApolloProvider'
 
 themes.current(window.localStorage.getItem('dx-theme') || 'material.blue.light')
 

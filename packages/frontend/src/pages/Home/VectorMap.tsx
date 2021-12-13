@@ -14,15 +14,12 @@ import VectorMap, {
 	Legend,
 	Source,
 } from 'devextreme-react/vector-map'
-// @ts-ignore
-import * as mapsData from 'devextreme/dist/js/vectormap-data/world.js'
 import dxVectorMap, { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
-import { GqlResponse, MultipleRegionsCoords, RegionNames } from '../../../../../sharedTypes/gqlResolvers'
 import styles from './styles/VectorMap.module.scss'
-import { SelectedRegion } from '../../sharedTypes/states'
+// import { SelectedRegion } from '../../sharedTypes/states'
 import { hostApi } from '../../helpers/host'
 import { SelectionMode } from './Home'
-import statisticsByYearsQuery from '../../queries/statisticsByYears'
+// import statisticsByYearsQuery from '../../queries/statisticsByYears'
 import useVectorMapQuery from './queryHooks/useVectorMapQuery'
 
 // @ts-ignore
@@ -30,15 +27,15 @@ import useVectorMapQuery from './queryHooks/useVectorMapQuery'
 
 interface Props {
 	selectedRegionHandler: (newSelectedRegion: string) => void,
-	selectedRegion: SelectedRegion,
+	selectedRegion: string, // ***
 	mainSectionName: string,
 	subSectionTitle: string,
 }
 
-type Response = GqlResponse<{
-	multipleRegionsCoords: MultipleRegionsCoords,
-	regionNames: RegionNames
-}>
+// type Response = GqlResponse<{
+// 	multipleRegionsCoords: MultipleRegionsCoords,
+// 	regionNames: RegionNames
+// }>
 
 const bounds = [71, 97, 45, 26]
 
@@ -50,7 +47,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	} = props
 
 	const { loading, error, data } = useVectorMapQuery()
-	const multipleRegionsCoords = data?.multipleRegionsCoords || []
+	const coordsByRegionType = data?.coordsByRegionType || []
 	const regionNames = data?.regionNames || []
 
 	const [year, setYear] = useState<number>(2007)
@@ -78,7 +75,6 @@ const VectorMapRComponent: FC<Props> = (props) => {
 
 		values = values.sort((a, b) => a - b)
 
-		// debugger
 		if (values.length === 2) values.push(values[1] / 2)
 		if (values.length > 5) {
 			values = [
@@ -111,11 +107,11 @@ const VectorMapRComponent: FC<Props> = (props) => {
 					endYear: year,
 				}
 				element.attribute('value', i * 2)
-				const statisticsByYears = await statisticsByYearsQuery(queryOptions)
-				if (!statisticsByYears) return
-				const value = parseFloat(statisticsByYears[0].value)
-				element.attribute('value', value)
-				return
+				// const statisticsByYears = await statisticsByYearsQuery(queryOptions)
+				// if (!statisticsByYears) return
+				// const value = parseFloat(statisticsByYears[0].value)
+				// element.attribute('value', value)
+				// return
 			}
 
 			element.applySettings({
@@ -153,14 +149,16 @@ const VectorMapRComponent: FC<Props> = (props) => {
 		return 'yo'
 	}
 
+	if (loading) return <p>Loading...</p>
+	if (error) return <p>Error :(</p>
+
 	return (
 		<div style={{ position: 'relative' }}>
-			<VectorMap
+			{/* <VectorMap
 				bounds={bounds}
 				onClick={onMapClick}
 				onSelectionChanged={onSelectionChanged}
 				onInitialized={onInitialized}
-			// ref={vectorMapRef}
 			>
 				<Layer
 					dataSource={{
@@ -173,7 +171,6 @@ const VectorMapRComponent: FC<Props> = (props) => {
 					name="regions"
 					colorGroupingField="value"
 					colorGroups={colorGroups}
-				// palette="Violet"
 				>
 					<Label enabled dataField="name_ru">
 						<Font size={16} />
@@ -192,7 +189,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 					<Source layer="regions" grouping="color" />
 				</Legend>
 
-			</VectorMap>
+			</VectorMap> */}
 		</div>
 	)
 }

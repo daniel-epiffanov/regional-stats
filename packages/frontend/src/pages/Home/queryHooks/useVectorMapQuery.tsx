@@ -5,16 +5,16 @@ import {
 	useQuery,
 	gql,
 } from '@apollo/client'
-import { RegionNamesQuery, MultipleRegionsCoords } from '../../../../../../sharedTypes/gqlQueries'
+import { RegionNamesQuery, CoordsByRegionTypeQuery } from '../../../../../../sharedTypes/gqlQueries'
 
 type QueryResponse = {
-	multipleRegionsCoords: MultipleRegionsCoords,
+	coordsByRegionType: CoordsByRegionTypeQuery,
 	regionNames: RegionNamesQuery
 }
 
 const QUERY = gql`
 query {
-	multipleRegionsCoords(type: "region") {
+	coordsByRegionType(type: "region") {
 		type,
 		geometry {
 			type,
@@ -33,6 +33,8 @@ const useVectorMapQuery = () => {
 	const methods = useQuery<QueryResponse>(QUERY)
 
 	const { loading, error, data } = methods
+
+	console.log({ data })
 
 	return methods
 }
