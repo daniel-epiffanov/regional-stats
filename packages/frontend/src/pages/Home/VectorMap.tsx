@@ -23,6 +23,7 @@ import { SelectedRegion } from '../../sharedTypes/states'
 import { hostApi } from '../../helpers/host'
 import { SelectionMode } from './Home'
 import statisticsByYearsQuery from '../../queries/statisticsByYears'
+import useVectorMapQuery from './queryHooks/useVectorMapQuery'
 
 // @ts-ignore
 // import MapToolbar from './MapToolbar'
@@ -47,23 +48,14 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	const {
 		selectedRegionHandler, selectedRegion, mainSectionName, subSectionTitle,
 	} = props
-	const [mapCoords, setMapCoords] = useState<MultipleRegionsCoords>([])
-	const [availableRegions, setAvailableRegions] = useState<RegionNames>([])
+
+	const { loading, error, data } = useVectorMapQuery()
+	const multipleRegionsCoords = data?.multipleRegionsCoords || []
+	const regionNames = data?.regionNames || []
+
 	const [year, setYear] = useState<number>(2007)
 	const [colorGroups, setColorGroups] = useState<number[]>([0, 5, 10])
 	const [component, setComponent] = useState<dxVectorMap>()
-
-	React.useEffect(() => {
-		console.log({ availableRegions })
-	}, [availableRegions])
-	// React.useEffect(() => {
-	// 	if (!availableRegions || !mainSectionName || !subSectionTitle) return
-
-	// 	availableRegions
-	// 	const statisticsByYears = await statisticsByYearsQuery(queryOptions)
-	// 	if (!statisticsByYears) return
-	// 	const value = parseFloat(statisticsByYears[0].value)
-	// }, [availableRegions, mainSectionName, subSectionTitle])
 
 	const onInitialized = (e: {
 		component?: dxVectorMap | undefined;
@@ -81,7 +73,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 
 		elements.forEach((element) => {
 			const name_ru = element.attribute('name_ru')
-			if (availableRegions.includes(name_ru)) values.push(element.attribute('value'))
+			if (regionNames.includes(name_ru)) values.push(element.attribute('value'))
 		})
 
 		values = values.sort((a, b) => a - b)
@@ -104,17 +96,11 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	}, [mainSectionName, subSectionTitle])
 
 	async function customizeLayer(elements: any) {
-		// const values: number[] = []
-
-		// await Promise.all(
 		elements.map(async (element: any, i: number) => {
 			const name_ru: string = element.attribute('name_ru')
 			if (name_ru === selectedRegion) element.selected(true)
 
-			if (availableRegions.includes(name_ru)) {
-				// element.attribute('population', i * 5)
-				// console.log({ vectorMapRef })
-
+			if (regionNames.includes(name_ru)) {
 				if (!mainSectionName || !subSectionTitle) return
 
 				const queryOptions = {
@@ -129,7 +115,6 @@ const VectorMapRComponent: FC<Props> = (props) => {
 				if (!statisticsByYears) return
 				const value = parseFloat(statisticsByYears[0].value)
 				element.attribute('value', value)
-				// values.push(value)
 				return
 			}
 
@@ -137,42 +122,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 				opacity: 0.2,
 			})
 		})
-		// )
-
-		// setColorGroups(values.sort())
-		// console.log({ values })
 	}
-
-	React.useEffect(() => {
-		// federalDistrict
-		// region
-		const query = `
-			query {
-				multipleRegionsCoords(type: "region") {
-					type,
-					geometry {
-						type,
-						coordinates
-					},
-					properties {
-						name_en
-						name_ru
-					}
-				},
-				regionNames
-				
-			}`
-
-		console.log({ hostApi })
-
-		axios
-			.post<Response>(hostApi, { query })
-			.then((res) => {
-				const { multipleRegionsCoords, regionNames } = res.data.data
-				setMapCoords(multipleRegionsCoords)
-				setAvailableRegions(regionNames)
-			})
-	}, [])
 
 	function customizeTooltip(element: any) {
 		return {
@@ -183,7 +133,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	function onMapClick(e: MapClickEvent) {
 		if (!e.target) return
 		const name_ru = e.target.attribute('name_ru')
-		if (!availableRegions.includes(name_ru)) return
+		if (!regionNames.includes(name_ru)) return
 
 		e.target.selected(!e.target.selected())
 
@@ -215,7 +165,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 				<Layer
 					dataSource={{
 						type: 'FeatureCollection',
-						features: mapCoords,
+						features: multipleRegionsCoords,
 					}}
 					type="area"
 					customize={customizeLayer}

@@ -1,4 +1,3 @@
-// import { IResolvers } from 'graphql-tools'
 import years from './years'
 import regionNames from './regionNames'
 import mainSectionNames from './mainSectionNames'

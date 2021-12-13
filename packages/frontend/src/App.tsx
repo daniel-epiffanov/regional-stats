@@ -6,22 +6,18 @@ import {
 	Routes,
 } from 'react-router-dom'
 import Home from './pages/Home/Home'
-
-// const appMainHeader = 'Росстат'
+import CustomApolloProvider from './providers/CustomApolloProvider'
 
 themes.current(window.localStorage.getItem('dx-theme') || 'material.blue.light')
 
-function App() {
-	return (
-		<>
-			<Router>
-				<Routes>
-					<Route path="/" element={<Home />} />
-				</Routes>
-			</Router>
-
-		</>
-	)
-}
+const App = () => (
+	<CustomApolloProvider>
+		<Router>
+			<Routes>
+				<Route path="/" element={<Home />} />
+			</Routes>
+		</Router>
+	</CustomApolloProvider>
+)
 
 export default App

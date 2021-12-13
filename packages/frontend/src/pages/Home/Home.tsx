@@ -26,15 +26,9 @@ const Home = () => {
 		_selectedMainSectionName: string,
 		_selectedSubSectionTitle: string,
 	) => {
-		console.log({ _selectedMainSectionName })
-		console.log({ _selectedSubSectionTitle })
 		setSelectedMainSectionName(_selectedMainSectionName)
 		setSelectedSubSectionTitle(_selectedSubSectionTitle)
 	}
-
-	useEffect(() => {
-		console.log({ selectedRegion })
-	}, [selectedRegion])
 
 	return (
 		<ResponsiveBox>
@@ -43,12 +37,10 @@ const Home = () => {
 			<Row ratio={1} />
 			<Row ratio={0.7} />
 			<Col ratio={1} />
-			{/* <Col ratio={1} screen="md lg" /> */}
-			{/* <Col ratio={0.5} screen="md lg" /> */}
 
 			<Item>
 				<Location screen="md lg" row={0} col={0} />
-				<div className="left-side-bar item">
+				<div>
 					<VectorMap
 						selectedRegionHandler={selectedRegionHandler}
 						selectedRegion={selectedRegion}
@@ -60,18 +52,18 @@ const Home = () => {
 
 			<Item>
 				<Location screen="md lg" row={1} col={0} />
-				<div className="content item">
-					<DoughnutChart
+				<div>
+					{/* <DoughnutChart
 						selectedRegion={selectedRegion}
 						mainSectionName={selectedMainSectionName}
 						subSectionTitle={selectedSubSectionTitle}
-					/>
+					/> */}
 				</div>
 			</Item>
 			<Item>
 				<Location screen="md lg" row={2} col={0} />
 				<div>
-					<SectionsTree selectedSectionsHandler={selectedSectionsHandler} />
+					{/* <SectionsTree selectedSectionsHandler={selectedSectionsHandler} /> */}
 				</div>
 			</Item>
 
