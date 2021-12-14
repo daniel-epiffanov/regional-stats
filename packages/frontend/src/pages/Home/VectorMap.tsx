@@ -13,7 +13,7 @@ import VectorMap, {
 import dxVectorMap, { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
 import styles from './styles/VectorMap.module.scss'
 import useVectorMapQuery from './hooks/useVectorMapQuery'
-import Error from '../../components/Error'
+import Message from '../../components/Message'
 import useComponentInstance from '../../hooks/useComponentInstance'
 
 interface Props {
@@ -75,34 +75,34 @@ const VectorMapRComponent: FC<Props> = (props) => {
 		console.log({ sortedValues })
 	}, [mainSectionName, subSectionTitle])
 
-	async function customizeLayer(elements: any) {
-		elements.map(async (element: any, i: number) => {
-			const name_ru: string = element.attribute('name_ru')
-			if (name_ru === selectedRegion) element.selected(true)
+	// async function customizeLayer(elements: any) {
+	// 	elements.map(async (element: any, i: number) => {
+	// 		const name_ru: string = element.attribute('name_ru')
+	// 		if (name_ru === selectedRegion) element.selected(true)
 
-			if (regionNames.includes(name_ru)) {
-				if (!mainSectionName || !subSectionTitle) return
+	// 		if (regionNames.includes(name_ru)) {
+	// 			if (!mainSectionName || !subSectionTitle) return
 
-				const queryOptions = {
-					selectedRegion: name_ru,
-					mainSectionName,
-					subSectionTitle,
-					startYear: year,
-					endYear: year,
-				}
-				element.attribute('value', i * 2)
-				// const statisticsByYears = await statisticsByYearsQuery(queryOptions)
-				// if (!statisticsByYears) return
-				// const value = parseFloat(statisticsByYears[0].value)
-				// element.attribute('value', value)
-				// return
-			}
+	// 			const queryOptions = {
+	// 				selectedRegion: name_ru,
+	// 				mainSectionName,
+	// 				subSectionTitle,
+	// 				startYear: year,
+	// 				endYear: year,
+	// 			}
+	// 			element.attribute('value', i * 2)
+	// 			const statisticsByYears = await statisticsByYearsQuery(queryOptions)
+	// 			if (!statisticsByYears) return
+	// 			const value = parseFloat(statisticsByYears[0].value)
+	// 			element.attribute('value', value)
+	// 			return
+	// 		}
 
-			element.applySettings({
-				opacity: 0.2,
-			})
-		})
-	}
+	// 		element.applySettings({
+	// 			opacity: 0.2,
+	// 		})
+	// 	})
+	// }
 
 	function customizeTooltip(element: any) {
 		return {
@@ -128,10 +128,10 @@ const VectorMapRComponent: FC<Props> = (props) => {
 
 	// const colorGroups = [0, 5, 10]
 
-	if (loading) return <p>Загрузка карты...</p>
+	if (loading) return <Message message="Загрузка карты..." />
 	if (error) {
 		console.error({ error })
-		return <Error message="Произошла ошибка. Мы не можем получить координаты для карты с сервера." />
+		return <Message message="Произошла ошибка. Мы не можем получить координаты для карты с сервера." type="error" />
 	}
 
 	return (
@@ -149,7 +149,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 						features: coordsByRegionType,
 					}}
 					type="area"
-					customize={customizeLayer}
+					// customize={customizeLayer}
 					selectionMode="single"
 					name="regions"
 					colorGroupingField="value"

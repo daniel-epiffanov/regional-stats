@@ -1,17 +1,14 @@
 /* eslint-disable max-len */
 /* eslint-disable import/extensions */
-import React, { FC, useEffect, useState } from 'react'
-import axios from 'axios'
+import { FC } from 'react'
 import { TreeView } from 'devextreme-react/tree-view'
 import {
 	Item, ItemClickEvent, ItemSelectionChangedEvent, SelectionChangedEvent,
 } from 'devextreme/ui/tree_view'
 import styles from './styles/SectionsTree.module.scss'
-// import { MainSectionNamesQuery } from '../../../../../sharedTypes/gqlResolvers'
-import { hostApi } from '../../helpers/host'
 import useSectionsTreeQuery from './hooks/useSectionsTreeQuery'
 import { SelectedSectionNamesHandler } from './hooks/useSelectedSectionNames'
-import Error from '../../components/Error'
+import Message from '../../components/Message'
 
 interface Props {
 	selectedSectionNamesHandler: SelectedSectionNamesHandler
@@ -53,10 +50,10 @@ const SectionsTree: FC<Props> = ({ selectedSectionNamesHandler }) => {
 		return null
 	}
 
-	if (loading) return <p>Загрузка разделов статистики...</p>
+	if (loading) return <Message message="Загрузка разделов статистики..." />
 	if (error) {
 		console.error({ error })
-		return <Error message="Произошла ошибка. Мы не можем получить разделы статистики с сервера." />
+		return <Message type="error" message="Произошла ошибка. Мы не можем получить разделы статистики с сервера." />
 	}
 
 	return (

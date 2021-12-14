@@ -1,8 +1,6 @@
-import { useQuery, gql } from '@apollo/client'
+import { useQuery, gql, useLazyQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
-import {
-	Item, ItemClickEvent, ItemSelectionChangedEvent, SelectionChangedEvent,
-} from 'devextreme/ui/tree_view'
+import { Item } from 'devextreme/ui/tree_view'
 import { MainSectionNamesQuery } from '../../../../../../sharedTypes/gqlQueries'
 
 type MainSectionNamesQueryResponse = {
@@ -21,13 +19,17 @@ const useSectionsTreeQuery = () => {
 	const msQueryMethods = useQuery<MainSectionNamesQueryResponse>(mainSectionsQuery)
 	const mainSectionNames = msQueryMethods.data?.mainSectionNames
 
-	const mainSectionNamesQuery = mainSectionNames
+	const subSectionNamesQuery = mainSectionNames
 		&& mainSectionNames.map((name, i) => `var_${i}: subSectionNames(mainSectionName:"${name}")`)
 
-	const ssQueryMethods = useQuery<SubSectionNamesQueryResponse>(gql` query {
-		${mainSectionNamesQuery || 'mainSectionNames'}
+	const [getSsNames, ssQueryMethods] = useLazyQuery<SubSectionNamesQueryResponse>(gql` query {
+		${subSectionNamesQuery}
 	}`)
 	const [returnData, setReturnData] = useState<Item[] | undefined>(undefined)
+
+	useEffect(() => {
+		getSsNames()
+	}, [mainSectionNames])
 
 	const { data } = ssQueryMethods
 
