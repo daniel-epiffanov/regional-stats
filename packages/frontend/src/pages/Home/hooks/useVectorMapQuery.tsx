@@ -26,7 +26,7 @@ const useVectorMapQuery = () => {
 
 	const { loading, error, data } = methods
 
-	console.log({ data })
+	// console.log({ data })
 
 	return methods
 }

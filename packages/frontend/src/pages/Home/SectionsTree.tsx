@@ -6,16 +6,16 @@ import {
 	Item, ItemClickEvent, ItemSelectionChangedEvent, SelectionChangedEvent,
 } from 'devextreme/ui/tree_view'
 import styles from './styles/SectionsTree.module.scss'
-import useSectionsTreeQuery from './hooks/useSectionsTreeQuery'
 import { SelectedSectionNamesHandler } from './hooks/useSelectedSectionNames'
 import Message from '../../components/Message'
+import useSectionsTreeItemsQuery from './hooks/useSectionsTreeItemsQuery'
 
 interface Props {
 	selectedSectionNamesHandler: SelectedSectionNamesHandler
 }
 
 const SectionsTree: FC<Props> = ({ selectedSectionNamesHandler }) => {
-	const { loading, error, data } = useSectionsTreeQuery()
+	const { loading, error, data } = useSectionsTreeItemsQuery()
 
 	const onItemClick = async (e: ItemClickEvent) => {
 		const itemData: Item = e.itemData

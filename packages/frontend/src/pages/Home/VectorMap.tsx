@@ -72,7 +72,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 		}
 		const sortedValues = values.sort((a, b) => a - b)
 		setColorGroups(sortedValues)
-		console.log({ sortedValues })
+		// console.log({ sortedValues })
 	}, [mainSectionName, subSectionTitle])
 
 	// async function customizeLayer(elements: any) {

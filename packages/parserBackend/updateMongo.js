@@ -19,9 +19,9 @@ const updateMongo = async () => {
 	console.log('updating ...')
 	const statistics = await StatisticsModel.find({ regionName: "Центральный федеральный округ" })
 	// const years = await StatisticsModel.distinct('regionName')
-	console.log({ statistics })
+	// console.log({ statistics })
 	statistics.forEach(async (stat, i) => {
-		console.log({ stat })
+		// console.log({ stat })
 
 		const newStat = {
 			// ...stat.toObject(),
@@ -30,7 +30,7 @@ const updateMongo = async () => {
 				return ({
 					...ms.toObject(),
 					subSections: ms.subSections.map((ss, ssIdx) => {
-						console.log(ss.title)
+						// console.log(ss.title)
 						return ({
 							...ss.toObject(),
 							name: ss.title,
@@ -43,9 +43,9 @@ const updateMongo = async () => {
 
 		const newStatistics = new StatisticsModel(newStat)
 
-		console.log({ newStat })
-		console.log({ newStatistics })
-		console.log(newStatistics.mainSections[0])
+		// console.log({ newStat })
+		// console.log({ newStatistics })
+		// console.log(newStatistics.mainSections[0])
 
 		// console.log(JSON.stringify(newStatistics))
 		// console.log(newStatistics.mainSections[0].subSections)
@@ -60,7 +60,7 @@ const updateMongo = async () => {
 	})
 
 
-	console.log('finished ...')
+	// console.log('finished ...')
 }
 
 module.exports = updateMongo

@@ -1,14 +1,11 @@
 import axios from 'axios'
-import { MainSectionNamesQuery, MultipleSubSectionNamesQuery, SubSectionNamesQuery } from '../../../../sharedTypes/gqlQueries'
-
+import { MainSectionNamesQuery, MultipleSubSectionNamesQuery } from '../../../../sharedTypes/gqlQueries'
 import { hostApi } from '../helpers/host'
 
-type SingleSelectionResponse = { mainSectionNames: MainSectionNamesQuery }
-
-type SubSectionNamesQueryFn = (
+type MultipleSubSectionNamesQueryFn = (
 	mainSectionNames: MainSectionNamesQuery) => Promise<MultipleSubSectionNamesQuery | null>
 
-const subSectionNamesQuery: SubSectionNamesQueryFn = async (mainSectionNames) => {
+const multipleSubSectionNamesQuery: MultipleSubSectionNamesQueryFn = async (mainSectionNames) => {
 	const query = mainSectionNames
 		&& mainSectionNames.map((name, i) => `mainSection_${i}: subSectionNames(mainSectionName:"${name}")`)
 
@@ -18,4 +15,4 @@ const subSectionNamesQuery: SubSectionNamesQueryFn = async (mainSectionNames) =>
 	return subSectionNames
 }
 
-export default subSectionNamesQuery
+export default multipleSubSectionNamesQuery
