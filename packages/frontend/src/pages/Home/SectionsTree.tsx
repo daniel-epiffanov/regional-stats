@@ -17,24 +17,6 @@ interface Props {
 const SectionsTree: FC<Props> = ({ selectedSectionNamesHandler }) => {
 	const { loading, error, data } = useSectionsTreeItemsQuery()
 
-	const onItemClick = async (e: ItemClickEvent) => {
-		const itemData: Item = e.itemData
-		const { node } = e
-		if (itemData.items) {
-			e.event?.preventDefault()
-			return null
-		}
-
-		await e.component.unselectAll()
-
-		const parentText = node?.parent?.text || ''
-		const text = node?.text || ''
-
-		selectedSectionNamesHandler(parentText, text)
-
-		return null
-	}
-
 	const onItemSelectionChanged = async (e: ItemSelectionChangedEvent) => {
 		const itemData: Item = e.itemData
 		const { node } = e

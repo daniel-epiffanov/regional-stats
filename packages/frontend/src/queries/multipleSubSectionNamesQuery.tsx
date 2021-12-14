@@ -15,9 +15,17 @@ const multipleSubSectionNamesQuery: MultipleSubSectionNamesQueryFn = async (main
 		}
 	`
 	const axiosResponse = await axios.post<Response>(hostApi, { query })
-	const subSectionNames = axiosResponse.data.data
-	if (!subSectionNames) return null
-	return subSectionNames
+	const multipleSubSectionNames = axiosResponse.data.data
+	if (!multipleSubSectionNames) return null
+
+	const correctedMultipleSubSectionNames: MultipleSubSectionNamesQuery = {}
+	mainSectionNames.forEach((mainSectionName, i) => {
+		correctedMultipleSubSectionNames[mainSectionName] = multipleSubSectionNames[`mainSection_${i}`]
+	})
+
+	console.log({ correctedMultipleSubSectionNames })
+
+	return correctedMultipleSubSectionNames
 }
 
 export default multipleSubSectionNamesQuery

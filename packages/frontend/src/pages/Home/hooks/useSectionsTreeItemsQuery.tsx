@@ -17,7 +17,7 @@ const getDxTreeItems = (multipleSubSectionNames: MultipleSubSectionNamesQuery) =
 	})
 
 	return mainSectionNames
-		.map((mainSectionName, i) => generateItem(`${i}`, mainSectionName, multipleSubSectionNames[`mainSection_${i}`]))
+		.map((mainSectionName, i) => generateItem(`${i}`, mainSectionName, multipleSubSectionNames[mainSectionName]))
 }
 
 const useSectionsTreeItemsQuery = () => {

@@ -22,6 +22,12 @@ const Home = () => {
 		selectedSectionNamesHandler,
 	} = useSelectedSectionNames()
 
+	useEffect(() => {
+		console.log({ selectedRegion })
+		console.log({ selectedMainSectionName })
+		console.log({ selectedSubSectionTitle })
+	}, [selectedRegion, selectedMainSectionName, selectedSubSectionTitle])
+
 	return (
 		<ResponsiveBox>
 			<Row ratio={1} />
