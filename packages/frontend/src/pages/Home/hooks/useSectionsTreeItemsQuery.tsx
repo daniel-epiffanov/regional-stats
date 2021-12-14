@@ -24,23 +24,30 @@ const useSectionsTreeItemsQuery = () => {
 	const [data, setData] = useState<Item[] | undefined>(undefined)
 	const [loading, setLoading] = useState<boolean>(true)
 	const [error, setError] = useState<boolean>(false)
+	const errorHandler = () => {
+		setError(true)
+		setLoading(false)
+	}
 
 	useEffect(() => {
 		(async () => {
 			try {
 				const fetchedMainSectionNames = await mainSectionNamesQuery()
-				if (!fetchedMainSectionNames) return setError(true)
+				console.log({ fetchedMainSectionNames })
+				if (!fetchedMainSectionNames) return errorHandler()
 				const fetchedMultipleSubSectionNames = await multipleSubSectionNamesQuery(
 					fetchedMainSectionNames,
 				)
-				if (!fetchedMultipleSubSectionNames) return setError(true)
+				console.log({ fetchedMultipleSubSectionNames })
+				if (!fetchedMultipleSubSectionNames) return errorHandler()
 				const dxItems = getDxTreeItems(fetchedMultipleSubSectionNames)
-				if (!dxItems) return setError(true)
+				if (!dxItems) return errorHandler()
 
 				setLoading(false)
 				setData(dxItems)
 			} catch (err) {
-				setError(true)
+				console.log({ err })
+				errorHandler()
 			}
 		})()
 	}, [])

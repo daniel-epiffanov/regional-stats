@@ -2,6 +2,7 @@ import axios from 'axios'
 import { StatisticsByYearsQuery } from '../../../../sharedTypes/gqlQueries'
 
 import { hostApi } from '../helpers/host'
+import GqlResponse from './@types/gqlResponse'
 
 interface Options {
 	selectedRegion: string,
@@ -13,7 +14,7 @@ interface Options {
 
 type StatisticsByYearsFn = (options: Options) => Promise<StatisticsByYearsQuery | null>
 
-type SingleSelectionResponse = { statisticsByYears: StatisticsByYearsQuery }
+type SingleSelectionResponse = GqlResponse<{ statisticsByYears: StatisticsByYearsQuery }>
 
 const statisticsByYearsQuery: StatisticsByYearsFn = async (options) => {
 	const {
@@ -35,7 +36,7 @@ const statisticsByYearsQuery: StatisticsByYearsFn = async (options) => {
 	}`
 
 	const axiosResponse = await axios.post<SingleSelectionResponse>(hostApi, { query })
-	const { statisticsByYears } = axiosResponse.data
+	const { statisticsByYears } = axiosResponse.data.data
 	if (!statisticsByYears) return null
 	return statisticsByYears
 }
