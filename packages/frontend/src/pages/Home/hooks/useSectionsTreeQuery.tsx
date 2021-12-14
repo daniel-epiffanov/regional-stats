@@ -1,56 +1,51 @@
-import { useQuery, gql, useLazyQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { Item } from 'devextreme/ui/tree_view'
-import { MainSectionNamesQuery } from '../../../../../../sharedTypes/gqlQueries'
+import { MainSectionNamesQuery, MultipleSubSectionNamesQuery } from '../../../../../../sharedTypes/gqlQueries'
+import mainSectionNamesQuery from '../../../queries/mainSectionNamesQuery'
+import subSectionNamesQuery from '../../../queries/subSectionNamesQuery'
 
-type MainSectionNamesQueryResponse = {
-	mainSectionNames: MainSectionNamesQuery,
+const getDxTreeItems = (subSectionNames: MultipleSubSectionNamesQuery) => {
+	if (!subSectionNames) return null
+	const mainSectionNames = Object.keys(subSectionNames)
+
+	type GenerateItem = (id: string, text: string, childItems?: string[]) => Item
+
+	const generateItem: GenerateItem = (id, text, childItems) => ({
+		id,
+		text,
+		items: childItems && childItems.map((item, _id) => generateItem(`${id}_${_id}`, item)),
+	})
+
+	return mainSectionNames
+		.map((mainSectionName, i) => generateItem(`${i}`, mainSectionName, subSectionNames[`mainSection_${i}`]))
 }
-
-type SubSectionNamesQueryResponse = {
-	[key: string]: string[]
-}
-
-const mainSectionsQuery = gql`query {
-	mainSectionNames,
-}`
 
 const useSectionsTreeQuery = () => {
-	const msQueryMethods = useQuery<MainSectionNamesQueryResponse>(mainSectionsQuery)
-	const mainSectionNames = msQueryMethods.data?.mainSectionNames
+	const [mainSectionNames, setMainSectionNames] = useState<MainSectionNamesQuery | null>(null)
 
-	const subSectionNamesQuery = mainSectionNames
-		&& mainSectionNames.map((name, i) => `var_${i}: subSectionNames(mainSectionName:"${name}")`)
-
-	const [getSsNames, ssQueryMethods] = useLazyQuery<SubSectionNamesQueryResponse>(gql` query {
-		${subSectionNamesQuery}
-	}`)
-	const [returnData, setReturnData] = useState<Item[] | undefined>(undefined)
+	const [data, setData] = useState<Item[] | undefined>(undefined)
+	const [loading, setLoading] = useState<boolean>(true)
+	const [error, setError] = useState<boolean>(false)
 
 	useEffect(() => {
-		getSsNames()
-	}, [mainSectionNames])
+		(async () => {
+			try {
+				const fetchedMainSectionNames = await mainSectionNamesQuery()
+				if (!fetchedMainSectionNames) return setError(true)
+				const fetchedSubSectionNames = await subSectionNamesQuery(fetchedMainSectionNames)
+				if (!fetchedSubSectionNames) return setError(true)
+				const dxItems = getDxTreeItems(fetchedSubSectionNames)
+				if (!dxItems) return setError(true)
 
-	const { data } = ssQueryMethods
+				setLoading(false)
+				setData(dxItems)
+			} catch (err) {
+				setError(true)
+			}
+		})()
+	}, [])
 
-	useEffect(() => {
-		if (!mainSectionNames) return
-		if (!data) return
-
-		type GenerateItem = (id: string, text: string, childItems?: string[]) => Item
-
-		const generateItem: GenerateItem = (id, text, childItems) => ({
-			id,
-			text,
-			items: childItems && childItems.map((item, _id) => generateItem(`${id}_${_id}`, item)),
-		})
-
-		const items = mainSectionNames.map((mainSectionName, i) => generateItem(`${i}`, mainSectionName, data[`var_${i}`]))
-
-		setReturnData(items)
-	}, [data])
-
-	return { ...ssQueryMethods, data: returnData }
+	return { data, loading, error }
 }
 
 export default useSectionsTreeQuery

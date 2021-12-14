@@ -62,7 +62,8 @@
 		"react/jsx-no-bind": "off",
 		"no-unused-expressions": "off",
 		"prefer-destructuring": "off",
-		"arrow-parens": "warn"
+		"arrow-parens": "warn",
+		"consistent-return": "warn"
 	},
 	"settings": {
 		"import/resolver": {

@@ -52,6 +52,7 @@ const SectionsTree: FC<Props> = ({ selectedSectionNamesHandler }) => {
 
 	if (loading) return <Message message="Загрузка разделов статистики..." />
 	if (error) {
+		console.error('error on section tree component')
 		console.error({ error })
 		return <Message type="error" message="Произошла ошибка. Мы не можем получить разделы статистики с сервера." />
 	}
