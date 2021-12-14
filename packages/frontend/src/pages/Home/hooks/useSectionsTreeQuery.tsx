@@ -21,8 +21,11 @@ const useSectionsTreeQuery = () => {
 	const msQueryMethods = useQuery<MainSectionNamesQueryResponse>(mainSectionsQuery)
 	const mainSectionNames = msQueryMethods.data?.mainSectionNames
 
+	const mainSectionNamesQuery = mainSectionNames
+		&& mainSectionNames.map((name, i) => `var_${i}: subSectionNames(mainSectionName:"${name}")`)
+
 	const ssQueryMethods = useQuery<SubSectionNamesQueryResponse>(gql` query {
-		${mainSectionNames && mainSectionNames.map((name, i) => `var_${i}: subSectionNames(mainSectionName:"${name}")`)}
+		${mainSectionNamesQuery || 'mainSectionNames'}
 	}`)
 	const [returnData, setReturnData] = useState<Item[] | undefined>(undefined)
 

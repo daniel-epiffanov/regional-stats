@@ -2,6 +2,7 @@ import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
 import { useState, useEffect } from 'react'
+import useSelectedSectionNames from './hooks/useSelectedSectionNames'
 import SectionsTree from './SectionsTree'
 // import DoughnutChart from './DoughnutChart'
 import styles from './styles/Home.module.scss'
@@ -15,19 +16,11 @@ export type SelectionMode = 'multiple' | 'single'
 
 const Home = () => {
 	const [selectedRegion, setSelectedRegion] = useState<string>('')
-	const [selectedMainSectionName, setSelectedMainSectionName] = useState<string>('')
-	const [selectedSubSectionTitle, setSelectedSubSectionTitle] = useState<string>('')
-
-	const selectedRegionHandler = (newSelectedRegion: string) => {
-		setSelectedRegion(newSelectedRegion)
-	}
-	const selectedSectionsHandler = (
-		_selectedMainSectionName: string,
-		_selectedSubSectionTitle: string,
-	) => {
-		setSelectedMainSectionName(_selectedMainSectionName)
-		setSelectedSubSectionTitle(_selectedSubSectionTitle)
-	}
+	const selectedRegionHandler = (newSelectedRegion: string) => setSelectedRegion(newSelectedRegion)
+	const {
+		selectedMainSectionName, selectedSubSectionTitle,
+		selectedSectionNamesHandler,
+	} = useSelectedSectionNames()
 
 	return (
 		<ResponsiveBox>
@@ -62,7 +55,7 @@ const Home = () => {
 			<Item>
 				<Location screen="md lg" row={2} col={0} />
 				<div>
-					<SectionsTree selectedSectionsHandler={selectedSectionsHandler} />
+					<SectionsTree selectedSectionNamesHandler={selectedSectionNamesHandler} />
 				</div>
 			</Item>
 
