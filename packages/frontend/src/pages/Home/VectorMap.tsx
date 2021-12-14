@@ -1,10 +1,5 @@
 /* eslint-disable import/extensions */
-import React, {
-	FC, useEffect, useRef, useState,
-} from 'react'
-import axios from 'axios'
-// import { LoadPanel } from 'devextreme-react/load-panel'
-import { LoadIndicator } from 'devextreme-react/load-indicator'
+import React, { FC, useEffect, useState } from 'react'
 import VectorMap, {
 	Layer,
 	Tooltip,
@@ -13,17 +8,12 @@ import VectorMap, {
 	Label,
 	Legend,
 	Source,
+	LoadingIndicator,
 } from 'devextreme-react/vector-map'
 import dxVectorMap, { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
 import styles from './styles/VectorMap.module.scss'
-// import { SelectedRegion } from '../../sharedTypes/states'
-import { hostApi } from '../../helpers/host'
-import { SelectionMode } from './Home'
-// import statisticsByYearsQuery from '../../queries/statisticsByYears'
-import useVectorMapQuery from './queryHooks/useVectorMapQuery'
-
-// @ts-ignore
-// import MapToolbar from './MapToolbar'
+import useVectorMapQuery from './hooks/useVectorMapQuery'
+import Error from '../../components/Error'
 
 interface Props {
 	selectedRegionHandler: (newSelectedRegion: string) => void,
@@ -32,34 +22,35 @@ interface Props {
 	subSectionTitle: string,
 }
 
-// type Response = GqlResponse<{
-// 	multipleRegionsCoords: MultipleRegionsCoords,
-// 	regionNames: RegionNames
-// }>
+const BOUNDS = [71, 97, 45, 26]
 
-const bounds = [71, 97, 45, 26]
-
-// console.log({ testData })
+const customizeText = (args: any) => {
+	console.log()
+	return 'yo'
+}
 
 const VectorMapRComponent: FC<Props> = (props) => {
 	const {
 		selectedRegionHandler, selectedRegion, mainSectionName, subSectionTitle,
 	} = props
 
+	// graphql response
 	const { loading, error, data } = useVectorMapQuery()
 	const coordsByRegionType = data?.coordsByRegionType || []
 	const regionNames = data?.regionNames || []
 
+	// mapSetups
+	// const [component, setComponent] = useState<dxVectorMap>()
 	const [year, setYear] = useState<number>(2007)
 	const [colorGroups, setColorGroups] = useState<number[]>([0, 5, 10])
-	const [component, setComponent] = useState<dxVectorMap>()
+	useComponentInstance
 
-	const onInitialized = (e: {
-		component?: dxVectorMap | undefined;
-		element?: HTMLElement | undefined;
-	}) => {
-		if (e.component) setComponent(e.component)
-	}
+	// const onInitialized = (e: {
+	// 	component?: dxVectorMap | undefined;
+	// 	element?: HTMLElement | undefined;
+	// }) => {
+	// 	if (e.component) setComponent(e.component)
+	// }
 
 	useEffect(() => {
 		if (!mainSectionName || !subSectionTitle || !component) return
@@ -144,26 +135,26 @@ const VectorMapRComponent: FC<Props> = (props) => {
 
 	// const colorGroups = [0, 5, 10]
 
-	const customizeText = (args: any) => {
-		console.log()
-		return 'yo'
+	// if (loading) return <p>Loading...</p>
+	if (error) {
+		console.error({ error })
+		return <Error message="Произошла ошибка. Мы не можем получить координаты для карты с сервера." />
 	}
-
-	if (loading) return <p>Loading...</p>
-	if (error) return <p>Error :(</p>
 
 	return (
 		<div style={{ position: 'relative' }}>
-			{/* <VectorMap
-				bounds={bounds}
-				onClick={onMapClick}
-				onSelectionChanged={onSelectionChanged}
+			{loading && <p>loading</p>}
+			<VectorMap
+				id="vectorMap"
+				bounds={BOUNDS}
+				// onClick={onMapClick}
+				// onSelectionChanged={onSelectionChanged}
 				onInitialized={onInitialized}
 			>
 				<Layer
 					dataSource={{
 						type: 'FeatureCollection',
-						features: multipleRegionsCoords,
+						features: coordsByRegionType,
 					}}
 					type="area"
 					customize={customizeLayer}
@@ -177,19 +168,19 @@ const VectorMapRComponent: FC<Props> = (props) => {
 					</Label>
 				</Layer>
 
-				<Tooltip
+				{/* <Tooltip
 					enabled
 					customizeTooltip={customizeTooltip}
 				>
 					<Border visible />
 					<Font color="#fff" />
-				</Tooltip>
+				</Tooltip> */}
 
-				<Legend customizeText={customizeText}>
+				{/* <Legend customizeText={customizeText}>
 					<Source layer="regions" grouping="color" />
-				</Legend>
+				</Legend> */}
 
-			</VectorMap> */}
+			</VectorMap>
 		</div>
 	)
 }
