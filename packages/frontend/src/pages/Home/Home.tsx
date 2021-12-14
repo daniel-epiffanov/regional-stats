@@ -2,8 +2,8 @@ import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
 import { useState, useEffect } from 'react'
+import SectionsTree from './SectionsTree'
 // import DoughnutChart from './DoughnutChart'
-// import SectionsTree from './SectionsTree'
 import styles from './styles/Home.module.scss'
 import VectorMap from './VectorMap'
 
@@ -62,7 +62,7 @@ const Home = () => {
 			<Item>
 				<Location screen="md lg" row={2} col={0} />
 				<div>
-					{/* <SectionsTree selectedSectionsHandler={selectedSectionsHandler} /> */}
+					<SectionsTree selectedSectionsHandler={selectedSectionsHandler} />
 				</div>
 			</Item>
 

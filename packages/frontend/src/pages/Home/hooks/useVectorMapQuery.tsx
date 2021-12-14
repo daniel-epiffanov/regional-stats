@@ -1,10 +1,4 @@
-import {
-	ApolloClient,
-	InMemoryCache,
-	ApolloProvider,
-	useQuery,
-	gql,
-} from '@apollo/client'
+import { useQuery, gql } from '@apollo/client'
 import { RegionNamesQuery, CoordsByRegionTypeQuery } from '../../../../../../sharedTypes/gqlQueries'
 
 type QueryResponse = {
@@ -12,9 +6,8 @@ type QueryResponse = {
 	regionNames: RegionNamesQuery
 }
 
-const QUERY = gql`
-query {
-	coordsByRegionType(type: "region") {
+const QUERY = gql` query {
+	coordsByRegionType(type: "federalDistrict") {
 		type,
 		geometry {
 			type,
@@ -26,7 +19,6 @@ query {
 		}
 	},
 	regionNames
-	
 }`
 
 const useVectorMapQuery = () => {

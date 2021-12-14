@@ -9,6 +9,7 @@ import {
 import styles from './styles/SectionsTree.module.scss'
 // import { MainSectionNamesQuery } from '../../../../../sharedTypes/gqlResolvers'
 import { hostApi } from '../../helpers/host'
+import useSectionsTreeQuery from './hooks/useSectionsTreeQuery'
 
 interface Props {
 	// selectedRegionHandler: (newSelectedRegion: string) => void,
@@ -30,53 +31,16 @@ interface Props {
 const SectionsTree: FC<Props> = (props) => {
 	const { selectedSectionsHandler } = props
 
+	const { loading, error, data } = useSectionsTreeQuery()
+
+	useEffect(() => {
+		console.log({ loading })
+		console.log({ error })
+		console.log({ data })
+	}, [data, loading, error])
+
 	// const [mainSectionNames, setMainSectionNames] = useState<MainSectionNames>([])
-	const [items, setItems] = useState<Item[]>([])
-
-	// useEffect(() => {
-	// 	const query = `
-	// 		query {
-	// 			mainSectionNames,
-	// 		}`
-
-	// 	axios
-	// 		.post<Response>(hostApi, { query })
-	// 		.then((res) => {
-	// 			const _mainSectionNames = res.data.data.mainSectionNames
-	// 			setMainSectionNames(_mainSectionNames)
-	// 			// setMapCoords(multipleRegionsCoords)
-	// 			// setAvailableRgions(regionNames)
-	// 		})
-	// }, [])
-
-	// useEffect(() => {
-	// 	if (!mainSectionNames.length) return
-
-	// 	const query = `
-	// 		query {
-	// 			${mainSectionNames.map((name, i) => `var_${i}: subSectionTitles(mainSectionName:"${name}")`)}
-	// 		}`
-
-	// 	axios
-	// 		.post<SubSectionsResponse>(hostApi, { query })
-	// 		.then((res) => {
-	// 			const _data = res.data.data
-	// 			console.log({ _data })
-	// 			const entries = Object.entries(_data)
-
-	// 			type GenerateItem = (id: string, text: string, childItems?: string[]) => Item
-
-	// 			const generateItem: GenerateItem = (id, text, childItems) => ({
-	// 				id,
-	// 				text,
-	// 				items: childItems && childItems.map((item, _id) => generateItem(`${id}_${_id}`, item)),
-	// 			})
-
-	// 			const _items = mainSectionNames.map((mainSectionName, i) => generateItem(`${i}`, mainSectionName, _data[`var_${i}`]))
-
-	// 			setItems(_items)
-	// 		})
-	// }, [mainSectionNames])
+	// const [items, setItems] = useState<Item[]>([])
 
 	const onItemClick = async (e: ItemClickEvent) => {
 		const itemData: Item = e.itemData
@@ -126,10 +90,11 @@ const SectionsTree: FC<Props> = (props) => {
 		return null
 	}
 
+	// return <p>yo</p>
 	return (
 		<div>
 			<TreeView
-				items={items}
+				items={data}
 				selectByClick
 				showCheckBoxesMode="normal"
 				selectionMode="single"

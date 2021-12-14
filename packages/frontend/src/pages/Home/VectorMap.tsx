@@ -14,6 +14,7 @@ import dxVectorMap, { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_
 import styles from './styles/VectorMap.module.scss'
 import useVectorMapQuery from './hooks/useVectorMapQuery'
 import Error from '../../components/Error'
+import useComponentInstance from '../../hooks/useComponentInstance'
 
 interface Props {
 	selectedRegionHandler: (newSelectedRegion: string) => void,
@@ -40,22 +41,14 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	const regionNames = data?.regionNames || []
 
 	// mapSetups
-	// const [component, setComponent] = useState<dxVectorMap>()
+	const { instance, onInitialized } = useComponentInstance<dxVectorMap>()
 	const [year, setYear] = useState<number>(2007)
 	const [colorGroups, setColorGroups] = useState<number[]>([0, 5, 10])
-	useComponentInstance
-
-	// const onInitialized = (e: {
-	// 	component?: dxVectorMap | undefined;
-	// 	element?: HTMLElement | undefined;
-	// }) => {
-	// 	if (e.component) setComponent(e.component)
-	// }
 
 	useEffect(() => {
-		if (!mainSectionName || !subSectionTitle || !component) return
+		if (!mainSectionName || !subSectionTitle || !instance) return
 
-		const elements = component.getLayers()[0].getElements()
+		const elements = instance.getLayers()[0].getElements()
 
 		let values: number[] = []
 
@@ -135,7 +128,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 
 	// const colorGroups = [0, 5, 10]
 
-	// if (loading) return <p>Loading...</p>
+	if (loading) return <p>Загрузка карты...</p>
 	if (error) {
 		console.error({ error })
 		return <Error message="Произошла ошибка. Мы не можем получить координаты для карты с сервера." />
@@ -143,7 +136,6 @@ const VectorMapRComponent: FC<Props> = (props) => {
 
 	return (
 		<div style={{ position: 'relative' }}>
-			{loading && <p>loading</p>}
 			<VectorMap
 				id="vectorMap"
 				bounds={BOUNDS}

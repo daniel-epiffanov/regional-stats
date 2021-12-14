@@ -1,9 +1,7 @@
 import { useState } from 'react'
 
-type UseComponentInstance<Component> = () => Return<Component>
-
-interface Return<Component> {
-	component: Component | null,
+interface Return<Instance> {
+	instance: Instance | null,
 	onInitialized: OnInitialized
 }
 
@@ -14,14 +12,15 @@ interface Event {
 
 type OnInitialized = (e: Event) => void
 
-const useComponentInstance: UseComponentInstance<any> = () => {
-	const [component, setComponent] = useState<any>(null)
+const useComponentInstance = <Instance, P = any>(): Return<Instance> => {
+	const [instance, setInstance] = useState<Instance | null>(null)
 
 	const onInitialized: OnInitialized = (e) => {
-		if (e.component) setComponent(e.component)
+		if (e.component) setInstance(e.component)
 	}
 
-	return { component, onInitialized }
+	const toReturn = { instance, onInitialized }
+	return toReturn
 }
 
 export default useComponentInstance
