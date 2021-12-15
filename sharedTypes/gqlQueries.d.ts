@@ -8,4 +8,5 @@ export type MultipleSubSectionNamesQuery = {
 	[key: string]: SubSectionNamesQuery
 }
 export type StatisticsByYearsQuery = YearValue[]
+export type StatisticsByYearsQuery = YearValue[]
 export type CoordsByRegionTypeQuery = RegionCoords[]

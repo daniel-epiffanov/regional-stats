@@ -21,7 +21,7 @@ const QUERY = gql` query {
 	regionNames
 }`
 
-const useVectorMapQuery = () => {
+const useVectorMapCoordsQuery = () => {
 	const methods = useQuery<QueryResponse>(QUERY)
 
 	const { loading, error, data } = methods
@@ -31,4 +31,4 @@ const useVectorMapQuery = () => {
 	return methods
 }
 
-export default useVectorMapQuery
+export default useVectorMapCoordsQuery

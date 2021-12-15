@@ -2,6 +2,7 @@ import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
 import { useState, useEffect } from 'react'
+import useSelectedRegion from './hooks/useSelectedRegion'
 import useSelectedSectionNames from './hooks/useSelectedSectionNames'
 import SectionsTree from './SectionsTree'
 // import DoughnutChart from './DoughnutChart'
@@ -15,8 +16,7 @@ interface SelectedSections {
 export type SelectionMode = 'multiple' | 'single'
 
 const Home = () => {
-	const [selectedRegion, setSelectedRegion] = useState<string>('')
-	const selectedRegionHandler = (newSelectedRegion: string) => setSelectedRegion(newSelectedRegion)
+	const { selectedRegion, selectedRegionHandler } = useSelectedRegion()
 	const {
 		selectedMainSectionName, selectedSubSectionTitle,
 		selectedSectionNamesHandler,
