@@ -3,15 +3,17 @@
 export interface RegionCoords {
 	type: string,
 	geometry: {
-		type: 'Polygon' | 'MultiPolygon',
-		coordinates: string[][][]
+		readonly type: 'Polygon' | 'MultiPolygon',
+		readonly coordinates: ReadonlyArray<ReadonlyArray<ReadonlyArray<string>>>
 	},
 	properties: {
-		name_ru: string,
-		name_en: string,
-		alt_names: string[]
+		readonly name_ru: string,
+		readonly name_en: string,
+		readonly alt_names: ReadonlyArray<string>
 	}
 }
+
+export type ReadonlyRegionCoords = Readonly<RegionCoords>
 
 
 
@@ -22,20 +24,25 @@ export interface YearValue {
 	value: string,
 }
 
-export interface SubSection {
+interface SubSection {
 	name: string,
 	orderNumber: string,
 	children: SubSection[],
 	yearValues: YearValue[],
 }
 
-export interface MainSection {
+interface MainSection {
 	name: string,
 	fullFilename: string,
 	subSections: SubSection[],
 }
 
-export interface Statistics {
+interface Statistics {
 	regionName: string,
 	mainSections: MainSection[],
 }
+
+export type ReadonlyStatistics = Readonly<Statistics>
+export type ReadonlyMainSection = Readonly<MainSection>
+export type ReadonlySubSection = Readonly<SubSection>
+export type ReadonlyYearValue = Readonly<YearValue>

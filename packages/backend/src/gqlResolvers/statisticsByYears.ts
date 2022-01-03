@@ -1,5 +1,5 @@
 import { StatisticsByYearsQuery } from '../../../../sharedTypes/gqlQueries'
-import { YearValue } from '../../../../sharedTypes/mongoModels'
+import { ReadonlyYearValue } from '../../../../sharedTypes/mongoModels'
 import statisticsModel from '../mongooseModels/statistics'
 import { ResolverFnAsync } from './@types/ResolverFn'
 
@@ -16,7 +16,7 @@ const statisticsByYears: ResolverFnAsync<StatisticsByYearsQuery> = async (
 	const defaultRegion = process.env.DEFAULT_REGION
 	// console.log({ defaultRegion })
 	// console.log({ mainSectionName })
-	const mongoRes = await statisticsModel.aggregate<{ yearValues: YearValue[] }>([
+	const mongoRes = await statisticsModel.aggregate<{ yearValues: ReadonlyYearValue[] }>([
 		{ $match: { regionName: regionName || defaultRegion } },
 
 		{

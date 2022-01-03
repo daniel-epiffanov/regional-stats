@@ -1,12 +1,11 @@
-import { RegionCoords, YearValue } from './mongoModels'
+import { ReadonlyRegionCoords, ReadonlyYearValue } from './mongoModels'
 
-export type YearsQuery = number[]
-export type RegionNamesQuery = string[]
-export type MainSectionNamesQuery = string[]
-export type SubSectionNamesQuery = string[]
+export type YearsQuery = ReadonlyArray<number>
+export type RegionNamesQuery = ReadonlyArray<string>
+export type MainSectionNamesQuery = ReadonlyArray<string>
+export type SubSectionNamesQuery = ReadonlyArray<string>
 export type MultipleSubSectionNamesQuery = {
 	[key: string]: SubSectionNamesQuery
 }
-export type StatisticsByYearsQuery = YearValue[]
-export type StatisticsByYearsQuery = YearValue[]
-export type CoordsByRegionTypeQuery = RegionCoords[]
+export type StatisticsByYearsQuery = ReadonlyArray<ReadonlyYearValue>
+export type CoordsByRegionTypeQuery = ReadonlyArray<ReadonlyRegionCoords>
