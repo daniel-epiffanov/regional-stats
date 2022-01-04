@@ -63,7 +63,8 @@
 		"no-unused-expressions": "off",
 		"prefer-destructuring": "off",
 		"arrow-parens": "warn",
-		"consistent-return": "warn"
+		"consistent-return": "warn",
+		"arrow-body-style": "off"
 	},
 	"settings": {
 		"import/resolver": {

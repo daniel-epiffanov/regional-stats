@@ -5,8 +5,7 @@ import { useState, useEffect } from 'react'
 import useSelectedRegion from './hooks/useSelectedRegion'
 import useSelectedSectionNames from './hooks/useSelectedSectionNames'
 import SectionsTree from './SectionsTree'
-// import DoughnutChart from './DoughnutChart'
-import styles from './styles/Home.module.scss'
+import styles from './styles/index.module.scss'
 import VectorMap from './VectorMap'
 
 interface SelectedSections {
@@ -36,7 +35,7 @@ const Home = () => {
 			<Row ratio={0.7} />
 			<Col ratio={1} />
 
-			<Item>
+			{/* <Item>
 				<Location screen="md lg" row={0} col={0} />
 				<div>
 					<VectorMap
@@ -46,18 +45,18 @@ const Home = () => {
 						subSectionTitle={selectedSubSectionTitle}
 					/>
 				</div>
-			</Item>
+			</Item> */}
 
-			<Item>
+			{/* <Item>
 				<Location screen="md lg" row={1} col={0} />
 				<div>
-					{/* <DoughnutChart
+					<DoughnutChart
 						selectedRegion={selectedRegion}
 						mainSectionName={selectedMainSectionName}
 						subSectionTitle={selectedSubSectionTitle}
-					/> */}
+					/>
 				</div>
-			</Item>
+			</Item> */}
 			<Item>
 				<Location screen="md lg" row={2} col={0} />
 				<div>

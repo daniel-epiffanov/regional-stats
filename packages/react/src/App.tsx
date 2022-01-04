@@ -5,18 +5,21 @@ import {
 	Route,
 	Routes,
 } from 'react-router-dom'
-import Home from './pages/Home/Home'
-import CustomApolloProvider from './contexts/CustomApolloProvider'
+import Home from './pages/Home'
+import CustomApolloProvider from './context/CustomApolloProvider'
+import { SimpleQueriesProvider } from './context/simpleQueries'
 
 themes.current(window.localStorage.getItem('dx-theme') || 'material.blue.light')
 
 const App = () => (
 	<CustomApolloProvider>
-		<Router>
-			<Routes>
-				<Route path="/" element={<Home />} />
-			</Routes>
-		</Router>
+		<SimpleQueriesProvider>
+			<Router>
+				<Routes>
+					<Route path="/" element={<Home />} />
+				</Routes>
+			</Router>
+		</SimpleQueriesProvider>
 	</CustomApolloProvider>
 )
 

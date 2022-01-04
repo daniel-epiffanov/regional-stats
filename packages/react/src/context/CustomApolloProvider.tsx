@@ -1,10 +1,8 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import {
 	ApolloClient,
 	InMemoryCache,
 	ApolloProvider,
-	useQuery,
-	gql,
 } from '@apollo/client'
 import { hostApi } from '../helpers/host'
 
