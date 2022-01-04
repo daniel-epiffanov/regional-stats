@@ -1,12 +1,12 @@
 import axios from 'axios'
-import { MainSectionNamesQuery } from '../../../../sharedTypes/gqlQueries'
+import { MainSectionNamesResponse } from '../../../../sharedTypes/gqlQueries'
 
 import { hostApi } from '../helpers/host'
 import GqlResponse from './@types/gqlResponse'
 
-type Response = GqlResponse<{ mainSectionNames: MainSectionNamesQuery }>
+type Response = GqlResponse<{ mainSectionNames: MainSectionNamesResponse }>
 
-type mainSectionNamesQueryFn = () => Promise<MainSectionNamesQuery | null>
+type mainSectionNamesQueryFn = () => Promise<MainSectionNamesResponse | null>
 
 const mainSectionNamesQuery: mainSectionNamesQueryFn = async () => {
 	const query = `

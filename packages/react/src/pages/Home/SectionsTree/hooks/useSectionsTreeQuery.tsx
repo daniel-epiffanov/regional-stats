@@ -1,5 +1,5 @@
 import { useQuery, gql } from '@apollo/client'
-import { SectionsTreeQuery } from '../../../../../../../sharedTypes/gqlQueries'
+import { SectionsTreeResponse } from '../../../../../../../sharedTypes/gqlQueries'
 import { useSimpleQueriesContext } from '../../../../context/simpleQueries'
 
 const useSectionsTreeItemsQuery = () => {
@@ -9,7 +9,7 @@ const useSectionsTreeItemsQuery = () => {
 		${mainSectionNames.map((name, i) => `mainSection_${i}: subSectionNames(mainSectionName:"${name}")`)}
 	}`
 
-	const { loading, error, data } = useQuery<SectionsTreeQuery>(QUERY)
+	const { loading, error, data } = useQuery<SectionsTreeResponse>(QUERY)
 
 	return { loading, error, data }
 }

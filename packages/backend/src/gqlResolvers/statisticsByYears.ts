@@ -1,4 +1,4 @@
-import { StatisticsByYearsQuery } from '../../../../sharedTypes/gqlQueries'
+import { StatisticsByYearsResponse } from '../../../../sharedTypes/gqlQueries'
 import { ReadonlyYearValue } from '../../../../sharedTypes/mongoModels'
 import statisticsModel from '../mongooseModels/statistics'
 import { ResolverFnAsync } from './@types/ResolverFn'
@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config()
 }
 
-const statisticsByYears: ResolverFnAsync<StatisticsByYearsQuery> = async (
+const statisticsByYears: ResolverFnAsync<StatisticsByYearsResponse> = async (
 	parent: any, args: any,
 ) => {
 	const {

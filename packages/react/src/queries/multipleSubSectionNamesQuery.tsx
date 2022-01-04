@@ -1,12 +1,12 @@
 import axios from 'axios'
-import { MainSectionNamesQuery, SectionsTreeQuery } from '../../../../sharedTypes/gqlQueries'
+import { MainSectionNamesResponse, SectionsTreeResponse } from '../../../../sharedTypes/gqlQueries'
 import { hostApi } from '../helpers/host'
 import GqlResponse from './@types/gqlResponse'
 
-type Response = GqlResponse<SectionsTreeQuery>
+type Response = GqlResponse<SectionsTreeResponse>
 
 type MultipleSubSectionNamesQueryFn = (
-	mainSectionNames: MainSectionNamesQuery) => Promise<SectionsTreeQuery | null>
+	mainSectionNames: MainSectionNamesResponse) => Promise<SectionsTreeResponse | null>
 
 const multipleSubSectionNamesQuery: MultipleSubSectionNamesQueryFn = async (mainSectionNames) => {
 	const query = `
@@ -18,7 +18,7 @@ const multipleSubSectionNamesQuery: MultipleSubSectionNamesQueryFn = async (main
 	const multipleSubSectionNames = axiosResponse.data.data
 	if (!multipleSubSectionNames) return null
 
-	const correctedMultipleSubSectionNames: SectionsTreeQuery = {}
+	const correctedMultipleSubSectionNames: SectionsTreeResponse = {}
 	mainSectionNames.forEach((mainSectionName, i) => {
 		correctedMultipleSubSectionNames[mainSectionName] = multipleSubSectionNames[`mainSection_${i}`]
 	})

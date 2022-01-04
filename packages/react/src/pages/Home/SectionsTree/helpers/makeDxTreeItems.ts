@@ -1,9 +1,9 @@
 import { Item } from 'devextreme/ui/tree_view'
-import { SectionsTreeQuery } from '../../../../../../../sharedTypes/gqlQueries'
+import { SectionsTreeResponse } from '../../../../../../../sharedTypes/gqlQueries'
 
 type GenerateItem = (id: string, text: string, childItems?: ReadonlyArray<string>) => Item
 
-const makeDxTreeItems = (sectionsTree: SectionsTreeQuery) => {
+const makeDxTreeItems = (sectionsTree: SectionsTreeResponse) => {
 	if (!sectionsTree) return []
 	const mainSectionNames = Object.keys(sectionsTree)
 

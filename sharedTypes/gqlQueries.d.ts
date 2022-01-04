@@ -1,14 +1,14 @@
 import { ReadonlyRegionCoords, ReadonlyYearValue } from './mongoModels'
 
 // simple queries
-export type YearsQuery = ReadonlyArray<number>
-export type RegionNamesQuery = ReadonlyArray<string>
-export type MainSectionNamesQuery = ReadonlyArray<string>
+export type YearsResponse = ReadonlyArray<number>
+export type RegionNamesResponse = ReadonlyArray<string>
+export type MainSectionNamesResponse = ReadonlyArray<string>
 
 // queries with arguments
-export type SubSectionNamesQuery = ReadonlyArray<string>
-export type SectionsTreeQuery = {
-	[key: string]: SubSectionNamesQuery
+export type SubSectionNamesResponse = ReadonlyArray<string>
+export type SectionsTreeResponse = {
+	[key: string]: SubSectionNamesResponse
 }
-export type StatisticsByYearsQuery = ReadonlyArray<ReadonlyYearValue>
-export type CoordsByRegionTypeQuery = ReadonlyArray<ReadonlyRegionCoords>
+export type StatisticsByYearsResponse = ReadonlyArray<ReadonlyYearValue>
+export type CoordsByRegionTypeResponse = ReadonlyArray<ReadonlyRegionCoords>

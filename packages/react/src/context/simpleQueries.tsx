@@ -2,12 +2,12 @@ import { useQuery, gql } from '@apollo/client'
 import {
 	createContext, FC, useContext,
 } from 'react'
-import { MainSectionNamesQuery, RegionNamesQuery, YearsQuery } from '../../../../sharedTypes/gqlQueries'
+import { MainSectionNamesResponse, RegionNamesResponse, YearsResponse } from '../../../../sharedTypes/gqlQueries'
 
 interface ContextValues {
-	regionNames: RegionNamesQuery,
-	years: YearsQuery,
-	mainSectionNames: MainSectionNamesQuery
+	regionNames: RegionNamesResponse,
+	years: YearsResponse,
+	mainSectionNames: MainSectionNamesResponse
 }
 
 type ReadonlyContextValues = Readonly<ContextValues>

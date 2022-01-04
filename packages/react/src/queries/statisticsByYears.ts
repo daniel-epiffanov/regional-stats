@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { StatisticsByYearsQuery } from '../../../../sharedTypes/gqlQueries'
+import { StatisticsByYearsResponse } from '../../../../sharedTypes/gqlQueries'
 
 import { hostApi } from '../helpers/host'
 import GqlResponse from './@types/gqlResponse'
@@ -12,9 +12,9 @@ interface Options {
 	endYear: number
 }
 
-type StatisticsByYearsFn = (options: Options) => Promise<StatisticsByYearsQuery | null>
+type StatisticsByYearsFn = (options: Options) => Promise<StatisticsByYearsResponse | null>
 
-type SingleSelectionResponse = GqlResponse<{ statisticsByYears: StatisticsByYearsQuery }>
+type SingleSelectionResponse = GqlResponse<{ statisticsByYears: StatisticsByYearsResponse }>
 
 const statisticsByYearsQuery: StatisticsByYearsFn = async (options) => {
 	const {
