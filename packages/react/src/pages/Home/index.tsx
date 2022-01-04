@@ -60,7 +60,7 @@ const Home = () => {
 			<Item>
 				<Location screen="md lg" row={2} col={0} />
 				<div>
-					<SectionsTree selectedSectionNamesHandler={selectedSectionNamesHandler} />
+					<SectionsTree />
 				</div>
 			</Item>
 

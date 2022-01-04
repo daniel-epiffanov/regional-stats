@@ -3,7 +3,7 @@ import { SectionsTreeResponse } from '../../../../../../../sharedTypes/gqlQuerie
 
 type GenerateItem = (id: string, text: string, childItems?: ReadonlyArray<string>) => Item
 
-const makeDxTreeItems = (sectionsTree: SectionsTreeResponse) => {
+const makeDxTreeItems = (sectionsTree: SectionsTreeResponse | null) => {
 	if (!sectionsTree) return []
 	const mainSectionNames = Object.keys(sectionsTree)
 
