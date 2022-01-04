@@ -4,7 +4,7 @@ import { MultipleSubSectionNamesQuery } from '../../../../../../sharedTypes/gqlQ
 import mainSectionNamesQuery from '../../../queries/mainSectionNamesQuery'
 import multipleSubSectionNamesQuery from '../../../queries/multipleSubSectionNamesQuery'
 
-type GenerateItem = (id: string, text: string, childItems?: string[]) => Item
+type GenerateItem = (id: string, text: string, childItems?: ReadonlyArray<string>) => Item
 
 const getDxTreeItems = (multipleSubSectionNames: MultipleSubSectionNamesQuery) => {
 	if (!multipleSubSectionNames) return null

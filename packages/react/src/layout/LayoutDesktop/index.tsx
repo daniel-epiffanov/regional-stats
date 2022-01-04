@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import Header from './Header'
-import styles from './styles/Desktop.module.scss'
+import styles from './styles/index.module.scss'
 
-const Layout: FC = (props) => {
+const LayoutDesktop: FC = (props) => {
 	const { children } = props
 
 	return (
@@ -24,4 +24,4 @@ const Layout: FC = (props) => {
 	)
 }
 
-export default Layout
+export default LayoutDesktop

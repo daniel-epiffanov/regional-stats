@@ -1,4 +1,4 @@
-import LogoSvg from '../assets/logo.svg'
+import LogoSvg from '../../assets/logo.svg'
 import styles from './styles/Logo.module.scss'
 
 const LOGO_TXT = 'рос|стат'.toUpperCase()
