@@ -20,7 +20,7 @@ const SectionsTree: FC = () => {
 
 	const getDxTreeItems = () => {
 		if (loading || error || !sectionsTreeResponse) return []
-		return makeDxTreeItems(sectionsTreeResponse)
+		return makeDxTreeItems(sectionsTreeResponse, selectedItemId)
 	}
 
 	const onItemSelectionChanged = async (e: ItemSelectionChangedEvent) => {
@@ -48,24 +48,34 @@ const SectionsTree: FC = () => {
 	// }
 
 	const itemRenderHandler = (item: { id: string, text: string }, index: number) => {
-		console.log({ item })
-		const isSubSectionName = index > mainSectionNames.length - 1
+		// console.log({ item })
+		// const isSubSectionName = index > mainSectionNames.length - 1
+		const isSubSectionName = item.id.split('_').length > 1
 		if (isSubSectionName) return <CheckBox value={selectedItemId === item.id} text={item.text} />
 
 		return <span>{item.text}</span>
+	}
+
+	const onItemClickHandler = (e: any) => {
+		// const itemData: Item = e.itemData
+		const isSecondLevel = e.itemData.id.split('_').length > 1
+		// console.log({ itemData })
+		// console.log(itemData.id)
+		if (isSecondLevel) setSelectedItemId(`${e.itemData.id}`)
 	}
 
 	return (
 		<div>
 			<TreeView
 				items={getDxTreeItems()}
-				selectByClick
+				// selectByClick
 				// showCheckBoxesMode="normal"
 				selectionMode="single"
 				expandEvent="click"
 				searchEnabled
 				itemRender={itemRenderHandler}
 				onItemSelectionChanged={onItemSelectionChanged}
+				onItemClick={onItemClickHandler}
 			/>
 		</div>
 	)
