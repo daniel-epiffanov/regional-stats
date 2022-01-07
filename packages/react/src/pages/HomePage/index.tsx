@@ -5,7 +5,7 @@ import { useState, useEffect, FC } from 'react'
 import { SelectionParamsProvider, useSelectionParamsContext } from './context/selectionParamsContext'
 import useSelectedRegion from './hooks/useSelectedRegion'
 import useSelectedSectionNames from './hooks/useSelectedSectionNames'
-import SectionsTree from './SectionsTree'
+import MenuSectionsTree from './MenuSectionsTree'
 import styles from './styles/index.module.scss'
 import VectorMap from './VectorMap'
 
@@ -60,7 +60,7 @@ const HomePageLayout: FC = () => {
 			<Item>
 				<Location screen="md lg sm" row={2} col={0} />
 				<div>
-					<SectionsTree />
+					<MenuSectionsTree />
 				</div>
 			</Item>
 

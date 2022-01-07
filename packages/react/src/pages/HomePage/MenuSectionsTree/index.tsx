@@ -8,7 +8,7 @@ import useSectionsTreeQuery from './hooks/useSectionsTreeQuery'
 import makeDxTreeItems from './helpers/makeDxTreeItems'
 import { useSelectionParamsContext } from '../context/selectionParamsContext'
 
-const SectionsTree: FC = () => {
+const MenuSectionsTree: FC = () => {
 	const { loading, error, data: sectionsTreeResponse } = useSectionsTreeQuery()
 	const { selectionParamsHandler } = useSelectionParamsContext()
 	const [selectedItemId, setSelectedItemId] = useState('20_3')
@@ -18,13 +18,8 @@ const SectionsTree: FC = () => {
 		return makeDxTreeItems(sectionsTreeResponse, selectedItemId)
 	}
 
-	// if (loading) return <Message message="Загрузка разделов статистики..." />
-	// if (error) {
-	// 	console.error('error on section tree component')
-	// 	console.error({ error })
-	// 	return <Message type="error" message="Произошла ошибка.
-	// Мы не можем получить разделы статистики с сервера." />
-	// }
+	if (loading) return <Message type="message" text="Loading menu sections." />
+	if (error) return <Message type="error" text="We have not fetched the menu sections." />
 
 	const itemRenderHandler = (item: { id: string, text: string }, index: number) => {
 		const isSubSectionName = item.id.split('_').length > 1
@@ -58,4 +53,4 @@ const SectionsTree: FC = () => {
 	)
 }
 
-export default SectionsTree
+export default MenuSectionsTree

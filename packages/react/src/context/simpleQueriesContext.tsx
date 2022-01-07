@@ -3,6 +3,7 @@ import {
 	createContext, FC, useContext,
 } from 'react'
 import { MainSectionNamesResponse, RegionNamesResponse, YearsResponse } from '../../../../sharedTypes/gqlQueries'
+import Message from '../components/Message'
 
 interface ContextValues {
 	regionNames: RegionNamesResponse,
@@ -23,19 +24,9 @@ export const useSimpleQueriesContext = () => useContext(SimpleQueriesContext)
 export const SimpleQueriesProvider: FC = ({ children }) => {
 	const { loading, error, data: simpleQueriesData } = useQuery<ReadonlyContextValues>(QUERY)
 
-	if (loading) return <span>We are fetching data. Please, wait...</span>
+	if (loading) return <Message type="message" text="We are fetching basic data." />
 
-	if (error || !simpleQueriesData) {
-		return (
-			<span>
-				<strong>
-					Error, data was not fetched!
-					{' '}
-					<em>Try to reload the page!</em>
-				</strong>
-			</span>
-		)
-	}
+	if (error || !simpleQueriesData) return <Message type="error" text="Basic data was not fetched!" />
 
 	return (
 		<SimpleQueriesContext.Provider value={simpleQueriesData}>

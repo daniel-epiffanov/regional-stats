@@ -1,16 +1,14 @@
-// import { Toast } from 'devextreme-react/toast'
 import { FC, useEffect } from 'react'
-import styles from './styles/Message.module.scss'
 
 interface Props {
-	message: string,
-	type?: 'error' | 'msg'
+	text: string,
+	type: 'error' | 'message'
 }
 
 const RELOAD_TIMEOUT_MSCDS = 20 * 1000
 const RELOAD_TIMEOUT_SCNDS = RELOAD_TIMEOUT_MSCDS / 1000
 
-const Message: FC<Props> = ({ message, type }) => {
+const Message: FC<Props> = ({ text, type }) => {
 	useEffect(() => {
 		if (type !== 'error') return
 		setTimeout(() => {
@@ -18,30 +16,19 @@ const Message: FC<Props> = ({ message, type }) => {
 		}, RELOAD_TIMEOUT_MSCDS)
 	}, [type])
 
+	if (type === 'message') {
+		return (
+			<span>{text} Please, wait...</span>
+		)
+	}
+
 	return (
-		<div className={styles.root}>
-			<p>{message}</p>
-			{type === 'error' && (
-				<p>
-					Страница перезагрузится через
-					{' '}
-					{RELOAD_TIMEOUT_SCNDS}
-					{' '}
-					секунд...
-				</p>
-			)}
-		</div>
+		<span>
+			<strong>
+				{text} <em>We will reload the page in {RELOAD_TIMEOUT_SCNDS} seconds.</em>
+			</strong>
+		</span>
 	)
 }
-
-Message.defaultProps = {
-	type: 'msg',
-}
-// <Toast
-// 	visible
-// 	message={displayMessage}
-// 	type="error"
-// 	displayTime={RELOAD_TIMEOUT_MSCDS * 2}
-// />
 
 export default Message
