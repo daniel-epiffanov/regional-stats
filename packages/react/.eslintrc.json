@@ -62,7 +62,7 @@
 		"react/jsx-no-bind": "off",
 		"no-unused-expressions": "off",
 		"prefer-destructuring": "off",
-		"arrow-parens": "warn",
+		"arrow-parens": "off",
 		"consistent-return": "warn",
 		"arrow-body-style": "off"
 	},

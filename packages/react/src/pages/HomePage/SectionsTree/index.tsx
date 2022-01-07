@@ -1,21 +1,16 @@
-/* eslint-disable max-len */
-/* eslint-disable import/extensions */
 import { FC, useState } from 'react'
 import { TreeView } from 'devextreme-react/tree-view'
-import {
-	Item, ItemClickEvent, ItemSelectionChangedEvent, SelectionChangedEvent,
-} from 'devextreme/ui/tree_view'
+import { Item, ItemSelectionChangedEvent } from 'devextreme/ui/tree_view'
 import { CheckBox } from 'devextreme-react'
 import styles from './styles/index.module.scss'
-import { SelectedSectionNamesHandler } from '../hooks/useSelectedSectionNames'
 import Message from '../../../components/Message'
 import useSectionsTreeQuery from './hooks/useSectionsTreeQuery'
 import makeDxTreeItems from './helpers/makeDxTreeItems'
-import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
+import { useSelectionParamsContext } from '../context/selectionParamsContext'
 
 const SectionsTree: FC = () => {
-	const { mainSectionNames } = useSimpleQueriesContext()
 	const { loading, error, data: sectionsTreeResponse } = useSectionsTreeQuery()
+	const { selectionParamsHandler } = useSelectionParamsContext()
 	const [selectedItemId, setSelectedItemId] = useState('20_3')
 
 	const getDxTreeItems = () => {
@@ -23,49 +18,37 @@ const SectionsTree: FC = () => {
 		return makeDxTreeItems(sectionsTreeResponse, selectedItemId)
 	}
 
-	const onItemSelectionChanged = async (e: ItemSelectionChangedEvent) => {
-		const itemData: Item = e.itemData
-		console.log({ itemData })
-		if (itemData.id) setSelectedItemId(`${itemData.id}`)
-		// const { node } = e
-		// if (itemData.items) {
-		// 	await e.component.unselectAll()
-		// 	return null
-		// }
-		// const parentText = node?.parent?.text || ''
-		// const text = node?.text || ''
-
-		// selectedSectionNamesHandler(parentText, text)
-
-		return null
-	}
-
 	// if (loading) return <Message message="Загрузка разделов статистики..." />
 	// if (error) {
 	// 	console.error('error on section tree component')
 	// 	console.error({ error })
-	// 	return <Message type="error" message="Произошла ошибка. Мы не можем получить разделы статистики с сервера." />
+	// 	return <Message type="error" message="Произошла ошибка.
+	// Мы не можем получить разделы статистики с сервера." />
 	// }
 
 	const itemRenderHandler = (item: { id: string, text: string }, index: number) => {
-		// console.log({ item })
-		// const isSubSectionName = index > mainSectionNames.length - 1
 		const isSubSectionName = item.id.split('_').length > 1
 		if (isSubSectionName) return <CheckBox value={selectedItemId === item.id} text={item.text} />
 
 		return <span>{item.text}</span>
 	}
 
-	const onItemClickHandler = (e: any) => {
+	const onItemClickHandler = (e: ItemSelectionChangedEvent) => {
 		const isSecondLevel = e.itemData.id.split('_').length > 1
-		if (isSecondLevel) setSelectedItemId(`${e.itemData.id}`)
+		if (isSecondLevel) {
+			setSelectedItemId(`${e.itemData.id}`)
+			selectionParamsHandler({
+				selectedSubSectionName: e.node?.text,
+				selectedMainSectionName: e.node?.parent?.text,
+			})
+		}
 	}
 
 	return (
 		<div>
 			<TreeView
 				items={getDxTreeItems()}
-				selectionMode="single"
+				// selectionMode="single"
 				expandEvent="click"
 				searchEnabled
 				itemRender={itemRenderHandler}

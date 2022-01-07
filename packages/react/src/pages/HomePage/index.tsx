@@ -1,31 +1,31 @@
 import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, FC } from 'react'
+import { SelectionParamsProvider, useSelectionParamsContext } from './context/selectionParamsContext'
 import useSelectedRegion from './hooks/useSelectedRegion'
 import useSelectedSectionNames from './hooks/useSelectedSectionNames'
 import SectionsTree from './SectionsTree'
 import styles from './styles/index.module.scss'
 import VectorMap from './VectorMap'
 
-interface SelectedSections {
-
-}
-
-export type SelectionMode = 'multiple' | 'single'
-
-const HomePage = () => {
-	const { selectedRegion, selectedRegionHandler } = useSelectedRegion()
+const HomePageLayout: FC = () => {
 	const {
-		selectedMainSectionName, selectedSubSectionTitle,
-		selectedSectionNamesHandler,
-	} = useSelectedSectionNames()
+		selectedRegion,
+		selectedMainSectionName,
+		selectedSubSectionName,
+	} = useSelectionParamsContext()
+	// const { selectedRegion, selectedRegionHandler } = useSelectedRegion()
+	// const {
+	// 	selectedMainSectionName, selectedSubSectionTitle,
+	// 	selectedSectionNamesHandler,
+	// } = useSelectedSectionNames()
 
 	useEffect(() => {
 		console.log({ selectedRegion })
 		console.log({ selectedMainSectionName })
-		console.log({ selectedSubSectionTitle })
-	}, [selectedRegion, selectedMainSectionName, selectedSubSectionTitle])
+		console.log({ selectedSubSectionName })
+	}, [selectedRegion, selectedMainSectionName, selectedSubSectionName])
 
 	return (
 		<ResponsiveBox>
@@ -65,6 +65,14 @@ const HomePage = () => {
 			</Item>
 
 		</ResponsiveBox>
+	)
+}
+
+const HomePage: FC = () => {
+	return (
+		<SelectionParamsProvider>
+			<HomePageLayout />
+		</SelectionParamsProvider>
 	)
 }
 
