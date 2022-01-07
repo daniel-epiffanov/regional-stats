@@ -1,16 +1,16 @@
 import { FC, useState } from 'react'
 import { TreeView } from 'devextreme-react/tree-view'
-import { Item, ItemSelectionChangedEvent } from 'devextreme/ui/tree_view'
+import { ItemClickEvent } from 'devextreme/ui/tree_view'
 import { CheckBox } from 'devextreme-react'
 import styles from './styles/index.module.scss'
 import Message from '../../../components/Message'
 import useSectionsTreeQuery from './hooks/useSectionsTreeQuery'
 import makeDxTreeItems from './helpers/makeDxTreeItems'
-import { useSelectionParamsContext } from '../context/selectionParamsContext'
+import { useSelectionsContext } from '../context/selectionsContext'
 
 const MenuSectionsTree: FC = () => {
 	const { loading, error, data: sectionsTreeResponse } = useSectionsTreeQuery()
-	const { selectionParamsHandler } = useSelectionParamsContext()
+	const { selectionsHandler } = useSelectionsContext()
 	const [selectedItemId, setSelectedItemId] = useState('20_3')
 
 	const getDxTreeItems = () => {
@@ -28,11 +28,11 @@ const MenuSectionsTree: FC = () => {
 		return <span>{item.text}</span>
 	}
 
-	const onItemClickHandler = (e: ItemSelectionChangedEvent) => {
+	const onItemClickHandler = (e: ItemClickEvent) => {
 		const isSecondLevel = e.itemData.id.split('_').length > 1
 		if (isSecondLevel) {
 			setSelectedItemId(`${e.itemData.id}`)
-			selectionParamsHandler({
+			selectionsHandler({
 				selectedSubSectionName: e.node?.text,
 				selectedMainSectionName: e.node?.parent?.text,
 			})

@@ -2,7 +2,7 @@ import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
 import { useState, useEffect, FC } from 'react'
-import { SelectionParamsProvider, useSelectionParamsContext } from './context/selectionParamsContext'
+import { SelectionsProvider, useSelectionsContext } from './context/selectionsContext'
 import useSelectedRegion from './hooks/useSelectedRegion'
 import useSelectedSectionNames from './hooks/useSelectedSectionNames'
 import MenuSectionsTree from './MenuSectionsTree'
@@ -14,12 +14,7 @@ const HomePageLayout: FC = () => {
 		selectedRegion,
 		selectedMainSectionName,
 		selectedSubSectionName,
-	} = useSelectionParamsContext()
-	// const { selectedRegion, selectedRegionHandler } = useSelectedRegion()
-	// const {
-	// 	selectedMainSectionName, selectedSubSectionTitle,
-	// 	selectedSectionNamesHandler,
-	// } = useSelectedSectionNames()
+	} = useSelectionsContext()
 
 	useEffect(() => {
 		console.log({ selectedRegion })
@@ -35,17 +30,12 @@ const HomePageLayout: FC = () => {
 			<Row ratio={0.7} />
 			<Col ratio={1} />
 
-			{/* <Item>
+			<Item>
 				<Location screen="md lg" row={0} col={0} />
 				<div>
-					<VectorMap
-						selectedRegionHandler={selectedRegionHandler}
-						selectedRegion={selectedRegion}
-						mainSectionName={selectedMainSectionName}
-						subSectionTitle={selectedSubSectionTitle}
-					/>
+					<VectorMap />
 				</div>
-			</Item> */}
+			</Item>
 
 			{/* <Item>
 				<Location screen="md lg" row={1} col={0} />
@@ -70,9 +60,9 @@ const HomePageLayout: FC = () => {
 
 const HomePage: FC = () => {
 	return (
-		<SelectionParamsProvider>
+		<SelectionsProvider>
 			<HomePageLayout />
-		</SelectionParamsProvider>
+		</SelectionsProvider>
 	)
 }
 

@@ -11,17 +11,16 @@ import VectorMap, {
 	LoadingIndicator,
 } from 'devextreme-react/vector-map'
 import dxVectorMap, { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
-import styles from './styles/VectorMap.module.scss'
+import styles from './styles/index.module.scss'
 import useVectorMapCoordsQuery from './hooks/useVectorMapCoordsQuery'
-import Message from '../../components/Message'
-import useComponentInstance from '../../hooks/useComponentInstance'
+import Message from '../../../components/Message'
+import useComponentInstance from '../../../hooks/useComponentInstance'
+import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
+import { useSelectionsContext } from '../context/selectionsContext'
 
-interface Props {
-	selectedRegionHandler: (newSelectedRegion: string) => void,
-	selectedRegion: string, // ***
-	mainSectionName: string,
-	subSectionTitle: string,
-}
+interface Props { }
+
+type ReadonlyProps = Readonly<Props>
 
 const BOUNDS = [71, 97, 45, 26]
 
@@ -30,11 +29,8 @@ const customizeText = (args: any) => {
 	return 'yo'
 }
 
-const VectorMapRComponent: FC<Props> = (props) => {
-	const {
-		selectedRegionHandler, selectedRegion, mainSectionName, subSectionTitle,
-	} = props
-
+const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
+	const { selectedRegion, selectionsHandler } = useSelectionsContext()
 	// graphql response
 	const { loading, error, data } = useVectorMapCoordsQuery()
 	const coordsByRegionType = data?.coordsByRegionType || []
@@ -80,22 +76,13 @@ const VectorMapRComponent: FC<Props> = (props) => {
 			if (name_ru === selectedRegion) element.selected(true)
 
 			if (!statisticsRegionNames.includes(name_ru)) {
-				element.applySettings({
-					opacity: 0.2,
-				})
-				return
+				element.applySettings({ opacity: 0.2 })
 			}
 
-			if (!mainSectionName || !subSectionTitle) return
+			// if (!mainSectionName || !subSectionTitle) return
 
-			// const queryOptions = {
-			// 	selectedRegion: name_ru,
-			// 	mainSectionName,
-			// 	subSectionTitle,
-			// 	startYear: year,
-			// 	endYear: year,
-			// }
-			element.attribute('value', i * 2)
+			// element.attribute('value', i * 2)
+
 			// const statisticsByYears = await statisticsByYearsQuery(queryOptions)
 			// if (!statisticsByYears) return
 			// const value = parseFloat(statisticsByYears[0].value)
@@ -103,18 +90,18 @@ const VectorMapRComponent: FC<Props> = (props) => {
 		})
 	}
 
-	function customizeTooltip(element: any) {
-		return {
-			text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
-		}
-	}
+	// function customizeTooltip(element: any) {
+	// 	return {
+	// 		text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
+	// 	}
+	// }
 
 	function onMapClick(e: MapClickEvent) {
 		if (!e.target) return
 		const name_ru = e.target.attribute('name_ru')
-		if (!statisticsRegionNames.includes(name_ru)) return
+		// if (!statisticsRegionNames.includes(name_ru)) return
 
-		selectedRegionHandler(name_ru)
+		// selectedRegionHandler(name_ru)
 	}
 
 	// const onSelectionChanged = (e: MapClickEvent) => {
