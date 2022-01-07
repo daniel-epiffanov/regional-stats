@@ -125,11 +125,12 @@ const VectorMapRComponent: FC<Props> = (props) => {
 
 	// const colorGroups = [0, 5, 10]
 
-	if (loading) return <Message message="Загрузка карты..." />
-	if (error) {
-		console.error({ error })
-		return <Message message="Произошла ошибка. Мы не можем получить координаты для карты с сервера." type="error" />
-	}
+	// if (loading) return <Message message="Загрузка карты..." />
+	// if (error) {
+	// 	console.error({ error })
+	// 	return <Message message="Произошла ошибка.
+	// Мы не можем получить координаты для карты с сервера." type="error" />
+	// }
 
 	return (
 		<div style={{ position: 'relative' }}>
