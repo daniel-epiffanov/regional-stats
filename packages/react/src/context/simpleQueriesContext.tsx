@@ -21,7 +21,7 @@ const SimpleQueriesContext = createContext<ReadonlyContextValues>({} as Readonly
 export const useSimpleQueriesContext = () => useContext(SimpleQueriesContext)
 
 export const SimpleQueriesProvider: FC = ({ children }) => {
-	const { loading, error, data: simpleQueriesData } = useQuery<ContextValues>(QUERY)
+	const { loading, error, data: simpleQueriesData } = useQuery<ReadonlyContextValues>(QUERY)
 
 	if (loading) return <span>We are fetching data. Please, wait...</span>
 

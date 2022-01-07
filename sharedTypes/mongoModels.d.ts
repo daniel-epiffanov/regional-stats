@@ -19,7 +19,7 @@ export type ReadonlyRegionCoords = Readonly<RegionCoords>
 
 // statistics schema
 
-export interface YearValue {
+interface YearValue {
 	year: number,
 	value: string,
 }

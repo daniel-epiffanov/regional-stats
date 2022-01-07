@@ -14,7 +14,7 @@ interface SelectedSections {
 
 export type SelectionMode = 'multiple' | 'single'
 
-const Home = () => {
+const HomePage = () => {
 	const { selectedRegion, selectedRegionHandler } = useSelectedRegion()
 	const {
 		selectedMainSectionName, selectedSubSectionTitle,
@@ -67,4 +67,5 @@ const Home = () => {
 		</ResponsiveBox>
 	)
 }
-export default Home
+
+export default HomePage

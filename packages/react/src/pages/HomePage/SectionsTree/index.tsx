@@ -11,7 +11,7 @@ import { SelectedSectionNamesHandler } from '../hooks/useSelectedSectionNames'
 import Message from '../../../components/Message'
 import useSectionsTreeQuery from './hooks/useSectionsTreeQuery'
 import makeDxTreeItems from './helpers/makeDxTreeItems'
-import { useSimpleQueriesContext } from '../../../context/simpleQueries'
+import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 
 const SectionsTree: FC = () => {
 	const { mainSectionNames } = useSimpleQueriesContext()
@@ -57,10 +57,7 @@ const SectionsTree: FC = () => {
 	}
 
 	const onItemClickHandler = (e: any) => {
-		// const itemData: Item = e.itemData
 		const isSecondLevel = e.itemData.id.split('_').length > 1
-		// console.log({ itemData })
-		// console.log(itemData.id)
 		if (isSecondLevel) setSelectedItemId(`${e.itemData.id}`)
 	}
 
@@ -68,13 +65,10 @@ const SectionsTree: FC = () => {
 		<div>
 			<TreeView
 				items={getDxTreeItems()}
-				// selectByClick
-				// showCheckBoxesMode="normal"
 				selectionMode="single"
 				expandEvent="click"
 				searchEnabled
 				itemRender={itemRenderHandler}
-				onItemSelectionChanged={onItemSelectionChanged}
 				onItemClick={onItemClickHandler}
 			/>
 		</div>

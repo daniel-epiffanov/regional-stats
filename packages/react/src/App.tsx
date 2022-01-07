@@ -5,9 +5,9 @@ import {
 	Route,
 	Routes,
 } from 'react-router-dom'
-import Home from './pages/Home'
+import Home from './pages/HomePage'
 import CustomApolloProvider from './context/CustomApolloProvider'
-import { SimpleQueriesProvider } from './context/simpleQueries'
+import { SimpleQueriesProvider } from './context/simpleQueriesContext'
 
 themes.current(window.localStorage.getItem('dx-theme') || 'material.blue.light')
 
