@@ -17,6 +17,7 @@ import useComponentInstance from '../../../hooks/useComponentInstance'
 import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 import { useSelectionsContext } from '../context/selectionsContext'
 import statisticsByYearsQuery from '../../../manualQueries/statisticsByYears'
+import useStatisticsByYearQuery from './hooks/useStatisticsByYearQuery'
 
 interface Props { }
 
@@ -35,7 +36,7 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 		selectionsHandler,
 		selectedMainSectionName,
 		selectedSubSectionName,
-		selectedYear,
+		selectedYearOnMap,
 	} = useSelectionsContext()
 	const { regionNames } = useSimpleQueriesContext()
 	const isRegionNameInStatistics = (regionName: string) => regionNames.includes(regionName)
@@ -43,35 +44,36 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 	// graphql response
 	const { loading, error, data } = useVectorMapCoordsQuery()
 	const coordsByRegionType = data?.coordsByRegionType || []
-	const statisticsRegionNames = data?.regionNames || []
+	const getRegionNamesOnMapAndStatistics = () => {
+		const regionNamesOnMap = coordsByRegionType
+			.map(coordsByRegionTypeItem => coordsByRegionTypeItem.properties.name_ru)
+
+		return regionNamesOnMap.filter(regionNameOnMap => regionNames.includes(regionNameOnMap))
+	}
+	const { statisticsByYear } = useStatisticsByYearQuery(getRegionNamesOnMapAndStatistics())
+	console.log({ statisticsByYear })
 
 	// mapSetups
 	const { instance, onInitialized } = useComponentInstance<dxVectorMap>()
 	const [colorGroups, setColorGroups] = useState<number[]>([0, 5, 10])
 
 	useEffect(() => {
-		if (!selectedMainSectionName || !selectedSubSectionName || !instance) return
+		if (!selectedMainSectionName
+			|| !selectedSubSectionName
+			|| !instance
+			|| Object.keys(statisticsByYear).length === 0) return
 
-		(async () => {
-			const statisticsByYears = await statisticsByYearsQuery({
-				regionName: selectedRegionName,
-				mainSectionName: selectedMainSectionName,
-				subSectionName: selectedSubSectionName,
-				startYear: selectedYear,
-				endYear: selectedYear,
-			})
-
-			console.log({ statisticsByYears })
-		})()
-
-		// const elements = instance.getLayers()[0].getElements()
+		const elements = instance.getLayers()[0].getElements()
 
 		// let values: number[] = []
 
-		// elements.forEach((element) => {
-		// 	const regionName = element.attribute('name_ru')
-		// 	if (isRegionNameInStatistics(regionName)) values.push(element.attribute('value'))
-		// })
+		elements.forEach((element) => {
+			const regionName = element.attribute('name_ru')
+			if (isRegionNameInStatistics(regionName)) {
+				// debugger
+				element.attribute('value', statisticsByYear[regionName].value)
+			}
+		})
 
 		// values = values.sort((a, b) => a - b)
 
@@ -88,7 +90,8 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 		// }
 		// const sortedValues = values.sort((a, b) => a - b)
 		// setColorGroups(sortedValues)
-	}, [instance, selectedMainSectionName, selectedSubSectionName])
+	}, [instance, selectedMainSectionName, selectedSubSectionName,
+		selectedMainSectionName, statisticsByYear])
 
 	async function customizeLayer(elements: any) {
 		elements.map(async (element: any, i: number) => {
@@ -159,8 +162,8 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 					customize={customizeLayer}
 					selectionMode="single"
 					// name="regions"
-					// colorGroupingField="value"
-					// colorGroups={colorGroups}
+					colorGroupingField="value"
+					colorGroups={colorGroups}
 					label={{
 						enabled: true,
 						dataField: 'name_ru',

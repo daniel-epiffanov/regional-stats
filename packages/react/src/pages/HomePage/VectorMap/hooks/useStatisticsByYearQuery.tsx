@@ -1,38 +1,68 @@
-import { useQuery, gql } from '@apollo/client'
+import { useLazyQuery, gql } from '@apollo/client'
+import { useEffect, useState } from 'react'
 import { RegionNamesResponse, CoordsByRegionTypeResponse } from '../../../../../../../sharedTypes/gqlQueries'
+import { ReadonlyStatistics, ReadonlyYearValue } from '../../../../../../../sharedTypes/mongoModels'
 import { useSimpleQueriesContext } from '../../../../context/simpleQueriesContext'
 import { useSelectionsContext } from '../../context/selectionsContext'
 
-type QueryResponse = {
-	coordsByRegionType: CoordsByRegionTypeResponse,
-	regionNames: RegionNamesResponse
-}
+type QueryResponse = Readonly<{
+	[key: string]: ReadonlyYearValue
+}>
 
-const QUERY = gql` query {
-	coordsByRegionType(type: "federalDistrict") {
-		type,
-		geometry {
-			type,
-			coordinates
-		},
-		properties {
-			name_en
-			name_ru
-		}
-	},
-	regionNames
-}`
+type StatisticsByYear = Readonly<{
+	[key: ReadonlyStatistics['regionName']]: ReadonlyYearValue
+}>
 
-const useVectorMapCoordsQuery = () => {
-	const { regionNames } = useSimpleQueriesContext()
-	const { selectedYear, selectedRegionType } = useSelectionsContext()
-	const methods = useQuery<QueryResponse>(QUERY)
+// regionNamesOnMap: ReadonlyArray<ReadonlyStatistics['regionName']>
+const useStatisticsByYearQuery = (regionNamesOnMapAndStatistics: ReadonlyArray<ReadonlyStatistics['regionName']>) => {
+	console.log({ regionNamesOnMapAndStatistics })
+	const {
+		selectedYearOnMap,
+		selectedSubSectionName,
+		selectedMainSectionName,
+	} = useSelectionsContext()
 
+	const multipleRegionsStatisticsQuery = regionNamesOnMapAndStatistics.map((regionName, i) => `region_${i}: statisticsByYears (
+		regionName: "${regionName}",
+		mainSectionName: "${selectedMainSectionName}",
+		subSectionName: "${selectedSubSectionName}",
+		startYear: ${selectedYearOnMap},
+		endYear: ${selectedYearOnMap}
+	) {
+		year,
+		value
+	}`)
+
+	console.log({ multipleRegionsStatisticsQuery })
+
+	const QUERY = gql` query {
+		${multipleRegionsStatisticsQuery},
+		regionNames,
+	}`
+	console.log({ QUERY })
+
+	const [makeQuery, methods] = useLazyQuery<QueryResponse>(QUERY)
 	const { loading, error, data } = methods
+	const [statisticsByYear, setStatisticsByYear] = useState<StatisticsByYear>({})
+
+	useEffect(() => {
+		const isMakingQueryMakesSense = regionNamesOnMapAndStatistics.length > 0
+		if (isMakingQueryMakesSense) makeQuery()
+	}, [selectedSubSectionName])
+
+	useEffect(() => {
+		if (!data) return
+		const statisticsByYearEntries = Object.entries(data)
+			.map(([indexedRegionName, yearValue], i) => {
+				const indexOfRegion = parseInt(indexedRegionName.split('_')[1])
+				return [regionNamesOnMapAndStatistics[indexOfRegion], yearValue]
+			})
+		setStatisticsByYear(Object.fromEntries(statisticsByYearEntries))
+	}, [data])
 
 	// console.log({ data })
 
-	return methods
+	return { statisticsByYear }
 }
 
-export default useVectorMapCoordsQuery
+export default useStatisticsByYearQuery

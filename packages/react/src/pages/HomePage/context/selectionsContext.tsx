@@ -12,10 +12,12 @@ import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 
 interface ContextValues {
 	selectedRegionName: ReadonlyStatistics['regionName'],
-	selectedRegionType: ReadonlyRegionCoords['type'],
 	selectedMainSectionName: ReadonlyMainSection['name'],
 	selectedSubSectionName: ReadonlySubSection['name'],
-	selectedYear: ReadonlyYearValue['year'],
+
+	selectedRegionTypeOnMap: ReadonlyRegionCoords['type'],
+	selectedYearOnMap: ReadonlyYearValue['year'],
+
 	selectionsHandler: SelectionsHandler,
 }
 
@@ -36,8 +38,8 @@ export const SelectionsProvider: FC = ({ children }) => {
 		selectedRegionName: regionNames[1],
 		selectedMainSectionName: mainSectionNames[0],
 		selectedSubSectionName: '',
-		selectedYear: 2007,
-		selectedRegionType: 'federalDistrict',
+		selectedYearOnMap: 2007,
+		selectedRegionTypeOnMap: 'federalDistrict',
 	})
 
 	const selectionsHandler: SelectionsHandler = (newSelections) => {

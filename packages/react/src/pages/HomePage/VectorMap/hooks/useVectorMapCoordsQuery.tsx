@@ -2,15 +2,17 @@ import { useQuery, gql } from '@apollo/client'
 import { RegionNamesResponse, CoordsByRegionTypeResponse } from '../../../../../../../sharedTypes/gqlQueries'
 import { useSelectionsContext } from '../../context/selectionsContext'
 
-type QueryResponse = {
+interface QueryResponse {
 	coordsByRegionType: CoordsByRegionTypeResponse,
 	regionNames: RegionNamesResponse
 }
 
+type ReadonlyQueryResponse = Readonly<QueryResponse>
+
 const useVectorMapCoordsQuery = () => {
-	const { selectedRegionType } = useSelectionsContext()
+	const { selectedRegionTypeOnMap } = useSelectionsContext()
 	const QUERY = gql` query {
-		coordsByRegionType(type: "${selectedRegionType}") {
+		coordsByRegionType(type: "${selectedRegionTypeOnMap}") {
 			type,
 			geometry {
 				type,
@@ -23,7 +25,7 @@ const useVectorMapCoordsQuery = () => {
 		}
 	}`
 
-	const methods = useQuery<QueryResponse>(QUERY)
+	const methods = useQuery<ReadonlyQueryResponse>(QUERY)
 	// const { loading, error, data } = methods
 
 	return methods
