@@ -10,5 +10,5 @@ export type SubSectionNamesResponse = ReadonlyArray<ReadonlyStatisticsOfSubSecti
 export type SectionsTreeResponse = {
 	[key: string]: SubSectionNamesResponse
 }
-export type yearValueResponse = ReadonlyArray<ReadonlyStatisticsData>
+export type StatisticsDataResponse = ReadonlyArray<ReadonlyStatisticsData>
 export type CoordsByRegionTypeResponse = ReadonlyArray<ReadonlyRegionCoords>
