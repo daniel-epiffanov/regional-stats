@@ -16,12 +16,9 @@ import Message from '../../../components/Message'
 import useComponentInstance from '../../../hooks/useComponentInstance'
 import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 import { useSelectionsContext } from '../context/selectionsContext'
-import statisticsByYearsQuery from '../../../manualQueries/statisticsByYears'
-import useStatisticsByYearQuery from './hooks/useStatisticsByYearQuery'
+import useStatisticsDataQuery from './hooks/useStatisticsDataQuery'
 
-interface Props { }
-
-type ReadonlyProps = Readonly<Props>
+type Props = Readonly<{}>
 
 const BOUNDS = [71, 97, 45, 26]
 
@@ -30,7 +27,7 @@ const customizeText = (args: any) => {
 	return 'yo'
 }
 
-const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
+const VectorMapRComponent: FC<Props> = (props) => {
 	const {
 		selectedRegionName,
 		selectionsHandler,
@@ -50,7 +47,7 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 
 		return regionNamesOnMap.filter(regionNameOnMap => regionNames.includes(regionNameOnMap))
 	}
-	const { statisticsByYear } = useStatisticsByYearQuery(getRegionNamesOnMapAndStatistics())
+	const { statisticsByYear } = useStatisticsDataQuery(getRegionNamesOnMapAndStatistics())
 	console.log({ statisticsByYear })
 
 	// mapSetups
@@ -108,9 +105,9 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 
 			element.attribute('value', Math.floor(Math.random() * 10))
 
-			// const statisticsByYears = await statisticsByYearsQuery(queryOptions)
-			// if (!statisticsByYears) return
-			// const value = parseFloat(statisticsByYears[0].value)
+			// const statisticsData = await statisticsByYearsQuery(queryOptions)
+			// if (!statisticsData) return
+			// const value = parseFloat(statisticsData[0].value)
 			// element.attribute('value', value)
 		})
 	}
@@ -124,14 +121,6 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 
 		selectionsHandler({ selectedRegionName: regionName })
 	}
-
-	// const onSelectionChanged = (e: MapClickEvent) => {
-	// 	if (!e.target) return
-	// 	const name_ru: string = e.target.attribute('name_ru')
-	// 	selectedRegionHandler(name_ru)
-	// }
-
-	// const colorGroups = [0, 5, 10]
 
 	// if (loading) return <Message message="Загрузка карты..." />
 	// if (error) {

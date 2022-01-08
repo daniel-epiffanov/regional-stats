@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { StatisticsByYearsResponse } from '../../../../sharedTypes/gqlQueries'
+import { yearValueResponse } from '../../../../sharedTypes/gqlQueries'
 
 import { hostApi } from '../helpers/host'
 import GqlResponse from './@types/gqlResponse'
@@ -12,9 +12,9 @@ interface Options {
 	endYear: number
 }
 
-type StatisticsByYearsFn = (options: Options) => Promise<StatisticsByYearsResponse | null>
+type StatisticsByYearsFn = (options: Options) => Promise<yearValueResponse | null>
 
-type SingleSelectionResponse = GqlResponse<{ statisticsByYears: StatisticsByYearsResponse }>
+type SingleSelectionResponse = GqlResponse<{ statisticsData: yearValueResponse }>
 
 const statisticsByYearsQuery: StatisticsByYearsFn = async (options) => {
 	const {
@@ -23,7 +23,7 @@ const statisticsByYearsQuery: StatisticsByYearsFn = async (options) => {
 
 	const query = `
 	query {
-		statisticsByYears (
+		statisticsData (
 			regionName: "${regionName}",
 			mainSectionName: "${mainSectionName}",
 			subSectionName: "${subSectionTitle}",
@@ -36,9 +36,9 @@ const statisticsByYearsQuery: StatisticsByYearsFn = async (options) => {
 	}`
 
 	const axiosResponse = await axios.post<SingleSelectionResponse>(hostApi, { query })
-	const { statisticsByYears } = axiosResponse.data.data
-	if (!statisticsByYears) return null
-	return statisticsByYears
+	const { statisticsData } = axiosResponse.data.data
+	if (!statisticsData) return null
+	return statisticsData
 }
 
 export default statisticsByYearsQuery

@@ -19,30 +19,30 @@ export type ReadonlyRegionCoords = Readonly<RegionCoords>
 
 // statistics schema
 
-interface YearValue {
+interface StatisticsData {
 	year: number,
 	value: string,
 }
 
-interface SubSection {
+interface StatisticsOfSubSection {
 	name: string,
 	orderNumber: string,
 	children: SubSection[],
-	yearValues: YearValue[],
+	yearValues: StatisticsData[],
 }
 
-interface MainSection {
+interface StatisticsOfMainSection {
 	name: string,
 	fullFilename: string,
 	subSections: SubSection[],
 }
 
-interface Statistics {
+interface StatisticsOfRegion {
 	regionName: string,
 	mainSections: MainSection[],
 }
 
-export type ReadonlyStatistics = Readonly<Statistics>
-export type ReadonlyMainSection = Readonly<MainSection>
-export type ReadonlySubSection = Readonly<SubSection>
-export type ReadonlyYearValue = Readonly<YearValue>
+export type ReadonlyStatisticsOfRegion = Readonly<StatisticsOfRegion>
+export type ReadonlyStatisticsOfMainSection = Readonly<StatisticsOfMainSection>
+export type ReadonlyStatisticsOfSubSection = Readonly<StatisticsOfSubSection>
+export type ReadonlyStatisticsData = Readonly<StatisticsData>

@@ -1,4 +1,4 @@
-type YearValue {
+type StatisticsData {
 	year: Int,
 	value: String
 }

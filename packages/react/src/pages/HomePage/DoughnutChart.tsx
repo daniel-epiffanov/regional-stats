@@ -13,7 +13,7 @@ import styles from './styles/DoughnutChart.module.scss'
 // import { StatisticsByYearsQuery } from '../../../../../sharedTypes/gqlQueries'
 // import { hostApi } from '../../helpers/host'
 // import { SelectionMode } from './Home'
-// import statisticsByYearsQuery from '../../queries/statisticsByYears'
+// import statisticsByYearsQuery from '../../queries/statisticsData'
 
 interface Props {
 	mainSectionName: string,
@@ -21,7 +21,7 @@ interface Props {
 	selectedRegion: string,
 }
 
-// type SingleSelectionResponse = GqlResponse<{ statisticsByYears: StatisticsByYearsQuery }>
+// type SingleSelectionResponse = GqlResponse<{ statisticsData: StatisticsByYearsQuery }>
 // type MultipleSelectionResponse = GqlResponse<{ [key: string]: StatisticsByYears }>
 
 interface DataSource {
@@ -41,9 +41,9 @@ const DoughnutChart: FC<Props> = (props) => {
 	// 	};
 
 	// 	(async () => {
-	// 		const statisticsByYears = await statisticsByYearsQuery(queryOptions)
-	// 		if (!statisticsByYears) return
-	// 		setDataSource(statisticsByYears)
+	// 		const statisticsData = await statisticsByYearsQuery(queryOptions)
+	// 		if (!statisticsData) return
+	// 		setDataSource(statisticsData)
 	// 	})()
 	// }, [selectedRegion, mainSectionName, subSectionTitle])
 

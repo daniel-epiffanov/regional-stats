@@ -1,5 +1,5 @@
-import { StatisticsByYearsResponse } from '../../../../sharedTypes/gqlQueries'
-import { ReadonlyYearValue } from '../../../../sharedTypes/mongoModels'
+import { yearValueResponse } from '../../../../sharedTypes/gqlQueries'
+import { ReadonlyStatisticsData } from '../../../../sharedTypes/mongoModels'
 import statisticsModel from '../mongooseModels/statistics'
 import { ResolverFnAsync } from './@types/ResolverFn'
 
@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config()
 }
 
-const statisticsByYears: ResolverFnAsync<StatisticsByYearsResponse> = async (
+const statisticsData: ResolverFnAsync<yearValueResponse> = async (
 	parent: any, args: any,
 ) => {
 	const {
@@ -16,7 +16,7 @@ const statisticsByYears: ResolverFnAsync<StatisticsByYearsResponse> = async (
 	const defaultRegion = process.env.DEFAULT_REGION
 	// console.log({ defaultRegion })
 	// console.log({ mainSectionName })
-	const mongoRes = await statisticsModel.aggregate<{ yearValues: ReadonlyYearValue[] }>([
+	const mongoRes = await statisticsModel.aggregate<{ yearValues: ReadonlyStatisticsData[] }>([
 		{ $match: { regionName: regionName || defaultRegion } },
 
 		{
@@ -54,11 +54,11 @@ const statisticsByYears: ResolverFnAsync<StatisticsByYearsResponse> = async (
 												input: {
 													$filter: {
 														input: '$$subSection.yearValues',
-														as: 'yearValue',
+														as: 'statisticsData',
 														cond: {
 															$and: [
-																{ $gte: ['$$yearValue.year', startYear] },
-																{ $lte: ['$$yearValue.year', endYear] },
+																{ $gte: ['$$statisticsData.year', startYear] },
+																{ $lte: ['$$statisticsData.year', endYear] },
 															],
 														},
 													},
@@ -91,4 +91,4 @@ const statisticsByYears: ResolverFnAsync<StatisticsByYearsResponse> = async (
 	return mongoRes[0].yearValues
 }
 
-export default statisticsByYears
+export default statisticsData

@@ -1,20 +1,18 @@
 import { useLazyQuery, gql } from '@apollo/client'
 import { useEffect, useState } from 'react'
-import { RegionNamesResponse, CoordsByRegionTypeResponse } from '../../../../../../../sharedTypes/gqlQueries'
-import { ReadonlyStatistics, ReadonlyYearValue } from '../../../../../../../sharedTypes/mongoModels'
-import { useSimpleQueriesContext } from '../../../../context/simpleQueriesContext'
+import { ReadonlyStatisticsOfRegion, ReadonlyStatisticsData } from '../../../../../../../sharedTypes/mongoModels'
 import { useSelectionsContext } from '../../context/selectionsContext'
 
 type QueryResponse = Readonly<{
-	[key: string]: ReadonlyYearValue
+	[key: string]: ReadonlyStatisticsData
 }>
 
 type StatisticsByYear = Readonly<{
-	[key: ReadonlyStatistics['regionName']]: ReadonlyYearValue
+	[key: ReadonlyStatisticsOfRegion['regionName']]: ReadonlyStatisticsData
 }>
 
-// regionNamesOnMap: ReadonlyArray<ReadonlyStatistics['regionName']>
-const useStatisticsByYearQuery = (regionNamesOnMapAndStatistics: ReadonlyArray<ReadonlyStatistics['regionName']>) => {
+// regionNamesOnMap: ReadonlyArray<ReadonlyStatisticsOfRegion['regionName']>
+const useStatisticsDataQuery = (regionNamesOnMapAndStatistics: ReadonlyArray<ReadonlyStatisticsOfRegion['regionName']>) => {
 	console.log({ regionNamesOnMapAndStatistics })
 	const {
 		selectedYearOnMap,
@@ -22,7 +20,7 @@ const useStatisticsByYearQuery = (regionNamesOnMapAndStatistics: ReadonlyArray<R
 		selectedMainSectionName,
 	} = useSelectionsContext()
 
-	const multipleRegionsStatisticsQuery = regionNamesOnMapAndStatistics.map((regionName, i) => `region_${i}: statisticsByYears (
+	const multipleRegionsStatisticsQuery = regionNamesOnMapAndStatistics.map((regionName, i) => `region_${i}: statisticsData (
 		regionName: "${regionName}",
 		mainSectionName: "${selectedMainSectionName}",
 		subSectionName: "${selectedSubSectionName}",
@@ -53,9 +51,9 @@ const useStatisticsByYearQuery = (regionNamesOnMapAndStatistics: ReadonlyArray<R
 	useEffect(() => {
 		if (!data) return
 		const statisticsByYearEntries = Object.entries(data)
-			.map(([indexedRegionName, yearValue], i) => {
+			.map(([indexedRegionName, statisticsData], i) => {
 				const indexOfRegion = parseInt(indexedRegionName.split('_')[1])
-				return [regionNamesOnMapAndStatistics[indexOfRegion], yearValue]
+				return [regionNamesOnMapAndStatistics[indexOfRegion], statisticsData]
 			})
 		setStatisticsByYear(Object.fromEntries(statisticsByYearEntries))
 	}, [data])
@@ -65,4 +63,4 @@ const useStatisticsByYearQuery = (regionNamesOnMapAndStatistics: ReadonlyArray<R
 	return { statisticsByYear }
 }
 
-export default useStatisticsByYearQuery
+export default useStatisticsDataQuery

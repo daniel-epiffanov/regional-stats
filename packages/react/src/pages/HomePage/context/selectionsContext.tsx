@@ -2,21 +2,21 @@ import {
 	createContext, FC, useContext, useState,
 } from 'react'
 import {
-	ReadonlyMainSection,
+	ReadonlyStatisticsOfMainSection,
 	ReadonlyRegionCoords,
-	ReadonlyStatistics,
-	ReadonlySubSection,
-	ReadonlyYearValue,
+	ReadonlyStatisticsOfRegion,
+	ReadonlyStatisticsOfSubSection,
+	ReadonlyStatisticsData,
 } from '../../../../../../sharedTypes/mongoModels'
 import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 
 interface ContextValues {
-	selectedRegionName: ReadonlyStatistics['regionName'],
-	selectedMainSectionName: ReadonlyMainSection['name'],
-	selectedSubSectionName: ReadonlySubSection['name'],
+	selectedRegionName: ReadonlyStatisticsOfRegion['regionName'],
+	selectedMainSectionName: ReadonlyStatisticsOfMainSection['name'],
+	selectedSubSectionName: ReadonlyStatisticsOfSubSection['name'],
 
 	selectedRegionTypeOnMap: ReadonlyRegionCoords['type'],
-	selectedYearOnMap: ReadonlyYearValue['year'],
+	selectedYearOnMap: ReadonlyStatisticsData['year'],
 
 	selectionsHandler: SelectionsHandler,
 }
