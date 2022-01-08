@@ -1,16 +1,16 @@
-import years from './years'
-import regionNames from './regionNames'
-import mainSectionNames from './mainSectionNames'
-import subSectionNames from './subSectionTitles'
+import statisticsYears from './statisticsYears'
+import statisticsRegionNames from './statisticsRegionNames'
+import statisticsMainSectionNames from './statisticsMainSectionNames'
+import statisticsSubSectionNames from './statisticsSubSectionNames'
 import statisticsData from './statisticsData'
 import coordsByRegionType from './coordsByRegionType'
 
 const gqlResolvers = {
 	Query: {
-		years,
-		regionNames,
-		mainSectionNames,
-		subSectionNames,
+		statisticsYears,
+		statisticsRegionNames,
+		statisticsMainSectionNames,
+		statisticsSubSectionNames,
 		statisticsData,
 		coordsByRegionType,
 	},

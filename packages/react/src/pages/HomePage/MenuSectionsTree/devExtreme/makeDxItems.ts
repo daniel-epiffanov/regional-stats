@@ -8,7 +8,7 @@ const makeDxItems = (
 	selectedItemId: string,
 ) => {
 	if (!sectionsTree) return []
-	const mainSectionNames = Object.keys(sectionsTree)
+	const statisticsMainSectionNames = Object.keys(sectionsTree)
 
 	const generateItem: GenerateItem = (id, text, childItems) => ({
 		id,
@@ -17,7 +17,7 @@ const makeDxItems = (
 		isExpanded: id === selectedItemId || false,
 	})
 
-	return mainSectionNames
+	return statisticsMainSectionNames
 		.map((mainSectionName, i) => generateItem(`${i}`, mainSectionName, sectionsTree[mainSectionName]))
 }
 

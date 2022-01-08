@@ -15,8 +15,8 @@ import Message from '../../../components/Message'
 import useComponentInstance from '../../../hooks/useComponentInstance'
 import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 import { useSelectionsContext } from '../context/selectionsContext'
-import useStatisticsDataQuery from './hooks/useStatisticsDataQuery'
 import { CoordsByRegionTypeResponse } from '../../../../../../sharedTypes/gqlQueries'
+import statisticsDataForManyRegionsQuery from './customQueries/statisticsDataForManyRegionsQuery'
 
 type Props = Readonly<{
 	coordsByRegionType: CoordsByRegionTypeResponse
@@ -37,66 +37,75 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 		selectedSubSectionName,
 		selectedYearOnMap,
 	} = useSelectionsContext()
-	const { regionNames } = useSimpleQueriesContext()
-	const isRegionNameInStatistics = (regionName: string) => regionNames.includes(regionName)
+	const { statisticsRegionNames } = useSimpleQueriesContext()
+	const isRegionNameInStatistics = (regionName: string) => statisticsRegionNames.includes(regionName)
 
 	const getRegionNamesOnMapAndStatistics = () => {
 		const regionNamesOnMap = coordsByRegionType
 			.map(coordsByRegionTypeItem => coordsByRegionTypeItem.properties.name_ru)
 
-		return regionNamesOnMap.filter(regionNameOnMap => regionNames.includes(regionNameOnMap))
+		return regionNamesOnMap
+			.filter(regionNameOnMap => statisticsRegionNames.includes(regionNameOnMap))
 	}
-	const { statisticsByYear } = useStatisticsDataQuery(getRegionNamesOnMapAndStatistics())
-	console.log({ statisticsByYear })
+	// const { statisticsByYear } = useStatisticsDataQuery(getRegionNamesOnMapAndStatistics())
+	// console.log({ statisticsByYear })
 
 	// mapSetups
 	const { instance, onInitialized } = useComponentInstance<dxVectorMap>()
 	const [colorGroups, setColorGroups] = useState<number[]>([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
-	useEffect(() => {
-		// debugger
-		if (!selectedMainSectionName
-			|| !selectedSubSectionName
-			|| !instance
-			|| Object.keys(statisticsByYear).length === 0) return
+	// useEffect(() => {
+	// 	// debugger
+	// 	if (!selectedMainSectionName
+	// 		|| !selectedSubSectionName
+	// 		|| !instance
+	// 		|| Object.keys(statisticsByYear).length === 0) return
 
-		const elements = instance.getLayers()[0].getElements()
+	// 	const elements = instance.getLayers()[0].getElements()
 
-		// debugger
+	// 	// debugger
 
-		// let values: number[] = []
+	// 	// let values: number[] = []
 
-		// elements.forEach((element) => {
-		// 	const regionName = element.attribute('name_ru')
-		// 	element.attribute('value', 5)
-		// 	// element.attribute('value', Math.floor(Math.random() * 10))
-		// 	if (isRegionNameInStatistics(regionName)) {
-		// 		// debugger
-		// 		// element.attribute('value', statisticsByYear[regionName].value)
-		// 	}
-		// })
+	// 	// elements.forEach((element) => {
+	// 	// 	const regionName = element.attribute('name_ru')
+	// 	// 	element.attribute('value', 5)
+	// 	// 	// element.attribute('value', Math.floor(Math.random() * 10))
+	// 	// 	if (isRegionNameInStatistics(regionName)) {
+	// 	// 		// debugger
+	// 	// 		// element.attribute('value', statisticsByYear[regionName].value)
+	// 	// 	}
+	// 	// })
 
-		// values = values.sort((a, b) => a - b)
+	// 	// values = values.sort((a, b) => a - b)
 
-		// if (values.length === 2) values.push(values[1] / 2)
-		// if (values.length > 5) {
-		// 	values = [
-		// 		values[0],
-		// 		Math.round(values[values.length - 1] / 2),
-		// 		Math.round(values[values.length - 1] / 3),
-		// 		Math.round(values[values.length - 1] / 4),
-		// 		Math.round(values[values.length - 1] / 5),
-		// 		values[values.length - 1],
-		// 	]
-		// }
-		// const sortedValues = values.sort((a, b) => a - b)
-		// setColorGroups([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
-	}, [instance, selectedMainSectionName, selectedSubSectionName,
-		selectedMainSectionName, statisticsByYear])
+	// 	// if (values.length === 2) values.push(values[1] / 2)
+	// 	// if (values.length > 5) {
+	// 	// 	values = [
+	// 	// 		values[0],
+	// 	// 		Math.round(values[values.length - 1] / 2),
+	// 	// 		Math.round(values[values.length - 1] / 3),
+	// 	// 		Math.round(values[values.length - 1] / 4),
+	// 	// 		Math.round(values[values.length - 1] / 5),
+	// 	// 		values[values.length - 1],
+	// 	// 	]
+	// 	// }
+	// 	// const sortedValues = values.sort((a, b) => a - b)
+	// 	// setColorGroups([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
+	// }, [instance, selectedMainSectionName, selectedSubSectionName,
+	// 	selectedMainSectionName, statisticsByYear])
 
 	async function customizeLayer(elements: any) {
-		console.log('statisticsByYear')
-		console.log(statisticsByYear)
+		const isFetchingDataMakesSense = selectedMainSectionName
+			&& selectedSubSectionName
+			&& selectedYearOnMap
+		const statisticsData = isFetchingDataMakesSense && await statisticsDataForManyRegionsQuery({
+			regionNames: getRegionNamesOnMapAndStatistics(),
+			mainSectionName: selectedMainSectionName,
+			subSectionName: selectedSubSectionName,
+			year: selectedYearOnMap,
+		})
+
 		elements.map(async (element: any, i: number) => {
 			const regionName: string = element.attribute('name_ru')
 			if (regionName === selectedRegionName) element.selected(true)

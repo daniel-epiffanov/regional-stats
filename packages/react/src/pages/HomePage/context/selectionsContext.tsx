@@ -32,11 +32,11 @@ const SelectionsContext = createContext<ReadonlyContextValues>({} as ReadonlyCon
 export const useSelectionsContext = () => useContext(SelectionsContext)
 
 export const SelectionsProvider: FC = ({ children }) => {
-	const { mainSectionNames, regionNames } = useSimpleQueriesContext()
+	const { statisticsMainSectionNames, statisticsRegionNames } = useSimpleQueriesContext()
 
 	const [selections, setSelections] = useState<ReadonlyStateValues>({
-		selectedRegionName: regionNames[1],
-		selectedMainSectionName: mainSectionNames[0],
+		selectedRegionName: statisticsRegionNames[1],
+		selectedMainSectionName: statisticsMainSectionNames[0],
 		selectedSubSectionName: '',
 		selectedYearOnMap: 2007,
 		selectedRegionTypeOnMap: 'federalDistrict',
