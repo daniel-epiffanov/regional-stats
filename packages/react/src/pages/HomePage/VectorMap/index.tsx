@@ -16,8 +16,11 @@ import useComponentInstance from '../../../hooks/useComponentInstance'
 import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 import { useSelectionsContext } from '../context/selectionsContext'
 import useStatisticsDataQuery from './hooks/useStatisticsDataQuery'
+import { CoordsByRegionTypeResponse } from '../../../../../../sharedTypes/gqlQueries'
 
-type Props = Readonly<{}>
+type Props = Readonly<{
+	coordsByRegionType: CoordsByRegionTypeResponse
+}>
 
 const BOUNDS = [71, 97, 45, 26]
 
@@ -26,7 +29,7 @@ const customizeText = (args: any) => {
 	return 'yo'
 }
 
-const VectorMapRComponent: FC<Props> = (props) => {
+const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 	const {
 		selectedRegionName,
 		selectionsHandler,
@@ -37,9 +40,6 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	const { regionNames } = useSimpleQueriesContext()
 	const isRegionNameInStatistics = (regionName: string) => regionNames.includes(regionName)
 
-	// graphql response
-	const { loading, error, data } = useVectorMapCoordsQuery()
-	const coordsByRegionType = data?.coordsByRegionType || []
 	const getRegionNamesOnMapAndStatistics = () => {
 		const regionNamesOnMap = coordsByRegionType
 			.map(coordsByRegionTypeItem => coordsByRegionTypeItem.properties.name_ru)
@@ -126,13 +126,6 @@ const VectorMapRComponent: FC<Props> = (props) => {
 		selectionsHandler({ selectedRegionName: regionName })
 	}
 
-	// if (loading) return <Message message="Загрузка карты..." />
-	// if (error) {
-	// 	console.error({ error })
-	// 	return <Message message="Произошла ошибка.
-	// Мы не можем получить координаты для карты с сервера." type="error" />
-	// }
-
 	function customizeTooltip(element: any) {
 		console.log(element.attribute('value'))
 		return {
@@ -187,4 +180,16 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	)
 }
 
-export default VectorMapRComponent
+const VectorMapDataLoader: FC = () => {
+	// graphql response
+	const { loading, error, data } = useVectorMapCoordsQuery()
+	const coordsByRegionType = data?.coordsByRegionType
+
+	if (loading) return <Message type="message" text="Map data is loading." />
+	if (error) return <Message type="error" text="Error while loading the map data." />
+
+	if (coordsByRegionType) return <VectorMapComponent coordsByRegionType={coordsByRegionType} />
+	return <Message type="error" text="Error coordsByRegionType is not recieved." />
+}
+
+export default VectorMapDataLoader
