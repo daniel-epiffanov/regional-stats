@@ -5,7 +5,7 @@ import { hostApi } from '../helpers/host'
 import GqlResponse from './@types/gqlResponse'
 
 interface Options {
-	selectedRegion: string,
+	selectedRegionName: string,
 	mainSectionName: string,
 	subSectionTitle: string,
 	startYear: number
@@ -18,13 +18,13 @@ type SingleSelectionResponse = GqlResponse<{ statisticsByYears: StatisticsByYear
 
 const statisticsByYearsQuery: StatisticsByYearsFn = async (options) => {
 	const {
-		selectedRegion, mainSectionName, subSectionTitle, startYear, endYear,
+		selectedRegionName, mainSectionName, subSectionTitle, startYear, endYear,
 	} = options
 
 	const query = `
 	query {
 		statisticsByYears (
-			regionName: "${selectedRegion}",
+			regionName: "${selectedRegionName}",
 			mainSectionName: "${mainSectionName}",
 			subSectionTitle: "${subSectionTitle}",
 			startYear: ${startYear},

@@ -30,14 +30,17 @@ const customizeText = (args: any) => {
 }
 
 const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
-	const { selectedRegion, selectionsHandler } = useSelectionsContext()
+	const { selectedRegionName, selectionsHandler } = useSelectionsContext()
+	const { regionNames } = useSimpleQueriesContext()
+	const isRegionNameInStatistics = (regionName: string) => regionNames.includes(regionName)
+
 	// graphql response
 	const { loading, error, data } = useVectorMapCoordsQuery()
 	const coordsByRegionType = data?.coordsByRegionType || []
 	const statisticsRegionNames = data?.regionNames || []
 
 	// mapSetups
-	const { instance, onInitialized } = useComponentInstance<dxVectorMap>()
+	// const { instance, onInitialized } = useComponentInstance<dxVectorMap>()
 	const [year, setYear] = useState<number>(2007)
 	const [colorGroups, setColorGroups] = useState<number[]>([0, 5, 10])
 
@@ -72,10 +75,10 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 
 	async function customizeLayer(elements: any) {
 		elements.map(async (element: any, i: number) => {
-			const name_ru: string = element.attribute('name_ru')
-			if (name_ru === selectedRegion) element.selected(true)
+			const regionName: string = element.attribute('name_ru')
+			if (regionName === selectedRegionName) element.selected(true)
 
-			if (!statisticsRegionNames.includes(name_ru)) {
+			if (!isRegionNameInStatistics(regionName)) {
 				element.applySettings({ opacity: 0.2 })
 			}
 
@@ -98,10 +101,11 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 
 	function onMapClick(e: MapClickEvent) {
 		if (!e.target) return
-		const name_ru = e.target.attribute('name_ru')
-		// if (!statisticsRegionNames.includes(name_ru)) return
+		const regionName = e.target.attribute('name_ru')
+		console.log({ regionName })
+		if (!isRegionNameInStatistics(regionName)) return
 
-		// selectedRegionHandler(name_ru)
+		selectionsHandler({ selectedRegionName: regionName })
 	}
 
 	// const onSelectionChanged = (e: MapClickEvent) => {
@@ -125,25 +129,26 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 				id="vectorMap"
 				bounds={BOUNDS}
 				onClick={onMapClick}
-				// onSelectionChanged={onSelectionChanged}
-				onInitialized={onInitialized}
+			// onSelectionChanged={onSelectionChanged}
+			// onInitialized={onInitialized}
 			>
 				<Layer
 					dataSource={{
 						type: 'FeatureCollection',
 						features: coordsByRegionType,
 					}}
-					type="area"
+					// type="area"
 					customize={customizeLayer}
 					selectionMode="single"
-					name="regions"
-					colorGroupingField="value"
-					colorGroups={colorGroups}
-				>
-					<Label enabled dataField="name_ru">
-						<Font size={16} />
-					</Label>
-				</Layer>
+					// name="regions"
+					// colorGroupingField="value"
+					// colorGroups={colorGroups}
+					label={{
+						enabled: true,
+						dataField: 'name_ru',
+						font: { size: 10 },
+					}}
+				/>
 
 				{/* <Tooltip
 					enabled

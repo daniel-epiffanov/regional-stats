@@ -11,16 +11,16 @@ import VectorMap from './VectorMap'
 
 const HomePageLayout: FC = () => {
 	const {
-		selectedRegion,
+		selectedRegionName,
 		selectedMainSectionName,
 		selectedSubSectionName,
 	} = useSelectionsContext()
 
 	useEffect(() => {
-		console.log({ selectedRegion })
+		console.log({ selectedRegionName })
 		console.log({ selectedMainSectionName })
 		console.log({ selectedSubSectionName })
-	}, [selectedRegion, selectedMainSectionName, selectedSubSectionName])
+	}, [selectedRegionName, selectedMainSectionName, selectedSubSectionName])
 
 	return (
 		<ResponsiveBox>
@@ -41,7 +41,7 @@ const HomePageLayout: FC = () => {
 				<Location screen="md lg" row={1} col={0} />
 				<div>
 					<DoughnutChart
-						selectedRegion={selectedRegion}
+						selectedRegionName={selectedRegionName}
 						mainSectionName={selectedMainSectionName}
 						subSectionTitle={selectedSubSectionTitle}
 					/>

@@ -5,7 +5,7 @@ import { ReadonlyMainSection, ReadonlyStatistics, ReadonlySubSection } from '../
 import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 
 interface ContextValues {
-	selectedRegion: ReadonlyStatistics['regionName'],
+	selectedRegionName: ReadonlyStatistics['regionName'],
 	selectedMainSectionName: ReadonlyMainSection['name'],
 	selectedSubSectionName: ReadonlySubSection['name'],
 	selectionsHandler: SelectionsHandler
@@ -25,7 +25,7 @@ export const SelectionsProvider: FC = ({ children }) => {
 	const { mainSectionNames, regionNames } = useSimpleQueriesContext()
 
 	const [selections, setSelections] = useState<ReadonlyStateValues>({
-		selectedRegion: regionNames[1],
+		selectedRegionName: regionNames[1],
 		selectedMainSectionName: mainSectionNames[0],
 		selectedSubSectionName: '',
 	})
