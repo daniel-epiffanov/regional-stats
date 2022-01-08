@@ -5,7 +5,7 @@ import { CheckBox } from 'devextreme-react'
 import styles from './styles/index.module.scss'
 import Message from '../../../components/Message'
 import useSectionsTreeQuery from './hooks/useSectionsTreeQuery'
-import makeDxTreeItems from './helpers/makeDxTreeItems'
+import makeDxItems from './devExtreme/makeDxItems'
 import { useSelectionsContext } from '../context/selectionsContext'
 
 const MenuSectionsTree: FC = () => {
@@ -13,9 +13,9 @@ const MenuSectionsTree: FC = () => {
 	const { selectionsHandler } = useSelectionsContext()
 	const [selectedItemId, setSelectedItemId] = useState('20_3')
 
-	const getDxTreeItems = () => {
+	const getDxItems = () => {
 		if (loading || error || !sectionsTreeResponse) return []
-		return makeDxTreeItems(sectionsTreeResponse, selectedItemId)
+		return makeDxItems(sectionsTreeResponse, selectedItemId)
 	}
 
 	if (loading) return <Message type="message" text="Loading menu sections." />
@@ -42,12 +42,13 @@ const MenuSectionsTree: FC = () => {
 	return (
 		<div>
 			<TreeView
-				items={getDxTreeItems()}
+				items={getDxItems()}
 				// selectionMode="single"
 				expandEvent="click"
 				searchEnabled
 				itemRender={itemRenderHandler}
 				onItemClick={onItemClickHandler}
+				expandedExpr="isExpanded"
 			/>
 		</div>
 	)

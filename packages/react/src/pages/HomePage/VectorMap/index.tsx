@@ -6,7 +6,6 @@ import VectorMap, {
 	Border,
 	Legend,
 	Source,
-	LoadingIndicator,
 	Font,
 } from 'devextreme-react/vector-map'
 import dxVectorMap, { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
@@ -55,6 +54,7 @@ const VectorMapRComponent: FC<Props> = (props) => {
 	const [colorGroups, setColorGroups] = useState<number[]>([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
 	useEffect(() => {
+		// debugger
 		if (!selectedMainSectionName
 			|| !selectedSubSectionName
 			|| !instance
@@ -62,17 +62,19 @@ const VectorMapRComponent: FC<Props> = (props) => {
 
 		const elements = instance.getLayers()[0].getElements()
 
+		// debugger
+
 		// let values: number[] = []
 
-		elements.forEach((element) => {
-			const regionName = element.attribute('name_ru')
-			element.attribute('value', Math.floor(Math.random() * 10))
-			if (isRegionNameInStatistics(regionName)) {
-				// debugger
-				// element.attribute('value', statisticsByYear[regionName].value)
-				// element.attribute('value', `${Math.floor(Math.random())}`)
-			}
-		})
+		// elements.forEach((element) => {
+		// 	const regionName = element.attribute('name_ru')
+		// 	element.attribute('value', 5)
+		// 	// element.attribute('value', Math.floor(Math.random() * 10))
+		// 	if (isRegionNameInStatistics(regionName)) {
+		// 		// debugger
+		// 		// element.attribute('value', statisticsByYear[regionName].value)
+		// 	}
+		// })
 
 		// values = values.sort((a, b) => a - b)
 
@@ -93,6 +95,8 @@ const VectorMapRComponent: FC<Props> = (props) => {
 		selectedMainSectionName, statisticsByYear])
 
 	async function customizeLayer(elements: any) {
+		console.log('statisticsByYear')
+		console.log(statisticsByYear)
 		elements.map(async (element: any, i: number) => {
 			const regionName: string = element.attribute('name_ru')
 			if (regionName === selectedRegionName) element.selected(true)

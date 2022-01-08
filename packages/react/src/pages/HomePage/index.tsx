@@ -31,7 +31,7 @@ const HomePageLayout: FC = () => {
 			<Col ratio={1} />
 
 			<Item>
-				<Location screen="md lg" row={0} col={0} />
+				<Location screen="sm md lg" row={0} col={0} />
 				<div>
 					<VectorMap />
 				</div>
@@ -48,7 +48,7 @@ const HomePageLayout: FC = () => {
 				</div>
 			</Item> */}
 			<Item>
-				<Location screen="md lg sm" row={2} col={0} />
+				<Location screen="sm md lg" row={2} col={0} />
 				<div>
 					<MenuSectionsTree />
 				</div>

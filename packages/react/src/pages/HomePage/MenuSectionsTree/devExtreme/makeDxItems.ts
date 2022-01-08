@@ -3,7 +3,10 @@ import { SectionsTreeResponse } from '../../../../../../../sharedTypes/gqlQuerie
 
 type GenerateItem = (id: string, text: string, childItems?: ReadonlyArray<string>) => Item
 
-const makeDxTreeItems = (sectionsTree: SectionsTreeResponse | null, selectedItemId: string) => {
+const makeDxItems = (
+	sectionsTree: SectionsTreeResponse | null,
+	selectedItemId: string,
+) => {
 	if (!sectionsTree) return []
 	const mainSectionNames = Object.keys(sectionsTree)
 
@@ -11,12 +14,11 @@ const makeDxTreeItems = (sectionsTree: SectionsTreeResponse | null, selectedItem
 		id,
 		text,
 		items: childItems && childItems.map((item, _id) => generateItem(`${id}_${_id}`, item)),
-		// isExpanded: true,
-		expanded: id === selectedItemId || false,
+		isExpanded: id === selectedItemId || false,
 	})
 
 	return mainSectionNames
 		.map((mainSectionName, i) => generateItem(`${i}`, mainSectionName, sectionsTree[mainSectionName]))
 }
 
-export default makeDxTreeItems
+export default makeDxItems
