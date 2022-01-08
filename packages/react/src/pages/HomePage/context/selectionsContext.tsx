@@ -1,14 +1,22 @@
 import {
 	createContext, FC, useContext, useState,
 } from 'react'
-import { ReadonlyMainSection, ReadonlyStatistics, ReadonlySubSection } from '../../../../../../sharedTypes/mongoModels'
+import {
+	ReadonlyMainSection,
+	ReadonlyRegionCoords,
+	ReadonlyStatistics,
+	ReadonlySubSection,
+	ReadonlyYearValue,
+} from '../../../../../../sharedTypes/mongoModels'
 import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 
 interface ContextValues {
 	selectedRegionName: ReadonlyStatistics['regionName'],
+	selectedRegionType: ReadonlyRegionCoords['type'],
 	selectedMainSectionName: ReadonlyMainSection['name'],
 	selectedSubSectionName: ReadonlySubSection['name'],
-	selectionsHandler: SelectionsHandler
+	selectedYear: ReadonlyYearValue['year'],
+	selectionsHandler: SelectionsHandler,
 }
 
 type ReadonlyContextValues = Readonly<ContextValues>
@@ -28,6 +36,8 @@ export const SelectionsProvider: FC = ({ children }) => {
 		selectedRegionName: regionNames[1],
 		selectedMainSectionName: mainSectionNames[0],
 		selectedSubSectionName: '',
+		selectedYear: 2007,
+		selectedRegionType: 'federalDistrict',
 	})
 
 	const selectionsHandler: SelectionsHandler = (newSelections) => {

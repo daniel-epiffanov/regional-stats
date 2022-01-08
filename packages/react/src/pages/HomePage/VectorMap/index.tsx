@@ -4,11 +4,10 @@ import VectorMap, {
 	Layer,
 	Tooltip,
 	Border,
-	Font,
-	Label,
 	Legend,
 	Source,
 	LoadingIndicator,
+	Font,
 } from 'devextreme-react/vector-map'
 import dxVectorMap, { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
 import styles from './styles/index.module.scss'
@@ -17,6 +16,7 @@ import Message from '../../../components/Message'
 import useComponentInstance from '../../../hooks/useComponentInstance'
 import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 import { useSelectionsContext } from '../context/selectionsContext'
+import statisticsByYearsQuery from '../../../manualQueries/statisticsByYears'
 
 interface Props { }
 
@@ -30,7 +30,13 @@ const customizeText = (args: any) => {
 }
 
 const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
-	const { selectedRegionName, selectionsHandler } = useSelectionsContext()
+	const {
+		selectedRegionName,
+		selectionsHandler,
+		selectedMainSectionName,
+		selectedSubSectionName,
+		selectedYear,
+	} = useSelectionsContext()
 	const { regionNames } = useSimpleQueriesContext()
 	const isRegionNameInStatistics = (regionName: string) => regionNames.includes(regionName)
 
@@ -40,38 +46,49 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 	const statisticsRegionNames = data?.regionNames || []
 
 	// mapSetups
-	// const { instance, onInitialized } = useComponentInstance<dxVectorMap>()
-	const [year, setYear] = useState<number>(2007)
+	const { instance, onInitialized } = useComponentInstance<dxVectorMap>()
 	const [colorGroups, setColorGroups] = useState<number[]>([0, 5, 10])
 
-	// useEffect(() => {
-	// 	if (!mainSectionName || !subSectionTitle || !instance) return
+	useEffect(() => {
+		if (!selectedMainSectionName || !selectedSubSectionName || !instance) return
 
-	// 	const elements = instance.getLayers()[0].getElements()
+		(async () => {
+			const statisticsByYears = await statisticsByYearsQuery({
+				regionName: selectedRegionName,
+				mainSectionName: selectedMainSectionName,
+				subSectionName: selectedSubSectionName,
+				startYear: selectedYear,
+				endYear: selectedYear,
+			})
 
-	// 	let values: number[] = []
+			console.log({ statisticsByYears })
+		})()
 
-	// 	elements.forEach((element) => {
-	// 		const name_ru = element.attribute('name_ru')
-	// 		if (regionNames.includes(name_ru)) values.push(element.attribute('value'))
-	// 	})
+		// const elements = instance.getLayers()[0].getElements()
 
-	// 	values = values.sort((a, b) => a - b)
+		// let values: number[] = []
 
-	// 	if (values.length === 2) values.push(values[1] / 2)
-	// 	if (values.length > 5) {
-	// 		values = [
-	// 			values[0],
-	// 			Math.round(values[values.length - 1] / 2),
-	// 			Math.round(values[values.length - 1] / 3),
-	// 			Math.round(values[values.length - 1] / 4),
-	// 			Math.round(values[values.length - 1] / 5),
-	// 			values[values.length - 1],
-	// 		]
-	// 	}
-	// 	const sortedValues = values.sort((a, b) => a - b)
-	// 	setColorGroups(sortedValues)
-	// }, [mainSectionName, subSectionTitle])
+		// elements.forEach((element) => {
+		// 	const regionName = element.attribute('name_ru')
+		// 	if (isRegionNameInStatistics(regionName)) values.push(element.attribute('value'))
+		// })
+
+		// values = values.sort((a, b) => a - b)
+
+		// if (values.length === 2) values.push(values[1] / 2)
+		// if (values.length > 5) {
+		// 	values = [
+		// 		values[0],
+		// 		Math.round(values[values.length - 1] / 2),
+		// 		Math.round(values[values.length - 1] / 3),
+		// 		Math.round(values[values.length - 1] / 4),
+		// 		Math.round(values[values.length - 1] / 5),
+		// 		values[values.length - 1],
+		// 	]
+		// }
+		// const sortedValues = values.sort((a, b) => a - b)
+		// setColorGroups(sortedValues)
+	}, [instance, selectedMainSectionName, selectedSubSectionName])
 
 	async function customizeLayer(elements: any) {
 		elements.map(async (element: any, i: number) => {
@@ -93,16 +110,11 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 		})
 	}
 
-	// function customizeTooltip(element: any) {
-	// 	return {
-	// 		text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
-	// 	}
-	// }
-
 	function onMapClick(e: MapClickEvent) {
 		if (!e.target) return
 		const regionName = e.target.attribute('name_ru')
-		console.log({ regionName })
+		const value = e.target.attribute('value')
+		console.log({ value })
 		if (!isRegionNameInStatistics(regionName)) return
 
 		selectionsHandler({ selectedRegionName: regionName })
@@ -123,14 +135,20 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 	// Мы не можем получить координаты для карты с сервера." type="error" />
 	// }
 
+	function customizeTooltip(element: any) {
+		return {
+			text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
+		}
+	}
+
 	return (
 		<div style={{ position: 'relative' }}>
 			<VectorMap
 				id="vectorMap"
 				bounds={BOUNDS}
 				onClick={onMapClick}
-			// onSelectionChanged={onSelectionChanged}
-			// onInitialized={onInitialized}
+				// onSelectionChanged={onSelectionChanged}
+				onInitialized={onInitialized}
 			>
 				<Layer
 					dataSource={{
@@ -146,17 +164,19 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 					label={{
 						enabled: true,
 						dataField: 'name_ru',
-						font: { size: 10 },
+						font: {
+							size: 10,
+						},
 					}}
 				/>
 
-				{/* <Tooltip
+				<Tooltip
 					enabled
 					customizeTooltip={customizeTooltip}
 				>
 					<Border visible />
 					<Font color="#fff" />
-				</Tooltip> */}
+				</Tooltip>
 
 				{/* <Legend customizeText={customizeText}>
 					<Source layer="regions" grouping="color" />
