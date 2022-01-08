@@ -55,7 +55,7 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 
 	// mapSetups
 	const { instance, onInitialized } = useComponentInstance<dxVectorMap>()
-	const [colorGroups, setColorGroups] = useState<number[]>([0, 5, 10])
+	const [colorGroups, setColorGroups] = useState<number[]>([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
 	useEffect(() => {
 		if (!selectedMainSectionName
@@ -69,9 +69,11 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 
 		elements.forEach((element) => {
 			const regionName = element.attribute('name_ru')
+			element.attribute('value', Math.floor(Math.random() * 10))
 			if (isRegionNameInStatistics(regionName)) {
 				// debugger
-				element.attribute('value', statisticsByYear[regionName].value)
+				// element.attribute('value', statisticsByYear[regionName].value)
+				// element.attribute('value', `${Math.floor(Math.random())}`)
 			}
 		})
 
@@ -89,7 +91,7 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 		// 	]
 		// }
 		// const sortedValues = values.sort((a, b) => a - b)
-		// setColorGroups(sortedValues)
+		// setColorGroups([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
 	}, [instance, selectedMainSectionName, selectedSubSectionName,
 		selectedMainSectionName, statisticsByYear])
 
@@ -104,7 +106,7 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 
 			// if (!mainSectionName || !subSectionTitle) return
 
-			// element.attribute('value', i * 2)
+			element.attribute('value', Math.floor(Math.random() * 10))
 
 			// const statisticsByYears = await statisticsByYearsQuery(queryOptions)
 			// if (!statisticsByYears) return
@@ -139,6 +141,7 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 	// }
 
 	function customizeTooltip(element: any) {
+		console.log(element.attribute('value'))
 		return {
 			text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
 		}
@@ -158,10 +161,11 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 						type: 'FeatureCollection',
 						features: coordsByRegionType,
 					}}
-					// type="area"
+					type="area"
 					customize={customizeLayer}
 					selectionMode="single"
-					// name="regions"
+					name="regions"
+					palette="Violet"
 					colorGroupingField="value"
 					colorGroups={colorGroups}
 					label={{
@@ -181,9 +185,9 @@ const VectorMapRComponent: FC<ReadonlyProps> = (props) => {
 					<Font color="#fff" />
 				</Tooltip>
 
-				{/* <Legend customizeText={customizeText}>
+				<Legend customizeText={customizeText}>
 					<Source layer="regions" grouping="color" />
-				</Legend> */}
+				</Legend>
 
 			</VectorMap>
 		</div>
