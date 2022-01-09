@@ -18,6 +18,7 @@ import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 import { useSelectionsContext } from '../context/selectionsContext'
 import { CoordsByRegionTypeResponse } from '../../../../../../sharedTypes/gqlQueries'
 import statisticsDataForManyRegionsQuery from './customQueries/statisticsDataForManyRegionsQuery'
+import makeColorGroupsRange from './devExtreme/makeColorGroupsRange'
 
 type Props = Readonly<{
 	coordsByRegionType: CoordsByRegionTypeResponse
@@ -76,10 +77,9 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 				const value = parseFloat(statisticsDataItem[0].value)
 				return value
 			})
-			const newColorGroups = statisticsDataValues.sort((a, b) => a - b)
-			newColorGroups.push(newColorGroups[newColorGroups.length - 1] + (newColorGroups[newColorGroups.length - 1] - newColorGroups[newColorGroups.length - 2]))
-			newColorGroups.unshift(newColorGroups[0] - (newColorGroups[0] + newColorGroups[1]))
+			const newColorGroups = makeColorGroupsRange(statisticsDataValues)
 			setColorGroups(newColorGroups)
+			console.log({ newColorGroups })
 
 			const elements = instance?.getLayerByName('regions')?.getElements()
 			elements && elements.forEach((element) => {
@@ -87,7 +87,7 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 
 				if (isRegionNameInStatistics(regionName) && statisticsData) {
 					// element.attribute('value', Math.floor(Math.random() * 10))
-					const statisticsValue = parseInt(statisticsData[regionName][0].value)
+					const statisticsValue = parseFloat(statisticsData[regionName][0].value)
 					element.attribute('value', statisticsValue)
 					element.applySettings({ setColorGroups: newColorGroups })
 				} else {
