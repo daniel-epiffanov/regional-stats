@@ -39,7 +39,7 @@ export const SelectionsProvider: FC = ({ children }) => {
 		selectedMainSectionName: statisticsMainSectionNames[0],
 		selectedSubSectionName: '',
 		selectedYearOnMap: 2007,
-		selectedRegionTypeOnMap: 'region',
+		selectedRegionTypeOnMap: 'federalDistrict',
 	})
 
 	const selectionsHandler: SelectionsHandler = (newSelections) => {

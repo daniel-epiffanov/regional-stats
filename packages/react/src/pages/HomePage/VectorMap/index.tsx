@@ -27,10 +27,6 @@ type Props = Readonly<{
 const BOUNDS = [71, 97, 45, 26]
 const PALLETE = ['#eeacc5', '#db9eba', '#c88fb0', '#b581a5', '#a1739a', '#8e6490', '#7b5685']
 
-const customizeText = (args: any) => {
-	return 'yo'
-}
-
 const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 	const {
 		selectedRegionName,
@@ -90,32 +86,19 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 					const statisticsValue = parseFloat(statisticsData[regionName][0].value)
 					element.attribute('value', statisticsValue)
 					element.applySettings({ setColorGroups: newColorGroups })
-				} else {
-					element.applySettings({ opacity: 0.2 })
 				}
 			})
 		})()
-
-		// values = values.sort((a, b) => a - b)
-
-		// if (values.length === 2) values.push(values[1] / 2)
-		// if (values.length > 5) {
-		// 	values = [
-		// 		values[0],
-		// 		Math.round(values[values.length - 1] / 2),
-		// 		Math.round(values[values.length - 1] / 3),
-		// 		Math.round(values[values.length - 1] / 4),
-		// 		Math.round(values[values.length - 1] / 5),
-		// 		values[values.length - 1],
-		// 	]
-		// }
-		// const sortedValues = values.sort((a, b) => a - b)
-		// setColorGroups([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
 	}, [instance, selectedMainSectionName, selectedSubSectionName,
 		selectedMainSectionName, selectedRegionName])
 
 	function customizeLayer(elements: any) {
-
+		elements.forEach((element: any) => {
+			const regionName = element.attribute('name_ru')
+			if (!isRegionNameInStatistics(regionName)) {
+				element.applySettings({ opacity: 0.2 })
+			}
+		})
 	}
 
 	function onMapClick(e: MapClickEvent) {
@@ -132,6 +115,20 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 		return {
 			text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
 		}
+	}
+
+	const customizeText = (args: { end: number, start: number, index: number }) => {
+		const { end, start, index } = args
+		const formattedStart = new Intl.NumberFormat('ru-RU').format(start)
+		const formattedEnd = new Intl.NumberFormat('ru-RU').format(end)
+		const percent = (index / 10) * 100
+		const isLowestGroup = percent === 0
+		const isHighestGroup = percent === 100
+		// const getReturnText = (extremeGroupLabel: string) => `${percent}% (${formattedStart} - ${formattedEnd})`
+		if (isLowestGroup) return `<b>low</b> (${formattedStart} - ${formattedEnd})`
+		if (isHighestGroup) return `<b>high</b> (${formattedStart} - ${formattedEnd})`
+
+		return `${percent}% (${formattedStart} - ${formattedEnd})`
 	}
 
 	return (
@@ -151,7 +148,7 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 					customize={customizeLayer}
 					selectionMode="single"
 					name="regions"
-					// palette="Violet"
+					palette="Violet"
 					colorGroupingField="value"
 					colorGroups={colorGroups}
 					label={{
