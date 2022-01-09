@@ -13,6 +13,7 @@ import { useSelectionsContext } from '../context/selectionsContext'
 import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 import statisticsDataQuery from './customQueries/statisticsDataQuery'
 import { StatisticsDataResponse } from '../../../../../../sharedTypes/gqlQueries'
+import bigNumberFormatter from '../../../helpers/bigNumberFormatter'
 
 type Props = Readonly<{}>
 
@@ -48,6 +49,12 @@ const DoughnutChart: FC<Props> = (props) => {
 		item.isVisible() ? item.hide() : item.show()
 	}
 
+	const customizeTextHandler = (args: { value: number, percentText: string }) => {
+		console.log({ args })
+		const { value, percentText } = args
+		return `${bigNumberFormatter(value)} (${percentText})`
+	}
+
 	return (
 		<div className={styles.PieChart}>
 			<PieChart
@@ -59,7 +66,7 @@ const DoughnutChart: FC<Props> = (props) => {
 				onLegendClick={legendClickHandler}
 			>
 				<Series argumentField="year" valueField="value">
-					<Label visible format="decimal">
+					<Label visible format="decimal" customizeText={customizeTextHandler}>
 						<Connector visible />
 					</Label>
 				</Series>

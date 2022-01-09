@@ -19,6 +19,7 @@ import { useSelectionsContext } from '../context/selectionsContext'
 import { CoordsByRegionTypeResponse } from '../../../../../../sharedTypes/gqlQueries'
 import statisticsDataForManyRegionsQuery from './customQueries/statisticsDataForManyRegionsQuery'
 import makeColorGroupsRange from './devExtreme/makeColorGroupsRange'
+import bigNumberFormatter from '../../../helpers/bigNumberFormatter'
 
 type Props = Readonly<{
 	coordsByRegionType: CoordsByRegionTypeResponse
@@ -119,8 +120,8 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 
 	const customizeText = (args: { end: number, start: number, index: number }) => {
 		const { end, start, index } = args
-		const formattedStart = new Intl.NumberFormat('ru-RU').format(start)
-		const formattedEnd = new Intl.NumberFormat('ru-RU').format(end)
+		const formattedStart = bigNumberFormatter(start)
+		const formattedEnd = bigNumberFormatter(end)
 		const percent = (index / 10) * 100
 		const isLowestGroup = percent === 0
 		const isHighestGroup = percent === 100
