@@ -28,15 +28,7 @@ const ChartWrapper = () => {
 				.post(process.env.REACT_APP_API_URL, { query })
 				.then((res) => {
 					const { data } = res
-					// console.log(data.data.mapCoords)
 					const changedData = data.data.mapCoords
-					// setMapCoords({
-					// 	type: 'FeatureCollection',
-					// 	features: changedData,
-					// })
-					// eslint-disable-next-line no-debugger
-					// debugger
-					// if (Array.isArray(res.data)) scndTopLvlData(data)
 				})
 		}
 	})

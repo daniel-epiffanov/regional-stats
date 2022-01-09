@@ -9,6 +9,7 @@ import VectorMap, {
 	Font,
 } from 'devextreme-react/vector-map'
 import dxVectorMap, { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
+import { EventInfo } from 'devextreme/events'
 import styles from './styles/index.module.scss'
 import useVectorMapCoordsQuery from './hooks/useVectorMapCoordsQuery'
 import Message from '../../../components/Message'
@@ -23,9 +24,9 @@ type Props = Readonly<{
 }>
 
 const BOUNDS = [71, 97, 45, 26]
+const PALLETE = ['#eeacc5', '#db9eba', '#c88fb0', '#b581a5', '#a1739a', '#8e6490', '#7b5685']
 
 const customizeText = (args: any) => {
-	console.log()
 	return 'yo'
 }
 
@@ -47,96 +48,87 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 		return regionNamesOnMap
 			.filter(regionNameOnMap => statisticsRegionNames.includes(regionNameOnMap))
 	}
-	// const { statisticsByYear } = useStatisticsDataQuery(getRegionNamesOnMapAndStatistics())
-	// console.log({ statisticsByYear })
 
 	// mapSetups
 	const { instance, onInitialized } = useComponentInstance<dxVectorMap>()
-	const [colorGroups, setColorGroups] = useState<number[]>([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+	const [colorGroups, setColorGroups] = useState<number[]>([2330427, 4330427, 20208917])
 
-	// useEffect(() => {
-	// 	// debugger
-	// 	if (!selectedMainSectionName
-	// 		|| !selectedSubSectionName
-	// 		|| !instance
-	// 		|| Object.keys(statisticsByYear).length === 0) return
+	useEffect(() => {
+		(async () => {
+			const isFetchingDataMakesSense = !!selectedMainSectionName
+				&& !!selectedSubSectionName
+				&& !!selectedYearOnMap
 
-	// 	const elements = instance.getLayers()[0].getElements()
+			if (!isFetchingDataMakesSense) return
+			const statisticsData = await statisticsDataForManyRegionsQuery({
+				regionNames: getRegionNamesOnMapAndStatistics(),
+				mainSectionName: selectedMainSectionName,
+				subSectionName: selectedSubSectionName,
+				year: selectedYearOnMap,
+			})
+			if (!statisticsData) return
+			console.log('cl')
+			console.log({ statisticsData })
 
-	// 	// debugger
+			// // debugger
 
-	// 	// let values: number[] = []
+			const statisticsDataValues = Object.values(statisticsData).map(statisticsDataItem => {
+				const value = parseFloat(statisticsDataItem[0].value)
+				return value
+			})
+			const newColorGroups = statisticsDataValues.sort((a, b) => a - b)
+			newColorGroups.push(newColorGroups[newColorGroups.length - 1] + (newColorGroups[newColorGroups.length - 1] - newColorGroups[newColorGroups.length - 2]))
+			newColorGroups.unshift(newColorGroups[0] - (newColorGroups[0] + newColorGroups[1]))
+			setColorGroups(newColorGroups)
 
-	// 	// elements.forEach((element) => {
-	// 	// 	const regionName = element.attribute('name_ru')
-	// 	// 	element.attribute('value', 5)
-	// 	// 	// element.attribute('value', Math.floor(Math.random() * 10))
-	// 	// 	if (isRegionNameInStatistics(regionName)) {
-	// 	// 		// debugger
-	// 	// 		// element.attribute('value', statisticsByYear[regionName].value)
-	// 	// 	}
-	// 	// })
+			const elements = instance?.getLayerByName('regions')?.getElements()
+			elements && elements.forEach((element) => {
+				const regionName = element.attribute('name_ru')
 
-	// 	// values = values.sort((a, b) => a - b)
+				if (isRegionNameInStatistics(regionName) && statisticsData) {
+					// element.attribute('value', Math.floor(Math.random() * 10))
+					const statisticsValue = parseInt(statisticsData[regionName][0].value)
+					element.attribute('value', statisticsValue)
+					element.applySettings({ setColorGroups: newColorGroups })
+				} else {
+					element.applySettings({ opacity: 0.2 })
+				}
+			})
+		})()
 
-	// 	// if (values.length === 2) values.push(values[1] / 2)
-	// 	// if (values.length > 5) {
-	// 	// 	values = [
-	// 	// 		values[0],
-	// 	// 		Math.round(values[values.length - 1] / 2),
-	// 	// 		Math.round(values[values.length - 1] / 3),
-	// 	// 		Math.round(values[values.length - 1] / 4),
-	// 	// 		Math.round(values[values.length - 1] / 5),
-	// 	// 		values[values.length - 1],
-	// 	// 	]
-	// 	// }
-	// 	// const sortedValues = values.sort((a, b) => a - b)
-	// 	// setColorGroups([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
-	// }, [instance, selectedMainSectionName, selectedSubSectionName,
-	// 	selectedMainSectionName, statisticsByYear])
+		// values = values.sort((a, b) => a - b)
 
-	async function customizeLayer(elements: any) {
-		const isFetchingDataMakesSense = selectedMainSectionName
-			&& selectedSubSectionName
-			&& selectedYearOnMap
-		const statisticsData = isFetchingDataMakesSense && await statisticsDataForManyRegionsQuery({
-			regionNames: getRegionNamesOnMapAndStatistics(),
-			mainSectionName: selectedMainSectionName,
-			subSectionName: selectedSubSectionName,
-			year: selectedYearOnMap,
-		})
+		// if (values.length === 2) values.push(values[1] / 2)
+		// if (values.length > 5) {
+		// 	values = [
+		// 		values[0],
+		// 		Math.round(values[values.length - 1] / 2),
+		// 		Math.round(values[values.length - 1] / 3),
+		// 		Math.round(values[values.length - 1] / 4),
+		// 		Math.round(values[values.length - 1] / 5),
+		// 		values[values.length - 1],
+		// 	]
+		// }
+		// const sortedValues = values.sort((a, b) => a - b)
+		// setColorGroups([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
+	}, [instance, selectedMainSectionName, selectedSubSectionName,
+		selectedMainSectionName, selectedRegionName])
 
-		elements.map(async (element: any, i: number) => {
-			const regionName: string = element.attribute('name_ru')
-			if (regionName === selectedRegionName) element.selected(true)
+	function customizeLayer(elements: any) {
 
-			if (!isRegionNameInStatistics(regionName)) {
-				element.applySettings({ opacity: 0.2 })
-			}
-
-			// if (!mainSectionName || !subSectionTitle) return
-
-			element.attribute('value', Math.floor(Math.random() * 10))
-
-			// const statisticsData = await statisticsByYearsQuery(queryOptions)
-			// if (!statisticsData) return
-			// const value = parseFloat(statisticsData[0].value)
-			// element.attribute('value', value)
-		})
 	}
 
 	function onMapClick(e: MapClickEvent) {
 		if (!e.target) return
 		const regionName = e.target.attribute('name_ru')
 		const value = e.target.attribute('value')
-		console.log({ value })
+		// console.log({ value })
 		if (!isRegionNameInStatistics(regionName)) return
 
 		selectionsHandler({ selectedRegionName: regionName })
 	}
 
-	function customizeTooltip(element: any) {
-		console.log(element.attribute('value'))
+	function customizeTooltip(element: any, b: any, c: any) {
 		return {
 			text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
 		}
@@ -148,7 +140,6 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 				id="vectorMap"
 				bounds={BOUNDS}
 				onClick={onMapClick}
-				// onSelectionChanged={onSelectionChanged}
 				onInitialized={onInitialized}
 			>
 				<Layer
@@ -160,7 +151,7 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 					customize={customizeLayer}
 					selectionMode="single"
 					name="regions"
-					palette="Violet"
+					// palette="Violet"
 					colorGroupingField="value"
 					colorGroups={colorGroups}
 					label={{

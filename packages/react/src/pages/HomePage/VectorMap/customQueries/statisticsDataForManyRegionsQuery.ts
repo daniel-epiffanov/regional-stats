@@ -17,12 +17,12 @@ type Props = Readonly<{
 
 type StatisticsDataForManyRegionsResponse = Readonly<{
 	readonly data: {
-		[key: string]: ReadonlyStatisticsData
+		[key: string]: ReadonlyArray<ReadonlyStatisticsData>
 	}
 }>
 
 type StatisticsDataForManyRegions = Readonly<{
-	[key: ReadonlyStatisticsOfRegion['regionName']]: ReadonlyStatisticsData
+	[key: ReadonlyStatisticsOfRegion['regionName']]: ReadonlyArray<ReadonlyStatisticsData>
 }>
 
 const statisticsDataForManyRegionsQuery = async (props: Props) => {

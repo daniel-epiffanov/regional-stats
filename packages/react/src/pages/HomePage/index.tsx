@@ -16,11 +16,11 @@ const HomePageLayout: FC = () => {
 		selectedSubSectionName,
 	} = useSelectionsContext()
 
-	useEffect(() => {
-		console.log({ selectedRegionName })
-		console.log({ selectedMainSectionName })
-		console.log({ selectedSubSectionName })
-	}, [selectedRegionName, selectedMainSectionName, selectedSubSectionName])
+	// useEffect(() => {
+	// 	console.log({ selectedRegionName })
+	// 	console.log({ selectedMainSectionName })
+	// 	console.log({ selectedSubSectionName })
+	// }, [selectedRegionName, selectedMainSectionName, selectedSubSectionName])
 
 	return (
 		<ResponsiveBox>

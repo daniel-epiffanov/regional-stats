@@ -1,7 +1,7 @@
 // RegionsCoords schema
 
 export interface RegionCoords {
-	type: 'federalDistrict', 'region',
+	type: 'federalDistrict' | 'region',
 	geometry: {
 		readonly type: 'Polygon' | 'MultiPolygon',
 		readonly coordinates: ReadonlyArray<ReadonlyArray<ReadonlyArray<string>>>
