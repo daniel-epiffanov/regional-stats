@@ -25,26 +25,25 @@ const HomePageLayout: FC = () => {
 		<ResponsiveBox>
 			<Row ratio={1} />
 			<Row ratio={1} />
-			<Row ratio={1} />
-			<Row ratio={0.7} />
 			<Col ratio={1} />
+			<Col ratio={2} />
 
 			<Item>
-				<Location screen="sm md lg" row={0} col={0} />
+				<Location screen="sm md lg" row={0} col={1} />
 				<div>
 					<VectorMap />
 				</div>
 			</Item>
 
 			<Item>
-				<Location screen="md lg" row={1} col={0} />
+				<Location screen="md lg" row={1} col={1} />
 				<div>
 					<DoughnutChart />
 				</div>
 			</Item>
 			<Item>
-				<Location screen="sm md lg" row={2} col={0} />
-				<div>
+				<Location screen="sm md lg" row={0} col={0} rowspan={2} />
+				<div style={{ maxHeight: '100vh', overflowY: 'auto' }}>
 					<MenuSectionsTree />
 				</div>
 			</Item>

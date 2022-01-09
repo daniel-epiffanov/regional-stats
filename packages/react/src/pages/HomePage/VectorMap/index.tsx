@@ -114,7 +114,7 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 
 	function customizeTooltip(element: any, b: any, c: any) {
 		return {
-			text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
+			text: `${element.attribute('name_ru')} ${bigNumberFormatter(element.attribute('value'))}`,
 		}
 	}
 
