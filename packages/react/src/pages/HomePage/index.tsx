@@ -9,18 +9,6 @@ import styles from './styles/index.module.scss'
 import VectorMap from './VectorMap'
 
 const HomePageLayout: FC = () => {
-	// const {
-	// 	selectedRegionName,
-	// 	selectedMainSectionName,
-	// 	selectedSubSectionName,
-	// } = useSelectionsContext()
-
-	// useEffect(() => {
-	// 	console.log({ selectedRegionName })
-	// 	console.log({ selectedMainSectionName })
-	// 	console.log({ selectedSubSectionName })
-	// }, [selectedRegionName, selectedMainSectionName, selectedSubSectionName])
-
 	return (
 		<ResponsiveBox>
 			<Row ratio={1} />
