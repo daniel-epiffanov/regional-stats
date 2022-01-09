@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { StatisticsDataResponse } from '../../../../sharedTypes/gqlQueries'
+import { StatisticsDataResponse } from '../../../../../../../sharedTypes/gqlQueries'
 
-import { hostApi } from '../helpers/host'
-import GqlResponse from './@types/gqlResponse'
+import { hostApi } from '../../../../helpers/host'
+import GqlResponse from '../../../../manualQueries/@types/gqlResponse'
 
 interface Options {
 	regionName: string,
@@ -16,7 +16,7 @@ type StatisticsByYearsFn = (options: Options) => Promise<StatisticsDataResponse 
 
 type SingleSelectionResponse = GqlResponse<{ statisticsData: StatisticsDataResponse }>
 
-const statisticsByYearsQuery: StatisticsByYearsFn = async (options) => {
+const statisticsDataQuery: StatisticsByYearsFn = async (options) => {
 	const {
 		regionName, mainSectionName, subSectionName: subSectionTitle, startYear, endYear,
 	} = options
@@ -41,4 +41,4 @@ const statisticsByYearsQuery: StatisticsByYearsFn = async (options) => {
 	return statisticsData
 }
 
-export default statisticsByYearsQuery
+export default statisticsDataQuery

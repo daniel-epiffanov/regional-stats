@@ -1,20 +1,19 @@
 import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
-import { useState, useEffect, FC } from 'react'
-import { SelectionsProvider, useSelectionsContext } from './context/selectionsContext'
-import useSelectedRegion from './hooks/useSelectedRegion'
-import useSelectedSectionNames from './hooks/useSelectedSectionNames'
+import { FC } from 'react'
+import { SelectionsProvider } from './context/selectionsContext'
+import DoughnutChart from './DoughnutChart'
 import MenuSectionsTree from './MenuSectionsTree'
 import styles from './styles/index.module.scss'
 import VectorMap from './VectorMap'
 
 const HomePageLayout: FC = () => {
-	const {
-		selectedRegionName,
-		selectedMainSectionName,
-		selectedSubSectionName,
-	} = useSelectionsContext()
+	// const {
+	// 	selectedRegionName,
+	// 	selectedMainSectionName,
+	// 	selectedSubSectionName,
+	// } = useSelectionsContext()
 
 	// useEffect(() => {
 	// 	console.log({ selectedRegionName })
@@ -37,16 +36,12 @@ const HomePageLayout: FC = () => {
 				</div>
 			</Item>
 
-			{/* <Item>
+			<Item>
 				<Location screen="md lg" row={1} col={0} />
 				<div>
-					<DoughnutChart
-						selectedRegionName={selectedRegionName}
-						mainSectionName={selectedMainSectionName}
-						subSectionTitle={selectedSubSectionTitle}
-					/>
+					<DoughnutChart />
 				</div>
-			</Item> */}
+			</Item>
 			<Item>
 				<Location screen="sm md lg" row={2} col={0} />
 				<div>

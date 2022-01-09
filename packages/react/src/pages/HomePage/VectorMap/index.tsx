@@ -171,6 +171,9 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 				<Legend customizeText={customizeText}>
 					<Source layer="regions" grouping="color" />
 				</Legend>
+				<div>
+					<h1>hey</h1>
+				</div>
 
 			</VectorMap>
 		</div>
