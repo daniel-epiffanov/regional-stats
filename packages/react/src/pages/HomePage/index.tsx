@@ -14,7 +14,14 @@ const HomePageLayout: FC = () => {
 			<Row ratio={1} />
 			<Row ratio={1} />
 			<Col ratio={1} />
-			<Col ratio={2} />
+			<Col ratio={3} />
+
+			<Item>
+				<Location screen="sm md lg" row={0} col={0} rowspan={2} />
+				<div className={styles.doughnutChartContainer}>
+					<MenuSectionsTree />
+				</div>
+			</Item>
 
 			<Item>
 				<Location screen="sm md lg" row={0} col={1} />
@@ -27,12 +34,6 @@ const HomePageLayout: FC = () => {
 				<Location screen="md lg" row={1} col={1} />
 				<div>
 					<DoughnutChart />
-				</div>
-			</Item>
-			<Item>
-				<Location screen="sm md lg" row={0} col={0} rowspan={2} />
-				<div style={{ maxHeight: '100vh', overflowY: 'auto' }}>
-					<MenuSectionsTree />
 				</div>
 			</Item>
 

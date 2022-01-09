@@ -1,0 +1,10 @@
+
+.doughnutChartContainer {
+	height: 100%;
+	overflow-y: scroll;
+	position: relative;
+
+	>div {
+		position: absolute;
+	}
+}

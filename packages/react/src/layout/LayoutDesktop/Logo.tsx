@@ -1,15 +1,13 @@
 import LogoSvg from '../../assets/logo.svg'
+import { LOGO_TEXT } from '../../config/constants'
 import styles from './styles/Logo.module.scss'
-
-const LOGO_TXT = 'рос|стат'.toUpperCase()
 
 const Logo = () => (
 	<div className={styles.LogoRoot}>
-		<img src={LogoSvg} alt="logo" height="59px" className={styles.logoSvg} />
+		<img src={LogoSvg} alt="logo" height="60px" className={styles.logoSvg} />
 		<div className="toolbar-label">
-			<b className={styles.logoTxt}>{LOGO_TXT}</b>
+			<b className={styles.logoTxt}>{LOGO_TEXT}</b>
 		</div>
-		{/* <h1 className={styles.h1}>{LOGO_TXT}</h1> */}
 	</div>
 )
 
