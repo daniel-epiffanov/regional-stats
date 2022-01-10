@@ -1,4 +1,5 @@
 import { FC, useEffect } from 'react'
+import { LoadPanel } from 'devextreme-react/load-panel'
 
 interface Props {
 	text: string,
@@ -18,7 +19,10 @@ const Message: FC<Props> = ({ text, type }) => {
 
 	if (type === 'message') {
 		return (
-			<span>{text} Please, wait...</span>
+			<div style={{ position: 'relative' }}>
+				<span>{text} Please, wait...</span>
+				<LoadPanel visible />
+			</div>
 		)
 	}
 
