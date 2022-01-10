@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import Footer from './Footer'
 import Header from './Header'
 import styles from './styles/index.module.scss'
 
@@ -15,10 +14,6 @@ const LayoutDesktop: FC = (props) => {
 			<main>
 				{children}
 			</main>
-
-			<footer>
-				<Footer />
-			</footer>
 		</div>
 	)
 }
