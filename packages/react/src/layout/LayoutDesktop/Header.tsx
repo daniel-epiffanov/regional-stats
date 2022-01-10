@@ -3,7 +3,7 @@ import { FC } from 'react'
 import styles from './styles/Header.module.scss'
 import Logo from './Logo'
 import chageThemeHundler from '../../devExtreme/chageThemeHundler'
-import { GITHUB_LINK, LIGHT_THEME_NAME, TELEGRAM_LINK } from '../../config/constants'
+import { GITHUB_LINK, TELEGRAM_LINK } from '../../config/constants'
 
 const Header: FC = () => {
 	return (

@@ -1,5 +1,4 @@
 import './styles/App.module.scss'
-import themes from 'devextreme/ui/themes'
 import {
 	BrowserRouter as Router,
 	Route,
@@ -8,8 +7,9 @@ import {
 import Home from './pages/HomePage'
 import CustomApolloProvider from './context/CustomApolloProvider'
 import { SimpleQueriesProvider } from './context/simpleQueriesContext'
+import setLocalStorageTheme from './devExtreme/setLocalStorageTheme'
 
-themes.current(window.localStorage.getItem('dx-theme') || 'material.blue.light')
+setLocalStorageTheme()
 
 const App = () => (
 	<CustomApolloProvider>
