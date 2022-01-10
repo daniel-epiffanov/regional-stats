@@ -1,10 +1,11 @@
 import { Toolbar, Item } from 'devextreme-react/toolbar'
+import { FC } from 'react'
 import styles from './styles/Header.module.scss'
 import Logo from './Logo'
 import chageThemeHundler from '../../devExtreme/chageThemeHundler'
-import { LIGHT_THEME_NAME } from '../../config/constants'
+import { GITHUB_LINK, LIGHT_THEME_NAME, TELEGRAM_LINK } from '../../config/constants'
 
-const Header = () => {
+const Header: FC = () => {
 	return (
 		<div className={styles.root}>
 			<Toolbar
@@ -13,26 +14,39 @@ const Header = () => {
 			>
 				<Item
 					location="before"
-					widget="dxButton"
-					// options={backButtonOptions}
-					// text="Росстат"
-					render={Logo}
-				/>
-				<Item
-					location="before"
-					widget="dxButton"
-					// options={backButtonOptions}
-					// text="Росстат"
 					render={Logo}
 				/>
 				<Item
 					location="after"
 					widget="dxButton"
 					options={{
-						icon: `fas fa-${window.localStorage.getItem('dx-theme') === LIGHT_THEME_NAME ? 'sun' : 'moon'}`,
-						onClick: (e: any) => {
+						text: 'Author\'s GitHub',
+						icon: 'fab fa-github',
+						onClick: () => {
+							window.open(GITHUB_LINK)
+						},
+					}}
+				/>
+				<Item
+					location="after"
+					widget="dxButton"
+					options={{
+						text: 'Author\'s Telegram',
+						icon: 'fab fa-telegram',
+						onClick: () => {
+							window.open(TELEGRAM_LINK)
+						},
+					}}
+				/>
+				<Item
+					location="after"
+					widget="dxButton"
+					options={{
+						icon: 'far fa-lightbulb',
+						onClick: () => {
 							chageThemeHundler()
 						},
+						text: 'theme',
 					}}
 				/>
 			</Toolbar>
