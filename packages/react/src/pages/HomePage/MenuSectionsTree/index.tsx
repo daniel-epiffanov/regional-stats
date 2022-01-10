@@ -23,7 +23,16 @@ const MenuSectionsTree: FC = () => {
 
 	const itemRenderHandler = (item: { id: string, text: string }, index: number) => {
 		const isSubSectionName = item.id.split('_').length > 1
-		if (isSubSectionName) return <CheckBox value={selectedItemId === item.id} text={item.text} />
+		if (isSubSectionName) {
+			return (
+				<div className={styles.checkboxContainer}>
+					<CheckBox value={selectedItemId === item.id} />
+					<div>
+						{item.text}
+					</div>
+				</div>
+			)
+		}
 
 		return <span>{item.text}</span>
 	}
@@ -43,7 +52,6 @@ const MenuSectionsTree: FC = () => {
 		<div>
 			<TreeView
 				items={getDxItems()}
-				// selectionMode="single"
 				expandEvent="click"
 				searchEnabled
 				itemRender={itemRenderHandler}

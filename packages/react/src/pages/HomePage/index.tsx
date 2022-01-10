@@ -14,7 +14,7 @@ const HomePageLayout: FC = () => {
 			<Row ratio={1} />
 			<Row ratio={1} />
 			<Col ratio={1} />
-			<Col ratio={3} />
+			<Col ratio={2} />
 
 			<Item>
 				<Location screen="sm md lg" row={0} col={0} rowspan={2} />
