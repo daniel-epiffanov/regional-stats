@@ -122,10 +122,9 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 		const { end, start, index } = args
 		const formattedStart = bigNumberFormatter(start)
 		const formattedEnd = bigNumberFormatter(end)
-		const percent = (index / 10) * 100
+		const percent = ((index * 2) / 10) * 100
 		const isLowestGroup = percent === 0
 		const isHighestGroup = percent === 100
-		// const getReturnText = (extremeGroupLabel: string) => `${percent}% (${formattedStart} - ${formattedEnd})`
 		if (isLowestGroup) return `<b>low</b> (${formattedStart} - ${formattedEnd})`
 		if (isHighestGroup) return `<b>high</b> (${formattedStart} - ${formattedEnd})`
 

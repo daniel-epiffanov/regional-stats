@@ -1,6 +1,6 @@
-const NUMBER_OF_RANGE_PARTS = 12
+const NUMBER_OF_RANGE_PARTS = 7
 const NUMBER_OF_INNER_RANGE_PARTS = NUMBER_OF_RANGE_PARTS - 2
-const EXTREME_VALUES_INCREASE = 2
+const EXTREME_VALUES_INCREASE = 1
 const REMINDER_RANGE_DECREASER = 0.9
 
 const makeColorGroupsRange = (values: number[]) => {
@@ -12,7 +12,12 @@ const makeColorGroupsRange = (values: number[]) => {
 	const colorGroupsRange = [lowestValue]
 
 	for (let index = 0; index < NUMBER_OF_INNER_RANGE_PARTS; index += 1) {
-		colorGroupsRange.push(colorGroupsRange.slice(-1)[0] + range)
+		const nextRangePoint = colorGroupsRange.slice(-1)[0] + range
+
+		const closest = sortedValues.reduce((a, b) => {
+			return Math.abs(b - nextRangePoint) < Math.abs(a - nextRangePoint) ? b : a
+		})
+		colorGroupsRange.push(closest)
 	}
 	colorGroupsRange.push(higherValue)
 
