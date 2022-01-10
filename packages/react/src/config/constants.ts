@@ -6,3 +6,5 @@ export const DEFAULT_THEME = LIGHT_THEME_NAME
 
 export const GITHUB_LINK = 'https://github.com/daniel-epiffanov'
 export const TELEGRAM_LINK = 'https://t.me/danielEpifanov'
+
+export const ERROR_RELOAD_TIMEOUT_IN_SECONDS = 20
