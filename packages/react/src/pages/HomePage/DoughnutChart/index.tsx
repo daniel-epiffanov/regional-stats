@@ -6,18 +6,44 @@ import PieChart, {
 	Connector,
 	Export,
 } from 'devextreme-react/pie-chart'
-import { DataSourceLike } from 'devextreme/data/data_source'
-import { BaseChartOptions } from 'devextreme/viz/chart_components/base_chart'
 import dxPieChart from 'devextreme/viz/pie_chart'
 import styles from './styles/index.module.scss'
 import { useSelectionsContext } from '../context/selectionsContext'
 import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 import statisticsDataQuery from './customQueries/statisticsDataQuery'
-import { StatisticsDataResponse } from '../../../../../../sharedTypes/gqlQueries'
+import { StatisticsDataResponse, StatisticsYearsResponse } from '../../../../../../sharedTypes/gqlQueries'
 import bigNumberFormatter from '../../../helpers/bigNumberFormatter'
 import useComponentInstance from '../../../hooks/useComponentInstance'
 
 type Props = Readonly<{}>
+
+const hideExtraStatisticsYears = (
+	statisticsYears: StatisticsYearsResponse,
+	instance: dxPieChart,
+) => {
+	const middleStatisticsYearIndex = Math.floor(statisticsYears.length / 2)
+	const startStatisticsYearToShow = statisticsYears[middleStatisticsYearIndex]
+
+	statisticsYears.forEach(statisticsYear => {
+		const isShown = statisticsYear >= startStatisticsYearToShow
+		if (!isShown) {
+			const item = instance.getAllSeries()[0].getPointsByArg(statisticsYear)[0]
+			// @ts-ignore
+			item?.hide && item.hide()
+		}
+	})
+}
+
+const legendClickHandler = (e: any) => {
+	const arg = e.target
+	const item = e.component.getAllSeries()[0].getPointsByArg(arg)[0]
+	item.isVisible() ? item.hide() : item.show()
+}
+
+const customizeSeriesLabelTextHandler = (args: { value: number, percentText: string }) => {
+	const { value, percentText } = args
+	return `${bigNumberFormatter(value)} (${percentText})`
+}
 
 const DoughnutChart: FC<Props> = (props) => {
 	const {
@@ -26,60 +52,32 @@ const DoughnutChart: FC<Props> = (props) => {
 		selectedSubSectionName,
 	} = useSelectionsContext()
 	const { statisticsYears } = useSimpleQueriesContext()
-	const { instance, onInitialized } = useComponentInstance<dxPieChart>()
+	const { instance, onInitializedHandler } = useComponentInstance<dxPieChart>()
 
 	const [dataSource, setDataSource] = useState<StatisticsDataResponse>([])
+	const dataSourceHandler = (newDataSource: StatisticsDataResponse) => setDataSource(newDataSource)
+
+	const updateDataSource = async () => {
+		const statisticsData = await statisticsDataQuery({
+			regionName: selectedRegionName,
+			mainSectionName: selectedMainSectionName,
+			subSectionName: selectedSubSectionName,
+			startYear: statisticsYears[0],
+			endYear: statisticsYears.slice(-1)[0],
+		})
+		if (!statisticsData) return
+		dataSourceHandler(statisticsData)
+	}
 
 	useEffect(() => {
 		if (!selectedRegionName || !selectedMainSectionName || !selectedSubSectionName) return
-
-		(async () => {
-			const statisticsData = await statisticsDataQuery({
-				regionName: selectedRegionName,
-				mainSectionName: selectedMainSectionName,
-				subSectionName: selectedSubSectionName,
-				startYear: statisticsYears[0],
-				endYear: statisticsYears.slice(-1)[0],
-			})
-			if (!statisticsData) return
-			setDataSource(statisticsData)
-
-			if (!instance) return
-
-			statisticsYears.forEach(statisticsYear => {
-				const item = instance.getAllSeries()[0].getPointsByArg(statisticsYear)[0]
-				console.log({ item })
-			})
-			// item.isVisible() ? item.hide() : item.show()
-		})()
-	}, [selectedRegionName, selectedMainSectionName, selectedSubSectionName, instance])
+		updateDataSource()
+	}, [selectedRegionName, selectedMainSectionName, selectedSubSectionName])
 
 	useEffect(() => {
-		if (!instance || !dataSource || dataSource.length === 0) return
-		const middleStatisticsYearIndex = Math.floor(statisticsYears.length / 2)
-		const startStatisticsYearToShow = statisticsYears[middleStatisticsYearIndex]
-		statisticsYears.forEach(statisticsYear => {
-			const isShown = statisticsYear >= startStatisticsYearToShow
-			if (!isShown) {
-				const item = instance.getAllSeries()[0].getPointsByArg(statisticsYear)[0]
-				// @ts-ignore
-				item?.hide && item.hide()
-			}
-		})
-	}, [instance, dataSource])
-
-	function legendClickHandler(e: any) {
-		const arg = e.target
-		const item = e.component.getAllSeries()[0].getPointsByArg(arg)[0]
-		console.log({ item })
-		item.isVisible() ? item.hide() : item.show()
-	}
-
-	const customizeTextHandler = (args: { value: number, percentText: string }) => {
-		// console.log({ args })
-		const { value, percentText } = args
-		return `${bigNumberFormatter(value)} (${percentText})`
-	}
+		if (!instance || dataSource.length === 0) return
+		hideExtraStatisticsYears(statisticsYears, instance)
+	}, [instance, dataSource.length])
 
 	return (
 		<div className={styles.PieChart}>
@@ -90,10 +88,10 @@ const DoughnutChart: FC<Props> = (props) => {
 				palette="Violet"
 				dataSource={dataSource}
 				onLegendClick={legendClickHandler}
-				onInitialized={onInitialized}
+				onInitialized={onInitializedHandler}
 			>
 				<Series argumentField="year" valueField="value">
-					<Label visible format="decimal" customizeText={customizeTextHandler}>
+					<Label visible format="decimal" customizeText={customizeSeriesLabelTextHandler}>
 						<Connector visible />
 					</Label>
 				</Series>
@@ -102,9 +100,6 @@ const DoughnutChart: FC<Props> = (props) => {
 					horizontalAlignment="right"
 					verticalAlignment="center"
 				/>
-				{/* <Tooltip enabled customizeTooltip={this.customizeTooltip}>
-				<Format type="millions" />
-			</Tooltip> */}
 			</PieChart>
 		</div>
 	)

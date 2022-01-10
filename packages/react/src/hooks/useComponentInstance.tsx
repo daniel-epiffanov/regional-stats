@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 interface Return<Instance> {
 	instance: Instance | null,
-	onInitialized: OnInitialized
+	onInitializedHandler: OnInitializedHandler
 }
 
 interface Event {
@@ -10,16 +10,16 @@ interface Event {
 	element?: HTMLElement | undefined;
 }
 
-type OnInitialized = (e: Event) => void
+type OnInitializedHandler = (e: Event) => void
 
 const useComponentInstance = <Instance, P = any>(): Return<Instance> => {
 	const [instance, setInstance] = useState<Instance | null>(null)
 
-	const onInitialized: OnInitialized = (e) => {
+	const onInitializedHandler: OnInitializedHandler = (e) => {
 		if (e.component) setInstance(e.component)
 	}
 
-	const toReturn = { instance, onInitialized }
+	const toReturn = { instance, onInitializedHandler }
 	return toReturn
 }
 

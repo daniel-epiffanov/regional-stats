@@ -48,7 +48,7 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 	}
 
 	// mapSetups
-	const { instance, onInitialized } = useComponentInstance<dxVectorMap>()
+	const { instance, onInitializedHandler } = useComponentInstance<dxVectorMap>()
 	const [colorGroups, setColorGroups] = useState<number[]>([2330427, 4330427, 20208917])
 
 	useEffect(() => {
@@ -137,7 +137,7 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 				id="vectorMap"
 				bounds={BOUNDS}
 				onClick={onMapClick}
-				onInitialized={onInitialized}
+				onInitialized={onInitializedHandler}
 			>
 				<Layer
 					dataSource={{
