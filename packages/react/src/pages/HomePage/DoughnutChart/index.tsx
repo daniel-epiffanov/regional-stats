@@ -54,15 +54,19 @@ const DoughnutChart: FC<Props> = (props) => {
 		})()
 	}, [selectedRegionName, selectedMainSectionName, selectedSubSectionName, instance])
 
-	// useEffect(() => {
-	// 	if (!instance || !selectedSubSectionName) return
-
-	// 	statisticsYears.forEach(statisticsYear => {
-	// 		const item = instance.getAllSeries()[0].getPointsByArg(statisticsYear)[0]
-	// 		// @ts-ignore
-	// 		item?.hide && item.hide()
-	// 	})
-	// }, [instance, selectedSubSectionName])
+	useEffect(() => {
+		if (!instance || !dataSource || dataSource.length === 0) return
+		const middleStatisticsYearIndex = Math.floor(statisticsYears.length / 2)
+		const startStatisticsYearToShow = statisticsYears[middleStatisticsYearIndex]
+		statisticsYears.forEach(statisticsYear => {
+			const isShown = statisticsYear >= startStatisticsYearToShow
+			if (!isShown) {
+				const item = instance.getAllSeries()[0].getPointsByArg(statisticsYear)[0]
+				// @ts-ignore
+				item?.hide && item.hide()
+			}
+		})
+	}, [instance, dataSource])
 
 	function legendClickHandler(e: any) {
 		const arg = e.target
