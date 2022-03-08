@@ -1,9 +1,4 @@
 import './styles/App.module.scss'
-import {
-	BrowserRouter as Router,
-	Route,
-	Routes,
-} from 'react-router-dom'
 import Home from './pages/HomePage'
 import CustomApolloProvider from './context/CustomApolloProvider'
 import { SimpleQueriesProvider } from './context/simpleQueriesContext'
@@ -14,11 +9,7 @@ setLocalStorageTheme()
 const App = () => (
 	<CustomApolloProvider>
 		<SimpleQueriesProvider>
-			<Router>
-				<Routes>
-					<Route path="/" element={<Home />} />
-				</Routes>
-			</Router>
+			<Home />
 		</SimpleQueriesProvider>
 	</CustomApolloProvider>
 )

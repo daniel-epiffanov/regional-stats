@@ -13,7 +13,7 @@ const ChartWrapper = () => {
 		if (process.env.REACT_APP_API_URL) {
 			const query = `
 				query {
-					mapCoords(sort: "name_ru", input: {type: "federalDistrict"}) {
+					mapCoords(sort: "name_ru", input: {type: "region"}) {
 						properties {
               name_ru
             },
