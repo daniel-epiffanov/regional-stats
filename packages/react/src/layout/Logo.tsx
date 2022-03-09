@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import LogoSvg from '../../assets/logo.svg'
-import { LOGO_TEXT } from '../../config/constants'
+import LogoSvg from '../assets/logo.svg'
+import { LOGO_TEXT } from '../config/constants'
 import styles from './styles/Logo.module.scss'
 
 const Logo: FC = () => (

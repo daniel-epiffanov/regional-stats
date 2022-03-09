@@ -5,32 +5,32 @@ import {
 import { StatisticsMainSectionNamesResponse, StatisticsRegionNamesResponse, StatisticsYearsResponse } from '../../../../sharedTypes/gqlQueries'
 import Message from '../components/Message'
 
-interface ContextValues {
+type ContextValues = Readonly<{
 	statisticsRegionNames: StatisticsRegionNamesResponse,
 	statisticsYears: StatisticsYearsResponse,
 	statisticsMainSectionNames: StatisticsMainSectionNamesResponse
-}
-
-type ReadonlyContextValues = Readonly<ContextValues>
+}>
 
 const QUERY = gql` query {
-	statisticsRegionNames, statisticsYears, statisticsMainSectionNames
+	statisticsRegionNames,
+	statisticsYears,
+	statisticsMainSectionNames
 }`
 
-const SimpleQueriesContext = createContext<ReadonlyContextValues>({} as ReadonlyContextValues)
+const GeneralDataContext = createContext<ContextValues>({} as ContextValues)
 
-export const useSimpleQueriesContext = () => useContext(SimpleQueriesContext)
+export const useGeneralDataContext = () => useContext(GeneralDataContext)
 
-export const SimpleQueriesProvider: FC = ({ children }) => {
-	const { loading, error, data: simpleQueriesData } = useQuery<ReadonlyContextValues>(QUERY)
+export const GeneralDataProvider: FC = ({ children }) => {
+	const { loading, error, data: simpleQueriesData } = useQuery<ContextValues>(QUERY)
 
 	if (loading) return <Message type="message" text="We are fetching basic data." />
 
 	if (error || !simpleQueriesData) return <Message type="error" text="Basic data was not fetched!" />
 
 	return (
-		<SimpleQueriesContext.Provider value={simpleQueriesData}>
+		<GeneralDataContext.Provider value={simpleQueriesData}>
 			{children}
-		</SimpleQueriesContext.Provider>
+		</GeneralDataContext.Provider>
 	)
 }

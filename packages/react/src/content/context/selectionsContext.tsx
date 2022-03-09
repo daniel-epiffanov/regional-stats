@@ -7,8 +7,8 @@ import {
 	ReadonlyStatisticsOfRegion,
 	ReadonlyStatisticsOfSubSection,
 	ReadonlyStatisticsData,
-} from '../../../../../../sharedTypes/mongoModels'
-import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
+} from '../../../../../sharedTypes/mongoModels'
+import { useGeneralDataContext } from '../../context/GeneralDataContext'
 
 interface ContextValues {
 	selectedRegionName: ReadonlyStatisticsOfRegion['regionName'],
@@ -32,7 +32,7 @@ const SelectionsContext = createContext<ReadonlyContextValues>({} as ReadonlyCon
 export const useSelectionsContext = () => useContext(SelectionsContext)
 
 export const SelectionsProvider: FC = ({ children }) => {
-	const { statisticsMainSectionNames, statisticsRegionNames } = useSimpleQueriesContext()
+	const { statisticsMainSectionNames, statisticsRegionNames } = useGeneralDataContext()
 
 	const [selections, setSelections] = useState<ReadonlyStateValues>({
 		selectedRegionName: statisticsRegionNames[1],

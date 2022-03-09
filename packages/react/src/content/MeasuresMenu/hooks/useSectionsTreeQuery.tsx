@@ -1,6 +1,6 @@
 import { useQuery, gql } from '@apollo/client'
-import { StatisticsMainSectionNamesResponse, SectionsTreeResponse } from '../../../../../../../sharedTypes/gqlQueries'
-import { useSimpleQueriesContext } from '../../../../context/simpleQueriesContext'
+import { StatisticsMainSectionNamesResponse, SectionsTreeResponse } from '../../../../../../sharedTypes/gqlQueries'
+import { useGeneralDataContext } from '../../../context/GeneralDataContext'
 
 const sectionsTreeResponseHandler = (
 	statisticsMainSectionNames: StatisticsMainSectionNamesResponse,
@@ -14,7 +14,7 @@ const sectionsTreeResponseHandler = (
 }
 
 const useSectionsTreeItemsQuery = () => {
-	const { statisticsMainSectionNames } = useSimpleQueriesContext()
+	const { statisticsMainSectionNames } = useGeneralDataContext()
 
 	// we are forced to have here a data handler and
 	// constrictions like "mainSection_${i}: ..." because

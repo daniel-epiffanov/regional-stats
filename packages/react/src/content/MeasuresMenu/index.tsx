@@ -3,7 +3,7 @@ import { TreeView } from 'devextreme-react/tree-view'
 import { ItemClickEvent } from 'devextreme/ui/tree_view'
 import { CheckBox } from 'devextreme-react'
 import styles from './styles/index.module.scss'
-import Message from '../../../components/Message'
+import Message from '../../components/Message'
 import useSectionsTreeQuery from './hooks/useSectionsTreeQuery'
 import makeDxItems from './devExtreme/makeDxItems'
 import { useSelectionsContext } from '../context/selectionsContext'
@@ -18,7 +18,7 @@ const MenuSectionsTree: FC = () => {
 		return makeDxItems(sectionsTreeResponse, selectedItemId)
 	}
 
-	if (loading) return <Message type="message" text="Loading menu sections." />
+	if (loading) return <Message type="message" text="Loading menu sections." positionId="measures-menu-container" />
 	if (error) return <Message type="error" text="We have not fetched the menu sections." />
 
 	const itemRenderHandler = (item: { id: string, text: string }, index: number) => {
@@ -37,7 +37,7 @@ const MenuSectionsTree: FC = () => {
 		return <span>{item.text}</span>
 	}
 
-	const onItemClickHandler = (e: ItemClickEvent) => {
+	const itemClickHandler = (e: ItemClickEvent) => {
 		const isSecondLevel = e.itemData.id.split('_').length > 1
 		if (isSecondLevel) {
 			setSelectedItemId(`${e.itemData.id}`)
@@ -53,10 +53,10 @@ const MenuSectionsTree: FC = () => {
 			<TreeView
 				items={getDxItems()}
 				expandEvent="click"
-				searchEnabled
-				itemRender={itemRenderHandler}
-				onItemClick={onItemClickHandler}
-				expandedExpr="isExpanded"
+			// searchEnabled
+			// itemRender={itemRenderHandler}
+			// onItemClick={itemClickHandler}
+			// expandedExpr="isExpanded"
 			/>
 		</div>
 	)

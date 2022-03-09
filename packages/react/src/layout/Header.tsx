@@ -2,8 +2,8 @@ import { Toolbar, Item } from 'devextreme-react/toolbar'
 import { FC } from 'react'
 import styles from './styles/Header.module.scss'
 import Logo from './Logo'
-import chageThemeHundler from '../../devExtreme/chageThemeHundler'
-import { GITHUB_LINK, TELEGRAM_LINK } from '../../config/constants'
+import chageThemeHundler from '../devExtreme/chageThemeHundler'
+import { GITHUB_LINK, TELEGRAM_LINK } from '../config/constants'
 
 const Header: FC = () => {
 	return (

@@ -12,14 +12,14 @@ import dxVectorMap, { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_
 import { EventInfo } from 'devextreme/events'
 import styles from './styles/index.module.scss'
 import useVectorMapCoordsQuery from './hooks/useVectorMapCoordsQuery'
-import Message from '../../../components/Message'
-import useComponentInstance from '../../../hooks/useComponentInstance'
-import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
+import Message from '../../components/Message'
+import useComponentInstance from '../../hooks/useComponentInstance'
+import { useGeneralDataContext } from '../../context/GeneralDataContext'
 import { useSelectionsContext } from '../context/selectionsContext'
-import { CoordsByRegionTypeResponse } from '../../../../../../sharedTypes/gqlQueries'
+import { CoordsByRegionTypeResponse } from '../../../../../sharedTypes/gqlQueries'
 import statisticsDataForManyRegionsQuery from './customQueries/statisticsDataForManyRegionsQuery'
 import makeColorGroupsRange from './devExtreme/makeColorGroupsRange'
-import bigNumberFormatter from '../../../helpers/bigNumberFormatter'
+import bigNumberFormatter from '../../helpers/bigNumberFormatter'
 
 type Props = Readonly<{
 	coordsByRegionType: CoordsByRegionTypeResponse
@@ -36,7 +36,7 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 		selectedSubSectionName,
 		selectedYearOnMap,
 	} = useSelectionsContext()
-	const { statisticsRegionNames } = useSimpleQueriesContext()
+	const { statisticsRegionNames } = useGeneralDataContext()
 	const isRegionNameInStatistics = (regionName: string) => statisticsRegionNames.includes(regionName)
 
 	const getRegionNamesOnMapAndStatistics = () => {

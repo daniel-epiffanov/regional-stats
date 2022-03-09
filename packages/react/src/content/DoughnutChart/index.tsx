@@ -9,11 +9,11 @@ import PieChart, {
 import dxPieChart from 'devextreme/viz/pie_chart'
 import styles from './styles/index.module.scss'
 import { useSelectionsContext } from '../context/selectionsContext'
-import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
+import { useGeneralDataContext } from '../../context/GeneralDataContext'
 import statisticsDataQuery from './customQueries/statisticsDataQuery'
-import { StatisticsDataResponse, StatisticsYearsResponse } from '../../../../../../sharedTypes/gqlQueries'
-import bigNumberFormatter from '../../../helpers/bigNumberFormatter'
-import useComponentInstance from '../../../hooks/useComponentInstance'
+import { StatisticsDataResponse, StatisticsYearsResponse } from '../../../../../sharedTypes/gqlQueries'
+import bigNumberFormatter from '../../helpers/bigNumberFormatter'
+import useComponentInstance from '../../hooks/useComponentInstance'
 
 type Props = Readonly<{}>
 
@@ -51,7 +51,7 @@ const DoughnutChart: FC<Props> = (props) => {
 		selectedMainSectionName,
 		selectedSubSectionName,
 	} = useSelectionsContext()
-	const { statisticsYears } = useSimpleQueriesContext()
+	const { statisticsYears } = useGeneralDataContext()
 	const { instance, onInitializedHandler } = useComponentInstance<dxPieChart>()
 
 	const [dataSource, setDataSource] = useState<StatisticsDataResponse>([])

@@ -4,11 +4,11 @@ import ResponsiveBox, {
 import { FC } from 'react'
 import { SelectionsProvider } from './context/selectionsContext'
 import DoughnutChart from './DoughnutChart'
-import MenuSectionsTree from './MenuSectionsTree'
+import MeasuresMenu from './MeasuresMenu'
 import styles from './styles/index.module.scss'
 import VectorMap from './VectorMap'
 
-const HomePageLayout: FC = () => {
+const HomePage: FC = () => {
 	return (
 		<ResponsiveBox>
 			<Row ratio={1} />
@@ -18,12 +18,12 @@ const HomePageLayout: FC = () => {
 
 			<Item>
 				<Location screen="sm md lg" row={0} col={0} rowspan={2} />
-				<div className={styles.doughnutChartContainer}>
-					<MenuSectionsTree />
+				<div className={styles['measures-menu-container']} id="measures-menu-container">
+					<MeasuresMenu />
 				</div>
 			</Item>
 
-			<Item>
+			{/* <Item>
 				<Location screen="sm md lg" row={0} col={1} />
 				<div>
 					<VectorMap />
@@ -35,18 +35,18 @@ const HomePageLayout: FC = () => {
 				<div>
 					<DoughnutChart />
 				</div>
-			</Item>
+			</Item> */}
 
 		</ResponsiveBox>
 	)
 }
 
-const HomePage: FC = () => {
+const HomePagePreloads: FC = () => {
 	return (
 		<SelectionsProvider>
-			<HomePageLayout />
+			<HomePage />
 		</SelectionsProvider>
 	)
 }
 
-export default HomePage
+export default HomePagePreloads
