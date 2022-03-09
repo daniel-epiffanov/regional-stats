@@ -4,7 +4,7 @@ import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
 import styles from '../../styles/Charts/ChartWrapper.module.scss'
-import DoughnutChart from '../../pages/HomePage/DoughnutChart'
+import DoughnutChart from '../../content/DoughnutChart'
 import RangeSelector from '../RangeSelector'
 import MultipleAxesChart from '../MultipleAxesChart'
 

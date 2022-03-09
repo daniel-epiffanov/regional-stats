@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { StatisticsDataResponse } from '../../../../../../../sharedTypes/gqlQueries'
+import { StatisticsDataResponse } from '../../../../../../sharedTypes/gqlQueries'
 
-import { hostApi } from '../../../../helpers/host'
+import { hostApi } from '../../../helpers/host'
 
 interface Options {
 	regionName: string,

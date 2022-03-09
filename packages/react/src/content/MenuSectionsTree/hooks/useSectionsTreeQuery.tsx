@@ -1,6 +1,6 @@
 import { useQuery, gql } from '@apollo/client'
-import { StatisticsMainSectionNamesResponse, SectionsTreeResponse } from '../../../../../../../sharedTypes/gqlQueries'
-import { useSimpleQueriesContext } from '../../../../context/simpleQueriesContext'
+import { StatisticsMainSectionNamesResponse, SectionsTreeResponse } from '../../../../../../sharedTypes/gqlQueries'
+import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
 
 const sectionsTreeResponseHandler = (
 	statisticsMainSectionNames: StatisticsMainSectionNamesResponse,

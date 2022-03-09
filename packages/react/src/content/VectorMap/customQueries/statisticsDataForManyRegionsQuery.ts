@@ -4,9 +4,9 @@ import {
 	ReadonlyStatisticsOfMainSection,
 	ReadonlyStatisticsOfSubSection,
 	ReadonlyStatisticsData,
-} from '../../../../../../../sharedTypes/mongoModels.d'
+} from '../../../../../../sharedTypes/mongoModels'
 
-import { hostApi } from '../../../../helpers/host'
+import { hostApi } from '../../../helpers/host'
 
 type Props = Readonly<{
 	regionNames: ReadonlyArray<ReadonlyStatisticsOfRegion['regionName']>,

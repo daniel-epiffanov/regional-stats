@@ -1,5 +1,5 @@
 import { Item } from 'devextreme/ui/tree_view'
-import { SectionsTreeResponse } from '../../../../../../../sharedTypes/gqlQueries'
+import { SectionsTreeResponse } from '../../../../../../sharedTypes/gqlQueries'
 
 type GenerateItem = (id: string, text: string, childItems?: ReadonlyArray<string>) => Item
 

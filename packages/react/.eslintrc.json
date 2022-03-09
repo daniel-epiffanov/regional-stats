@@ -67,7 +67,8 @@
 		"react/jsx-one-expression-per-line": "off",
 		"radix": "off",
 		"max-len": "warn",
-		"array-callback-return": "warn"
+		"array-callback-return": "warn",
+		"import/prefer-default-export": "warn"
 	},
 	"settings": {
 		"import/resolver": {

@@ -1,5 +1,5 @@
 import './styles/App.module.scss'
-import Home from './pages/HomePage'
+import Home from './content'
 import CustomApolloProvider from './context/CustomApolloProvider'
 import { SimpleQueriesProvider } from './context/simpleQueriesContext'
 import setLocalStorageTheme from './devExtreme/setLocalStorageTheme'

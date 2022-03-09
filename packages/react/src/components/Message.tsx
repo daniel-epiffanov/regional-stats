@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react'
 import { LoadPanel } from 'devextreme-react/load-panel'
-import { ERROR_RELOAD_TIMEOUT_IN_SECONDS } from '../config/constants'
+import { ERROR_RELOAD_TIMEOUT_IN_SECONDS } from '../config/settings'
 
 interface Props {
 	text: string,

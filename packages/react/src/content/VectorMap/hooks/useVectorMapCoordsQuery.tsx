@@ -1,5 +1,5 @@
 import { useQuery, gql } from '@apollo/client'
-import { StatisticsRegionNamesResponse, CoordsByRegionTypeResponse } from '../../../../../../../sharedTypes/gqlQueries'
+import { StatisticsRegionNamesResponse, CoordsByRegionTypeResponse } from '../../../../../../sharedTypes/gqlQueries'
 import { useSelectionsContext } from '../../context/selectionsContext'
 
 interface QueryResponse {

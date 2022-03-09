@@ -7,8 +7,8 @@ import {
 	ReadonlyStatisticsOfRegion,
 	ReadonlyStatisticsOfSubSection,
 	ReadonlyStatisticsData,
-} from '../../../../../../sharedTypes/mongoModels'
-import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
+} from '../../../../../sharedTypes/mongoModels'
+import { useSimpleQueriesContext } from '../../context/simpleQueriesContext'
 
 interface ContextValues {
 	selectedRegionName: ReadonlyStatisticsOfRegion['regionName'],

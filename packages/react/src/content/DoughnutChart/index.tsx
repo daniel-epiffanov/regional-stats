@@ -9,11 +9,11 @@ import PieChart, {
 import dxPieChart from 'devextreme/viz/pie_chart'
 import styles from './styles/index.module.scss'
 import { useSelectionsContext } from '../context/selectionsContext'
-import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
+import { useSimpleQueriesContext } from '../../context/simpleQueriesContext'
 import statisticsDataQuery from './customQueries/statisticsDataQuery'
-import { StatisticsDataResponse, StatisticsYearsResponse } from '../../../../../../sharedTypes/gqlQueries'
-import bigNumberFormatter from '../../../helpers/bigNumberFormatter'
-import useComponentInstance from '../../../hooks/useComponentInstance'
+import { StatisticsDataResponse, StatisticsYearsResponse } from '../../../../../sharedTypes/gqlQueries'
+import bigNumberFormatter from '../../helpers/bigNumberFormatter'
+import useComponentInstance from '../../hooks/useComponentInstance'
 
 type Props = Readonly<{}>
 
