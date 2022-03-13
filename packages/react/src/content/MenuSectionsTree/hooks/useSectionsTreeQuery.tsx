@@ -1,10 +1,6 @@
 import { useQuery, gql } from '@apollo/client'
 import { StatisticsMainSectionNamesResponse, SectionsTreeResponse } from '../../../../../../sharedTypes/gqlQueries'
-<<<<<<< HEAD:packages/react/src/content/MeasuresMenu/hooks/useSectionsTreeQuery.tsx
 import { useGeneralDataContext } from '../../../context/GeneralDataContext'
-=======
-import { useSimpleQueriesContext } from '../../../context/simpleQueriesContext'
->>>>>>> 4077d884d9bc592c4ec95e864bd490e5a864d97e:packages/react/src/content/MenuSectionsTree/hooks/useSectionsTreeQuery.tsx
 
 const sectionsTreeResponseHandler = (
 	statisticsMainSectionNames: StatisticsMainSectionNamesResponse,

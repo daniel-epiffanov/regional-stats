@@ -9,11 +9,7 @@ import PieChart, {
 import dxPieChart from 'devextreme/viz/pie_chart'
 import styles from './styles/index.module.scss'
 import { useSelectionsContext } from '../context/selectionsContext'
-<<<<<<< HEAD:packages/react/src/content/DoughnutChart/index.tsx
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
-=======
-import { useSimpleQueriesContext } from '../../context/simpleQueriesContext'
->>>>>>> 4077d884d9bc592c4ec95e864bd490e5a864d97e:packages/react/src/pages/HomePage/DoughnutChart/index.tsx
 import statisticsDataQuery from './customQueries/statisticsDataQuery'
 import { StatisticsDataResponse, StatisticsYearsResponse } from '../../../../../sharedTypes/gqlQueries'
 import bigNumberFormatter from '../../helpers/bigNumberFormatter'

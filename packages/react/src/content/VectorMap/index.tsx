@@ -14,11 +14,7 @@ import styles from './styles/index.module.scss'
 import useVectorMapCoordsQuery from './hooks/useVectorMapCoordsQuery'
 import Message from '../../components/Message'
 import useComponentInstance from '../../hooks/useComponentInstance'
-<<<<<<< HEAD:packages/react/src/content/VectorMap/index.tsx
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
-=======
-import { useSimpleQueriesContext } from '../../context/simpleQueriesContext'
->>>>>>> 4077d884d9bc592c4ec95e864bd490e5a864d97e:packages/react/src/pages/HomePage/VectorMap/index.tsx
 import { useSelectionsContext } from '../context/selectionsContext'
 import { CoordsByRegionTypeResponse } from '../../../../../sharedTypes/gqlQueries'
 import statisticsDataForManyRegionsQuery from './customQueries/statisticsDataForManyRegionsQuery'
