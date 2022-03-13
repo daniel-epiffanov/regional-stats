@@ -6,7 +6,7 @@ import {
 	RegionCoords,
 	StatisticsOfRegion,
 	StatisticsOfSubSection,
-	StatisticsData,
+	StatisticsDataItem,
 } from '../../../../../sharedTypes/mongoModels'
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
 
@@ -16,7 +16,7 @@ interface ContextValues {
 	selectedSubSectionName: StatisticsOfSubSection['name'],
 
 	selectedRegionTypeOnMap: RegionCoords['type'],
-	selectedYearOnMap: StatisticsData['year'],
+	selectedYearOnMap: StatisticsDataItem['year'],
 
 	selectionsHandler: SelectionsHandler,
 }

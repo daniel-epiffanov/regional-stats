@@ -1,6 +1,6 @@
 import { RegionCoords } from '../../../../sharedTypes/mongoModels'
 import regionsCoords from '../mongooseModels/regionsCoords'
-import { ResolverFnAsync } from './@types/ResolverFn'
+import { ResolverFnAsync } from './types/ResolverFn'
 
 const coordsByRegionType: ResolverFnAsync<RegionCoords[]> = async (
 	parent: any,

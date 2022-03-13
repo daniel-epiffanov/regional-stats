@@ -1,4 +1,4 @@
-import { StatisticsOfMainSection, RegionCoords, StatisticsOfRegion, StatisticsData, StatisticsOfSubSection } from './mongoModels'
+import { StatisticsOfMainSection, RegionCoords, StatisticsOfRegion, StatisticsDataItem, StatisticsOfSubSection } from './mongoModels'
 
 // general data
 export type StatisticsYears = ReadonlyArray<number>
@@ -10,5 +10,5 @@ export type StatisticsSubSectionNames = ReadonlyArray<StatisticsOfSubSection['na
 export type SectionsTreeResponse = {
 	[key: string]: StatisticsSubSectionNames
 }
-export type StatisticsData = ReadonlyArray<StatisticsData>
+export type StatisticsData = ReadonlyArray<StatisticsDataItem>
 export type CoordsByRegionType = ReadonlyArray<RegionCoords>

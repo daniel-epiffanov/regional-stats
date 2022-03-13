@@ -1,6 +1,6 @@
 import { StatisticsSubSectionNames } from '../../../../sharedTypes/gqlQueries'
 import statisticsModel from '../mongooseModels/statistics'
-import { ResolverFnAsync } from './@types/ResolverFn'
+import { ResolverFnAsync } from './types/ResolverFn'
 
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config()

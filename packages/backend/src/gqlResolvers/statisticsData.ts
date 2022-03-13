@@ -1,7 +1,6 @@
 import { StatisticsData } from '../../../../sharedTypes/gqlQueries'
-import { StatisticsData } from '../../../../sharedTypes/mongoModels'
 import statisticsModel from '../mongooseModels/statistics'
-import { ResolverFnAsync } from './@types/ResolverFn'
+import { ResolverFnAsync } from './types/ResolverFn'
 
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config()
@@ -14,7 +13,7 @@ const statisticsData: ResolverFnAsync<StatisticsData> = async (
 		regionName, mainSectionName, subSectionName, startYear, endYear,
 	} = args
 	const defaultRegion = process.env.DEFAULT_REGION
-	const mongoRes = await statisticsModel.aggregate<{ statisticsData: StatisticsData[] }>([
+	const mongoRes = await statisticsModel.aggregate<{ statisticsData: StatisticsData }>([
 		{ $match: { regionName: regionName || defaultRegion } },
 
 		{

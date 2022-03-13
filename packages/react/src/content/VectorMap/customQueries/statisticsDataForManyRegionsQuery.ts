@@ -3,7 +3,7 @@ import {
 	StatisticsOfRegion,
 	StatisticsOfMainSection,
 	StatisticsOfSubSection,
-	StatisticsData,
+	StatisticsDataItem,
 } from '../../../../../../sharedTypes/mongoModels'
 
 import { hostApi } from '../../../helpers/host'
@@ -12,17 +12,17 @@ type Props = Readonly<{
 	regionNames: ReadonlyArray<StatisticsOfRegion['regionName']>,
 	mainSectionName: StatisticsOfMainSection['name'],
 	subSectionName: StatisticsOfSubSection['name'],
-	year: StatisticsData['year']
+	year: StatisticsDataItem['year']
 }>
 
 type StatisticsDataForManyRegionsResponse = Readonly<{
 	readonly data: {
-		[key: string]: ReadonlyArray<StatisticsData>
+		[key: string]: ReadonlyArray<StatisticsDataItem>
 	}
 }>
 
 type StatisticsDataForManyRegions = Readonly<{
-	[key: StatisticsOfRegion['regionName']]: ReadonlyArray<StatisticsData>
+	[key: StatisticsOfRegion['regionName']]: ReadonlyArray<StatisticsDataItem>
 }>
 
 const statisticsDataForManyRegionsQuery = async (props: Props) => {

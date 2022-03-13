@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose'
 import {
-	StatisticsOfMainSection, StatisticsOfRegion, StatisticsOfSubSection, StatisticsData,
+	StatisticsOfMainSection, StatisticsOfRegion, StatisticsOfSubSection, StatisticsDataItem,
 } from '../../../../sharedTypes/mongoModels'
 
-const YearValueSchema = new Schema<StatisticsData>({
+const YearValueSchema = new Schema<StatisticsDataItem>({
 	year: Number,
 	value: String,
 })

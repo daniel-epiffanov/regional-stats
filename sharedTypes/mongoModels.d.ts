@@ -30,9 +30,9 @@ export type StatisticsOfSubSection = Readonly<{
 	name: string,
 	orderNumber: string,
 	children: SubSection[],
-	yearValues: StatisticsData[],
+	yearValues: StatisticsDataItem[],
 }>
-export type StatisticsData = Readonly<{
+export type StatisticsDataItem = Readonly<{
 	year: number,
 	value: string,
 }>
