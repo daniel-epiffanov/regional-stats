@@ -2,13 +2,13 @@ import { useQuery, gql } from '@apollo/client'
 import {
 	createContext, FC, useContext,
 } from 'react'
-import { StatisticsMainSectionNamesResponse, StatisticsRegionNamesResponse, StatisticsYearsResponse } from '../../../../sharedTypes/gqlQueries'
+import { StatisticsMainSectionNames, StatisticsRegionNames, StatisticsYears } from '../../../../sharedTypes/gqlQueries'
 import Message from '../components/Message'
 
 type ContextValues = Readonly<{
-	statisticsRegionNames: StatisticsRegionNamesResponse,
-	statisticsYears: StatisticsYearsResponse,
-	statisticsMainSectionNames: StatisticsMainSectionNamesResponse
+	statisticsRegionNames: StatisticsRegionNames,
+	statisticsYears: StatisticsYears,
+	statisticsMainSectionNames: StatisticsMainSectionNames
 }>
 
 const QUERY = gql` query {
@@ -22,14 +22,14 @@ const GeneralDataContext = createContext<ContextValues>({} as ContextValues)
 export const useGeneralDataContext = () => useContext(GeneralDataContext)
 
 export const GeneralDataProvider: FC = ({ children }) => {
-	const { loading, error, data: simpleQueriesData } = useQuery<ContextValues>(QUERY)
+	const { loading, error, data: generalData } = useQuery<ContextValues>(QUERY)
 
-	if (loading) return <Message type="message" text="We are fetching basic data." />
+	if (loading) return <Message type="message" text="We are fetching general data." />
 
-	if (error || !simpleQueriesData) return <Message type="error" text="Basic data was not fetched!" />
+	if (error || !generalData) return <Message type="error" text="General data was not fetched!" />
 
 	return (
-		<GeneralDataContext.Provider value={simpleQueriesData}>
+		<GeneralDataContext.Provider value={generalData}>
 			{children}
 		</GeneralDataContext.Provider>
 	)

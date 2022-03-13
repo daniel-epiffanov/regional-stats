@@ -1,10 +1,10 @@
 import { useQuery, gql } from '@apollo/client'
-import { StatisticsRegionNamesResponse, CoordsByRegionTypeResponse } from '../../../../../../sharedTypes/gqlQueries'
+import { StatisticsRegionNames, CoordsByRegionType } from '../../../../../../sharedTypes/gqlQueries'
 import { useSelectionsContext } from '../../context/selectionsContext'
 
 interface QueryResponse {
-	coordsByRegionType: CoordsByRegionTypeResponse,
-	statisticsRegionNames: StatisticsRegionNamesResponse
+	coordsByRegionType: CoordsByRegionType,
+	statisticsRegionNames: StatisticsRegionNames
 }
 
 type ReadonlyQueryResponse = Readonly<QueryResponse>

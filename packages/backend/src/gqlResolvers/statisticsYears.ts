@@ -1,8 +1,8 @@
-import { StatisticsYearsResponse } from '../../../../sharedTypes/gqlQueries'
+import { StatisticsYears } from '../../../../sharedTypes/gqlQueries'
 import statisticsModel from '../mongooseModels/statistics'
 import { ResolverFnAsync } from './@types/ResolverFn'
 
-const statisticsYears: ResolverFnAsync<StatisticsYearsResponse> = async (parent, args, ctx) => {
+const statisticsYears: ResolverFnAsync<StatisticsYears> = async (parent, args, ctx) => {
 	const mongoRes = await statisticsModel.distinct('mainSections.subSections.yearValues.year')
 	return mongoRes
 }

@@ -11,14 +11,14 @@ import styles from './styles/index.module.scss'
 import { useSelectionsContext } from '../context/selectionsContext'
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
 import statisticsDataQuery from './customQueries/statisticsDataQuery'
-import { StatisticsDataResponse, StatisticsYearsResponse } from '../../../../../sharedTypes/gqlQueries'
+import { StatisticsData, StatisticsYears } from '../../../../../sharedTypes/gqlQueries'
 import bigNumberFormatter from '../../helpers/bigNumberFormatter'
 import useComponentInstance from '../../hooks/useComponentInstance'
 
 type Props = Readonly<{}>
 
 const hideExtraStatisticsYears = (
-	statisticsYears: StatisticsYearsResponse,
+	statisticsYears: StatisticsYears,
 	instance: dxPieChart,
 ) => {
 	const middleStatisticsYearIndex = Math.floor(statisticsYears.length / 2)
@@ -54,8 +54,8 @@ const DoughnutChart: FC<Props> = (props) => {
 	const { statisticsYears } = useGeneralDataContext()
 	const { instance, onInitializedHandler } = useComponentInstance<dxPieChart>()
 
-	const [dataSource, setDataSource] = useState<StatisticsDataResponse>([])
-	const dataSourceHandler = (newDataSource: StatisticsDataResponse) => setDataSource(newDataSource)
+	const [dataSource, setDataSource] = useState<StatisticsData>([])
+	const dataSourceHandler = (newDataSource: StatisticsData) => setDataSource(newDataSource)
 
 	const updateDataSource = async () => {
 		const statisticsData = await statisticsDataQuery({

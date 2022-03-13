@@ -1,4 +1,4 @@
-import { StatisticsSubSectionNamesResponse } from '../../../../sharedTypes/gqlQueries'
+import { StatisticsSubSectionNames } from '../../../../sharedTypes/gqlQueries'
 import statisticsModel from '../mongooseModels/statistics'
 import { ResolverFnAsync } from './@types/ResolverFn'
 
@@ -6,13 +6,13 @@ if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config()
 }
 
-const statisticsSubSectionNames: ResolverFnAsync<StatisticsSubSectionNamesResponse> = async (
+const statisticsSubSectionNames: ResolverFnAsync<StatisticsSubSectionNames> = async (
 	parent: any,
 	args: any,
 ) => {
 	const { mainSectionName } = args
 	const defaultRegion = process.env.DEFAULT_REGION
-	const mongoRes = await statisticsModel.aggregate<{ titles: StatisticsSubSectionNamesResponse }>([
+	const mongoRes = await statisticsModel.aggregate<{ titles: StatisticsSubSectionNames }>([
 		{ $match: { regionName: defaultRegion } },
 
 		{

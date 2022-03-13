@@ -16,13 +16,13 @@ import Message from '../../components/Message'
 import useComponentInstance from '../../hooks/useComponentInstance'
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
 import { useSelectionsContext } from '../context/selectionsContext'
-import { CoordsByRegionTypeResponse } from '../../../../../sharedTypes/gqlQueries'
+import { CoordsByRegionType } from '../../../../../sharedTypes/gqlQueries'
 import statisticsDataForManyRegionsQuery from './customQueries/statisticsDataForManyRegionsQuery'
 import makeColorGroupsRange from './devExtreme/makeColorGroupsRange'
 import bigNumberFormatter from '../../helpers/bigNumberFormatter'
 
 type Props = Readonly<{
-	coordsByRegionType: CoordsByRegionTypeResponse
+	coordsByRegionType: CoordsByRegionType
 }>
 
 const BOUNDS = [71, 97, 45, 26]

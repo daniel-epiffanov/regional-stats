@@ -1,4 +1,4 @@
-import { StatisticsDataResponse } from '../../../../sharedTypes/gqlQueries'
+import { StatisticsData } from '../../../../sharedTypes/gqlQueries'
 import { ReadonlyStatisticsData } from '../../../../sharedTypes/mongoModels'
 import statisticsModel from '../mongooseModels/statistics'
 import { ResolverFnAsync } from './@types/ResolverFn'
@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config()
 }
 
-const statisticsData: ResolverFnAsync<StatisticsDataResponse> = async (
+const statisticsData: ResolverFnAsync<StatisticsData> = async (
 	parent: any, args: any,
 ) => {
 	const {

@@ -1,9 +1,9 @@
 import { useQuery, gql } from '@apollo/client'
-import { StatisticsMainSectionNamesResponse, SectionsTreeResponse } from '../../../../../../sharedTypes/gqlQueries'
+import { StatisticsMainSectionNames, SectionsTreeResponse } from '../../../../../../sharedTypes/gqlQueries'
 import { useGeneralDataContext } from '../../../context/GeneralDataContext'
 
 const sectionsTreeResponseHandler = (
-	statisticsMainSectionNames: StatisticsMainSectionNamesResponse,
+	statisticsMainSectionNames: StatisticsMainSectionNames,
 	sectionsTreeResponse: SectionsTreeResponse,
 ) => {
 	const correctedSectionsTreeResponse: SectionsTreeResponse = {}
