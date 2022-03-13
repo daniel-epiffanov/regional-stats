@@ -1,28 +1,26 @@
 import axios from 'axios'
+
 import {
-	StatisticsOfRegion,
-	StatisticsOfMainSection,
-	StatisticsOfSubSection,
-	StatisticsDataItem,
+	MongoMainSection, MongoStatisticsOfRegion, MongoSubSection, MongoStatisticsDataItem,
 } from '../../../../../../sharedTypes/mongoModels'
 
 import { hostApi } from '../../../helpers/host'
 
 type Props = Readonly<{
-	regionNames: ReadonlyArray<StatisticsOfRegion['regionName']>,
-	mainSectionName: StatisticsOfMainSection['name'],
-	subSectionName: StatisticsOfSubSection['name'],
-	year: StatisticsDataItem['year']
+	regionNames: ReadonlyArray<MongoStatisticsOfRegion['regionName']>,
+	mainSectionName: MongoMainSection['name'],
+	subSectionName: MongoSubSection['name'],
+	year: MongoStatisticsDataItem['year']
 }>
 
 type StatisticsDataForManyRegionsResponse = Readonly<{
 	readonly data: {
-		[key: string]: ReadonlyArray<StatisticsDataItem>
+		[key: string]: ReadonlyArray<MongoStatisticsDataItem>
 	}
 }>
 
 type StatisticsDataForManyRegions = Readonly<{
-	[key: StatisticsOfRegion['regionName']]: ReadonlyArray<StatisticsDataItem>
+	[key: MongoStatisticsOfRegion['regionName']]: ReadonlyArray<MongoStatisticsDataItem>
 }>
 
 const statisticsDataForManyRegionsQuery = async (props: Props) => {

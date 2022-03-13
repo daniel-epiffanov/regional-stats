@@ -1,12 +1,12 @@
 import { useQuery, gql } from '@apollo/client'
-import { StatisticsMainSectionNames, SectionsTree } from '../../../../../../sharedTypes/gqlQueries'
+import { StatisticsMainSectionNames, StatisticsSectionsTree } from '../../../../../../sharedTypes/gqlQueries'
 import { useGeneralDataContext } from '../../../context/GeneralDataContext'
 
 const sectionsTreeResponseHandler = (
 	statisticsMainSectionNames: StatisticsMainSectionNames,
-	sectionsTreeResponse: SectionsTree,
+	sectionsTreeResponse: StatisticsSectionsTree,
 ) => {
-	const correctedSectionsTreeResponse: SectionsTree = {}
+	const correctedSectionsTreeResponse: StatisticsSectionsTree = {}
 	statisticsMainSectionNames.forEach((mainSectionName, i) => {
 		correctedSectionsTreeResponse[mainSectionName] = sectionsTreeResponse[`mainSection_${i}`]
 	})
@@ -24,9 +24,15 @@ const useSectionsTreeItemsQuery = () => {
 		${statisticsMainSectionNames.map((name, i) => `mainSection_${i}: statisticsSubSectionNames(mainSectionName:"${name}")`)}
 	}`
 
-	const { loading, error, data: sectionsTreeResponse } = useQuery<SectionsTree>(QUERY)
+	const { loading, error, data: sectionsTreeResponse } = useQuery<StatisticsSectionsTree>(QUERY)
 
 	console.log({ sectionsTreeResponse })
+	console.log({
+		sectionsTreeResponse2: sectionsTreeResponse && sectionsTreeResponseHandler(
+			statisticsMainSectionNames,
+			sectionsTreeResponse,
+		),
+	})
 
 	return {
 		loading,

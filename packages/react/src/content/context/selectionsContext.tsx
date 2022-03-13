@@ -2,21 +2,21 @@ import {
 	createContext, FC, useContext, useState,
 } from 'react'
 import {
-	StatisticsOfMainSection,
-	RegionCoords,
-	StatisticsOfRegion,
-	StatisticsOfSubSection,
-	StatisticsDataItem,
+	MongoMainSection,
+	MongoRegionCoords,
+	MongoStatisticsOfRegion,
+	MongoSubSection,
+	MongoStatisticsDataItem,
 } from '../../../../../sharedTypes/mongoModels'
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
 
 interface ContextValues {
-	selectedRegionName: StatisticsOfRegion['regionName'],
-	selectedMainSectionName: StatisticsOfMainSection['name'],
-	selectedSubSectionName: StatisticsOfSubSection['name'],
+	selectedRegionName: MongoStatisticsOfRegion['regionName'],
+	selectedMainSectionName: MongoMainSection['name'],
+	selectedSubSectionName: MongoSubSection['name'],
 
-	selectedRegionTypeOnMap: RegionCoords['type'],
-	selectedYearOnMap: StatisticsDataItem['year'],
+	selectedRegionTypeOnMap: MongoRegionCoords['type'],
+	selectedYearOnMap: MongoStatisticsDataItem['year'],
 
 	selectionsHandler: SelectionsHandler,
 }
