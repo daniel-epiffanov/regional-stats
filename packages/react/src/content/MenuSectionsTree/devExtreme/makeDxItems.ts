@@ -1,10 +1,10 @@
 import { Item } from 'devextreme/ui/tree_view'
-import { SectionsTreeResponse } from '../../../../../../sharedTypes/gqlQueries'
+import { SectionsTree } from '../../../../../../sharedTypes/gqlQueries'
 
 type GenerateItem = (id: string, text: string, childItems?: ReadonlyArray<string>) => Item
 
 const makeDxItems = (
-	sectionsTree: SectionsTreeResponse | null,
+	sectionsTree: SectionsTree | null,
 	selectedItemId: string,
 ) => {
 	if (!sectionsTree) return []

@@ -11,7 +11,7 @@ import styles from './styles/index.module.scss'
 import { useSelectionsContext } from '../context/selectionsContext'
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
 import statisticsDataQuery from './customQueries/statisticsDataQuery'
-import { StatisticsDataItem, StatisticsYears } from '../../../../../sharedTypes/gqlQueries'
+import { StatisticsData, StatisticsYears } from '../../../../../sharedTypes/gqlQueries'
 import bigNumberFormatter from '../../helpers/bigNumberFormatter'
 import useComponentInstance from '../../hooks/useComponentInstance'
 
@@ -54,8 +54,8 @@ const DoughnutChart: FC<Props> = (props) => {
 	const { statisticsYears } = useGeneralDataContext()
 	const { instance, onInitializedHandler } = useComponentInstance<dxPieChart>()
 
-	const [dataSource, setDataSource] = useState<StatisticsDataItem>([])
-	const dataSourceHandler = (newDataSource: StatisticsDataItem) => setDataSource(newDataSource)
+	const [dataSource, setDataSource] = useState<StatisticsData>([])
+	const dataSourceHandler = (newDataSource: StatisticsData) => setDataSource(newDataSource)
 
 	const updateDataSource = async () => {
 		const statisticsData = await statisticsDataQuery({

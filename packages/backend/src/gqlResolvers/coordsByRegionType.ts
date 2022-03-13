@@ -1,14 +1,14 @@
-import { RegionCoords } from '../../../../sharedTypes/mongoModels'
+import { MongoRegionCoords } from '../../../../sharedTypes/mongoModels'
 import regionsCoords from '../mongooseModels/regionsCoords'
 import { ResolverFnAsync } from './types/ResolverFn'
 
-const coordsByRegionType: ResolverFnAsync<RegionCoords[]> = async (
+const coordsByRegionType: ResolverFnAsync<MongoRegionCoords[]> = async (
 	parent: any,
 	args: any,
 ) => {
 	const { type } = args
 
-	const mongoRes: RegionCoords[] = await regionsCoords.find({ type })
+	const mongoRes: MongoRegionCoords[] = await regionsCoords.find({ type })
 	return mongoRes
 }
 

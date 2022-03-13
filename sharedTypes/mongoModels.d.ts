@@ -1,6 +1,6 @@
 // RegionsCoords schema
 
-export type RegionCoords = Readonly<{
+export type MongoRegionCoords = Readonly<{
 	type: 'federalDistrict' | 'region',
 	geometry: {
 		readonly type: 'Polygon' | 'MultiPolygon',
@@ -17,22 +17,22 @@ export type RegionCoords = Readonly<{
 
 // statistics schema
 
-export type StatisticsOfRegion = Readonly<{
+export type MongoStatisticsOfRegion = Readonly<{
 	regionName: string,
-	mainSections: MainSection[],
+	mainSections: ReadonlyArray<MongoMainSection>,
 }>
-export type StatisticsOfMainSection = Readonly<{
+export type MongoMainSection = Readonly<{
 	name: string,
 	fullFilename: string,
-	subSections: SubSection[],
+	subSections: ReadonlyArray<MongoSubSection>,
 }>
-export type StatisticsOfSubSection = Readonly<{
+export type MongoSubSection = Readonly<{
 	name: string,
 	orderNumber: string,
-	children: SubSection[],
-	yearValues: StatisticsDataItem[],
+	children: ReadonlyArray<SubSection>,
+	yearValues: ReadonlyArray<MongoStatisticsDataItem>,
 }>
-export type StatisticsDataItem = Readonly<{
+export type MongoStatisticsDataItem = Readonly<{
 	year: number,
 	value: string,
 }>

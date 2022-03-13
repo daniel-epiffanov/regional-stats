@@ -1,14 +1,14 @@
-import { StatisticsOfMainSection, RegionCoords, StatisticsOfRegion, StatisticsDataItem, StatisticsOfSubSection } from './mongoModels'
+import { MongoMainSection, MongoRegionCoords, MongoStatisticsOfRegion, MongoStatisticsDataItem, MongoSubSection } from './mongoModels'
 
 // general data
 export type StatisticsYears = ReadonlyArray<number>
-export type StatisticsRegionNames = ReadonlyArray<StatisticsOfRegion['regionName']>
-export type StatisticsMainSectionNames = ReadonlyArray<StatisticsOfMainSection['name']>
+export type StatisticsRegionNames = ReadonlyArray<MongoStatisticsOfRegion['regionName']>
+export type StatisticsMainSectionNames = ReadonlyArray<MongoMainSection['name']>
 
-// queries with arguments
-export type StatisticsSubSectionNames = ReadonlyArray<StatisticsOfSubSection['name']>
-export type SectionsTreeResponse = {
+// data to be gotten by query arguments
+export type StatisticsSectionsTree = {
 	[key: string]: StatisticsSubSectionNames
 }
-export type StatisticsData = ReadonlyArray<StatisticsDataItem>
-export type CoordsByRegionType = ReadonlyArray<RegionCoords>
+export type StatisticsSubSectionNames = ReadonlyArray<MongoSubSection['name']>
+export type StatisticsData = ReadonlyArray<MongoStatisticsDataItem>
+export type CoordsByRegionType = ReadonlyArray<MongoRegionCoords>
