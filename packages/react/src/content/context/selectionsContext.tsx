@@ -2,21 +2,21 @@ import {
 	createContext, FC, useContext, useState,
 } from 'react'
 import {
-	ReadonlyStatisticsOfMainSection,
-	ReadonlyRegionCoords,
-	ReadonlyStatisticsOfRegion,
-	ReadonlyStatisticsOfSubSection,
-	ReadonlyStatisticsData,
+	StatisticsOfMainSection,
+	RegionCoords,
+	StatisticsOfRegion,
+	StatisticsOfSubSection,
+	StatisticsData,
 } from '../../../../../sharedTypes/mongoModels'
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
 
 interface ContextValues {
-	selectedRegionName: ReadonlyStatisticsOfRegion['regionName'],
-	selectedMainSectionName: ReadonlyStatisticsOfMainSection['name'],
-	selectedSubSectionName: ReadonlyStatisticsOfSubSection['name'],
+	selectedRegionName: StatisticsOfRegion['regionName'],
+	selectedMainSectionName: StatisticsOfMainSection['name'],
+	selectedSubSectionName: StatisticsOfSubSection['name'],
 
-	selectedRegionTypeOnMap: ReadonlyRegionCoords['type'],
-	selectedYearOnMap: ReadonlyStatisticsData['year'],
+	selectedRegionTypeOnMap: RegionCoords['type'],
+	selectedYearOnMap: StatisticsData['year'],
 
 	selectionsHandler: SelectionsHandler,
 }

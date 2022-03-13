@@ -1,5 +1,5 @@
 import { StatisticsData } from '../../../../sharedTypes/gqlQueries'
-import { ReadonlyStatisticsData } from '../../../../sharedTypes/mongoModels'
+import { StatisticsData } from '../../../../sharedTypes/mongoModels'
 import statisticsModel from '../mongooseModels/statistics'
 import { ResolverFnAsync } from './@types/ResolverFn'
 
@@ -14,7 +14,7 @@ const statisticsData: ResolverFnAsync<StatisticsData> = async (
 		regionName, mainSectionName, subSectionName, startYear, endYear,
 	} = args
 	const defaultRegion = process.env.DEFAULT_REGION
-	const mongoRes = await statisticsModel.aggregate<{ statisticsData: ReadonlyStatisticsData[] }>([
+	const mongoRes = await statisticsModel.aggregate<{ statisticsData: StatisticsData[] }>([
 		{ $match: { regionName: regionName || defaultRegion } },
 
 		{

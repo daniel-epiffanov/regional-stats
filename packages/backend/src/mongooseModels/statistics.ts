@@ -1,14 +1,14 @@
 import { Schema, model } from 'mongoose'
 import {
-	ReadonlyStatisticsOfMainSection, ReadonlyStatisticsOfRegion, ReadonlyStatisticsOfSubSection, ReadonlyStatisticsData,
+	StatisticsOfMainSection, StatisticsOfRegion, StatisticsOfSubSection, StatisticsData,
 } from '../../../../sharedTypes/mongoModels'
 
-const YearValueSchema = new Schema<ReadonlyStatisticsData>({
+const YearValueSchema = new Schema<StatisticsData>({
 	year: Number,
 	value: String,
 })
 
-const SubSectionSchema = new Schema<ReadonlyStatisticsOfSubSection>()
+const SubSectionSchema = new Schema<StatisticsOfSubSection>()
 SubSectionSchema.add({
 	orderNumber: String,
 	name: String,
@@ -18,13 +18,13 @@ SubSectionSchema.add({
 	},
 })
 
-const MainSectionSchema = new Schema<ReadonlyStatisticsOfMainSection>({
+const MainSectionSchema = new Schema<StatisticsOfMainSection>({
 	name: String,
 	fullFilename: String,
 	subSections: [SubSectionSchema],
 })
 
-const StatisticsSchema = new Schema<ReadonlyStatisticsOfRegion>({
+const StatisticsSchema = new Schema<StatisticsOfRegion>({
 	regionName: String,
 	mainSections: [MainSectionSchema],
 })
