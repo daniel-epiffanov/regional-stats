@@ -3,9 +3,10 @@ import { StatisticsSectionsTree } from '../../../../../../sharedTypes/gqlQueries
 
 type GenerateItem = (id: string, text: string, childItems?: ReadonlyArray<string>) => Item
 
-const getDxTreeViewItems = (
+const getItems = (
 	sectionsTree: StatisticsSectionsTree | null,
-	selectedItemId: string,
+	selectedMainSectionName: string,
+	selectedSubSectionName: string,
 ) => {
 	if (!sectionsTree) return []
 	const statisticsMainSectionNames = Object.keys(sectionsTree)
@@ -14,11 +15,12 @@ const getDxTreeViewItems = (
 		id,
 		text,
 		items: childItems && childItems.map((item, _id) => generateItem(`${id}_${_id}`, item)),
-		isExpanded: id === selectedItemId || false,
+		isExpanded: text === selectedMainSectionName || false,
+		isSelected: selectedSubSectionName === text,
 	})
 
 	return statisticsMainSectionNames
 		.map((mainSectionName, i) => generateItem(`${i}`, mainSectionName, sectionsTree[mainSectionName]))
 }
 
-export default getDxTreeViewItems
+export default getItems

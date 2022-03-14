@@ -1,11 +1,10 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { TreeView } from 'devextreme-react/tree-view'
 import { ItemClickEvent } from 'devextreme/ui/tree_view'
-import { CheckBox } from 'devextreme-react'
 import styles from './styles/index.module.scss'
 import Message from '../../components/Message'
 import useSectionsTreeQuery from './queries/useStatisticsSectionsTreeQuery'
-import getDxTreeViewItems from './devExtreme/getDxTreeViewItems'
+import getItems from './devExtreme/getItems'
 import { useSelectionsContext } from '../context/selectionsContext'
 import { StatisticsSectionsTree } from '../../../../../sharedTypes/gqlQueries'
 
@@ -14,47 +13,35 @@ type Props = Readonly<{
 }>
 
 const MenuSectionsTree: FC<Props> = ({ statisticsSectionTree }) => {
-	const { selectionsHandler } = useSelectionsContext()
-	const [selectedItemId, setSelectedItemId] = useState('20_3')
+	const {
+		selectionsHandler,
+		selectedMainSectionName,
+		selectedSubSectionName,
+	} = useSelectionsContext()
 
-	const dxTreeViewItems = getDxTreeViewItems(statisticsSectionTree, selectedItemId)
+	const items = getItems(statisticsSectionTree, selectedMainSectionName, selectedSubSectionName)
 
-	// const itemRenderHandler = (item: { id: string, text: string }, index: number) => {
-	// 	const isSubSectionName = item.id.split('_').length > 1
-	// 	if (isSubSectionName) {
-	// 		return (
-	// 			<div className={styles.checkboxContainer}>
-	// 				<CheckBox value={selectedItemId === item.id} />
-	// 				<div>
-	// 					{item.text}
-	// 				</div>
-	// 			</div>
-	// 		)
-	// 	}
+	const itemClickHandler = (e: ItemClickEvent) => {
+		const isSecondLevel = e.itemData.id.split('_').length > 1
 
-	// 	return <span>{item.text}</span>
-	// }
+		if (!isSecondLevel) return
 
-	// const itemClickHandler = (e: ItemClickEvent) => {
-	// 	const isSecondLevel = e.itemData.id.split('_').length > 1
-	// 	if (isSecondLevel) {
-	// 		setSelectedItemId(`${e.itemData.id}`)
-	// 		selectionsHandler({
-	// 			selectedSubSectionName: e.node?.text,
-	// 			selectedMainSectionName: e.node?.parent?.text,
-	// 		})
-	// 	}
-	// }
+		selectionsHandler({
+			selectedSubSectionName: e.node?.text,
+			selectedMainSectionName: e.node?.parent?.text,
+		})
+	}
 
 	return (
 		<div>
 			<TreeView
-				items={dxTreeViewItems}
+				items={items}
 				expandEvent="click"
 				searchEnabled
-			// itemRender={itemRenderHandler}
-			// onItemClick={itemClickHandler}
-			// expandedExpr="isExpanded"
+				searchTimeout={200}
+				onItemClick={itemClickHandler}
+				expandedExpr="isExpanded"
+				selectedExpr="isSelected"
 			/>
 		</div>
 	)
