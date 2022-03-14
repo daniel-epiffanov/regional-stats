@@ -5,7 +5,7 @@ import { CheckBox } from 'devextreme-react'
 import styles from './styles/index.module.scss'
 import Message from '../../components/Message'
 import useSectionsTreeQuery from './queries/useStatisticsSectionsTreeQuery'
-import makeDxItems from './devExtreme/makeDxItems'
+import getDxTreeViewItems from './devExtreme/getDxTreeViewItems'
 import { useSelectionsContext } from '../context/selectionsContext'
 import { StatisticsSectionsTree } from '../../../../../sharedTypes/gqlQueries'
 
@@ -17,10 +17,7 @@ const MenuSectionsTree: FC<Props> = ({ statisticsSectionTree }) => {
 	const { selectionsHandler } = useSelectionsContext()
 	const [selectedItemId, setSelectedItemId] = useState('20_3')
 
-	const getDxItems = () => {
-		if (loading || error || !sectionsTreeResponse) return []
-		return makeDxItems(sectionsTreeResponse, selectedItemId)
-	}
+	const dxTreeViewItems = getDxTreeViewItems(statisticsSectionTree, selectedItemId)
 
 	// const itemRenderHandler = (item: { id: string, text: string }, index: number) => {
 	// 	const isSubSectionName = item.id.split('_').length > 1
@@ -52,7 +49,7 @@ const MenuSectionsTree: FC<Props> = ({ statisticsSectionTree }) => {
 	return (
 		<div>
 			<TreeView
-				items={getDxItems()}
+				items={dxTreeViewItems}
 				expandEvent="click"
 			// searchEnabled
 			// itemRender={itemRenderHandler}

@@ -3,7 +3,7 @@ import { StatisticsSectionsTree } from '../../../../../../sharedTypes/gqlQueries
 
 type GenerateItem = (id: string, text: string, childItems?: ReadonlyArray<string>) => Item
 
-const makeDxItems = (
+const getDxTreeViewItems = (
 	sectionsTree: StatisticsSectionsTree | null,
 	selectedItemId: string,
 ) => {
@@ -21,4 +21,4 @@ const makeDxItems = (
 		.map((mainSectionName, i) => generateItem(`${i}`, mainSectionName, sectionsTree[mainSectionName]))
 }
 
-export default makeDxItems
+export default getDxTreeViewItems
