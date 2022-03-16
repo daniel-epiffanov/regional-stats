@@ -8,6 +8,7 @@ import getItems from './devExtreme/getItems'
 import { useSelectionsContext } from '../context/selectionsContext'
 import { StatisticsSectionsTree } from '../../../../../sharedTypes/gqlQueries'
 import { DEFAULT_SELECTED_MEASURES_MENU_KEY } from '../../config/constants'
+import useComponentInstance from '../../hooks/useComponentInstance'
 
 type Props = Readonly<{
 	statisticsSectionTree: StatisticsSectionsTree
@@ -19,6 +20,8 @@ const MenuSectionsTree: FC<Props> = ({ statisticsSectionTree }) => {
 		selectedMainSectionName,
 		selectedSubSectionName,
 	} = useSelectionsContext()
+
+	// const { instance, onInitializedHandler } = useComponentInstance()
 
 	const [items] = useState(getItems(statisticsSectionTree))
 
@@ -39,6 +42,21 @@ const MenuSectionsTree: FC<Props> = ({ statisticsSectionTree }) => {
 		})
 	}
 
+	const searchEditorChangeHandler = (e: any) => {
+		console.log({ e })
+		// console.log({ instance })
+		// const value = e.event.currentTarget.value
+		// if (value !== '') return
+
+		// console.log({ selectedMainSectionName })
+
+		// items.forEach(item => {
+		// 	// debugger
+		// 	// @ts-ignore
+		// 	if (item.text !== selectedMainSectionName) instance?.collapseItem(item.id)
+		// })
+	}
+
 	return (
 		<div>
 			<TreeView
@@ -49,6 +67,10 @@ const MenuSectionsTree: FC<Props> = ({ statisticsSectionTree }) => {
 				onItemClick={itemClickHandler}
 				expandedExpr="isExpanded"
 				selectedExpr="isSelected"
+				searchEditorOptions={{
+					onValueChanged: searchEditorChangeHandler,
+				}}
+			// onInitialized={onInitializedHandler}
 			/>
 		</div>
 	)
