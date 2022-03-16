@@ -67,9 +67,9 @@ const MenuSectionsTree: FC<Props> = ({ statisticsSectionTree }) => {
 				onItemClick={itemClickHandler}
 				expandedExpr="isExpanded"
 				selectedExpr="isSelected"
-				searchEditorOptions={{
-					onValueChanged: searchEditorChangeHandler,
-				}}
+			// searchEditorOptions={{
+			// 	onValueChanged: searchEditorChangeHandler,
+			// }}
 			// onInitialized={onInitializedHandler}
 			/>
 		</div>
