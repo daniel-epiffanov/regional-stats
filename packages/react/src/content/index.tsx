@@ -1,7 +1,7 @@
 import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { SelectionsProvider } from './context/selectionsContext'
 import DoughnutChart from './DoughnutChart'
 import MeasuresMenu from './MeasuresMenu'
@@ -9,6 +9,12 @@ import styles from './styles/index.module.scss'
 import VectorMap from './VectorMap'
 
 const HomePage: FC = () => {
+	// const scrollhandler = (e: Event) => {
+	// 	debugger
+	// 	console.log('scroll')
+	// 	e.preventDefault()
+	// }
+
 	return (
 		<ResponsiveBox>
 			<Row ratio={1} />

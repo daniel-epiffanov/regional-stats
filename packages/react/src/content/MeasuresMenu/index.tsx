@@ -1,4 +1,6 @@
-import { FC, useCallback, useState } from 'react'
+import {
+	FC, useCallback, useEffect, useState,
+} from 'react'
 import { TreeView } from 'devextreme-react/tree-view'
 import { ItemClickEvent } from 'devextreme/ui/tree_view'
 import styles from './styles/index.module.scss'
@@ -17,11 +19,11 @@ type Props = Readonly<{
 const MenuSectionsTree: FC<Props> = ({ statisticsSectionTree }) => {
 	const {
 		selectionsHandler,
-		selectedMainSectionName,
-		selectedSubSectionName,
+		// selectedMainSectionName,
+		// selectedSubSectionName,
 	} = useSelectionsContext()
 
-	// const { instance, onInitializedHandler } = useComponentInstance()
+	const { instance, onInitializedHandler } = useComponentInstance()
 
 	const [items] = useState(getItems(statisticsSectionTree))
 
@@ -30,11 +32,11 @@ const MenuSectionsTree: FC<Props> = ({ statisticsSectionTree }) => {
 
 		if (!isSecondLevel) return
 
-		const newSelectedSubSectionName = e.node?.text
-		const newSelectedMainSectionName = e.node?.parent?.text
-
 		e.component.unselectAll()
 		e.component.selectItem(e.node?.key || DEFAULT_SELECTED_MEASURES_MENU_KEY)
+
+		const newSelectedSubSectionName = e.node?.text
+		const newSelectedMainSectionName = e.node?.parent?.text
 
 		selectionsHandler({
 			selectedSubSectionName: newSelectedSubSectionName,
@@ -43,12 +45,12 @@ const MenuSectionsTree: FC<Props> = ({ statisticsSectionTree }) => {
 	}
 
 	const searchEditorChangeHandler = (e: any) => {
-		console.log({ e })
+		// console.log({ e })
 		// console.log({ instance })
 		// const value = e.event.currentTarget.value
 		// if (value !== '') return
 
-		// console.log({ selectedMainSectionName })
+		// // console.log({ selectedMainSectionName })
 
 		// items.forEach(item => {
 		// 	// debugger
@@ -57,22 +59,38 @@ const MenuSectionsTree: FC<Props> = ({ statisticsSectionTree }) => {
 		// })
 	}
 
+	const disposingHandler = (e: any) => {
+		console.log({ e })
+		e.preventDefault()
+	}
+
+	console.log('update')
+
+	useEffect(() => {
+		console.log({ items })
+	}, [items])
+
 	return (
-		<div>
-			<TreeView
-				items={items}
-				expandEvent="click"
-				searchEnabled
-				searchTimeout={200}
-				onItemClick={itemClickHandler}
-				expandedExpr="isExpanded"
-				selectedExpr="isSelected"
-			// searchEditorOptions={{
-			// 	onValueChanged: searchEditorChangeHandler,
-			// }}
-			// onInitialized={onInitializedHandler}
-			/>
-		</div>
+		// <div>
+		<TreeView
+			items={items}
+			expandEvent="click"
+			searchEnabled
+			searchTimeout={200}
+			onItemClick={itemClickHandler}
+			expandedExpr="isExpanded"
+			selectedExpr="isSelected"
+			searchEditorOptions={{
+				onValueChanged: disposingHandler,
+				// disabled: true,
+			}}
+		// virtualModeEnabled
+		// searchValue="в"
+		// onInitialized={onInitializedHandler}
+		// searchValue="вал"
+		// onItemsChange={disposingHandler}
+		/>
+		// </div>
 	)
 }
 
