@@ -52,7 +52,7 @@ const DoughnutChart: FC<Props> = (props) => {
 		selectedSubSectionName,
 	} = useSelectionsContext()
 	const { statisticsYears } = useGeneralDataContext()
-	const { instance, onInitializedHandler } = useComponentInstance<dxPieChart>()
+	const [instance, onInitializedHandler] = useComponentInstance<dxPieChart>()
 
 	const [dataSource, setDataSource] = useState<StatisticsData>([])
 	const dataSourceHandler = (newDataSource: StatisticsData) => setDataSource(newDataSource)

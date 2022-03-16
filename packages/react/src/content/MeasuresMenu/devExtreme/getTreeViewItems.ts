@@ -4,10 +4,8 @@ import { DEFAULT_EXPANDED_MEASURES_MENU_KEY, DEFAULT_SELECTED_MEASURES_MENU_KEY 
 
 type GenerateItem = (id: string, text: string, childItems?: ReadonlyArray<string>) => Item
 
-const getItems = (
+const getTreeViewItems = (
 	sectionsTree: StatisticsSectionsTree | null,
-	// selectedMainSectionName: string,
-	// selectedSubSectionName: string,
 ) => {
 	if (!sectionsTree) return []
 	const statisticsMainSectionNames = Object.keys(sectionsTree)
@@ -24,4 +22,4 @@ const getItems = (
 		.map((mainSectionName, i) => generateItem(`${i}`, mainSectionName, sectionsTree[mainSectionName]))
 }
 
-export default getItems
+export default getTreeViewItems

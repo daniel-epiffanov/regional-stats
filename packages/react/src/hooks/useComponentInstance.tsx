@@ -1,9 +1,6 @@
 import { useState } from 'react'
 
-interface Return<Instance> {
-	instance: Instance | null,
-	onInitializedHandler: OnInitializedHandler
-}
+type Return<Instance> = [Instance | null, OnInitializedHandler]
 
 interface Event {
 	component?: any | undefined;
@@ -19,8 +16,7 @@ const useComponentInstance = <Instance, P = any>(): Return<Instance> => {
 		if (e.component) setInstance(e.component)
 	}
 
-	const toReturn = { instance, onInitializedHandler }
-	return toReturn
+	return [instance, onInitializedHandler]
 }
 
 export default useComponentInstance
