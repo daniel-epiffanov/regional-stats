@@ -20,19 +20,12 @@ type Props = Readonly<{
 	statisticsSectionTree: StatisticsSectionsTree
 }>
 
-const MenuSectionsTree: FC<Props> = ({ statisticsSectionTree }) => {
-	const {
-		selectionsHandler,
-		selectedMainSectionName,
-	} = useSelectionsContext()
+const MeasuresMenu: FC<Props> = ({ statisticsSectionTree }) => {
+	const [instance, onInitializedHandler] = useComponentInstance<TreeView['instance']>()
 
 	const [items] = useState(getTreeViewItems(statisticsSectionTree))
 
-	const {
-		onInitializedHandler,
-		itemClickHandler,
-		onValueChangedHandler,
-	} = useTreeViewHandlers(items)
+	const { itemClickHandler, onValueChangedHandler } = useTreeViewHandlers({ items, instance })
 
 	return (
 		<div>
@@ -53,13 +46,13 @@ const MenuSectionsTree: FC<Props> = ({ statisticsSectionTree }) => {
 	)
 }
 
-const MenuSectionsTreePreloads: FC = () => {
+const MeasuresMenuPreloads: FC = () => {
 	const { loading, error, data } = useSectionsTreeQuery()
 
 	if (loading) return <Message type="message" text="Loading menu sections." positionId="measures-menu-container" />
 	if (error || !data) return <Message type="error" text="We have not fetched the menu sections." />
 
-	return <MenuSectionsTree statisticsSectionTree={data} />
+	return <MeasuresMenu statisticsSectionTree={data} />
 }
 
-export default MenuSectionsTreePreloads
+export default MeasuresMenuPreloads

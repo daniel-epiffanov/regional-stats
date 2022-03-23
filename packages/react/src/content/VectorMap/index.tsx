@@ -28,7 +28,7 @@ type Props = Readonly<{
 const BOUNDS = [71, 97, 45, 26]
 const PALLETE = ['#eeacc5', '#db9eba', '#c88fb0', '#b581a5', '#a1739a', '#8e6490', '#7b5685']
 
-const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
+const Map: FC<Props> = ({ coordsByRegionType }) => {
 	const {
 		selectedRegionName,
 		selectionsHandler,
@@ -180,16 +180,17 @@ const VectorMapComponent: FC<Props> = ({ coordsByRegionType }) => {
 	)
 }
 
-const VectorMapDataLoader: FC = () => {
+const MapPreloads: FC = () => {
 	// graphql response
 	const { loading, error, data } = useVectorMapCoordsQuery()
+
+	if (loading) return <Message type="message" text="Map data is loading." positionId="vector-map-container" />
+
 	const coordsByRegionType = data?.coordsByRegionType
 
-	if (loading) return <Message type="message" text="Map data is loading." />
-	if (error) return <Message type="error" text="Error while loading the map data." />
+	if (error || !data || !coordsByRegionType) return <Message type="error" text="Error while loading the map data." />
 
-	if (coordsByRegionType) return <VectorMapComponent coordsByRegionType={coordsByRegionType} />
-	return <Message type="error" text="Error coordsByRegionType is not recieved." />
+	return <Map coordsByRegionType={coordsByRegionType} />
 }
 
-export default VectorMapDataLoader
+export default MapPreloads

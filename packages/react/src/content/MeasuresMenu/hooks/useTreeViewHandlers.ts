@@ -7,13 +7,16 @@ import { DEFAULT_SELECTED_MEASURES_MENU_KEY } from '../../../config/constants'
 import useComponentInstance from '../../../hooks/useComponentInstance'
 import { useSelectionsContext } from '../../context/selectionsContext'
 
-const useTreeViewHandlers = (items: dxTreeViewItem[]) => {
+type Props = Readonly<{
+	items: dxTreeViewItem[],
+	instance: TreeView['instance'] | null
+}>
+
+const useTreeViewHandlers = ({ items, instance }: Props) => {
 	const {
 		selectionsHandler,
 		selectedMainSectionName,
 	} = useSelectionsContext()
-
-	const [instance, onInitializedHandler] = useComponentInstance<TreeView['instance']>()
 
 	const itemClickHandler = (e: ItemClickEvent) => {
 		const isSecondLevel = e.itemData.id.split('_').length > 1
@@ -43,7 +46,6 @@ const useTreeViewHandlers = (items: dxTreeViewItem[]) => {
 	}
 
 	return {
-		onInitializedHandler,
 		itemClickHandler,
 		onValueChangedHandler,
 	}

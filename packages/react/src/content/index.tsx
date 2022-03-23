@@ -29,14 +29,14 @@ const HomePage: FC = () => {
 				</div>
 			</Item>
 
-			{/* <Item>
+			<Item>
 				<Location screen="sm md lg" row={0} col={1} />
-				<div>
+				<div className={styles['vector-map-container']} id="vector-map-container">
 					<VectorMap />
 				</div>
 			</Item>
 
-			<Item>
+			{/* <Item>
 				<Location screen="md lg" row={1} col={1} />
 				<div>
 					<DoughnutChart />
