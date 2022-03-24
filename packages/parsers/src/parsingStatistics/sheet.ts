@@ -83,7 +83,7 @@ export class ContentsSheet extends Sheet {
 export class DetailsSheet extends Sheet {
 	private readonly startYear = 1991;
 
-	private readonly endYear = 2021;
+	private readonly endYear = new Date().getFullYear();
 
 	private readonly yearsRange = this.getRange(this.startYear, this.endYear);
 
@@ -124,5 +124,13 @@ export class DetailsSheet extends Sheet {
 			return null
 		})
 		return data
+	}
+
+	getSheetMeasure() {
+		const yearIndex = this.getYearsHeadersIndex()
+		const sheetLines = this.getSheetLines()
+		const measure = sheetLines[yearIndex - 1][0]
+		const isMeaseExist = measure && `${measure}`.includes('(') && !parseInt(`${measure}`)
+		return isMeaseExist ? `${measure}` : ''
 	}
 }

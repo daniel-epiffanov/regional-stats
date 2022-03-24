@@ -37,7 +37,8 @@
 		"arrow-parens": "off",
 		"linebreak-style": "off",
 		"import/no-extraneous-dependencies": "warn",
-		"camelcase": "warn"
+		"camelcase": "warn",
+		"max-classes-per-file": "off"
 	},
 	"settings": {
 		"import/resolver": {
