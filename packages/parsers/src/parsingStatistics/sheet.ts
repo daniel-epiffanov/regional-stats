@@ -1,4 +1,5 @@
 import xlsx from 'xlsx'
+import removeExtraSpaces from '../helpers/removeExtraSpaces'
 import Helpers from './helpers'
 
 interface ContentsTree {
@@ -116,10 +117,16 @@ export class DetailsSheet extends Sheet {
 	}
 
 	getDetailedData() {
-		const data = this.getCleanedUpSheet().map((cellGroup) => {
+		const data = this.getCleanedUpSheet().map(cellGroup => {
+			const cellGroupCleanedUp = cellGroup.map(cell => {
+				const r = (typeof cell === 'string' ? removeExtraSpaces(cell) : cell)
+				// if (typeof cell === 'string') console.log({ regionName: removeExtraSpaces(cell) })
+				return r
+			})
+			// console.log({ cellGroupCleanedUp })
 			const yearsHeaders = this.getTopHeaders()
 			if (yearsHeaders) {
-				return this.getObjectFromTwoArrays(yearsHeaders, cellGroup)
+				return this.getObjectFromTwoArrays(yearsHeaders, cellGroupCleanedUp)
 			}
 			return null
 		})

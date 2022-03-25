@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import axios from 'axios'
 import cors from 'cors'
 import express from 'express'
-import osmParser from './osmParser/parser'
+// import osmParser from './osmParser/parser'
 import mapCoordsModel from './mongooseModels/mapCoords'
 
 require('dotenv').config()
@@ -67,89 +67,6 @@ app.get('/properties', async (req, res) => {
 
 	// 		res.send('ok')
 	// 	})
-})
-
-app.get('/osm', async (req, res) => {
-	const stackOfErrors: string[] = []
-	console.info('request has beeen made')
-
-	const query = `
-	query {
-		mapCoords(limit: 100) {
-			name_ru,
-		}
-}`
-
-	console.log('requesting graphql')
-	const gqlRes = await axios.post('http://localhost:5000/api', { query })
-	// const { mapCoords } = gqlRes.data.data
-	const mapCoords = [
-		{ name_ru: 'Москва' },
-	]
-
-	const requestToPostgis = async (name_ru: string) => {
-		const response = await osmParser(name_ru)
-		const { rows } = response
-
-		if (Array.isArray(rows) && rows.length > 0) {
-			const theBiggest = {
-				length: 0,
-				idx: 0,
-			}
-
-			try {
-				rows.forEach((row: any, idx) => {
-					if (row && row.st_asgeojson) {
-						const st_asgeojson = JSON.parse(row.st_asgeojson)
-						const length = st_asgeojson.coordinates[0]
-						if (theBiggest.length < length) {
-							theBiggest.idx = idx
-							theBiggest.length = length
-						}
-					}
-				})
-
-				const arrayToSave = rows[theBiggest.idx]
-				const st_asgeojson = JSON.parse(arrayToSave.st_asgeojson)
-
-				console.log('updating mongo')
-
-				mapCoordsModel
-					.findOneAndUpdate({ name_ru }, { geometry: st_asgeojson })
-					.then((mongodbRes: any) => {
-						console.log('saved to mongodb')
-						console.log({ mongodbRes })
-					})
-					.catch((err: any) => {
-						console.error('error ahs occured while saving to mongodb')
-						console.error({ err })
-					})
-			} catch (error) {
-				console.error('error while parsing st_asgeojson')
-				console.error({ error })
-				stackOfErrors.push(name_ru)
-			}
-		} else {
-			console.error('no results')
-			stackOfErrors.push(name_ru)
-		}
-	}
-
-	console.log('mapping graphql')
-	mapCoords.forEach((mapCoord: any, idx: number) => {
-		const { name_ru } = mapCoord
-
-		if (idx === 0) {
-			console.log(`requesting postgis at ${name_ru}`)
-			requestToPostgis(name_ru)
-		} else {
-			setTimeout(() => {
-				console.log(`requesting postgis at ${name_ru}`)
-				console.log({ stackOfErrors })
-				requestToPostgis(name_ru)
-			}, idx * 120000)
-		}
-	})
 })
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 5001

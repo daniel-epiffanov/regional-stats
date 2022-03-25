@@ -9,6 +9,7 @@ import mongoose from 'mongoose'
 import ExcelFile from './excelFile'
 import StatisticsModel from '../mongooseModels/statistics'
 import MapCoordsModel from '../mongooseModels/mapCoords'
+import removeExtraSpaces from '../helpers/removeExtraSpaces'
 
 require('dotenv').config()
 
@@ -29,11 +30,11 @@ const file = new ExcelFile('src/statisticsSrcFiles/2021/Раздел 1 - Нас�
 // console.log(files[0].path)
 // console.log(files[0].getDetailsSheet(0).getDetailedData())
 // console.log('success 19')
-const regions = file.getDetailsSheet(0).getDetailedData().map((object: any) => `${object.regionName}`.replace(/\s\s+/g, ' '))
+const regions = file.getDetailsSheet(0).getDetailedData().map((object: any) => removeExtraSpaces(`${object.regionName}`))
 
 const mainSections = fs.readdirSync('./src/statisticsSrcFiles/2021/').map((fPath: string) => {
 	// console.log({ fPath })
-	return ({ fullFilename: fPath, name: fPath.split(' -')[1]?.split('.')[0]?.replace(/\s\s+/g, ' ') })
+	return ({ fullFilename: fPath, name: removeExtraSpaces(fPath.split(' -')[1]?.split('.')[0] || '') })
 }).filter(mainSection => !mainSection.fullFilename.includes('~$'))
 
 // console.log({ mainSections })
@@ -54,7 +55,7 @@ const data = () => regions.forEach((region: any, _index: number) => {
 			// console.log({ subSections })
 
 			const _subsections = subSections.map((tree, i) => {
-				if (i > 4) return
+				if (i > 10) return
 
 				// setTimeout(() => {
 				const deatilsSheet = neededFile.getDetailsSheet(index)
@@ -99,12 +100,13 @@ const data = () => regions.forEach((region: any, _index: number) => {
 					})) : null,
 				})
 
-				console.log({ r })
+				return r
+				// console.log({ r })
 				// }, i * 100)
 			})
 
 			// console.log({ _subsections: JSON.stringify(_subsections) })
-			// console.log({ _subsections })
+			console.log({ _subsections })
 
 			// 		return ({
 			// 			...mainSection,
