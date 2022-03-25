@@ -54,37 +54,38 @@ const data = () => regions.forEach((region: any, _index: number) => {
 			// console.log({ subSections })
 
 			const _subsections = subSections.map((tree, i) => {
-				if (tree.sheetTitle !== 'Возрастной состав населения') return
-				// console.log({ tree })
+				if (i > 4) return
+
+				// setTimeout(() => {
 				const deatilsSheet = neededFile.getDetailsSheet(index)
 
-				const measure = deatilsSheet.getSheetMeasure()
-				console.log({ measure })
+				const measure = tree.children.length === 0 ? deatilsSheet.getSheetMeasure() : null
 
 				const detailedData = deatilsSheet.getDetailedData()
-				// console.log({ detailedData })
 
 				const neededYearsData = detailedData.find(detailedData => detailedData.regionName === region)
 				const neededYearsDataEntries = neededYearsData ? Object.entries(neededYearsData) : null
 
-				console.log({ name: tree.sheetTitle })
-				console.log({ neededYearsDataEntries })
+				// console.log({ neededYearsDataEntries })
 
 				if (tree.children.length === 0) index += 1
-				return ({
+				const r = ({
 					orderNumber: tree.orderNumber,
 					title: tree.sheetTitle,
 					measure,
-					children: tree.children.length === 0 ? [] : tree.children.map((child, _i) => {
+					children: tree.children.length === 0 ? null : tree.children.map((child, _i) => {
 						const deatilsSheet = neededFile.getDetailsSheet(index)
 						const neededYearsData = deatilsSheet.getDetailedData().find(detailedData => detailedData.regionName === region)
 						const neededYearsDataEntries = neededYearsData ? Object.entries(neededYearsData) : null
 						// console.log({ neededYearsDataEntries })
 
+						const measure = deatilsSheet.getSheetMeasure()
+
 						index += 1
 						return ({
 							orderNumber: child.orderNumber,
 							title: child.sheetTitle,
+							measure,
 							yearValues: neededYearsDataEntries ? neededYearsDataEntries.filter(neededYearsDataEntry => neededYearsDataEntry[0] !== 'regionName').map(neededYearsDataEntry => ({
 								year: parseInt(neededYearsDataEntry[0]),
 								value: neededYearsDataEntry && neededYearsDataEntry[1] ? neededYearsDataEntry[1].toString() : null,
@@ -97,9 +98,13 @@ const data = () => regions.forEach((region: any, _index: number) => {
 						value: neededYearsDataEntry && neededYearsDataEntry[1] ? neededYearsDataEntry[1].toString() : null,
 					})) : null,
 				})
+
+				console.log({ r })
+				// }, i * 100)
 			})
 
-			console.log({ _subsections })
+			// console.log({ _subsections: JSON.stringify(_subsections) })
+			// console.log({ _subsections })
 
 			// 		return ({
 			// 			...mainSection,
