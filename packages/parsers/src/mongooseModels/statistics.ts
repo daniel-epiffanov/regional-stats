@@ -14,7 +14,8 @@ subSectionSchema.add({
 		type: String,
 		required: true,
 	},
-	title: {
+	measure: String,
+	name: {
 		type: String,
 		required: true,
 	},

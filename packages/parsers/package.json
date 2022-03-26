@@ -8,6 +8,7 @@
     "build": "tsc",
     "start": "ts-node-dev --respawn src/app.ts",
     "stat": "ts-node-dev --respawn src/parsingStatistics/app.ts",
+    "stat-no-respawn": "ts-node-dev src/parsingStatistics/app.ts",
     "coords": "ts-node-dev --respawn src/parsingCoordsModel.ts",
     "osm": "ts-node-dev --respawn src/osmParser/parser.ts"
   },
