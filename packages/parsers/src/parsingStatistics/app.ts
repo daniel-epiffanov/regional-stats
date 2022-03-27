@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-continue */
 /* eslint-disable arrow-body-style */
 /* eslint-disable consistent-return */
@@ -20,7 +21,7 @@ const app = express()
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
-const file = new ExcelFile('src/statisticsSrcFiles/2021/Раздел 2 - Труд.xlsx')
+const file = new ExcelFile('src/statisticsSrcFiles/2021/Раздел 3 - Уровень жизни населения.xlsx')
 
 // console.log(file.path)
 // console.log(file.getDetailsSheet(0).getDetailedData())
@@ -42,7 +43,7 @@ console.log({ regions })
 
 const savingRegionData = (region: string) => {
 	console.log(`processing... ${region}`)
-	const mainSection = { fullFileName: 'Раздел 1 - Население.xlsx', name: 'Труд' }
+	const mainSection = { fullFileName: 'Раздел 1 - Население.xlsx', name: 'Уровень жизни населения' }
 	console.log({ mainSection })
 	const neededFile = file // files.find(file => file.path.includes(mainSection.fullFilename))
 	let index = 0
@@ -104,22 +105,36 @@ const savingRegionData = (region: string) => {
 }
 
 const data = async () => {
+	// const startingIndex = regions.findIndex(region => region === 'Чукотский автономный округ')
+	// if (!startingIndex) return
+	// @ts-ignore
+	// const statisticsRecords: { regionName: string }[] = await StatisticsModel.find()
+
+	// const statisticsRecordsFiltered = statisticsRecords.filter(statisticsRecord => !regions.includes(statisticsRecord.regionName))
+	// console.log({ statisticsRecordsFiltered })
+
+	// for (let index = 0; index < statisticsRecordsFiltered.length; index += 1) {
+	// 	const record = statisticsRecordsFiltered[index]
+	// 	await StatisticsModel.findOneAndRemove({ regionName: record.regionName })
+	// }
+	// console.log({ statisticsRecords })
+
 	for (let regionIndex = 0; regionIndex < regions.length; regionIndex += 1) {
-		// regions.forEach((region, regionIndex) => {
-		// if (regionIndex < 35) continue;
 		const region = regions[regionIndex]
+		// const size = await StatisticsModel.find({ regionName: region }).count()
+		// console.log({ size })
+		// if (size !== 0) continue
+		console.log({ region })
+		console.log({ regionIndex })
+
+		// const newModel = new StatisticsModel({ ...russianFederation, regionName: region })
+		// await newModel.save()
 
 		const mainSection = savingRegionData(region)
 
 		console.log(`starting saving... ${region}`)
-		// eslint-disable-next-line no-await-in-loop
 		await StatisticsModel.findOneAndUpdate({ regionName: region, 'mainSections.name': mainSection.name }, { $set: { 'mainSections.$.subSections': mainSection.subSections.filter(_subsection => !!_subsection) } })
-		// .then(r => {
-		// 	console.log(`${region} saved to mongo`)
-		// 	console.log({ r })
-		// })
 		console.log(`${region} saved to mongo`)
-		// })
 	}
 }
 
