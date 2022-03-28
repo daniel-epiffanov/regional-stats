@@ -82,6 +82,7 @@ const savingRegionData = (region: string) => {
 						year: parseInt(neededYearsDataEntry[0]),
 						value: neededYearsDataEntry && neededYearsDataEntry[1] ? neededYearsDataEntry[1].toString() : null,
 					})) : null,
+					children: null,
 				})
 			}),
 			yearValues: tree.children.length === 0 && neededYearsDataEntries ? neededYearsDataEntries.filter(neededYearsDataEntry => neededYearsDataEntry[0] !== 'regionName').map(neededYearsDataEntry => ({
