@@ -1,5 +1,5 @@
 import { StatisticsYears } from '../../../../sharedTypes/gqlQueries'
-import statisticsModel from '../mongooseModels/statistics'
+import statisticsModel from '../mongoModels/statistics'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 const statisticsYears: ResolverFnAsync<StatisticsYears> = async (parent, args, ctx) => {

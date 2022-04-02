@@ -1,5 +1,5 @@
 import { StatisticsSubSectionNames } from '../../../../sharedTypes/gqlQueries'
-import statisticsModel from '../mongooseModels/statistics'
+import statisticsModel from '../mongoModels/statistics'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 if (process.env.NODE_ENV !== 'production') {
@@ -12,7 +12,7 @@ const statisticsSubSectionNames: ResolverFnAsync<StatisticsSubSectionNames> = as
 ) => {
 	const { mainSectionName } = args
 	const defaultRegion = process.env.DEFAULT_REGION
-	const mongoRes = await statisticsModel.aggregate<{ titles: StatisticsSubSectionNames }>([
+	const mongoRes = await statisticsModel.aggregate<{ names: StatisticsSubSectionNames }>([
 		{ $match: { regionName: defaultRegion } },
 
 		{
@@ -36,7 +36,7 @@ const statisticsSubSectionNames: ResolverFnAsync<StatisticsSubSectionNames> = as
 									input: '$$mainSection.subSections',
 									as: 'subSection',
 									in: {
-										title: '$$subSection.title',
+										name: '$$subSection.name',
 									},
 								},
 							},
@@ -47,11 +47,11 @@ const statisticsSubSectionNames: ResolverFnAsync<StatisticsSubSectionNames> = as
 			},
 		},
 		{ $unwind: '$mainSections' },
-		{ $project: { titles: '$mainSections.subSections.title' } },
+		{ $project: { names: '$mainSections.subSections.name' } },
 
 	])
 
-	return mongoRes[0].titles
+	return mongoRes[0].names
 }
 
 export default statisticsSubSectionNames

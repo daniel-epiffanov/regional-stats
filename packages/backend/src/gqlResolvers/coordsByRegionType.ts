@@ -1,5 +1,5 @@
 import { MongoRegionCoords } from '../../../../sharedTypes/mongoModels'
-import regionsCoords from '../mongooseModels/regionsCoords'
+import regionsCoords from '../mongoModels/regionsCoords'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 const coordsByRegionType: ResolverFnAsync<MongoRegionCoords[]> = async (

@@ -110,18 +110,26 @@ export class DetailsSheet extends Sheet {
 	}
 
 	getCleanedUpSheet() {
-		const cuttedHeaders = this.getSheetLines().splice(this.getYearsHeadersIndex())
-		const filteredData = cuttedHeaders.filter((cell) => (
-			cell.length === this.getTopHeaders()?.length && !!cell[0]))
+		const SheetLinesWithCuttedHeaders = this.getSheetLines().splice(this.getYearsHeadersIndex())
+		const topHeaders = this.getTopHeaders()
+		// console.log({ topHeaders })
+
+		const filteredData = SheetLinesWithCuttedHeaders.filter((cellGroup) => {
+			const cellGroupLength = cellGroup.length
+			return cellGroupLength === topHeaders?.length && !!cellGroup[0]
+		})
 		return filteredData
 	}
 
 	getDetailedData() {
 		const data = this.getCleanedUpSheet().map(cellGroup => {
 			const cellGroupCleanedUp = cellGroup.map(cell => {
-				const r = (typeof cell === 'string' ? removeExtraSpaces(cell) : cell)
+				if (cell === '-') return null
+				if (typeof cell === 'string') return removeExtraSpaces(cell)
+				if (typeof cell === 'number') return Math.round(cell * 100) / 100
+				return null
 				// if (typeof cell === 'string') console.log({ regionName: removeExtraSpaces(cell) })
-				return r
+				// return r
 			})
 			// console.log({ cellGroupCleanedUp })
 			const yearsHeaders = this.getTopHeaders()

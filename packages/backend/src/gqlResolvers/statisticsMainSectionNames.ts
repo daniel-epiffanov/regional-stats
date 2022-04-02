@@ -1,5 +1,5 @@
 import { StatisticsMainSectionNames } from '../../../../sharedTypes/gqlQueries'
-import statisticsModel from '../mongooseModels/statistics'
+import statisticsModel from '../mongoModels/statistics'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 const statisticsMainSectionNames: ResolverFnAsync<StatisticsMainSectionNames> = async () => {

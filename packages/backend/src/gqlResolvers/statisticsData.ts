@@ -1,5 +1,5 @@
 import { StatisticsData } from '../../../../sharedTypes/gqlQueries'
-import statisticsModel from '../mongooseModels/statistics'
+import statisticsModel from '../mongoModels/statistics'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 if (process.env.NODE_ENV !== 'production') {
@@ -38,13 +38,13 @@ const statisticsData: ResolverFnAsync<StatisticsData> = async (
 										$filter: {
 											input: '$$mainSection.subSections',
 											as: 'subSection',
-											cond: { $eq: ['$$subSection.title', subSectionName] },
+											cond: { $eq: ['$$subSection.name', subSectionName] },
 										},
 									},
 									as: 'subSection',
 									in: {
 										orderNumber: '$$subSection.orderNumber',
-										title: '$$subSection.title',
+										name: '$$subSection.name',
 										children: '$$subSection.children',
 										yearValues: {
 											$map: {
