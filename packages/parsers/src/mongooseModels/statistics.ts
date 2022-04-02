@@ -5,7 +5,10 @@ const dataSchema = new Schema({
 		type: Number,
 		required: true,
 	},
-	value: String,
+	value: {
+		type: Number,
+		required: true,
+	},
 })
 
 const subSectionSchema = new Schema()
