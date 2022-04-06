@@ -7,8 +7,8 @@ import coordsByRegionType from './coordsByRegionType'
 
 const gqlResolvers = {
 	Query: {
-		statisticsYears,
 		statisticsRegionNames,
+		statisticsYears,
 		statisticsMainSectionNames,
 		statisticsSubSectionNames,
 		statisticsData,

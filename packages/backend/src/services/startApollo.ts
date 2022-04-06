@@ -3,10 +3,6 @@ import { Express } from 'express'
 import typeDefs from '../gqltypeDefs'
 import resolvers from '../gqlResolvers'
 
-if (process.env.NODE_ENV === 'development') {
-	require('dotenv').config()
-}
-
 export const getNewApolloServer = () => new ApolloServer({
 	typeDefs,
 	resolvers,
