@@ -13,6 +13,7 @@ const gqlResolvers = {
 		statisticsSubSectionNames,
 		statisticsData,
 		coordsByRegionType,
+		test: async () => 'yey',
 	},
 }
 

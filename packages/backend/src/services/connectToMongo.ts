@@ -14,12 +14,8 @@ const connectToMongo = async () => {
 			console.error({ err })
 		})
 
-	try {
-		if (!process.env.DB_AUTH) throw new Error('DB_AUTH enviroment variable is undefined')
-		await mongoose.connect(process.env.DB_AUTH)
-	} catch (err) {
-		throw new Error(`${err}`)
-	}
+	if (!process.env.DB_AUTH) throw new Error('DB_AUTH enviroment variable is undefined')
+	await mongoose.connect(process.env.DB_AUTH)
 }
 
 export default connectToMongo

@@ -3,23 +3,21 @@ import { Express } from 'express'
 import typeDefs from '../gqltypeDefs'
 import resolvers from '../gqlResolvers'
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
 	require('dotenv').config()
 }
 
-const startApollo = async (app: Express, port: number) => {
-	const server = new ApolloServer({
-		typeDefs,
-		resolvers,
-	})
-	await server.start()
+export const getNewApolloServer = () => new ApolloServer({
+	typeDefs,
+	resolvers,
+})
 
-	server.applyMiddleware({ app, path: '/api' })
+const startApollo = async (app: Express) => {
+	const apolloServer = getNewApolloServer()
+	await apolloServer.start()
+	apolloServer.applyMiddleware({ app, path: '/api' })
 
-	// await new Promise((resolve) => app.listen({ port }, resolve))
-	app.listen(port, () => console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`))
-	// console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`)
-	return { server, app }
+	return { apolloServer }
 }
 
 export default startApollo

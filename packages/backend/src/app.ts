@@ -1,23 +1,29 @@
 import cookieParser from 'cookie-parser'
-import express from 'express'
+import express, { Express } from 'express'
+import { DEFAULT_PORT } from './config/defaults'
 import connectToMongo from './services/connectToMongo'
 import startApollo from './services/startApollo'
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
 	require('dotenv').config()
 }
 
-const app = express()
+const expressApp = express()
 
-app.use(cookieParser())
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+expressApp.use(cookieParser())
+expressApp.use(express.urlencoded({ extended: true }))
+expressApp.use(express.json())
 
-const PORT = (process.env.PORT && parseInt(process.env.PORT)) || 5000
+const port = (process.env.PORT && parseInt(process.env.PORT)) || DEFAULT_PORT
 
 const startTheApp = async () => {
 	await connectToMongo()
-	startApollo(app, PORT)
+	const { apolloServer } = await startApollo(expressApp)
+	expressApp.listen(port, () => console.info(`Express Server ready at http://localhost:${port}`))
+
+	console.log(`Apollo Server ready at http://localhost:${port}${apolloServer.graphqlPath}`)
 }
 
 startTheApp()
+
+// export default startTheApp
