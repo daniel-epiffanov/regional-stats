@@ -10,48 +10,16 @@ const statisticsSubSectionNames: ResolverFnAsync<StatisticsSubSectionNames> = as
 	parent: any,
 	args: any,
 ) => {
-	const { mainSectionName } = args
-	const defaultRegion = process.env.DEFAULT_REGION
-	const mongoRes = await statisticsModel.aggregate<{ names: StatisticsSubSectionNames }>([
-		{ $match: { regionName: defaultRegion } },
-
-		{
-			$project: {
-				_id: 0,
-				regionName: 1,
-				mainSections: {
-					$map: {
-						input: {
-							$filter: {
-								input: '$mainSections',
-								as: 'mainSection',
-								cond: { $eq: ['$$mainSection.name', mainSectionName] },
-							},
-						},
-						as: 'mainSection',
-						in: {
-							name: '$$mainSection.name',
-							subSections: {
-								$map: {
-									input: '$$mainSection.subSections',
-									as: 'subSection',
-									in: {
-										name: '$$subSection.name',
-									},
-								},
-							},
-						},
-					},
-
-				},
-			},
-		},
-		{ $unwind: '$mainSections' },
-		{ $project: { names: '$mainSections.subSections.name' } },
-
+	const { regionName, mainSectionName } = args
+	const mongoRes = await statisticsModel.aggregate<{ subSections: StatisticsSubSectionNames }>([
+		{ $match: { regionName } },
+		{ $unwind: "$mainSections" },
+		{ $match: { "mainSections.name": mainSectionName } },
+		{ $project: { "mainSections.subSections.name": 1, "mainSections.subSections.children.name": 1 } },
+		{ $project: { subSections: "$mainSections.subSections" } }
 	])
 
-	return mongoRes[0].names
+	return mongoRes[0].subSections
 }
 
 export default statisticsSubSectionNames

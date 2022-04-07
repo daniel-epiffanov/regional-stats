@@ -13,7 +13,7 @@ test('graphql statisticsRegionNames', async () => {
 
 	const allQueries = statisticsRegionNames.map(async (regionName) => {
 		const statisticsMainSectionNamesResult = await testServer.executeOperation({
-			query: `query { statisticsMainSectionNames(regionName: "${regionName}") }`
+			query: `query { statisticsMainSectionNames(regionName: "${regionName}") { name } }`
 		})
 
 		expect(statisticsMainSectionNamesResult.errors).toBeUndefined()
@@ -24,8 +24,8 @@ test('graphql statisticsRegionNames', async () => {
 		expect(statisticsMainSectionNames.length).toBeGreaterThan(0)
 
 		statisticsMainSectionNames.forEach((statisticsMainSectionName) => {
-			expect(typeof statisticsMainSectionName === 'string').toBe(true)
-			expect(statisticsMainSectionName.length).toBeGreaterThan(0)
+			expect(typeof statisticsMainSectionName.name === 'string').toBe(true)
+			expect(statisticsMainSectionName.name.length).toBeGreaterThan(0)
 		})
 
 	})

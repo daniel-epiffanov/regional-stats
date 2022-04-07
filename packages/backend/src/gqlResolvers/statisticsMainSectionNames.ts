@@ -7,8 +7,15 @@ const statisticsMainSectionNames: ResolverFnAsync<StatisticsMainSectionNames> = 
 	args: any,
 ) => {
 	const { regionName } = args
-	const mongoRes: ReadonlyArray<string> = await StatisticsModel.find({ regionName }).distinct('mainSections.name')
-	return mongoRes
+	const mongoRes = await StatisticsModel.aggregate<{ mainSections: StatisticsMainSectionNames }>([
+		{ $match: { regionName } },
+		{ $project: { "mainSections.name": 1 } },
+	])
+
+	console.log({ mongoRes })
+	console.log({ mainSections: mongoRes[0].mainSections })
+
+	return mongoRes[0].mainSections
 }
 
 export default statisticsMainSectionNames

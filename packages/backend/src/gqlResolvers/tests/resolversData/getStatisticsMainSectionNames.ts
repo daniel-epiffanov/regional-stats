@@ -10,7 +10,7 @@ const getStatisticsMainSectionNames = async (props: Props) => {
 	const { regionName, testServer } = props
 
 	const response = await testServer.executeOperation({
-		query: `query { statisticsMainSectionNames(regionName: "${regionName}") }`
+		query: `query { statisticsMainSectionNames(regionName: "${regionName}") { name } }`
 	})
 
 	const statisticsMainSectionNames: StatisticsMainSectionNames = response.data?.statisticsMainSectionNames

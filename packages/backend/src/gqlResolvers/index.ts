@@ -8,12 +8,11 @@ import coordsByRegionType from './coordsByRegionType'
 const gqlResolvers = {
 	Query: {
 		statisticsRegionNames,
-		statisticsYears,
 		statisticsMainSectionNames,
 		statisticsSubSectionNames,
+		statisticsYears,
 		statisticsData,
-		coordsByRegionType,
-		test: async () => 'yey',
+		coordsByRegionType
 	},
 }
 
