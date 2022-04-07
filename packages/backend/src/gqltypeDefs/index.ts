@@ -7,9 +7,9 @@ export default gql`
 	${fs.readFileSync(path.join(__dirname, 'regionCoords.graphql'), 'utf8')}
 
 	type Query {
-		statisticsYears: [Int],
 		statisticsRegionNames: [String],
-		statisticsMainSectionNames: [String],
+		statisticsMainSectionNames(regionName: String): [String],
+		statisticsYears: [Int],
 		statisticsSubSectionNames(mainSectionName: String): [String],
 		statisticsData(regionName: String, mainSectionName: String, subSectionName: String, startYear: Int, endYear: Int): [StatisticsData],
 		coordsByRegionType(type: String): [regionCoords],

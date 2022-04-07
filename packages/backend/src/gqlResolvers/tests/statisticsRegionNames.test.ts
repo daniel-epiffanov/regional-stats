@@ -7,13 +7,13 @@ testMongoConenction()
 test('graphql statisticsRegionNames', async () => {
 	const testServer = getNewApolloServer()
 
-	const result = await testServer.executeOperation({
+	const response = await testServer.executeOperation({
 		query: 'query { statisticsRegionNames }',
 	})
 
-	expect(result.errors).toBeUndefined()
+	expect(response.errors).toBeUndefined()
 
-	const statisticsRegionNames: StatisticsRegionNames = result.data?.statisticsRegionNames
+	const statisticsRegionNames: StatisticsRegionNames = response.data?.statisticsRegionNames
 
 	expect(Array.isArray(statisticsRegionNames)).toBe(true)
 	expect(statisticsRegionNames.length).toBeGreaterThan(0)

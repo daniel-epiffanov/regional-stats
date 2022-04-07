@@ -1,9 +1,9 @@
 import { StatisticsRegionNames } from '../../../../sharedTypes/gqlQueries'
-import statisticsModel from '../mongoModels/statistics'
+import StatisticsModel from '../mongoModels/statistics'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 const statisticsRegionNames: ResolverFnAsync<StatisticsRegionNames> = async () => {
-	const mongoRes = await statisticsModel.distinct('regionName')
+	const mongoRes = await StatisticsModel.distinct('regionName')
 	return mongoRes
 }
 
