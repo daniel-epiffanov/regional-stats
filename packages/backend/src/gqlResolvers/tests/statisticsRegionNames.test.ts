@@ -13,13 +13,14 @@ test('graphql statisticsRegionNames', async () => {
 
 	expect(response.errors).toBeUndefined()
 
-	const statisticsRegionNames: StatisticsRegionNames = response.data?.statisticsRegionNames
+	const statisticsRegionNames: StatisticsRegionNames | undefined = response.data?.statisticsRegionNames
+
+	if (!statisticsRegionNames) throw new Error('statisticsRegionNames is falsy')
 
 	expect(Array.isArray(statisticsRegionNames)).toBe(true)
 	expect(statisticsRegionNames.length).toBeGreaterThan(0)
 
 	statisticsRegionNames.forEach((statisticsRegionName) => {
-		expect(statisticsRegionName).toBeTruthy()
 		expect(typeof statisticsRegionName === 'string').toBe(true)
 		expect(statisticsRegionName.length).toBeGreaterThan(0)
 	})

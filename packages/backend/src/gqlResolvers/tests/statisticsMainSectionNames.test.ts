@@ -1,14 +1,14 @@
 import { StatisticsMainSectionNames, StatisticsRegionNames } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from './shared/testMongoConenction'
-import StatisticsModel from '../../mongoModels/statistics'
+import getStatisticsRegionNames from './resolversData/getStatisticsRegionNames'
 
 testMongoConenction()
 
 test('graphql statisticsRegionNames', async () => {
 	const testServer = getNewApolloServer()
 
-	const statisticsRegionNames: StatisticsRegionNames = await StatisticsModel.distinct('regionName')
+	const statisticsRegionNames: StatisticsRegionNames = await getStatisticsRegionNames({ testServer })
 
 
 	const allQueries = statisticsRegionNames.map(async (regionName) => {
@@ -24,7 +24,6 @@ test('graphql statisticsRegionNames', async () => {
 		expect(statisticsMainSectionNames.length).toBeGreaterThan(0)
 
 		statisticsMainSectionNames.forEach((statisticsMainSectionName) => {
-			expect(statisticsMainSectionName).toBeTruthy()
 			expect(typeof statisticsMainSectionName === 'string').toBe(true)
 			expect(statisticsMainSectionName.length).toBeGreaterThan(0)
 		})
@@ -33,4 +32,3 @@ test('graphql statisticsRegionNames', async () => {
 
 	await Promise.all(allQueries)
 })
-
