@@ -12,8 +12,8 @@ const statisticsMainSectionNames: ResolverFnAsync<StatisticsMainSectionNames> = 
 		{ $project: { "mainSections.name": 1 } },
 	])
 
-	console.log({ mongoRes })
-	console.log({ mainSections: mongoRes[0].mainSections })
+	// console.log({ mongoRes })
+	// console.log({ mainSections: mongoRes[0].mainSections })
 
 	return mongoRes[0].mainSections
 }

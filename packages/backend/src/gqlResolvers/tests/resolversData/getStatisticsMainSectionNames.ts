@@ -9,13 +9,15 @@ type Props = Readonly<{
 const getStatisticsMainSectionNames = async (props: Props) => {
 	const { regionName, testServer } = props
 
+	// console.log({ regionName })
+
 	const response = await testServer.executeOperation({
 		query: `query { statisticsMainSectionNames(regionName: "${regionName}") { name } }`
 	})
 
 	const statisticsMainSectionNames: StatisticsMainSectionNames = response.data?.statisticsMainSectionNames
 
-	if (!statisticsMainSectionNames) throw new Error('statisticsRegionNames is falsy')
+	if (!statisticsMainSectionNames) throw new Error('statisticsMainSectionNames is falsy')
 
 	return statisticsMainSectionNames
 }
