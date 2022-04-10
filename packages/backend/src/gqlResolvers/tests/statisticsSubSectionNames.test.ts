@@ -10,49 +10,48 @@ test('graphql statisticsSubSectionNames', async () => {
 	const testServer = getNewApolloServer()
 
 	const statisticsRegionNames: StatisticsRegionNames = await getStatisticsRegionNames({ testServer })
-	console.log({ statisticsRegionNames })
-	expect(statisticsRegionNames).toBeTruthy()
 
+	for (let regionNameIndex = 0; regionNameIndex < statisticsRegionNames.length; regionNameIndex += 1) {
+		const regionName = statisticsRegionNames[regionNameIndex]
 
-	// await Promise.all(
-	// 	statisticsRegionNames.map(async (regionName) => {
+		const statisticsMainSectionNames = await getStatisticsMainSectionNames({ regionName, testServer })
 
-	// 		const statisticsMainSectionNames = await getStatisticsMainSectionNames({ regionName, testServer })
+		for (let mainSectionNameIndex = 0; mainSectionNameIndex < statisticsMainSectionNames.length; mainSectionNameIndex += 1) {
+			const mainSectionName = statisticsMainSectionNames[mainSectionNameIndex]
 
-	// 		// console.log({ statisticsMainSectionNames })
+			const response = await testServer.executeOperation({
+				query: `query { statisticsSubSectionNames(regionName: "${regionName}", mainSectionName: "${mainSectionName.name}") { name, children { name } } }`
+			})
 
-	// 		// await Promise.all(
-	// 		// 	statisticsMainSectionNames.map(async (statisticsMainSectionName) => {
+			expect(response.errors).toBeUndefined()
 
-	// 		// 		const response = await testServer.executeOperation({
-	// 		// 			query: `query { statisticsSubSectionNames(regionName: "${regionName}", mainSectionName: "${statisticsMainSectionName.name}") { name, children { name } } }`
-	// 		// 		})
+			const statisticsSubSectionNames: StatisticsSubSectionNames = response.data?.statisticsSubSectionNames
 
-	// 		// 		// expect(response.errors).toBeUndefined()
+			if (statisticsSubSectionNames.length === 0) {
+				console.log('000!')
+			}
 
-	// 		// 		// const statisticsSubSectionNames: StatisticsSubSectionNames = response.data?.statisticsSubSectionNames
+			expect(Array.isArray(statisticsSubSectionNames)).toBe(true)
+			expect(statisticsSubSectionNames.length).toBeGreaterThan(0)
 
-	// 		// 		// expect(Array.isArray(statisticsSubSectionNames)).toBe(true)
-	// 		// 		// expect(statisticsSubSectionNames.length).toBeGreaterThan(0)
+			statisticsSubSectionNames.forEach((statisticsSubSectionName) => {
+				expect(typeof statisticsSubSectionName.name === 'string').toBe(true)
+				expect(statisticsSubSectionName.name.length).toBeGreaterThan(0)
 
-	// 		// 		// statisticsSubSectionNames.forEach((statisticsSubSectionName) => {
-	// 		// 		// 	expect(typeof statisticsSubSectionName.name === 'string').toBe(true)
-	// 		// 		// 	expect(statisticsSubSectionName.name.length).toBeGreaterThan(0)
-	// 		// 		// 	if (statisticsSubSectionName.children) {
-	// 		// 		// 		expect(Array.isArray(statisticsSubSectionName.children)).toBe(true)
-	// 		// 		// 		expect(statisticsSubSectionName.children.length).toBeGreaterThan(0)
-	// 		// 		// 		statisticsSubSectionName.children.forEach((child) => {
-	// 		// 		// 			expect(typeof child.name === 'string').toBe(true)
-	// 		// 		// 			expect(child.name.length).toBeGreaterThan(0)
-	// 		// 		// 		})
-	// 		// 		// 	} else {
-	// 		// 		// 		expect(statisticsSubSectionName.children).toBeUndefined()
-	// 		// 		// 	}
-	// 		// 		// })
+				if (statisticsSubSectionName.children) {
+					expect(Array.isArray(statisticsSubSectionName.children)).toBe(true)
+					expect(statisticsSubSectionName.children.length).toBeGreaterThan(0)
+					statisticsSubSectionName.children.forEach((child) => {
+						expect(typeof child.name === 'string').toBe(true)
+						expect(child.name.length).toBeGreaterThan(0)
+					})
+				} else {
+					expect(statisticsSubSectionName.children).toBeNull()
+				}
+			})
 
-	// 		// 	})
-	// 		// )
+		}
 
-	// 	})
-	// )
+	}
+
 })

@@ -9,8 +9,6 @@ type Props = Readonly<{
 const getStatisticsMainSectionNames = async (props: Props) => {
 	const { regionName, testServer } = props
 
-	// console.log({ regionName })
-
 	const response = await testServer.executeOperation({
 		query: `query { statisticsMainSectionNames(regionName: "${regionName}") { name } }`
 	})

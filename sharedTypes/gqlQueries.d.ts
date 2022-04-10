@@ -21,5 +21,10 @@ export type StatisticsSubSectionNames = ReadonlyArray<{
 		name: string
 	}>
 }>
-export type StatisticsData = ReadonlyArray<MongoStatisticsDataItem>
+export type StatisticsData = Readonly<{
+	name: string,
+	measure: string,
+	parentMeasure?: string,
+	yearValues: ReadonlyArray<MongoStatisticsDataItem>
+}>
 export type CoordsByRegionType = ReadonlyArray<MongoRegionCoords>

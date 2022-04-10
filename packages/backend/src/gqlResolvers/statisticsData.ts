@@ -7,82 +7,31 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const statisticsData: ResolverFnAsync<StatisticsData> = async (
-	parent: any, args: any,
+	parent: any,
+	args: any,
 ) => {
 	const {
-		regionName, mainSectionName, subSectionName, startYear, endYear,
+		regionName, mainSectionName, subSectionName
 	} = args
-	const defaultRegion = process.env.DEFAULT_REGION
+
+	// const mongoRes = await statisticsModel.aggregate<{ statisticsData: StatisticsData }>([
+	// 	{ $match: { regionName } },
+	// 	{ $unwind: "$mainSections" },
+	// 	{ $match: { "mainSections.name": mainSectionName } },
+	// 	{ $unwind: "$mainSections.subSections" },
+	// 	{ $match: { "mainSections.subSections.name": subSectionName } },
+	// 	{ $project: { "mainSections.subSections.name": 1, "mainSections.subSections.measure": 1, "mainSections.subSections.yearValues": 1 } },
+	// 	{ $project: { statisticsData: "$mainSections.subSections" } }
+	// ])
+
 	const mongoRes = await statisticsModel.aggregate<{ statisticsData: StatisticsData }>([
-		{ $match: { regionName: regionName || defaultRegion } },
-
-		{
-			$project: {
-				_id: 0,
-				regionName: 1,
-				mainSections: {
-					$map: {
-						input: {
-							$filter: {
-								input: '$mainSections',
-								as: 'mainSection',
-								cond: { $eq: ['$$mainSection.name', mainSectionName] },
-							},
-						},
-						as: 'mainSection',
-						in: {
-							name: '$$mainSection.name',
-							subSections: {
-								$map: {
-									input: {
-										$filter: {
-											input: '$$mainSection.subSections',
-											as: 'subSection',
-											cond: { $eq: ['$$subSection.name', subSectionName] },
-										},
-									},
-									as: 'subSection',
-									in: {
-										orderNumber: '$$subSection.orderNumber',
-										name: '$$subSection.name',
-										children: '$$subSection.children',
-										yearValues: {
-											$map: {
-												input: {
-													$filter: {
-														input: '$$subSection.yearValues',
-														as: 'statisticsData',
-														cond: {
-															$and: [
-																{ $gte: ['$$statisticsData.year', startYear] },
-																{ $lte: ['$$statisticsData.year', endYear] },
-															],
-														},
-													},
-												},
-												as: 'subSection',
-												in: {
-													year: '$$subSection.year',
-													value: '$$subSection.value',
-												},
-											},
-										},
-									},
-								},
-							},
-						},
-					},
-
-				},
-			},
-		},
-		{ $unwind: '$mainSections' },
-		{ $unwind: '$mainSections.subSections' },
-		{
-			$project: {
-				statisticsData: '$mainSections.subSections.yearValues',
-			},
-		},
+		{ $match: { regionName } },
+		{ $unwind: "$mainSections" },
+		{ $match: { "mainSections.name": mainSectionName } },
+		{ $unwind: "$mainSections.subSections" },
+		{ $match: { "mainSections.subSections.name": subSectionName } },
+		{ $project: { "mainSections.subSections.name": 1, "mainSections.subSections.measure": 1, "mainSections.subSections.yearValues": 1 } },
+		{ $project: { statisticsData: "$mainSections.subSections" } }
 	])
 
 	return mongoRes[0].statisticsData

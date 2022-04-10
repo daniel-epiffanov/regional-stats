@@ -1,4 +1,10 @@
-type StatisticsData {
+type YearValue {
 	year: Int,
 	value: String
+}
+type StatisticsData {
+	name: String,
+	measure: String,
+	parentMeasure: String,
+	yearValues: [YearValue],
 }

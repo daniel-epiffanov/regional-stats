@@ -10,25 +10,23 @@ test('graphql statisticsMainSectionNames', async () => {
 
 	const statisticsRegionNames: StatisticsRegionNames = await getStatisticsRegionNames({ testServer })
 
+	for (let regionNameIndex = 0; regionNameIndex < statisticsRegionNames.length; regionNameIndex += 1) {
+		const regionName = statisticsRegionNames[regionNameIndex]
 
-	await Promise.all(
-		statisticsRegionNames.map(async (regionName) => {
-			const response = await testServer.executeOperation({
-				query: `query { statisticsMainSectionNames(regionName: "${regionName}") { name } }`
-			})
-
-			expect(response.errors).toBeUndefined()
-
-			const statisticsMainSectionNames: StatisticsMainSectionNames = response.data?.statisticsMainSectionNames
-
-			expect(Array.isArray(statisticsMainSectionNames)).toBe(true)
-			expect(statisticsMainSectionNames.length).toBeGreaterThan(0)
-
-			statisticsMainSectionNames.forEach((statisticsMainSectionName) => {
-				expect(typeof statisticsMainSectionName.name === 'string').toBe(true)
-				expect(statisticsMainSectionName.name.length).toBeGreaterThan(0)
-			})
-
+		const response = await testServer.executeOperation({
+			query: `query { statisticsMainSectionNames(regionName: "${regionName}") { name } }`
 		})
-	)
+
+		expect(response.errors).toBeUndefined()
+
+		const statisticsMainSectionNames: StatisticsMainSectionNames = response.data?.statisticsMainSectionNames
+
+		expect(Array.isArray(statisticsMainSectionNames)).toBe(true)
+		expect(statisticsMainSectionNames.length).toBeGreaterThan(0)
+
+		statisticsMainSectionNames.forEach((statisticsMainSectionName) => {
+			expect(typeof statisticsMainSectionName.name === 'string').toBe(true)
+			expect(statisticsMainSectionName.name.length).toBeGreaterThan(0)
+		})
+	}
 })

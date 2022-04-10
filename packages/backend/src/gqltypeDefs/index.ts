@@ -12,8 +12,8 @@ export default gql`
 		statisticsRegionNames: [String],
 		statisticsMainSectionNames(regionName: String): [statisticsMainSectionName],
 		statisticsSubSectionNames(regionName: String, mainSectionName: String): [statisticsSubSectionName],
-		statisticsYears: [Int],
-		statisticsData(regionName: String, mainSectionName: String, subSectionName: String, startYear: Int, endYear: Int): [StatisticsData],
+		statisticsYears(regionName: String): [Int],
+		statisticsData(regionName: String, mainSectionName: String, subSectionName: String): StatisticsData,
 		coordsByRegionType(type: String): [regionCoords],
 	}
 `
