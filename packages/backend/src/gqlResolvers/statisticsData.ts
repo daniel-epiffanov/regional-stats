@@ -6,35 +6,48 @@ if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config()
 }
 
+type Args = Readonly<{
+	regionName: string,
+	mainSectionName: string,
+	subSectionName: string,
+	subSectionChildName: string,
+}>
+
 const statisticsData: ResolverFnAsync<StatisticsData> = async (
 	parent: any,
-	args: any,
+	args: Args,
 ) => {
 	const {
-		regionName, mainSectionName, subSectionName
+		regionName, mainSectionName, subSectionName, subSectionChildName
 	} = args
 
-	// const mongoRes = await statisticsModel.aggregate<{ statisticsData: StatisticsData }>([
-	// 	{ $match: { regionName } },
-	// 	{ $unwind: "$mainSections" },
-	// 	{ $match: { "mainSections.name": mainSectionName } },
-	// 	{ $unwind: "$mainSections.subSections" },
-	// 	{ $match: { "mainSections.subSections.name": subSectionName } },
-	// 	{ $project: { "mainSections.subSections.name": 1, "mainSections.subSections.measure": 1, "mainSections.subSections.yearValues": 1 } },
-	// 	{ $project: { statisticsData: "$mainSections.subSections" } }
-	// ])
+	if (!!subSectionChildName) {
 
-	const mongoRes = await statisticsModel.aggregate<{ statisticsData: StatisticsData }>([
+		const mongoRes = await statisticsModel.aggregate<StatisticsData>([
+			{ $match: { regionName } },
+			{ $unwind: "$mainSections" },
+			{ $match: { "mainSections.name": mainSectionName } },
+			{ $unwind: "$mainSections.subSections" },
+			{ $match: { "mainSections.subSections.name": subSectionName } },
+			{ $unwind: "$mainSections.subSections.children" },
+			{ $match: { "mainSections.subSections.children.name": subSectionChildName } },
+			{ $project: { name: "$mainSections.subSections.children.name", measure: "$mainSections.subSections.children.measure", parentMeasure: "$mainSections.subSections.measure", yearValues: "$mainSections.subSections.children.yearValues" } }
+		])
+
+		return mongoRes[0]
+	}
+
+
+	const mongoRes = await statisticsModel.aggregate<StatisticsData>([
 		{ $match: { regionName } },
 		{ $unwind: "$mainSections" },
 		{ $match: { "mainSections.name": mainSectionName } },
 		{ $unwind: "$mainSections.subSections" },
 		{ $match: { "mainSections.subSections.name": subSectionName } },
-		{ $project: { "mainSections.subSections.name": 1, "mainSections.subSections.measure": 1, "mainSections.subSections.yearValues": 1 } },
-		{ $project: { statisticsData: "$mainSections.subSections" } }
+		{ $project: { name: "$mainSections.subSections.name", measure: "$mainSections.subSections.measure", yearValues: "$mainSections.subSections.yearValues" } }
 	])
 
-	return mongoRes[0].statisticsData
+	return mongoRes[0]
 }
 
 export default statisticsData

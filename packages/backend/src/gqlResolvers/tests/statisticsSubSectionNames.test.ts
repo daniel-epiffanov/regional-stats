@@ -27,10 +27,6 @@ test('graphql statisticsSubSectionNames', async () => {
 
 			const statisticsSubSectionNames: StatisticsSubSectionNames = response.data?.statisticsSubSectionNames
 
-			if (statisticsSubSectionNames.length === 0) {
-				console.log('000!')
-			}
-
 			expect(Array.isArray(statisticsSubSectionNames)).toBe(true)
 			expect(statisticsSubSectionNames.length).toBeGreaterThan(0)
 
@@ -45,9 +41,11 @@ test('graphql statisticsSubSectionNames', async () => {
 						expect(typeof child.name === 'string').toBe(true)
 						expect(child.name.length).toBeGreaterThan(0)
 					})
-				} else {
-					expect(statisticsSubSectionName.children).toBeNull()
+
+					return
 				}
+
+				expect(statisticsSubSectionName.children).toBeNull()
 			})
 
 		}

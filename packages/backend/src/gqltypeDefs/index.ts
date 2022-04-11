@@ -13,7 +13,7 @@ export default gql`
 		statisticsMainSectionNames(regionName: String): [statisticsMainSectionName],
 		statisticsSubSectionNames(regionName: String, mainSectionName: String): [statisticsSubSectionName],
 		statisticsYears(regionName: String): [Int],
-		statisticsData(regionName: String, mainSectionName: String, subSectionName: String): StatisticsData,
+		statisticsData(regionName: String, mainSectionName: String, subSectionName: String, subSectionChildName: String): StatisticsData,
 		coordsByRegionType(type: String): [regionCoords],
 	}
 `

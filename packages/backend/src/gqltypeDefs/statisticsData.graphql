@@ -1,6 +1,6 @@
 type YearValue {
 	year: Int,
-	value: String
+	value: Float
 }
 type StatisticsData {
 	name: String,
