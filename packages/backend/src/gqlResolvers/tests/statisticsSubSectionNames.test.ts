@@ -18,6 +18,7 @@ test('graphql statisticsSubSectionNames', async () => {
 			query: `query { statisticsSubSectionNames(mainSectionName: "${mainSectionName.name}") { name, children { name } } }`
 		})
 
+
 		expect(response.errors).toBeUndefined()
 
 		const statisticsSubSectionNames: StatisticsSubSectionNames | undefined = response.data?.statisticsSubSectionNames

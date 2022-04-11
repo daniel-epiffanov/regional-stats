@@ -8,13 +8,16 @@ import getStatisticsSubSectionNames from './resolversData/getStatisticsSubSectio
 testMongoConenction()
 
 const statisticsDataExpect = (statisticsData: StatisticsData) => {
+
+	if (!statisticsData) {
+		console.log('null')
+	}
 	expect(Array.isArray(statisticsData.yearValues)).toBe(true)
 	expect(statisticsData.yearValues.length).toBeGreaterThan(0)
 
 	statisticsData.yearValues.forEach((yearValue) => {
 		expect(typeof yearValue.year === 'number').toBe(true)
 		expect(typeof yearValue.value === 'number').toBe(true)
-		expect(yearValue.value.length).toBeGreaterThan(0)
 		expect(parseFloat(yearValue.value)).not.toBeNaN()
 	})
 }
@@ -43,14 +46,21 @@ test('graphql statisticsData', async () => {
 							regionName: "${regionName}",
 							mainSectionName: "${mainSectionName.name}",
 							subSectionName: "${subSectionName.name}"
-						) { name, children { name } } }`
+						) { 	name,	measure,	parentMeasure,	yearValues {		year,		value	} } }`
 					})
+
+					if (!!response.errors) {
+						console.log('errors!')
+					}
 
 					expect(response.errors).toBeUndefined()
 
 					const statisticsData: StatisticsData | undefined = response.data?.statisticsData
 
-					if (!statisticsData) throw new Error('statisticsData is falsy')
+					if (!statisticsData) {
+						expect(statisticsData).toBeNull()
+						continue
+					}
 
 					statisticsDataExpect(statisticsData)
 
@@ -66,14 +76,21 @@ test('graphql statisticsData', async () => {
 							mainSectionName: "${mainSectionName.name}",
 							subSectionName: "${subSectionName.name}",
 							subSectionChildName: "${subSectionChildName.name}"
-							) { name, children { name } } }`
+							) { name,	measure,	parentMeasure,	yearValues {		year,		value	} } } `
 					})
 
 					expect(response.errors).toBeUndefined()
 
+					if (!!response.errors) {
+						console.log('errors!')
+					}
+
 					const statisticsData: StatisticsData | undefined = response.data?.statisticsData
 
-					if (!statisticsData) throw new Error('statisticsData is falsy')
+					if (!statisticsData) {
+						expect(statisticsData).toBeNull()
+						continue
+					}
 
 					statisticsDataExpect(statisticsData)
 				}
