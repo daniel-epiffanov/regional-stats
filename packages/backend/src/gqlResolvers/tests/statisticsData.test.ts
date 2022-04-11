@@ -2,7 +2,7 @@ import { StatisticsData, StatisticsRegionNames, StatisticsSubSectionNames } from
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from './shared/testMongoConenction'
 import getStatisticsRegionNames from './resolversData/getStatisticsRegionNames'
-import getStatisticsMainSectionNames from './resolversData/getStatisticsMainSectionNames'
+import getStatisticsMainSectionNames from './resolversData/getStatisticsAllMainSectionNames'
 import getStatisticsSubSectionNames from './resolversData/getStatisticsSubSectionNames'
 
 testMongoConenction()
@@ -23,16 +23,15 @@ test('graphql statisticsData', async () => {
 	const testServer = getNewApolloServer()
 
 	const statisticsRegionNames = await getStatisticsRegionNames({ testServer })
+	const statisticsMainSectionNames = await getStatisticsMainSectionNames({ testServer })
 
 	for (let regionNameIndex = 0; regionNameIndex < statisticsRegionNames.length; regionNameIndex += 1) {
 		const regionName = statisticsRegionNames[regionNameIndex]
 
-		const statisticsMainSectionNames = await getStatisticsMainSectionNames({ regionName, testServer })
-
 		for (let mainSectionNameIndex = 0; mainSectionNameIndex < statisticsMainSectionNames.length; mainSectionNameIndex += 1) {
 			const mainSectionName = statisticsMainSectionNames[mainSectionNameIndex]
 
-			const statisticsSubSectionNames = await getStatisticsSubSectionNames({ testServer, regionName, mainSectionName: mainSectionName.name })
+			const statisticsSubSectionNames = await getStatisticsSubSectionNames({ testServer, mainSectionName: mainSectionName.name })
 
 			for (let subSectionNameIndex = 0; subSectionNameIndex < statisticsSubSectionNames.length; subSectionNameIndex += 1) {
 				const subSectionName = statisticsSubSectionNames[subSectionNameIndex]

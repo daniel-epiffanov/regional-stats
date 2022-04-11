@@ -1,4 +1,4 @@
-import { StatisticsRegionNames, StatisticsYears } from '../../../../../sharedTypes/gqlQueries'
+import { StatisticsYears } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from './shared/testMongoConenction'
 

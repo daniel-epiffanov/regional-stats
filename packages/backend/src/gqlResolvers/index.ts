@@ -1,6 +1,6 @@
 import statisticsAllYears from './statisticsAllYears'
 import statisticsRegionNames from './statisticsRegionNames'
-import statisticsMainSectionNames from './statisticsMainSectionNames'
+import statisticsAllMainSectionNames from './statisticsAllMainSectionNames'
 import statisticsSubSectionNames from './statisticsSubSectionNames'
 import statisticsData from './statisticsData'
 import coordsByRegionType from './coordsByRegionType'
@@ -8,9 +8,9 @@ import coordsByRegionType from './coordsByRegionType'
 const gqlResolvers = {
 	Query: {
 		statisticsRegionNames,
-		statisticsMainSectionNames,
-		statisticsSubSectionNames,
 		statisticsAllYears,
+		statisticsAllMainSectionNames,
+		statisticsSubSectionNames,
 		statisticsData,
 		coordsByRegionType
 	},

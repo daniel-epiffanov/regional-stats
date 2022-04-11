@@ -3,15 +3,14 @@ import { StatisticsSubSectionNames } from "../../../../../../sharedTypes/gqlQuer
 
 type Props = Readonly<{
 	testServer: ApolloServer
-	regionName: string,
 	mainSectionName: string,
 }>
 
 const getStatisticsSubSectionNames = async (props: Props) => {
-	const { regionName, testServer, mainSectionName } = props
+	const { testServer, mainSectionName } = props
 
 	const response = await testServer.executeOperation({
-		query: `query { statisticsSubSectionNames(regionName: "${regionName}", mainSectionName: "${mainSectionName}") { name, children { name } } }`
+		query: `query { statisticsSubSectionNames(mainSectionName: "${mainSectionName}") { name, children { name } } }`
 	})
 
 	const statisticsSubSectionNames: StatisticsSubSectionNames = response.data?.statisticsSubSectionNames
