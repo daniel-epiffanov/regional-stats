@@ -1,4 +1,4 @@
-import statisticsYears from './statisticsYears'
+import statisticsAllYears from './statisticsAllYears'
 import statisticsRegionNames from './statisticsRegionNames'
 import statisticsMainSectionNames from './statisticsMainSectionNames'
 import statisticsSubSectionNames from './statisticsSubSectionNames'
@@ -10,7 +10,7 @@ const gqlResolvers = {
 		statisticsRegionNames,
 		statisticsMainSectionNames,
 		statisticsSubSectionNames,
-		statisticsYears,
+		statisticsAllYears,
 		statisticsData,
 		coordsByRegionType
 	},

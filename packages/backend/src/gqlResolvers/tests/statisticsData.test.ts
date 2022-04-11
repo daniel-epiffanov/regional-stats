@@ -19,10 +19,10 @@ const statisticsDataExpect = (statisticsData: StatisticsData) => {
 	})
 }
 
-test('graphql statisticsSubSectionNames', async () => {
+test('graphql statisticsData', async () => {
 	const testServer = getNewApolloServer()
 
-	const statisticsRegionNames: StatisticsRegionNames = await getStatisticsRegionNames({ testServer })
+	const statisticsRegionNames = await getStatisticsRegionNames({ testServer })
 
 	for (let regionNameIndex = 0; regionNameIndex < statisticsRegionNames.length; regionNameIndex += 1) {
 		const regionName = statisticsRegionNames[regionNameIndex]
@@ -40,12 +40,18 @@ test('graphql statisticsSubSectionNames', async () => {
 				if (!subSectionName.children) {
 
 					const response = await testServer.executeOperation({
-						query: `query { statisticsData(regionName: "${regionName}", mainSectionName: "${mainSectionName.name}", subSectionName: "${subSectionName.name}") { name, children { name } } }`
+						query: `query { statisticsData(
+							regionName: "${regionName}",
+							mainSectionName: "${mainSectionName.name}",
+							subSectionName: "${subSectionName.name}"
+						) { name, children { name } } }`
 					})
 
 					expect(response.errors).toBeUndefined()
 
-					const statisticsData: StatisticsData = response.data?.statisticsData
+					const statisticsData: StatisticsData | undefined = response.data?.statisticsData
+
+					if (!statisticsData) throw new Error('statisticsData is falsy')
 
 					statisticsDataExpect(statisticsData)
 
@@ -66,7 +72,9 @@ test('graphql statisticsSubSectionNames', async () => {
 
 					expect(response.errors).toBeUndefined()
 
-					const statisticsData: StatisticsData = response.data?.statisticsData
+					const statisticsData: StatisticsData | undefined = response.data?.statisticsData
+
+					if (!statisticsData) throw new Error('statisticsData is falsy')
 
 					statisticsDataExpect(statisticsData)
 				}

@@ -19,7 +19,9 @@ test('graphql statisticsMainSectionNames', async () => {
 
 		expect(response.errors).toBeUndefined()
 
-		const statisticsMainSectionNames: StatisticsMainSectionNames = response.data?.statisticsMainSectionNames
+		const statisticsMainSectionNames: StatisticsMainSectionNames | undefined = response.data?.statisticsMainSectionNames
+
+		if (!statisticsMainSectionNames) throw new Error('statisticsMainSectionNames is falsy')
 
 		expect(Array.isArray(statisticsMainSectionNames)).toBe(true)
 		expect(statisticsMainSectionNames.length).toBeGreaterThan(0)
