@@ -1,10 +1,10 @@
 import { StatisticsYears } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
-import testMongoConenction from './shared/testMongoConenction'
+import testMongoConenction from '../../tests/shared/mongoConnection'
 
 testMongoConenction()
 
-test('graphql statisticsAllYEars', async () => {
+test('should return an array of all years as intengers', async () => {
 	const testServer = getNewApolloServer()
 
 	const response = await testServer.executeOperation({
@@ -15,13 +15,13 @@ test('graphql statisticsAllYEars', async () => {
 
 	const statisticsAllYears: StatisticsYears | undefined = response.data?.statisticsAllYears
 
-	if (!statisticsAllYears) throw new Error('statisticsallYears is falsy')
+	if (!statisticsAllYears) fail('statisticsallYears in response is falsy')
 
 	expect(Array.isArray(statisticsAllYears)).toBe(true)
 	expect(statisticsAllYears.length).toBeGreaterThan(0)
 
 	statisticsAllYears.forEach((year) => {
-		expect(year).not.toBeNaN()
 		expect(typeof year === 'number').toBe(true)
+		expect(year).not.toBeNaN()
 	})
 })

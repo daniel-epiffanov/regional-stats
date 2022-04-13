@@ -17,9 +17,9 @@ export type StatisticsSectionsTree = {
 export type StatisticsYears = ReadonlyArray<number>
 export type StatisticsSubSectionNames = ReadonlyArray<{
 	name: string,
-	children?: ReadonlyArray<{
+	children: ReadonlyArray<{
 		name: string
-	}>
+	}> | null
 }>
 export type StatisticsData = Readonly<{
 	name: string,

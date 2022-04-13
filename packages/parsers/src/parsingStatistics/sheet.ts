@@ -1,6 +1,7 @@
 import xlsx from 'xlsx'
 import removeExtraSpaces from '../helpers/removeExtraSpaces'
 import Helpers from './helpers'
+import _ from 'lodash'
 
 interface ContentsTree {
 	orderNumber: string,
@@ -41,6 +42,10 @@ export class ContentsSheet extends Sheet {
 	private orderNumberIsCorrect = (str: string) => str
 		.match(/[0-9][0-9]?\.([0-9][0-9]?\.)?([0-9][0-9]?\.)?/g)
 
+	private removeExtraCharacters = (str: string) => _.trim(
+		str.replace(/[\r\n]/gm, '')
+	)
+
 	getContentsMap() {
 		const sheetLines = this.getStringifiedSheetLines()
 		const contentsMap = new Map<string, string>()
@@ -48,7 +53,7 @@ export class ContentsSheet extends Sheet {
 			const orderNumber = sheetLine[0]
 			const title = sheetLine[1]
 			if (!!orderNumber && !!title && this.orderNumberIsCorrect(orderNumber)) {
-				contentsMap.set(orderNumber, title)
+				contentsMap.set(orderNumber, this.removeExtraCharacters(title))
 			}
 		})
 		return contentsMap

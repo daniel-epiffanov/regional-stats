@@ -1,52 +1,65 @@
-import { StatisticsRegionNames, StatisticsSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
+import { StatisticsSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
-import testMongoConenction from './shared/testMongoConenction'
-import getStatisticsRegionNames from './resolversData/getStatisticsRegionNames'
+import testMongoConenction from '../../tests/shared/mongoConnection'
 import getStatisticsAllMainSectionNames from './resolversData/getStatisticsAllMainSectionNames'
 
 testMongoConenction()
 
-test('graphql statisticsSubSectionNames', async () => {
+describe('Tests the createUser Mutation', () => {
 	const testServer = getNewApolloServer()
 
-	const statisticsAllMainSectionNames = await getStatisticsAllMainSectionNames({ testServer })
-
-	for (let mainSectionNameIndex = 0; mainSectionNameIndex < statisticsAllMainSectionNames.length; mainSectionNameIndex += 1) {
-		const mainSectionName = statisticsAllMainSectionNames[mainSectionNameIndex]
-
+	it('should return null in case we provided a wrong mainSectionName', async () => {
 		const response = await testServer.executeOperation({
-			query: `query { statisticsSubSectionNames(mainSectionName: "${mainSectionName.name}") { name, children { name } } }`
+			query: `query { statisticsSubSectionNames(mainSectionName: "wrong main section name") { name, children { name } } }`
 		})
 
 
 		expect(response.errors).toBeUndefined()
 
 		const statisticsSubSectionNames: StatisticsSubSectionNames | undefined = response.data?.statisticsSubSectionNames
+		expect(statisticsSubSectionNames).toBeNull()
+	})
 
-		if (!statisticsSubSectionNames) throw new Error('statisticsSubSectionNames is falsy')
+	it('should return an array of all sub sections of a given main section as {name: string, children: {name: string} | null}[]', async () => {
 
-		expect(Array.isArray(statisticsSubSectionNames)).toBe(true)
-		expect(statisticsSubSectionNames.length).toBeGreaterThan(0)
+		const statisticsAllMainSectionNames = await getStatisticsAllMainSectionNames({ testServer })
 
-		statisticsSubSectionNames.forEach((statisticsSubSectionName) => {
-			expect(typeof statisticsSubSectionName.name === 'string').toBe(true)
-			expect(statisticsSubSectionName.name.length).toBeGreaterThan(0)
+		for (let mainSectionNameIndex = 0; mainSectionNameIndex < statisticsAllMainSectionNames.length; mainSectionNameIndex += 1) {
+			const mainSectionName = statisticsAllMainSectionNames[mainSectionNameIndex]
 
-			if (statisticsSubSectionName.children) {
-				expect(Array.isArray(statisticsSubSectionName.children)).toBe(true)
-				expect(statisticsSubSectionName.children.length).toBeGreaterThan(0)
-				statisticsSubSectionName.children.forEach((child) => {
-					expect(typeof child.name === 'string').toBe(true)
-					expect(child.name.length).toBeGreaterThan(0)
-				})
-
-				return
-			}
-
-			expect(statisticsSubSectionName.children).toBeNull()
-		})
-
-	}
+			const response = await testServer.executeOperation({
+				query: `query { statisticsSubSectionNames(mainSectionName: "${mainSectionName.name}") { name, children { name } } }`
+			})
 
 
+			expect(response.errors).toBeUndefined()
+
+			const statisticsSubSectionNames: StatisticsSubSectionNames | undefined = response.data?.statisticsSubSectionNames
+
+			if (!statisticsSubSectionNames) throw new Error('statisticsSubSectionNames is falsy')
+
+			expect(Array.isArray(statisticsSubSectionNames)).toBe(true)
+			expect(statisticsSubSectionNames.length).toBeGreaterThan(0)
+
+			statisticsSubSectionNames.forEach((statisticsSubSectionName) => {
+				expect(typeof statisticsSubSectionName.name === 'string').toBe(true)
+				expect(statisticsSubSectionName.name.length).toBeGreaterThan(0)
+
+				if (statisticsSubSectionName.children) {
+					expect(Array.isArray(statisticsSubSectionName.children)).toBe(true)
+					expect(statisticsSubSectionName.children.length).toBeGreaterThan(0)
+					statisticsSubSectionName.children.forEach((child) => {
+						expect(typeof child.name === 'string').toBe(true)
+						expect(child.name.length).toBeGreaterThan(0)
+					})
+					return
+				}
+
+				expect(statisticsSubSectionName.children).toBeNull()
+			})
+
+		}
+
+
+	})
 })

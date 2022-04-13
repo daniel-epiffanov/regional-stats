@@ -1,11 +1,10 @@
-import { StatisticsMainSectionNames, StatisticsRegionNames } from '../../../../../sharedTypes/gqlQueries'
+import { StatisticsMainSectionNames } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
-import testMongoConenction from './shared/testMongoConenction'
-import getStatisticsRegionNames from './resolversData/getStatisticsRegionNames'
+import testMongoConenction from '../../tests/shared/mongoConnection'
 
 testMongoConenction()
 
-test('graphql statisticsAllMainSectionNames', async () => {
+test('should return an array of all main sections as {name: string}[]', async () => {
 	const testServer = getNewApolloServer()
 
 
@@ -17,7 +16,7 @@ test('graphql statisticsAllMainSectionNames', async () => {
 
 	const statisticsAllMainSectionNames: StatisticsMainSectionNames | undefined = response.data?.statisticsAllMainSectionNames
 
-	if (!statisticsAllMainSectionNames) throw new Error('statisticsMainSectionNames is falsy')
+	if (!statisticsAllMainSectionNames) fail('statisticsMainSectionNames is falsy')
 
 	expect(Array.isArray(statisticsAllMainSectionNames)).toBe(true)
 	expect(statisticsAllMainSectionNames.length).toBeGreaterThan(0)

@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import connectToMongo from "../../../services/connectToMongo"
+import connectToMongo from "../../services/connectToMongo"
 
 const testMongoConenction = () => {
 	beforeAll(async () => {

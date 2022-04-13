@@ -1,6 +1,6 @@
 import { StatisticsData, StatisticsRegionNames, StatisticsSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
-import testMongoConenction from './shared/testMongoConenction'
+import testMongoConenction from '../../tests/shared/mongoConnection'
 import getStatisticsRegionNames from './resolversData/getStatisticsRegionNames'
 import getStatisticsMainSectionNames from './resolversData/getStatisticsAllMainSectionNames'
 import getStatisticsSubSectionNames from './resolversData/getStatisticsSubSectionNames'
@@ -62,6 +62,10 @@ test('graphql statisticsData', async () => {
 						continue
 					}
 
+					if (statisticsData.yearValues.length === 0) {
+						console.log('yo')
+					}
+
 					statisticsDataExpect(statisticsData)
 
 					continue
@@ -87,9 +91,14 @@ test('graphql statisticsData', async () => {
 
 					const statisticsData: StatisticsData | undefined = response.data?.statisticsData
 
+
 					if (!statisticsData) {
 						expect(statisticsData).toBeNull()
 						continue
+					}
+
+					if (statisticsData.yearValues.length === 0) {
+						console.log('yo')
 					}
 
 					statisticsDataExpect(statisticsData)

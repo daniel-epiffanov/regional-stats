@@ -3,7 +3,7 @@ import statisticsRegionNames from './statisticsRegionNames'
 import statisticsAllMainSectionNames from './statisticsAllMainSectionNames'
 import statisticsSubSectionNames from './statisticsSubSectionNames'
 import statisticsData from './statisticsData'
-import coordsByRegionType from './coordsByRegionType'
+import regionCoords from './regionCoords'
 
 const gqlResolvers = {
 	Query: {
@@ -12,7 +12,7 @@ const gqlResolvers = {
 		statisticsAllMainSectionNames,
 		statisticsSubSectionNames,
 		statisticsData,
-		coordsByRegionType
+		regionCoords
 	},
 }
 

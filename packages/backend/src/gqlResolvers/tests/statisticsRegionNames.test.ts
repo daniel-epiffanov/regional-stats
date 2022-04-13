@@ -1,10 +1,10 @@
 import { StatisticsRegionNames } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
-import testMongoConenction from './shared/testMongoConenction'
+import testMongoConenction from '../../tests/shared/mongoConnection'
 
 testMongoConenction()
 
-test('graphql statisticsRegionNames', async () => {
+test('should return an array of all statistics regions as strings', async () => {
 	const testServer = getNewApolloServer()
 
 	const response = await testServer.executeOperation({

@@ -88,6 +88,33 @@ const getRegionData = (file: ExcelFile) => {
 				}))
 				.filter(yearValue => typeof yearValue.value === 'number')
 
+
+			const children = tree.children?.map((child, _i) => {
+				const childDeatilsSheet = detailsSheets[childrenSheetIndex]
+				const childNeededYearsData = detailsSheetsDetailedData[childrenSheetIndex].find(detailedData => detailedData.regionName === region)
+				const childNeededYearsDataEntries = childNeededYearsData ? Object.entries(childNeededYearsData) : null
+
+				const measure = childDeatilsSheet.getSheetMeasure()
+
+				childrenSheetIndex += 1
+
+				const childrenYearValuesData = childNeededYearsDataEntries && childNeededYearsDataEntries
+					.filter(childNeededYearsDataEntry => childNeededYearsDataEntry[0] !== 'regionName')
+					.map(childNeededYearsDataEntry => ({
+						year: parseInt(childNeededYearsDataEntry[0]),
+						value: (childNeededYearsDataEntry && childNeededYearsDataEntry[1]) ? childNeededYearsDataEntry[1] : null,
+					}))
+					.filter(yearValue => typeof yearValue.value === 'number')
+
+				return ({
+					orderNumber: child.orderNumber,
+					name: child.sheetTitle,
+					measure,
+					yearValues: childrenYearValuesData || null,
+					children: null,
+				})
+			})
+
 			const r = ({
 				region,
 				subSectionData: {
@@ -95,31 +122,7 @@ const getRegionData = (file: ExcelFile) => {
 					name: tree.sheetTitle,
 					measure,
 					yearValues: yearValuesData || null,
-					children: tree.children.length === 0 ? null : tree.children.map((child, _i) => {
-						const childDeatilsSheet = detailsSheets[childrenSheetIndex]
-						const childNeededYearsData = detailsSheetsDetailedData[childrenSheetIndex].find(detailedData => detailedData.regionName === region)
-						const childNeededYearsDataEntries = childNeededYearsData ? Object.entries(childNeededYearsData) : null
-
-						const measure = childDeatilsSheet.getSheetMeasure()
-
-						childrenSheetIndex += 1
-
-						const childrenYearValuesData = childNeededYearsDataEntries && childNeededYearsDataEntries
-							.filter(childNeededYearsDataEntry => childNeededYearsDataEntry[0] !== 'regionName')
-							.map(childNeededYearsDataEntry => ({
-								year: parseInt(childNeededYearsDataEntry[0]),
-								value: (childNeededYearsDataEntry && childNeededYearsDataEntry[1]) ? childNeededYearsDataEntry[1] : null,
-							}))
-							.filter(yearValue => typeof yearValue.value === 'number')
-
-						return ({
-							orderNumber: child.orderNumber,
-							name: child.sheetTitle,
-							measure,
-							yearValues: childrenYearValuesData || null,
-							children: null,
-						})
-					}),
+					children: (children && children.length !== 0) ? children : null,
 				},
 			})
 
@@ -178,12 +181,22 @@ const saveMainSection = async (file: ExcelFile) => {
 
 				if (neededSubSection) {
 					const { children, yearValues } = neededSubSection.subSectionData
-					const isChildrenExist = !!children && Array.isArray(children) && neededSubSection.subSectionData.children.length !== 0
-					const isYearValuesExist = !!yearValues && Array.isArray(yearValues) && neededSubSection.subSectionData.yearValues.length !== 0
+					const filteredChildren = children?.filter(({ yearValues: childYearValues }) => {
+						return !!childYearValues && Array.isArray(childYearValues) && childYearValues.length !== 0
+					})
+
+					if (children && children?.length !== filteredChildren?.length) {
+						console.log('weve got a problem')
+					}
+					const isChildrenExist = !!filteredChildren && Array.isArray(filteredChildren) && filteredChildren.length !== 0
+					const isYearValuesExist = !!yearValues && Array.isArray(yearValues) && yearValues.length !== 0
 					if (!isYearValuesExist && !isChildrenExist) {
 						return null
 					}
-					return neededSubSection.subSectionData
+					return ({
+						...neededSubSection.subSectionData,
+						children: isChildrenExist ? filteredChildren : null
+					})
 				}
 				return null
 			}),
@@ -217,6 +230,8 @@ const saveAllMainSections = async () => {
 		console.log({ name })
 		await saveMainSection(file)
 	}
+
+	console.log('finished')
 }
 
 // const PORT = 5001
