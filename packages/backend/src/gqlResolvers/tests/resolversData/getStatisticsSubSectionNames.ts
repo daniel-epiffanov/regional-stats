@@ -1,5 +1,5 @@
 import { ApolloServer } from "apollo-server-express"
-import { StatisticsSubSectionNames } from "../../../../../../sharedTypes/gqlQueries"
+import { StatSubSectionNames } from "../../../../../../sharedTypes/gqlQueries"
 
 type Props = Readonly<{
 	testServer: ApolloServer
@@ -13,7 +13,7 @@ const getStatisticsSubSectionNames = async (props: Props) => {
 		query: `query { statisticsSubSectionNames(mainSectionName: "${mainSectionName}") { name, children { name } } }`
 	})
 
-	const statisticsSubSectionNames: StatisticsSubSectionNames = response.data?.statisticsSubSectionNames
+	const statisticsSubSectionNames: StatSubSectionNames = response.data?.statisticsSubSectionNames
 
 	if (!statisticsSubSectionNames) throw new Error('statisticsMainSectionNames is falsy')
 

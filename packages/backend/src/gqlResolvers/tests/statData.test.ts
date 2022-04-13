@@ -1,4 +1,4 @@
-import { StatisticsData, StatisticsRegionNames, StatisticsSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
+import { StatData, StatRegionNames, StatSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from '../../tests/shared/mongoConnection'
 import getStatisticsRegionNames from './resolversData/getStatisticsRegionNames'
@@ -7,7 +7,7 @@ import getStatisticsSubSectionNames from './resolversData/getStatisticsSubSectio
 
 testMongoConenction()
 
-const statisticsDataExpect = (statisticsData: StatisticsData) => {
+const statisticsDataExpect = (statisticsData: StatData) => {
 
 	if (!statisticsData) {
 		console.log('null')
@@ -55,7 +55,7 @@ test('graphql statisticsData', async () => {
 
 					expect(response.errors).toBeUndefined()
 
-					const statisticsData: StatisticsData | undefined = response.data?.statisticsData
+					const statisticsData: StatData | undefined = response.data?.statisticsData
 
 					if (!statisticsData) {
 						expect(statisticsData).toBeNull()
@@ -89,7 +89,7 @@ test('graphql statisticsData', async () => {
 						console.log('errors!')
 					}
 
-					const statisticsData: StatisticsData | undefined = response.data?.statisticsData
+					const statisticsData: StatData | undefined = response.data?.statisticsData
 
 
 					if (!statisticsData) {

@@ -1,4 +1,4 @@
-import { StatisticsSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
+import { StatSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from '../../tests/shared/mongoConnection'
 import getStatisticsAllMainSectionNames from './resolversData/getStatisticsAllMainSectionNames'
@@ -16,7 +16,7 @@ describe('Tests the createUser Mutation', () => {
 
 		expect(response.errors).toBeUndefined()
 
-		const statisticsSubSectionNames: StatisticsSubSectionNames | undefined = response.data?.statisticsSubSectionNames
+		const statisticsSubSectionNames: StatSubSectionNames | undefined = response.data?.statisticsSubSectionNames
 		expect(statisticsSubSectionNames).toBeNull()
 	})
 
@@ -34,7 +34,7 @@ describe('Tests the createUser Mutation', () => {
 
 			expect(response.errors).toBeUndefined()
 
-			const statisticsSubSectionNames: StatisticsSubSectionNames | undefined = response.data?.statisticsSubSectionNames
+			const statisticsSubSectionNames: StatSubSectionNames | undefined = response.data?.statisticsSubSectionNames
 
 			if (!statisticsSubSectionNames) throw new Error('statisticsSubSectionNames is falsy')
 

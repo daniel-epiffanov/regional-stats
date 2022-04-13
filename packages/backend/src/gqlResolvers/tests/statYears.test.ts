@@ -4,23 +4,23 @@ import testMongoConenction from '../../tests/shared/mongoConnection'
 
 testMongoConenction()
 
-test('should return an array of all years as intengers', async () => {
+test('should return an array of years as intengers', async () => {
 	const testServer = getNewApolloServer()
 
 	const response = await testServer.executeOperation({
-		query: 'query { statisticsAllYears }',
+		query: 'query { statYears }',
 	})
 
 	expect(response.errors).toBeUndefined()
 
-	const statisticsAllYears: StatisticsYears | undefined = response.data?.statisticsAllYears
+	const statYears: StatisticsYears | undefined = response.data?.statYears
 
-	if (!statisticsAllYears) fail('statisticsallYears in response is falsy')
+	if (!statYears) fail('statYears in response is falsy')
 
-	expect(Array.isArray(statisticsAllYears)).toBe(true)
-	expect(statisticsAllYears.length).toBeGreaterThan(0)
+	expect(Array.isArray(statYears)).toBe(true)
+	expect(statYears.length).toBeGreaterThan(0)
 
-	statisticsAllYears.forEach((year) => {
+	statYears.forEach((year) => {
 		expect(typeof year === 'number').toBe(true)
 		expect(year).not.toBeNaN()
 	})

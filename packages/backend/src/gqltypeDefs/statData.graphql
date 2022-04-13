@@ -2,7 +2,7 @@ type YearValue {
 	year: Int,
 	value: Float
 }
-type StatisticsData {
+type StatData {
 	name: String,
 	measure: String,
 	parentMeasure: String,

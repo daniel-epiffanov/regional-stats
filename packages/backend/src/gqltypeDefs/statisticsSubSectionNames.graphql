@@ -1,8 +1,0 @@
-	type statisticsSubSectionNameChild {
-		name: String,
-	}
-	
-	type statisticsSubSectionName {
-		name: String,
-		children: [statisticsSubSectionNameChild]
-	}

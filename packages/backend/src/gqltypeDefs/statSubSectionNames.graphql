@@ -1,0 +1,8 @@
+	type StatSubSectionNameChild {
+		name: String,
+	}
+	
+	type StatSubSectionName {
+		name: String,
+		children: [StatSubSectionNameChild]
+	}

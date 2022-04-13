@@ -9,7 +9,7 @@ type Properties {
 	alt_names: [String],
 }
 
-type regionCoords {
+type RegionCoords {
 	type: String,
 	properties: Properties,
 	geometry: Geometry

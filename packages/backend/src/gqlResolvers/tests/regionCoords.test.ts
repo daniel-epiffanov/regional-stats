@@ -1,4 +1,4 @@
-import { CoordsByRegionType } from '../../../../../sharedTypes/gqlQueries'
+import { RegionCoords } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from '../../tests/shared/mongoConnection'
 
@@ -27,7 +27,7 @@ describe('Tests the createUser Mutation', () => {
 
 		expect(response.errors).toBeUndefined()
 
-		const statisticsSubSectionNames: CoordsByRegionType | undefined = response.data?.statisticsSubSectionNames
+		const statisticsSubSectionNames: RegionCoords | undefined = response.data?.statisticsSubSectionNames
 		expect(statisticsSubSectionNames).toBeNull()
 	})
 
@@ -64,7 +64,7 @@ describe('Tests the createUser Mutation', () => {
 
 			expect(response.errors).toBeUndefined()
 
-			const regionCoords: CoordsByRegionType | undefined = response.data?.coordsByRegionType
+			const regionCoords: RegionCoords | undefined = response.data?.coordsByRegionType
 
 			if (!regionCoords) fail('coordsByRegionType in response is falsy')
 

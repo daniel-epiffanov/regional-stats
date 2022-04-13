@@ -1,4 +1,4 @@
-import { StatisticsData } from '../../../../sharedTypes/gqlQueries'
+import { StatData } from '../../../../sharedTypes/gqlQueries'
 import statisticsModel from '../mongoModels/statistics'
 import { ResolverFnAsync } from './types/ResolverFn'
 
@@ -13,7 +13,7 @@ type Args = Readonly<{
 	subSectionChildName: string,
 }>
 
-const statisticsData: ResolverFnAsync<StatisticsData> = async (
+const statisticsData: ResolverFnAsync<StatData> = async (
 	parent: any,
 	args: Args,
 ) => {
@@ -23,7 +23,7 @@ const statisticsData: ResolverFnAsync<StatisticsData> = async (
 
 	if (!!subSectionChildName) {
 
-		const mongoRes = await statisticsModel.aggregate<StatisticsData>([
+		const mongoRes = await statisticsModel.aggregate<StatData>([
 			{ $match: { regionName } },
 			{ $unwind: "$mainSections" },
 			{ $match: { "mainSections.name": mainSectionName } },
@@ -38,7 +38,7 @@ const statisticsData: ResolverFnAsync<StatisticsData> = async (
 	}
 
 
-	const mongoRes = await statisticsModel.aggregate<StatisticsData>([
+	const mongoRes = await statisticsModel.aggregate<StatData>([
 		{ $match: { regionName } },
 		{ $unwind: "$mainSections" },
 		{ $match: { "mainSections.name": mainSectionName } },
