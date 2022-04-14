@@ -1,47 +1,47 @@
 import { StatSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from '../../tests/shared/mongoConnection'
-import getStatisticsAllMainSectionNames from './resolversData/getStatisticsAllMainSectionNames'
+import getStatMainSectionNames from './resolversData/getStatMainSectionNames'
 
 testMongoConenction()
 
-describe('Tests the createUser Mutation', () => {
+describe('Tests the statSubSectionNames query with a parameter', () => {
 	const testServer = getNewApolloServer()
 
 	it('should return null in case we provided a wrong mainSectionName', async () => {
 		const response = await testServer.executeOperation({
-			query: `query { statisticsSubSectionNames(mainSectionName: "wrong main section name") { name, children { name } } }`
+			query: `query { statSubSectionNames(mainSectionName: "wrong main section name") { name, children { name } } }`
 		})
 
 
 		expect(response.errors).toBeUndefined()
 
-		const statisticsSubSectionNames: StatSubSectionNames | undefined = response.data?.statisticsSubSectionNames
-		expect(statisticsSubSectionNames).toBeNull()
+		const statSubSectionNames: StatSubSectionNames | undefined = response.data?.statSubSectionNames
+		expect(statSubSectionNames).toBeNull()
 	})
 
-	it('should return an array of all sub sections of a given main section as {name: string, children: {name: string} | null}[]', async () => {
+	it('should return an array of all sub sections of a given main section as {name: string, children: {name: string}[] | null }', async () => {
 
-		const statisticsAllMainSectionNames = await getStatisticsAllMainSectionNames({ testServer })
+		const statisticsAllMainSectionNames = await getStatMainSectionNames({ testServer })
 
 		for (let mainSectionNameIndex = 0; mainSectionNameIndex < statisticsAllMainSectionNames.length; mainSectionNameIndex += 1) {
 			const mainSectionName = statisticsAllMainSectionNames[mainSectionNameIndex]
 
 			const response = await testServer.executeOperation({
-				query: `query { statisticsSubSectionNames(mainSectionName: "${mainSectionName.name}") { name, children { name } } }`
+				query: `query { statSubSectionNames(mainSectionName: "${mainSectionName.name}") { name, children { name } } }`
 			})
 
 
 			expect(response.errors).toBeUndefined()
 
-			const statisticsSubSectionNames: StatSubSectionNames | undefined = response.data?.statisticsSubSectionNames
+			const statSubSectionNames: StatSubSectionNames | undefined = response.data?.statSubSectionNames
 
-			if (!statisticsSubSectionNames) throw new Error('statisticsSubSectionNames is falsy')
+			if (!statSubSectionNames) throw new Error('statSubSectionNames is falsy')
 
-			expect(Array.isArray(statisticsSubSectionNames)).toBe(true)
-			expect(statisticsSubSectionNames.length).toBeGreaterThan(0)
+			expect(Array.isArray(statSubSectionNames)).toBe(true)
+			expect(statSubSectionNames.length).toBeGreaterThan(0)
 
-			statisticsSubSectionNames.forEach((statisticsSubSectionName) => {
+			statSubSectionNames.forEach((statisticsSubSectionName) => {
 				expect(typeof statisticsSubSectionName.name === 'string').toBe(true)
 				expect(statisticsSubSectionName.name.length).toBeGreaterThan(0)
 

@@ -13,7 +13,7 @@ type Args = Readonly<{
 	subSectionChildName: string,
 }>
 
-const statisticsData: ResolverFnAsync<StatData> = async (
+const statisticsData: ResolverFnAsync<StatData | null> = async (
 	parent: any,
 	args: Args,
 ) => {
@@ -34,7 +34,9 @@ const statisticsData: ResolverFnAsync<StatData> = async (
 			{ $project: { name: "$mainSections.subSections.children.name", measure: "$mainSections.subSections.children.measure", parentMeasure: "$mainSections.subSections.measure", yearValues: "$mainSections.subSections.children.yearValues" } }
 		])
 
-		return mongoRes[0]
+		const statData = mongoRes[0]
+
+		return !!statData.yearValues ? statData : null
 	}
 
 
@@ -47,7 +49,9 @@ const statisticsData: ResolverFnAsync<StatData> = async (
 		{ $project: { name: "$mainSections.subSections.name", measure: "$mainSections.subSections.measure", yearValues: "$mainSections.subSections.yearValues" } }
 	])
 
-	return mongoRes[0]
+	const statData = mongoRes[0]
+
+	return !!statData.yearValues ? statData : null
 }
 
 export default statisticsData

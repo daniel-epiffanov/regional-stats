@@ -16,7 +16,7 @@ test('should return an array of all main sections as {name: string}[]', async ()
 
 	const statMainSectionNames: StatMainSectionNames | undefined = response.data?.statMainSectionNames
 
-	if (!statMainSectionNames) fail('statisticsMainSectionNames is falsy')
+	if (!statMainSectionNames) fail('statMainSectionNames is falsy')
 
 	expect(Array.isArray(statMainSectionNames)).toBe(true)
 	expect(statMainSectionNames.length).toBeGreaterThan(0)

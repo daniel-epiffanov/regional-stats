@@ -1,9 +1,9 @@
 import { StatData, StatRegionNames, StatSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from '../../tests/shared/mongoConnection'
-import getStatisticsRegionNames from './resolversData/getStatisticsRegionNames'
-import getStatisticsMainSectionNames from './resolversData/getStatisticsAllMainSectionNames'
-import getStatisticsSubSectionNames from './resolversData/getStatisticsSubSectionNames'
+import statRegionNames from './resolversData/getStatRegionNames'
+import getStatisticsMainSectionNames from './resolversData/getStatMainSectionNames'
+import getStatSubSectionNames from './resolversData/getStatSubSectionNames'
 
 testMongoConenction()
 
@@ -22,11 +22,37 @@ const statisticsDataExpect = (statisticsData: StatData) => {
 	})
 }
 
+describe('Tests the statData query with a parameter', async () => {
+	const testServer = getNewApolloServer()
+	const statisticsRegionNames = await statRegionNames({ testServer })
+	const statisticsMainSectionNames = await getStatisticsMainSectionNames({ testServer })
+
+
+
+	it('should return null in case one of the parameters we provided is wrong', async () => {
+		const response = await testServer.executeOperation({
+			query: `query { statSubSectionNames(mainSectionName: "wrong main section name") { name, children { name } } }`
+		})
+
+
+		expect(response.errors).toBeUndefined()
+
+		const statSubSectionNames: StatSubSectionNames | undefined = response.data?.statSubSectionNames
+		expect(statSubSectionNames).toBeNull()
+	})
+
+	it('should return null in case we did not provide subSectionChildName but it was required is this case', async () => {
+
+	})
+
+
+})
+
+
+
 test('graphql statisticsData', async () => {
 	const testServer = getNewApolloServer()
 
-	const statisticsRegionNames = await getStatisticsRegionNames({ testServer })
-	const statisticsMainSectionNames = await getStatisticsMainSectionNames({ testServer })
 
 	for (let regionNameIndex = 0; regionNameIndex < statisticsRegionNames.length; regionNameIndex += 1) {
 		const regionName = statisticsRegionNames[regionNameIndex]
@@ -34,7 +60,7 @@ test('graphql statisticsData', async () => {
 		for (let mainSectionNameIndex = 0; mainSectionNameIndex < statisticsMainSectionNames.length; mainSectionNameIndex += 1) {
 			const mainSectionName = statisticsMainSectionNames[mainSectionNameIndex]
 
-			const statisticsSubSectionNames = await getStatisticsSubSectionNames({ testServer, mainSectionName: mainSectionName.name })
+			const statisticsSubSectionNames = await getStatSubSectionNames({ testServer, mainSectionName: mainSectionName.name })
 
 			for (let subSectionNameIndex = 0; subSectionNameIndex < statisticsSubSectionNames.length; subSectionNameIndex += 1) {
 				const subSectionName = statisticsSubSectionNames[subSectionNameIndex]
@@ -42,7 +68,7 @@ test('graphql statisticsData', async () => {
 				if (!subSectionName.children) {
 
 					const response = await testServer.executeOperation({
-						query: `query { statisticsData(
+						query: `query { statData(
 							regionName: "${regionName}",
 							mainSectionName: "${mainSectionName.name}",
 							subSectionName: "${subSectionName.name}"

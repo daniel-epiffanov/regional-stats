@@ -8,7 +8,7 @@ type Args = Readonly<{
 }>
 
 
-const statisticsSubSectionNames: ResolverFnAsync<StatSubSectionNames> = async (
+const statisticsSubSectionNames: ResolverFnAsync<StatSubSectionNames | null> = async (
 	parent: any,
 	args: Args,
 ) => {
@@ -74,7 +74,7 @@ const statisticsSubSectionNames: ResolverFnAsync<StatSubSectionNames> = async (
 
 	const statSubSectionNames: StatSubSectionNames = [...draftStatSubSectionNames]
 
-	return statSubSectionNames
+	return statSubSectionNames?.length > 0 ? statSubSectionNames : null
 }
 
 export default statisticsSubSectionNames

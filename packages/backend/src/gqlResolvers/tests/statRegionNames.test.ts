@@ -15,7 +15,7 @@ test('should return an array of statistics regions as strings', async () => {
 
 	const statRegionNames: StatRegionNames | undefined = response.data?.statRegionNames
 
-	if (!statRegionNames) throw new Error('statRegionNames is falsy')
+	if (!statRegionNames) fail('statRegionNames is falsy')
 
 	expect(Array.isArray(statRegionNames)).toBe(true)
 	expect(statRegionNames.length).toBeGreaterThan(0)
