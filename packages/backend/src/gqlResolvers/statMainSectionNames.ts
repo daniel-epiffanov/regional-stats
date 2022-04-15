@@ -3,11 +3,14 @@ import StatisticsModel from '../mongoModels/statistics'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 const statisticsMainSectionNames: ResolverFnAsync<StatMainSectionNames> = async () => {
-	const mongoRes = await StatisticsModel.aggregate<{ mainSections: StatMainSectionNames }>([
+	const mongoRes = await StatisticsModel.aggregate<{ _id: string }>([
 		{ $project: { "mainSections.name": 1 } },
+		{ $unwind: "$mainSections" },
+		{ $group: { _id: "$mainSections.name" } },
+		{ $sort: { _id: 1 } }
 	])
 
-	return mongoRes[0].mainSections
+	return mongoRes.map(({ _id: name }) => ({ name }))
 }
 
 export default statisticsMainSectionNames

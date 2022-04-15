@@ -1,5 +1,5 @@
 import { StatSubSectionNames } from '../../../../sharedTypes/gqlQueries'
-import statisticsModel from '../mongoModels/statistics'
+import StatisticsModel from '../mongoModels/statistics'
 import { ResolverFnAsync } from './types/ResolverFn'
 import _ from 'lodash'
 
@@ -14,7 +14,7 @@ const statisticsSubSectionNames: ResolverFnAsync<StatSubSectionNames | null> = a
 ) => {
 	const { mainSectionName } = args
 
-	const mongoRes = await statisticsModel.aggregate<{ _id: StatSubSectionNames[0] }>([
+	const mongoRes = await StatisticsModel.aggregate<{ _id: StatSubSectionNames[0] }>([
 		{ $unwind: "$mainSections" },
 		{ $match: { "mainSections.name": mainSectionName } },
 		{ $project: { "mainSections.subSections.name": 1, "mainSections.subSections.children.name": 1 } },
@@ -45,7 +45,7 @@ const statisticsSubSectionNames: ResolverFnAsync<StatSubSectionNames | null> = a
 		if (alreadyExist) continue
 
 		if (!!rawSubSectionName.children) {
-			const childrenMongoRes = await statisticsModel.aggregate<{ _id: string }>([
+			const childrenMongoRes = await StatisticsModel.aggregate<{ _id: string }>([
 				{ $unwind: "$mainSections" },
 				{ $match: { "mainSections.name": mainSectionName } },
 				{ $project: { "mainSections.subSections.name": 1, "mainSections.subSections.children.name": 1 } },

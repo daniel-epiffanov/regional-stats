@@ -36,7 +36,7 @@ const statisticsData: ResolverFnAsync<StatData | null> = async (
 
 		const statData = mongoRes[0]
 
-		return !!statData.yearValues ? statData : null
+		return !!statData?.yearValues ? statData : null
 	}
 
 
@@ -51,7 +51,7 @@ const statisticsData: ResolverFnAsync<StatData | null> = async (
 
 	const statData = mongoRes[0]
 
-	return !!statData.yearValues ? statData : null
+	return !!statData?.yearValues ? statData : null
 }
 
 export default statisticsData
