@@ -1,27 +1,34 @@
-import { StatisticsYears } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from '../../tests/shared/mongoConnection'
+import RegionsCoordsSchema from '../regionsCoords'
+import StatisticscSchema from '../statistics'
 
 testMongoConenction()
+getNewApolloServer()
 
-test('should the array of all region coords names match the array of all statistics region names', async () => {
-	// const testServer = getNewApolloServer()
+test('should return an array of years as intengers', async () => {
 
-	// const response = await testServer.executeOperation({
-	// 	query: 'query { statisticsAllYears }',
-	// })
+	const rawStatisticsRegionNames = await StatisticscSchema.aggregate<{ _id: string }>([
+		{ $group: { _id: "$regionName" } }
+	])
 
-	// expect(response.errors).toBeUndefined()
+	expect(Array.isArray(rawStatisticsRegionNames)).toBe(true)
+	expect(rawStatisticsRegionNames?.length).toBeGreaterThan(0)
 
-	// const statisticsAllYears: StatisticsYears | undefined = response.data?.statisticsAllYears
+	const statisticsRegionNames = rawStatisticsRegionNames.map(rawStatisticsRegionName => rawStatisticsRegionName._id)
 
-	// if (!statisticsAllYears) fail('statisticsallYears in response is falsy')
 
-	// expect(Array.isArray(statisticsAllYears)).toBe(true)
-	// expect(statisticsAllYears.length).toBeGreaterThan(0)
+	const rawRegionCoordsRegionNames = await RegionsCoordsSchema.aggregate<{ _id: string }>([
+		{ $group: { _id: "$properties.name_ru" } }
+	])
 
-	// statisticsAllYears.forEach((year) => {
-	// 	expect(typeof year === 'number').toBe(true)
-	// 	expect(year).not.toBeNaN()
-	// })
+	expect(Array.isArray(rawRegionCoordsRegionNames)).toBe(true)
+	expect(rawRegionCoordsRegionNames?.length).toBeGreaterThan(0)
+
+	const regionCoordsRegionNames = rawRegionCoordsRegionNames.map(rawRegionCoordsRegionName => rawRegionCoordsRegionName._id)
+
+	regionCoordsRegionNames.forEach(regionCoordsRegionName => {
+		expect(statisticsRegionNames.includes(regionCoordsRegionName)).toBe(true)
+	})
 })
+
