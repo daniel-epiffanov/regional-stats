@@ -1,5 +1,5 @@
 import { MongoRegionCoords } from '../../../../sharedTypes/mongoModels'
-import regionsCoords from '../mongoModels/regionsCoords'
+import RegionsCoordsSchema from '../mongoModels/regionsCoords'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 type Args = Readonly<{
@@ -7,14 +7,14 @@ type Args = Readonly<{
 }>
 
 
-const coordsByRegionType: ResolverFnAsync<MongoRegionCoords[]> = async (
+const coordsByRegionType: ResolverFnAsync<MongoRegionCoords[] | null> = async (
 	parent: any,
 	args: Args,
 ) => {
 	const { regionType } = args
 
-	const mongoRes: MongoRegionCoords[] = await regionsCoords.find({ type: regionType })
-	return mongoRes
+	const mongoRes: MongoRegionCoords[] = await RegionsCoordsSchema.find({ type: regionType })
+	return mongoRes?.length > 0 ? mongoRes : null
 }
 
 export default coordsByRegionType
