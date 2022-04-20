@@ -16,19 +16,19 @@ import Message from '../../components/Message'
 import useComponentInstance from '../../hooks/useComponentInstance'
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
 import { useSelectionsContext } from '../context/selectionsContext'
-import { CoordsByRegionType } from '../../../../../sharedTypes/gqlQueries'
+import { RegionCoords } from '../../../../../sharedTypes/gqlQueries'
 import statisticsDataForManyRegionsQuery from './customQueries/statisticsDataForManyRegionsQuery'
 import makeColorGroupsRange from './devExtreme/makeColorGroupsRange'
 import bigNumberFormatter from '../../helpers/bigNumberFormatter'
 
 type Props = Readonly<{
-	coordsByRegionType: CoordsByRegionType
+	regionCoords: RegionCoords
 }>
 
 const BOUNDS = [71, 97, 45, 26]
 const PALLETE = ['#eeacc5', '#db9eba', '#c88fb0', '#b581a5', '#a1739a', '#8e6490', '#7b5685']
 
-const Map: FC<Props> = ({ coordsByRegionType }) => {
+const Map: FC<Props> = ({ regionCoords: coordsByRegionType }) => {
 	const {
 		selectedRegionName,
 		selectionsHandler,
@@ -36,7 +36,7 @@ const Map: FC<Props> = ({ coordsByRegionType }) => {
 		selectedSubSectionName,
 		selectedYearOnMap,
 	} = useSelectionsContext()
-	const { statisticsRegionNames } = useGeneralDataContext()
+	const { statRegionNames: statisticsRegionNames } = useGeneralDataContext()
 	const isRegionNameInStatistics = (regionName: string) => statisticsRegionNames.includes(regionName)
 
 	const getRegionNamesOnMapAndStatistics = () => {
@@ -186,11 +186,11 @@ const MapPreloads: FC = () => {
 
 	if (loading) return <Message type="message" text="Map data is loading." positionId="vector-map-container" />
 
-	const coordsByRegionType = data?.coordsByRegionType
+	const coordsByRegionType = data?.regionCoords
 
 	if (error || !data || !coordsByRegionType) return <Message type="error" text="Error while loading the map data." />
 
-	return <Map coordsByRegionType={coordsByRegionType} />
+	return <Map regionCoords={coordsByRegionType} />
 }
 
 export default MapPreloads

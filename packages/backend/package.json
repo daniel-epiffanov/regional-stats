@@ -1,6 +1,6 @@
 {
-  "name": "rosstat",
-  "version": "1.0.0",
+  "name": "stat_visual_backend",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {

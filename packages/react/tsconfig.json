@@ -20,6 +20,9 @@
 		"noEmit": true,
 		"jsx": "react-jsx"
 	},
+	"exclude": [
+		"src/outdated"
+	],
 	"include": [
 		"src",
 		"../../sharedTypes"

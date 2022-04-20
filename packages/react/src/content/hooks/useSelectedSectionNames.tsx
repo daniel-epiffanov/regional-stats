@@ -1,10 +1,10 @@
 import { useQuery, gql } from '@apollo/client'
 import { useState } from 'react'
-import { StatisticsRegionNames, CoordsByRegionType } from '../../../../../sharedTypes/gqlQueries'
+import { StatRegionNames, RegionCoords } from '../../../../../sharedTypes/gqlQueries'
 
 type QueryResponse = {
-	coordsByRegionType: CoordsByRegionType,
-	statisticsRegionNames: StatisticsRegionNames
+	regionCoords: RegionCoords,
+	statRegionNames: StatRegionNames
 }
 
 interface SelectedSections {

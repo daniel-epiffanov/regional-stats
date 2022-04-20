@@ -1,4 +1,4 @@
-import { StatisticsYears } from '../../../../../sharedTypes/gqlQueries'
+import { StatYears } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from '../../tests/shared/mongoConnection'
 
@@ -13,7 +13,7 @@ test('should return an array of years as intengers', async () => {
 
 	expect(response.errors).toBeUndefined()
 
-	const statYears: StatisticsYears | undefined = response.data?.statYears
+	const statYears: StatYears | undefined = response.data?.statYears
 
 	if (!statYears) fail('statYears in response is falsy')
 

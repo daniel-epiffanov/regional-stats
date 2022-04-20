@@ -2,15 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import LayoutDesktop from './layout'
+import Layout from './layout'
 import './styles/globals.scss'
 import './styles/dxOverrides.scss'
 
 ReactDOM.render(
 	<React.StrictMode>
-		<LayoutDesktop>
+		<Layout>
 			<App />
-		</LayoutDesktop>
+		</Layout>
 	</React.StrictMode>,
 	document.getElementById('root'),
 )
