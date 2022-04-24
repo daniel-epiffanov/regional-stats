@@ -3,10 +3,11 @@ import ResponsiveBox, {
 } from 'devextreme-react/responsive-box'
 import { FC } from 'react'
 import { SelectionsProvider } from './context/selectionsContext'
+import LookUp from './LookUp'
 // import DoughnutChart from '../outdated/DoughnutChart'
 // import MeasuresMenu from '../outdated/MeasuresMenu'
-import styles from './styles/index.module.scss'
-import VectorMap from './VectorMap'
+// import styles from './styles/index.module.scss'
+// import VectorMap from './VectorMap'
 
 const HomePage: FC = () => {
 	// const scrollhandler = (e: Event) => {
@@ -18,13 +19,13 @@ const HomePage: FC = () => {
 	return (
 		<ResponsiveBox>
 			<Row ratio={1} />
-			<Row ratio={1} />
+			{/* <Row ratio={1} />
+			<Col ratio={1} /> */}
 			<Col ratio={1} />
-			<Col ratio={2} />
 
 			<Item>
 				<Location screen="sm md lg" row={0} col={0} rowspan={2} />
-				<h1>hey</h1>
+				<LookUp />
 				{/* <div className={styles['measures-menu-container']} id="measures-menu-container">
 					<MeasuresMenu />
 				</div> */}
@@ -56,4 +57,4 @@ const HomePagePreloads: FC = () => {
 	)
 }
 
-export default HomePagePreloads
+export default HomePage

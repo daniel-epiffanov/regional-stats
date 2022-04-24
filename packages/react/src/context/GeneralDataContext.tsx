@@ -14,7 +14,9 @@ type ContextValues = Readonly<{
 const QUERY = gql` query {
 	statRegionNames,
 	statYears,
-	statMainSectionNames
+	statMainSectionNames {
+		name
+	}
 }`
 
 const GeneralDataContext = createContext<ContextValues>({} as ContextValues)
