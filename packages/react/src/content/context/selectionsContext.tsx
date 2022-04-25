@@ -11,12 +11,13 @@ import {
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
 
 interface ContextValues {
-	selectedRegionName: MongoStatisticsOfRegion['regionName'],
+	// selectedRegionName: MongoStatisticsOfRegion['regionName'],
 	selectedMainSectionName: MongoMainSection['name'],
 	selectedSubSectionName: MongoSubSection['name'],
+	selectedSubSectionChildName?: MongoSubSection['name'],
 
-	selectedRegionTypeOnMap: MongoRegionCoords['type'],
-	selectedYearOnMap: MongoStatisticsDataItem['year'],
+	// selectedRegionTypeOnMap: MongoRegionCoords['type'],
+	// selectedYearOnMap: MongoStatisticsDataItem['year'],
 
 	selectionsHandler: SelectionsHandler,
 }
@@ -32,14 +33,14 @@ const SelectionsContext = createContext<ReadonlyContextValues>({} as ReadonlyCon
 export const useSelectionsContext = () => useContext(SelectionsContext)
 
 export const SelectionsProvider: FC = ({ children }) => {
-	const { statMainSectionNames, statRegionNames } = useGeneralDataContext()
+	const { statMainSectionNames, statRegionNames, statYears } = useGeneralDataContext()
 
 	const [selections, setSelections] = useState<ReadonlyStateValues>({
-		selectedRegionName: statRegionNames[1],
+		// selectedRegionName: statRegionNames[0],
 		selectedMainSectionName: statMainSectionNames[0].name,
 		selectedSubSectionName: '',
-		selectedYearOnMap: 2007,
-		selectedRegionTypeOnMap: 'region',
+		// selectedYearOnMap: statYears[0],
+		// selectedRegionTypeOnMap: 'region',
 	})
 
 	const selectionsHandler: SelectionsHandler = (newSelections) => {

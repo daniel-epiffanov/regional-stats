@@ -57,4 +57,4 @@ const HomePagePreloads: FC = () => {
 	)
 }
 
-export default HomePage
+export default HomePagePreloads

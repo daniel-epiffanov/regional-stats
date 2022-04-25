@@ -1,18 +1,20 @@
 import { FC } from 'react'
+import { ValueChangedEvent } from 'devextreme/ui/lookup'
 import { Lookup, DropDownOptions } from 'devextreme-react/lookup'
-import { useGeneralDataContext } from '../../context/GeneralDataContext'
 
 type Props = Readonly<{
-	items: string[]
+	items: string[],
+	valueChangeHandler?: (e: ValueChangedEvent) => void
 }>
 
-const LookUpItem: FC<Props> = ({ items }) => {
+const LookUpItem: FC<Props> = ({ items, valueChangeHandler }) => {
 	return (
 		<div>
 			<Lookup
 				searchEnabled
 				items={items}
 				defaultValue={items[0]}
+				onValueChanged={valueChangeHandler}
 			>
 				<DropDownOptions showTitle={false} />
 			</Lookup>
