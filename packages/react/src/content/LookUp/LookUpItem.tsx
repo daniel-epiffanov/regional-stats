@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { ValueChangedEvent } from 'devextreme/ui/lookup'
 import { Lookup, DropDownOptions } from 'devextreme-react/lookup'
+import styles from './styles/LookUpItem.module.scss'
 
 type Props = Readonly<{
 	items: string[],
@@ -10,7 +11,7 @@ type Props = Readonly<{
 
 const LookUpItem: FC<Props> = ({ items, valueChangeHandler, isDefaultOpened }) => {
 	return (
-		<div>
+		<div className={styles['root']}>
 			<Lookup
 				searchEnabled
 				items={items}
@@ -18,11 +19,16 @@ const LookUpItem: FC<Props> = ({ items, valueChangeHandler, isDefaultOpened }) =
 				onValueChanged={valueChangeHandler}
 				dropDownCentered={false}
 				defaultOpened={isDefaultOpened}
+				showCancelButton
+				// showDataBeforeSearch
+				// showDropDownButton
+				// showClearButton
+				// stylingMode="outlined"
 			>
 				<DropDownOptions
 				showTitle={false}
-				maxHeight="70vh"
-				height="max-content"
+				maxHeight="50vh"
+				height="calc(max-content + 100px)"
 				width="30vw"
 				/>
 			</Lookup>

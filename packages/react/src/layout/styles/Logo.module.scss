@@ -1,13 +1,15 @@
-.logoSvg{
-	height: 2.2rem;
-}
-
-.LogoRoot {
+.root {
 	display: flex;
 	gap: 5px;
 	align-items: center;
 }
 
-.logoTxt {
+
+.img{
+	height: 2.2rem;
+}
+
+
+.txt {
 	font-size: 1.3rem;
 }

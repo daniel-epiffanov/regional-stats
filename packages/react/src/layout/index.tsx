@@ -6,7 +6,7 @@ const LayoutDesktop: FC = (props) => {
 	const { children } = props
 
 	return (
-		<div className={styles.root}>
+		<div className={styles['root']}>
 			<header>
 				<Header />
 			</header>

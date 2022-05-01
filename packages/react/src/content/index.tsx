@@ -2,7 +2,7 @@ import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
 import { FC } from 'react'
-import { SelectionsProvider } from './context/selectionsContext'
+import { SelectionsProvider } from './context/curValuesContext'
 import LookUp from './LookUp'
 // import DoughnutChart from '../outdated/DoughnutChart'
 // import MeasuresMenu from '../outdated/MeasuresMenu'
@@ -18,8 +18,8 @@ const HomePage: FC = () => {
 
 	return (
 		<ResponsiveBox>
+			<Row ratio={0}/>
 			<Row ratio={1} />
-			<Row ratio={10} />
 			{/* <Col ratio={1} /> */}
 			<Col ratio={1} />
 

@@ -12,21 +12,21 @@ import { useGeneralDataContext } from '../../context/GeneralDataContext'
 
 interface ContextValues {
 	// selectedRegionName: MongoStatisticsOfRegion['regionName'],
-	selectedMainSectionName: MongoMainSection['name'],
-	selectedSubSectionName: MongoSubSection['name'],
-	selectedSubSectionChildName?: MongoSubSection['name'],
+	curMainSectionName: MongoMainSection['name'],
+	curSubSectionName: MongoSubSection['name'],
+	curSubSectionChildName?: MongoSubSection['name'],
 
-	selectedRegionTypeOnMap: MongoRegionCoords['type'],
+	curRegionTypeOnMap: MongoRegionCoords['type'],
 	// selectedYearOnMap: MongoStatisticsDataItem['year'],
 
-	selectionsHandler: SelectionsHandler,
+	setCurValues: SetCurValues,
 }
 
 type ReadonlyContextValues = Readonly<ContextValues>
 
-type SelectionsHandler = (newSelections: Partial<ReadonlyStateValues>) => void
+type SetCurValues = (newSelections: Partial<ReadonlyStateValues>) => void
 
-type ReadonlyStateValues = Omit<ReadonlyContextValues, 'selectionsHandler'>
+type ReadonlyStateValues = Omit<ReadonlyContextValues, 'setCurValues'>
 
 const SelectionsContext = createContext<ReadonlyContextValues>({} as ReadonlyContextValues)
 
@@ -37,20 +37,20 @@ export const SelectionsProvider: FC = ({ children }) => {
 
 	const [selections, setSelections] = useState<ReadonlyStateValues>({
 		// selectedRegionName: statRegionNames[0],
-		selectedMainSectionName: statMainSectionNames[0].name,
-		selectedSubSectionName: '',
+		curMainSectionName: statMainSectionNames[0].name,
+		curSubSectionName: '',
 		// selectedYearOnMap: statYears[0],
-		selectedRegionTypeOnMap: 'region',
+		curRegionTypeOnMap: 'region',
 	})
 
-	const selectionsHandler: SelectionsHandler = (newSelections) => {
+	const setCurValues: SetCurValues = (newSelections) => {
 		setSelections(prevSelectionParams => ({ ...prevSelectionParams, ...newSelections }))
 	}
 
 	return (
 		<SelectionsContext.Provider value={{
 			...selections,
-			selectionsHandler,
+			setCurValues,
 		}}
 		>
 			{children}

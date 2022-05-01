@@ -1,7 +1,7 @@
 import { gql, useLazyQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { StatSubSectionNames } from "../../../../../../sharedTypes/gqlQueries";
-import { useSelectionsContext } from "../../context/selectionsContext";
+import { useSelectionsContext } from "../../context/curValuesContext";
 
 const QUERY = gql`
   query GetStatSubSectionNames($mainSectionName: String!) {
@@ -15,7 +15,7 @@ const QUERY = gql`
 `;
 
 const useSubSectionData = () => {
-	const { selectedMainSectionName } = useSelectionsContext()
+	const { curMainSectionName: selectedMainSectionName } = useSelectionsContext()
 
 	const [load, response] = useLazyQuery<{ statSubSectionNames: StatSubSectionNames }>(QUERY, {
 		variables: { mainSectionName: selectedMainSectionName },

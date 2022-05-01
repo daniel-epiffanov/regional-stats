@@ -2,15 +2,14 @@ import { Toolbar, Item } from 'devextreme-react/toolbar'
 import { FC } from 'react'
 import styles from './styles/Header.module.scss'
 import Logo from './Logo'
-import chageThemeHundler from '../devExtreme/chageThemeHundler'
+import chageTheme from '../devExtreme/chageThemeHundler'
 import { GITHUB_LINK, TELEGRAM_LINK } from '../config/constants'
 
 const Header: FC = () => {
 	return (
-		<div className={styles.root}>
+		<div className={styles['root']}>
 			<Toolbar
-				// onItemRendered={onInitializedHandler}
-				className={styles.root}
+				className={styles['root']}
 			>
 				<Item
 					location="before"
@@ -44,7 +43,7 @@ const Header: FC = () => {
 					options={{
 						icon: 'far fa-lightbulb',
 						onClick: () => {
-							chageThemeHundler()
+							chageTheme()
 						},
 						text: 'theme',
 					}}
