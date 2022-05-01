@@ -18,18 +18,17 @@ const LookUp: FC<Props> = (props) => {
 	const mainSectionNames = statMainSectionNames
 		.map(statMainSectionName => statMainSectionName.name)
 
-	const valueChangedEvent = (e: ValueChangedEvent) => {
-		// console.log({ value: e.value })
-		// console.log({ selectionsHandler })
-		// console.log({ selectedMainSectionName })
-		// console.log({ selectedSubSectionName })
-		// debugger
+	const mainSectionChangeHandler = (e: ValueChangedEvent) => {
 		selectionsHandler({ selectedMainSectionName: e.value })
+	}
+	const subSectionChangeHandler = (e: ValueChangedEvent) => {
+		selectionsHandler({ selectedSubSectionName: e.value })
 	}
 
 	const { loading, error, data } = useSubSectionData()
 
 	const subSectionNames = data && data.statSubSectionNames && data.statSubSectionNames.map(subSectionName => subSectionName.name)
+	const subSectionChildrenNames = data && data.statSubSectionNames && data.statSubSectionNames.find(subSectionName => subSectionName.name === selectedSubSectionName)?.children?.map(subSectionChildName=> subSectionChildName.name)
 
 
 	useEffect(() => {
@@ -40,13 +39,26 @@ const LookUp: FC<Props> = (props) => {
 
 	return (
 		<div className={styles['root']}>
-			<LookUpItem items={mainSectionNames} valueChangeHandler={valueChangedEvent} />
-			<p> / </p>
+			<p>Разделы: </p>
+			<LookUpItem items={mainSectionNames} valueChangeHandler={mainSectionChangeHandler} />
 			{subSectionNames && (
+				<>
+				<p> / </p>
 				<LookUpItem
-					items={subSectionNames}
-					valueChangeHandler={valueChangedEvent}
+				items={subSectionNames}
+				valueChangeHandler={subSectionChangeHandler}
+				isDefaultOpened
 				/>
+				</>
+			)}
+			{subSectionChildrenNames && (
+			<>
+			<p> / </p>
+				<LookUpItem
+					items={subSectionChildrenNames}
+					isDefaultOpened
+					/>
+					</>
 			)}
 		</div>
 	)

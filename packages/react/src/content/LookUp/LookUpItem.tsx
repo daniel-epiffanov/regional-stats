@@ -4,10 +4,11 @@ import { Lookup, DropDownOptions } from 'devextreme-react/lookup'
 
 type Props = Readonly<{
 	items: string[],
-	valueChangeHandler?: (e: ValueChangedEvent) => void
+	valueChangeHandler?: (e: ValueChangedEvent) => void,
+	isDefaultOpened?: boolean
 }>
 
-const LookUpItem: FC<Props> = ({ items, valueChangeHandler }) => {
+const LookUpItem: FC<Props> = ({ items, valueChangeHandler, isDefaultOpened }) => {
 	return (
 		<div>
 			<Lookup
@@ -15,8 +16,15 @@ const LookUpItem: FC<Props> = ({ items, valueChangeHandler }) => {
 				items={items}
 				defaultValue={items[0]}
 				onValueChanged={valueChangeHandler}
+				dropDownCentered={false}
+				defaultOpened={isDefaultOpened}
 			>
-				<DropDownOptions showTitle={false} />
+				<DropDownOptions
+				showTitle={false}
+				maxHeight="70vh"
+				height="max-content"
+				width="30vw"
+				/>
 			</Lookup>
 		</div>
 	)

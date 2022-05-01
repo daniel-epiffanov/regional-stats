@@ -16,7 +16,7 @@ interface ContextValues {
 	selectedSubSectionName: MongoSubSection['name'],
 	selectedSubSectionChildName?: MongoSubSection['name'],
 
-	// selectedRegionTypeOnMap: MongoRegionCoords['type'],
+	selectedRegionTypeOnMap: MongoRegionCoords['type'],
 	// selectedYearOnMap: MongoStatisticsDataItem['year'],
 
 	selectionsHandler: SelectionsHandler,
@@ -40,7 +40,7 @@ export const SelectionsProvider: FC = ({ children }) => {
 		selectedMainSectionName: statMainSectionNames[0].name,
 		selectedSubSectionName: '',
 		// selectedYearOnMap: statYears[0],
-		// selectedRegionTypeOnMap: 'region',
+		selectedRegionTypeOnMap: 'region',
 	})
 
 	const selectionsHandler: SelectionsHandler = (newSelections) => {
