@@ -15,7 +15,7 @@ const LookUpItem: FC<Props> = ({ items, valueChangeHandler, isDefaultOpened }) =
 			<Lookup
 				searchEnabled
 				items={items}
-				defaultValue={items[0]}
+				// defaultValue={items[0]}
 				onValueChanged={valueChangeHandler}
 				dropDownCentered={false}
 				defaultOpened={isDefaultOpened}
@@ -27,7 +27,7 @@ const LookUpItem: FC<Props> = ({ items, valueChangeHandler, isDefaultOpened }) =
 			>
 				<DropDownOptions
 				showTitle={false}
-				maxHeight="50vh"
+				maxHeight="90vh"
 				height="calc(max-content + 100px)"
 				width="30vw"
 				/>

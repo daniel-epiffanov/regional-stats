@@ -2,70 +2,107 @@ import { FC, useEffect, useState } from 'react'
 import { ValueChangedEvent } from 'devextreme/ui/lookup'
 import LookUpItem from './LookUpItem'
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
-import { useSelectionsContext } from '../context/curValuesContext'
-import useSubSectionData from './queries/useSubSectionData'
+import { useCurValuesContext } from '../context/curValuesContext'
+import getSubSectionNamesData from './queries/getSubSectionNamesData'
 import styles from './styles/index.module.scss'
+import Message from '../../components/Message'
+import getStatData from './queries/getStatData'
+import { StatSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
 
 type Props = Readonly<{}>
+type EditValues = Readonly<{
+	mainSectionName?: string | null,
+	subSectionName?: string | null,
+	subSectionChildName?: string | null,
+	isBeingEdited: boolean
+}>
 
 
 const LookUp: FC<Props> = (props) => {
-	const { statMainSectionNames } = useGeneralDataContext()
-	const { setCurValues: selectionsHandler, curMainSectionName: selectedMainSectionName, curSubSectionName: selectedSubSectionName } = useSelectionsContext()
+	const { statMainSectionNames, statRegionNames } = useGeneralDataContext()
+	const { setCurValues } = useCurValuesContext()
 
-	const [editValues, setEditValues] = useState<Readonly<{curMainSectionName?: string | null, isBeingEdited: boolean}>>({isBeingEdited: false, curMainSectionName: null})
+	const [editValues, setEditValues] = useState<EditValues>({isBeingEdited: true})
+	const [subSectionNamesData, setSubSectionNamesData] = useState<StatSubSectionNames | null>(null)
+	const [subSectionChildrenNamesData, setSubSectionChildrenNamesData] = useState<string[] | null>(null)
 
 	const mainSectionNames = statMainSectionNames
 		.map(statMainSectionName => statMainSectionName.name)
 
-	const mainSectionChangeHandler = (e: ValueChangedEvent) => {
-		setEditValues({isBeingEdited: true, curMainSectionName: e.value})
-		// selectionsHandler({ selectedMainSectionName: e.value })
+	const mainSectionChangeHandler = async (e: ValueChangedEvent) => {
+		const newMainSectionName = e.value
+		const subSectionNamesData = await getSubSectionNamesData(newMainSectionName)
+		if(subSectionNamesData) setSubSectionNamesData(subSectionNamesData)
+			// const subSectionNames = subSectionDataResponse.statSubSectionNames
+			// .map(statSubSectionName=> statSubSectionName.name)
+		setEditValues({isBeingEdited: true, mainSectionName: newMainSectionName})
 	}
-	// const subSectionChangeHandler = (e: ValueChangedEvent) => {
-	// 	selectionsHandler({ curSubSectionName: e.value })
-	// }
+	const subSectionChangeHandler = async (e: ValueChangedEvent) => {
 
-	const { loading, error, data } = useSubSectionData()
+		const subSectionName: string = e.value
 
-	const subSectionNames = data && data.statSubSectionNames && data.statSubSectionNames.map(subSectionName => subSectionName.name)
-	const subSectionChildrenNames = data && data.statSubSectionNames && data.statSubSectionNames.find(subSectionName => subSectionName.name === selectedSubSectionName)?.children?.map(subSectionChildName=> subSectionChildName.name)
+		const subSectionNamesItem = subSectionNamesData?.find(subSectionNamesItem => subSectionNamesItem.name === subSectionName)
+
+		setEditValues(oldEditValues => ({ ...oldEditValues, subSectionName: e.value, isBeingEdited: false }))
+
+		if(subSectionNamesItem?.children && Array.isArray(subSectionNamesItem?.children)) {
+			return setSubSectionChildrenNamesData(subSectionNamesItem?.children.map(subSectionNamesItem=> subSectionNamesItem.name))
+		}
+		
 
 
-	// useEffect(() => {
-	// 	console.log({ data })
-	// 	console.log({ subSectionNames })
-	// }, [data, subSectionNames])
+		const statData = await getStatData({
+			regionNames: statRegionNames,
+			mainSectionName: `${editValues.mainSectionName}`,
+			subSectionName: e.value,
+		})
+		console.log('parent')
+		console.log({statData})
+		if(statData) setCurValues({curStatData: statData})
+		
+	}
 
-	// if(editValues.isBeingEdited) return (
-	// 	<div className={styles['root']}>
-	// 		<LookUpItem items={mainSectionNames} valueChangeHandler={mainSectionChangeHandler} />
-	// 	</div>
-	// )
+	const subSectionChildChangeHandler = async (e: ValueChangedEvent) => {
+
+		const subSectionChildName: string = e.value
+
+		const statData = await getStatData({
+			regionNames: statRegionNames,
+			mainSectionName: `${editValues.mainSectionName}`,
+			subSectionName: `${editValues.subSectionName}`,
+			subSectionChildName
+		})
+		console.log('child')
+		console.log({statData})
+		if(statData) setCurValues({curStatData: statData})
+	}
+
 
 
 	return (
 		<div className={styles['root']}>
 			<LookUpItem items={mainSectionNames} valueChangeHandler={mainSectionChangeHandler} />
-			{/* {subSectionNames && (
+			{/* {subSectionDataResponse.loading && <Message type="message" text="loading subsections" />} */}
+			{subSectionNamesData && (
 				<>
-				<p> / </p>
+				<p>/</p>
 				<LookUpItem
-				items={subSectionNames}
-				valueChangeHandler={subSectionChangeHandler}
-				isDefaultOpened
+					items={subSectionNamesData.map(statSubSectionName=> statSubSectionName.name)}
+					valueChangeHandler={subSectionChangeHandler}
+					isDefaultOpened={!editValues.subSectionName}
 				/>
 				</>
-			)} */}
-			{/* {subSectionChildrenNames && (
+			)}
+			{subSectionChildrenNamesData && (
 			<>
-			<p> / </p>
+			<p>/</p>
 				<LookUpItem
-					items={subSectionChildrenNames}
+					items={subSectionChildrenNamesData}
+					valueChangeHandler={subSectionChildChangeHandler}
 					isDefaultOpened
 					/>
 					</>
-			)} */}
+			)}
 		</div>
 	)
 }

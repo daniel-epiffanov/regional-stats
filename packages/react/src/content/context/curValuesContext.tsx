@@ -1,6 +1,7 @@
 import {
-	createContext, FC, useContext, useState,
+	createContext, FC, useContext, useEffect, useState,
 } from 'react'
+import { StatData } from '../../../../../sharedTypes/gqlQueries'
 import {
 	MongoMainSection,
 	MongoRegionCoords,
@@ -8,13 +9,17 @@ import {
 	MongoSubSection,
 	MongoStatisticsDataItem,
 } from '../../../../../sharedTypes/mongoModels'
+import Message from '../../components/Message'
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
 
 interface ContextValues {
 	// selectedRegionName: MongoStatisticsOfRegion['regionName'],
-	curMainSectionName: MongoMainSection['name'],
-	curSubSectionName: MongoSubSection['name'],
-	curSubSectionChildName?: MongoSubSection['name'],
+	// curMainSectionName: MongoMainSection['name'],
+	// curSubSectionName: MongoSubSection['name'],
+	// curSubSectionChildName?: MongoSubSection['name'],
+	curStatData?: Readonly<{
+    [key: string]: StatData
+}> | null,
 
 	curRegionTypeOnMap: MongoRegionCoords['type'],
 	// selectedYearOnMap: MongoStatisticsDataItem['year'],
@@ -28,32 +33,46 @@ type SetCurValues = (newSelections: Partial<ReadonlyStateValues>) => void
 
 type ReadonlyStateValues = Omit<ReadonlyContextValues, 'setCurValues'>
 
-const SelectionsContext = createContext<ReadonlyContextValues>({} as ReadonlyContextValues)
+const CurValuesContext = createContext<ReadonlyContextValues>({} as ReadonlyContextValues)
 
-export const useSelectionsContext = () => useContext(SelectionsContext)
+export const useCurValuesContext = () => useContext(CurValuesContext)
 
-export const SelectionsProvider: FC = ({ children }) => {
-	const { statMainSectionNames, statRegionNames, statYears } = useGeneralDataContext()
+export const CurValuesProvider: FC = ({ children }) => {
+	// const { statMainSectionNames, statRegionNames, statYears } = useGeneralDataContext()
 
-	const [selections, setSelections] = useState<ReadonlyStateValues>({
+	
+	const [curValuesAcc, setCurValuesAcc] = useState<ReadonlyStateValues>({
 		// selectedRegionName: statRegionNames[0],
-		curMainSectionName: statMainSectionNames[0].name,
-		curSubSectionName: '',
+		// curMainSectionName: statMainSectionNames[0].name,
+		// curSubSectionName: '',
 		// selectedYearOnMap: statYears[0],
+		curStatData: null,
 		curRegionTypeOnMap: 'region',
 	})
 
 	const setCurValues: SetCurValues = (newSelections) => {
-		setSelections(prevSelectionParams => ({ ...prevSelectionParams, ...newSelections }))
+		setCurValuesAcc(prevSelectionParams => ({ ...prevSelectionParams, ...newSelections }))
 	}
+	
+	// const {loading, error, data} = useSubSectionData(statMainSectionNames[0].name)
+
+	// useEffect(() => {
+	// 	if(data) {
+	// 		setCurValuesAcc({...curValuesAcc, curSubSectionName: data.statSubSectionNames[0].name})
+	// 	}
+	// }, [data])
+	
+
+	// if(error) return <Message text="loading subsections error" type="error" />
+	// if(loading || !data || !curValuesAcc.curSubSectionName) return <Message text="loading subsections" type="message" />
 
 	return (
-		<SelectionsContext.Provider value={{
-			...selections,
+		<CurValuesContext.Provider value={{
+			...curValuesAcc,
 			setCurValues,
 		}}
 		>
 			{children}
-		</SelectionsContext.Provider>
+		</CurValuesContext.Provider>
 	)
 }

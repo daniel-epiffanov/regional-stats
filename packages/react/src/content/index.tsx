@@ -2,7 +2,7 @@ import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
 import { FC } from 'react'
-import { SelectionsProvider } from './context/curValuesContext'
+import { CurValuesProvider } from './context/curValuesContext'
 import LookUp from './LookUp'
 // import DoughnutChart from '../outdated/DoughnutChart'
 // import MeasuresMenu from '../outdated/MeasuresMenu'
@@ -51,9 +51,9 @@ const HomePage: FC = () => {
 
 const HomePagePreloads: FC = () => {
 	return (
-		<SelectionsProvider>
+		<CurValuesProvider>
 			<HomePage />
-		</SelectionsProvider>
+		</CurValuesProvider>
 	)
 }
 
