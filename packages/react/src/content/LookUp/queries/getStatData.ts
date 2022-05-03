@@ -35,7 +35,8 @@ const getStatData = async (props: Props) => {
     measure,
     parentMeasure,
     yearValues {
-      year
+      year,
+			value
     }
 	}`)
 

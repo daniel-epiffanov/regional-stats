@@ -22,6 +22,6 @@ export type StatData = Readonly<{
 	name: string,
 	measure: string,
 	parentMeasure?: string,
-	yearValues: ReadonlyArray<MongoStatisticsDataItem>
+	yearValues: ReadonlyArray<Readonly<{year: number, value: number}>>
 }>
 export type RegionCoords = ReadonlyArray<MongoRegionCoords>

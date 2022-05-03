@@ -8,18 +8,12 @@ import VectorMap, {
 	Source,
 	Font,
 } from 'devextreme-react/vector-map'
-import dxVectorMap, { ClickEvent as MapClickEvent } from 'devextreme/viz/vector_map'
-import { EventInfo } from 'devextreme/events'
-import styles from './styles/index.module.scss'
 import useCoordsQuery from './hooks/useCoordsQuery'
 import Message from '../../components/Message'
-import useComponentInstance from '../../hooks/useComponentInstance'
-import { useGeneralDataContext } from '../../context/GeneralDataContext'
 import { useCurValuesContext } from '../context/curValuesContext'
 import { RegionCoords } from '../../../../../sharedTypes/gqlQueries'
-import getStatData from '../LookUp/queries/getStatData'
-import makeColorGroupsRange from './devExtreme/makeColorGroupsRange'
-import bigNumberFormatter from '../../helpers/bigNumberFormatter'
+import _ from 'lodash'
+import {mean as getMean, standardDeviation as getStandardDeviation} from 'simple-statistics'
 
 type Props = Readonly<{
 	regionCoords: RegionCoords
@@ -28,14 +22,40 @@ type Props = Readonly<{
 const BOUNDS = [71, 97, 45, 26]
 const PALLETE = ['#eeacc5', '#db9eba', '#c88fb0', '#b581a5', '#a1739a', '#8e6490', '#7b5685']
 
-const Map: FC<Props> = ({ regionCoords: coordsByRegionType }) => {
-	// const {
-	// 	// selectedRegionName,
-	// 	selectionsHandler,
-	// 	selectedMainSectionName,
-	// 	selectedSubSectionName,
-	// 	// selectedYearOnMap,
-	// } = useSelectionsContext()
+const Map: FC<Props> = ({ regionCoords }) => {
+	const {curStatData} = useCurValuesContext()
+
+	const [colorGroups, setColorGroups] = useState<ReadonlyArray<number> | null>([3971424.9, -217936.46432840865, 177886.95348993287, 573710.3713082743, 326.6])
+
+	useEffect(() => {
+		if(!curStatData) return
+		const test = Object
+			.values(curStatData)
+			.filter(curStatItem=> !!curStatItem)
+			.map(curStatItem => {
+				return curStatItem.yearValues.map(yearValue => yearValue.value)
+			})
+		
+		const other = _.concat(...test);
+
+		const standardDeviation = getStandardDeviation(other)
+		const cutStandardDeviation = standardDeviation / 3
+		const mean = getMean(other)
+
+		const newColorSetting = [
+			Math.min(...other),
+			mean - cutStandardDeviation,
+			mean,
+			mean + cutStandardDeviation,
+			Math.max(...other),
+		]
+
+		setColorGroups(newColorSetting)
+
+		debugger
+	}, [curStatData])
+	
+
 	// const { statRegionNames: statisticsRegionNames } = useGeneralDataContext()
 	// const isRegionNameInStatistics = (regionName: string) => statisticsRegionNames.includes(regionName)
 
@@ -93,14 +113,17 @@ const Map: FC<Props> = ({ regionCoords: coordsByRegionType }) => {
 	// }, [instance, selectedMainSectionName, selectedSubSectionName,
 	// 	selectedMainSectionName, selectedRegionName])
 
-	// function customizeLayer(elements: any) {
-	// 	elements.forEach((element: any) => {
-	// 		const regionName = element.attribute('name_ru')
-	// 		if (!isRegionNameInStatistics(regionName)) {
-	// 			element.applySettings({ opacity: 0.2 })
-	// 		}
-	// 	})
-	// }
+	function customizeLayer(elements: any) {
+		// debugger
+		if(!curStatData) return
+		elements.forEach((element: any) => {
+			const regionName = element.attribute('name_ru')
+			element.attribute('value', curStatData[regionName].yearValues[0].value)
+			// if (!isRegionNameInStatistics(regionName)) {
+			// 	element.applySettings({ opacity: 0.2 })
+			// }
+		})
+	}
 
 	// function onMapClick(e: MapClickEvent) {
 	// 	if (!e.target) return
@@ -131,26 +154,28 @@ const Map: FC<Props> = ({ regionCoords: coordsByRegionType }) => {
 	// 	return `${percent}% (${formattedStart} - ${formattedEnd})`
 	// }
 
+	// const colorGroups = [0, 50, 200, 1000, 5000, 300000, 1000000];
+
 	return (
 		<div style={{ position: 'relative' }}>
 			<VectorMap
 				id="vectorMap"
-				bounds={BOUNDS}
+				// bounds={BOUNDS}
 				// onClick={onMapClick}
 				// onInitialized={onInitializedHandler}
 			>
 				<Layer
 					dataSource={{
 						type: 'FeatureCollection',
-						features: coordsByRegionType,
+						features: regionCoords,
 					}}
 					type="area"
-					// customize={customizeLayer}
+					customize={customizeLayer}
 					selectionMode="single"
 					name="regions"
-					palette="Violet"
+					// palette="Violet"
 					colorGroupingField="value"
-					// colorGroups={colorGroups}
+					colorGroups={[326.6, 45945.814217152365, 177886.95348993287, 309828.0927627134, 3971424.9]}
 					label={{
 						enabled: true,
 						dataField: 'name_ru',
@@ -168,9 +193,9 @@ const Map: FC<Props> = ({ regionCoords: coordsByRegionType }) => {
 					<Font color="#fff" />
 				</Tooltip> */}
 
-				{/* <Legend customizeText={customizeText}>
+				<Legend>
 					<Source layer="regions" grouping="color" />
-				</Legend> */}
+				</Legend>
 				<div>
 					<h1>hey</h1>
 				</div>
