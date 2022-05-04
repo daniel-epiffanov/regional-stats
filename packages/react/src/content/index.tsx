@@ -33,9 +33,9 @@ const HomePage: FC = () => {
 
 			<Item>
 				<Location screen="sm md lg" row={1} col={0} />
-				<div className={styles['vector-map-container']} id="vector-map-container">
+				{/* <div className={styles['vector-map-container']} id="vector-map-container"> */}
 					<VectorMap />
-				</div>
+				{/* </div> */}
 			</Item>
 
 			{/* <Item>

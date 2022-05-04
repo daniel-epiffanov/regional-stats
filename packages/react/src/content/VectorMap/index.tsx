@@ -7,13 +7,21 @@ import VectorMap, {
 	Legend,
 	Source,
 	Font,
+	ControlBar,
 } from 'devextreme-react/vector-map'
 import useCoordsQuery from './hooks/useCoordsQuery'
 import Message from '../../components/Message'
 import { useCurValuesContext } from '../context/curValuesContext'
 import { RegionCoords } from '../../../../../sharedTypes/gqlQueries'
 import _ from 'lodash'
-import {mean as getMean, standardDeviation as getStandardDeviation} from 'simple-statistics'
+import {
+	mean as getMean,
+	median as getMedian,
+	standardDeviation as getStandardDeviation,
+	interquartileRange as getInterquartileRange
+} from 'simple-statistics'
+import styles from './styles/index.module.scss'
+import TopRegions from './TopRegions'
 
 type Props = Readonly<{
 	regionCoords: RegionCoords
@@ -25,7 +33,9 @@ const PALLETE = ['#eeacc5', '#db9eba', '#c88fb0', '#b581a5', '#a1739a', '#8e6490
 const Map: FC<Props> = ({ regionCoords }) => {
 	const {curStatData} = useCurValuesContext()
 
-	const [colorGroups, setColorGroups] = useState<ReadonlyArray<number> | null>([3971424.9, -217936.46432840865, 177886.95348993287, 573710.3713082743, 326.6])
+	const [colorGroups, setColorGroups] = useState<ReadonlyArray<number> | null>(
+		[326.6, 52907.853489932866, 115397.40348993287, 177886.95348993287, 240376.50348993286, 302866.0534899329, 3971424.9]
+		)
 
 	useEffect(() => {
 		if(!curStatData) return
@@ -38,80 +48,38 @@ const Map: FC<Props> = ({ regionCoords }) => {
 		
 		const other = _.concat(...test);
 
+		const min = Math.min(...other)
+		const max = Math.max(...other)
+		const interquartileRange = getInterquartileRange(other)
+		const halfInterquartileRange = interquartileRange / 2
 		const standardDeviation = getStandardDeviation(other)
 		const cutStandardDeviation = standardDeviation / 3
 		const mean = getMean(other)
+		const median = getMedian(other)
 
 		const newColorSetting = [
-			Math.min(...other),
-			mean - cutStandardDeviation,
-			mean,
-			mean + cutStandardDeviation,
-			Math.max(...other),
+			min,
+			(median - min) / 2,
+			(median - min) / 3,
+			(median - min) / 4,
+			(median - min) / 5,
+			(median - min) / 6,
+			median,
+			(max - median) / 6,
+			(max - median) / 5,
+			(max - median) / 4,
+			(max - median) / 3,
+			(max - median) / 2,
+			max,
 		]
 
 		setColorGroups(newColorSetting)
+		console.log({newColorSetting})
 
-		debugger
+		// debugger
 	}, [curStatData])
 	
 
-	// const { statRegionNames: statisticsRegionNames } = useGeneralDataContext()
-	// const isRegionNameInStatistics = (regionName: string) => statisticsRegionNames.includes(regionName)
-
-	// const getRegionNamesOnMapAndStatistics = () => {
-	// 	const regionNamesOnMap = coordsByRegionType
-	// 		.map(coordsByRegionTypeItem => coordsByRegionTypeItem.properties.name_ru)
-
-	// 	return regionNamesOnMap
-	// 		.filter(regionNameOnMap => statisticsRegionNames.includes(regionNameOnMap))
-	// }
-
-	// mapSetups
-	// const [instance, onInitializedHandler] = useComponentInstance<dxVectorMap>()
-	// const [colorGroups, setColorGroups] = useState<number[]>([2330427, 4330427, 20208917])
-
-	// useEffect(() => {
-	// 	(async () => {
-	// 		const isFetchingDataMakesSense = !!selectedMainSectionName
-	// 			&& !!selectedSubSectionName
-	// 			&& !!selectedYearOnMap
-
-	// 		if (!isFetchingDataMakesSense) return
-	// 		const statisticsData = await statisticsDataForManyRegionsQuery({
-	// 			regionNames: getRegionNamesOnMapAndStatistics(),
-	// 			mainSectionName: selectedMainSectionName,
-	// 			subSectionName: selectedSubSectionName,
-	// 			year: selectedYearOnMap,
-	// 		})
-	// 		if (!statisticsData) return
-	// 		console.log('cl')
-	// 		console.log({ statisticsData })
-
-	// 		// // debugger
-
-	// 		const statisticsDataValues = Object.values(statisticsData).map(statisticsDataItem => {
-	// 			const value = parseFloat(statisticsDataItem[0].value)
-	// 			return value
-	// 		})
-	// 		const newColorGroups = makeColorGroupsRange(statisticsDataValues)
-	// 		setColorGroups(newColorGroups)
-	// 		console.log({ newColorGroups })
-
-	// 		const elements = instance?.getLayerByName('regions')?.getElements()
-	// 		elements && elements.forEach((element) => {
-	// 			const regionName = element.attribute('name_ru')
-
-	// 			if (isRegionNameInStatistics(regionName) && statisticsData) {
-	// 				// element.attribute('value', Math.floor(Math.random() * 10))
-	// 				const statisticsValue = parseFloat(statisticsData[regionName][0].value)
-	// 				element.attribute('value', statisticsValue)
-	// 				element.applySettings({ setColorGroups: newColorGroups })
-	// 			}
-	// 		})
-	// 	})()
-	// }, [instance, selectedMainSectionName, selectedSubSectionName,
-	// 	selectedMainSectionName, selectedRegionName])
 
 	function customizeLayer(elements: any) {
 		// debugger
@@ -130,40 +98,43 @@ const Map: FC<Props> = ({ regionCoords }) => {
 	// 	const regionName = e.target.attribute('name_ru')
 	// 	const value = e.target.attribute('value')
 	// 	// console.log({ value })
-	// 	if (!isRegionNameInStatistics(regionName)) return
+	// 	// if (!isRegionNameInStatistics(regionName)) return
 
-	// 	selectionsHandler({ selectedRegionName: regionName })
+	// 	// selectionsHandler({ selectedRegionName: regionName })
 	// }
 
-	// function customizeTooltip(element: any, b: any, c: any) {
-	// 	return {
-	// 		text: `${element.attribute('name_ru')} ${bigNumberFormatter(element.attribute('value'))}`,
-	// 	}
-	// }
+	function customizeTooltip(element: any, b: any, c: any) {
+		return {
+			text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
+		}
+	}
 
 	// const customizeText = (args: { end: number, start: number, index: number }) => {
 	// 	const { end, start, index } = args
-	// 	const formattedStart = bigNumberFormatter(start)
-	// 	const formattedEnd = bigNumberFormatter(end)
-	// 	const percent = ((index * 2) / 10) * 100
-	// 	const isLowestGroup = percent === 0
-	// 	const isHighestGroup = percent === 100
-	// 	if (isLowestGroup) return `<b>low</b> (${formattedStart} - ${formattedEnd})`
-	// 	if (isHighestGroup) return `<b>high</b> (${formattedStart} - ${formattedEnd})`
+	// 	// const formattedStart = bigNumberFormatter(start)
+	// 	// const formattedEnd = bigNumberFormatter(end)
+	// 	// const percent = ((index * 2) / 10) * 100
+	// 	// const isLowestGroup = percent === 0
+	// 	// const isHighestGroup = percent === 100
+	// 	// if (isLowestGroup) return `<b>low</b> (${formattedStart} - ${formattedEnd})`
+	// 	// if (isHighestGroup) return `<b>high</b> (${formattedStart} - ${formattedEnd})`
 
-	// 	return `${percent}% (${formattedStart} - ${formattedEnd})`
+	// 	return `${percent}%`
 	// }
 
 	// const colorGroups = [0, 50, 200, 1000, 5000, 300000, 1000000];
 
 	return (
-		<div style={{ position: 'relative' }}>
+		<div className={styles['root']}>
 			<VectorMap
 				id="vectorMap"
 				// bounds={BOUNDS}
 				// onClick={onMapClick}
 				// onInitialized={onInitializedHandler}
+				zoomFactor={3}
+				// height="90vh"
 			>
+				<ControlBar enabled={false}/>
 				<Layer
 					dataSource={{
 						type: 'FeatureCollection',
@@ -175,7 +146,7 @@ const Map: FC<Props> = ({ regionCoords }) => {
 					name="regions"
 					// palette="Violet"
 					colorGroupingField="value"
-					colorGroups={[326.6, 45945.814217152365, 177886.95348993287, 309828.0927627134, 3971424.9]}
+					colorGroups={colorGroups}
 					label={{
 						enabled: true,
 						dataField: 'name_ru',
@@ -183,24 +154,24 @@ const Map: FC<Props> = ({ regionCoords }) => {
 							size: 10,
 						},
 					}}
+
+				// borderWidth="2px"
 				/>
 
-				{/* <Tooltip
+				<Tooltip
 					enabled
 					customizeTooltip={customizeTooltip}
 				>
 					<Border visible />
 					<Font color="#fff" />
-				</Tooltip> */}
+				</Tooltip>
 
 				<Legend>
 					<Source layer="regions" grouping="color" />
 				</Legend>
-				<div>
-					<h1>hey</h1>
-				</div>
-
 			</VectorMap>
+
+			<TopRegions />
 		</div>
 	)
 }

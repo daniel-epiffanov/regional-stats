@@ -1,16 +1,4 @@
 
-.measures-menu-container {
-	height: 100%;
-	overflow-y: scroll;
-	position: relative;
-	
-	>div {
-		min-height: 1000px;
-		position: absolute;
-		width: 100%;
-	}
-}
-
 .vector-map-container {
 	min-height: 40vh;
 }
