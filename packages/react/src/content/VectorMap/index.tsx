@@ -8,6 +8,9 @@ import VectorMap, {
 	Source,
 	Font,
 	ControlBar,
+	CommonAnnotationSettings,
+	Annotation,
+	Label,
 } from 'devextreme-react/vector-map'
 import useCoordsQuery from './hooks/useCoordsQuery'
 import Message from '../../components/Message'
@@ -30,6 +33,28 @@ type Props = Readonly<{
 const BOUNDS = [71, 97, 45, 26]
 const PALLETE = ['#eeacc5', '#db9eba', '#c88fb0', '#b581a5', '#a1739a', '#8e6490', '#7b5685']
 
+function AnnotationTemplate(annotation: any) {
+  const { data } = annotation;
+  return (
+    <svg className="annotation">
+      {/* <image href={getImagePath(data)} width="60" height="40" /> */}
+      <rect x={0} y={0} className="border"></rect>
+      <text x="70" y="25" className="state">{data.name}</text>
+      <text x="0" y="60">
+        <tspan className="caption">Capital:</tspan>
+        <tspan className="capital" dx="5">{data.capital}</tspan>
+        <tspan dy="14" x="0" className="caption">Population:</tspan>
+        <tspan className="population" dx="5">{data.population}</tspan>
+        <tspan dy="14" x="0" className="caption">Area:</tspan>
+        <tspan className="area" dx="5">{data.area}</tspan>
+        <tspan dx="5">km</tspan>
+        <tspan className="sup" dy="-2">2</tspan>
+      </text>
+    </svg>
+  );
+}
+
+
 const Map: FC<Props> = ({ regionCoords }) => {
 	const {curStatData} = useCurValuesContext()
 
@@ -43,7 +68,7 @@ const Map: FC<Props> = ({ regionCoords }) => {
 			.values(curStatData)
 			.filter(curStatItem=> !!curStatItem)
 			.map(curStatItem => {
-				return curStatItem.yearValues.map(yearValue => yearValue.value)
+				return curStatItem.yearValues[0].value
 			})
 		
 		const other = _.concat(...test);
@@ -124,6 +149,89 @@ const Map: FC<Props> = ({ regionCoords }) => {
 
 	// const colorGroups = [0, 50, 200, 1000, 5000, 300000, 1000000];
 
+	const statesData = [{
+		coordinates: [40.560076548725455, 54.53531529510556],
+		data: {
+			name: 'New York',
+			population: 19746227,
+			capital: 'Albany',
+			area: 141297,
+		},
+	}, {
+		coordinates: [69.60064097022877, 62.43771004049723],
+		offsetX: -100,
+		offsetY: -80,
+		data: {
+			name: 'Illinois',
+			population: 12880580,
+			capital: 'Springfield',
+			area: 149995,
+		},
+	}];
+
+	const markers = {
+		type: 'FeatureCollection',
+		features: [
+			{
+				coordinates: [159, 56],
+				text: 'New York City',
+				value: 8406,
+			},
+			{
+				coordinates: [160, 57],
+				text: 'Bangkok',
+				value: 8281,
+			},
+			{
+				coordinates: [40.04923925434538, 51.17876373322016],
+				text: 'Baghdad',
+				value: 7181,
+			},
+			{
+				coordinates: [37.62, 55.75],
+				text: 'Moscow',
+				value: 12111,
+			},
+			{
+				coordinates: [38.961649341699925, 60.07807077542048],
+				text: 'Shanghai',
+				value: 24150,
+			},
+			{
+				coordinates: [69.60064097022877, 62.43771004049723],
+				text: 'Rio de Janeiro',
+				value: 6429,
+			},
+			{
+				coordinates: [40.560076548725455, 54.53531529510556],
+				text: 'Cairo',
+				value: 8922,
+			},
+			{
+				coordinates: [39, 53],
+				text: 'Istanbul',
+				value: 14160,
+			},
+			{
+				coordinates: [38, 61],
+				text: 'Seoul',
+				value: 10388,
+			},
+		].map((data) => ({
+			type: 'Feature',
+			geometry: {
+				type: 'Point',
+				coordinates: data.coordinates,
+			},
+			properties: {
+				text: data.text,
+				value: data.value,
+				tooltip: `<b>${data.text}</b>\n${data.value}K`,
+			},
+		})),
+	};
+	
+
 	return (
 		<div className={styles['root']}>
 			<VectorMap
@@ -169,6 +277,36 @@ const Map: FC<Props> = ({ regionCoords }) => {
 				<Legend>
 					<Source layer="regions" grouping="color" />
 				</Legend>
+
+				{/* <CommonAnnotationSettings
+        type="custom"
+        render={AnnotationTemplate}
+      >
+      </CommonAnnotationSettings>
+      {statesData.map((state) => (
+        <Annotation
+          coordinates={state.coordinates}
+          offsetX={state.offsetX}
+          offsetY={state.offsetY}
+          key={state.data.name}
+          data={state.data}
+        >
+        </Annotation>
+      ))
+      } */}
+
+<Layer
+        dataSource={markers}
+				color="red"
+        name="bubbles"
+        elementType="dot"
+        dataField="value"
+        minSize={20}
+        maxSize={40}
+        sizeGroups={[0, 8000, 10000, 50000]}
+        opacity="0.8">
+        <Label enabled={false}></Label>
+      </Layer>
 			</VectorMap>
 
 			<TopRegions />
