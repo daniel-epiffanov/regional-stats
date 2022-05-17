@@ -2,6 +2,7 @@ import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
 import { FC } from 'react'
+import Chart from './Chart'
 import { CurValuesProvider } from './context/curValuesContext'
 import LookUp from './LookUp'
 // import DoughnutChart from '../outdated/DoughnutChart'
@@ -20,6 +21,7 @@ const HomePage: FC = () => {
 		<ResponsiveBox>
 			<Row ratio={0}/>
 			<Row ratio={1} />
+			<Row ratio={0} />
 			{/* <Col ratio={1} /> */}
 			<Col ratio={1} />
 
@@ -38,12 +40,14 @@ const HomePage: FC = () => {
 				{/* </div> */}
 			</Item>
 
-			{/* <Item>
-				<Location screen="md lg" row={1} col={1} />
-				<div>
-					<DoughnutChart />
-				</div>
-			</Item> */}
+			<Item>
+				<Location screen="sm md lg" row={2} col={0} />
+				{/* <div className={styles['vector-map-container']} id="vector-map-container"> */}
+					<Chart />
+				{/* </div> */}
+			</Item>
+
+			
 
 		</ResponsiveBox>
 	)

@@ -20,11 +20,13 @@ import _ from 'lodash'
 import {
 	mean as getMean,
 	median as getMedian,
+	mode as getMode,
 	standardDeviation as getStandardDeviation,
 	interquartileRange as getInterquartileRange
 } from 'simple-statistics'
 import styles from './styles/index.module.scss'
 import TopRegions from './TopRegions'
+import { ClickEvent, SelectionChangedEvent } from 'devextreme/viz/vector_map'
 
 type Props = Readonly<{
 	regionCoords: RegionCoords
@@ -81,20 +83,21 @@ const Map: FC<Props> = ({ regionCoords }) => {
 		const cutStandardDeviation = standardDeviation / 3
 		const mean = getMean(other)
 		const median = getMedian(other)
+		const mode = getMode(other)
 
 		const newColorSetting = [
 			min,
-			(median - min) / 2,
-			(median - min) / 3,
-			(median - min) / 4,
-			(median - min) / 5,
-			(median - min) / 6,
-			median,
-			(max - median) / 6,
-			(max - median) / 5,
-			(max - median) / 4,
-			(max - median) / 3,
-			(max - median) / 2,
+			(mode - min) / 2,
+			(mode - min) / 3,
+			(mode - min) / 4,
+			(mode - min) / 5,
+			(mode - min) / 6,
+			mode,
+			(max - mode) / 6,
+			(max - mode) / 5,
+			(max - mode) / 4,
+			(max - mode) / 3,
+			(max - mode) / 2,
 			max,
 		]
 
@@ -118,15 +121,22 @@ const Map: FC<Props> = ({ regionCoords }) => {
 		})
 	}
 
-	// function onMapClick(e: MapClickEvent) {
-	// 	if (!e.target) return
-	// 	const regionName = e.target.attribute('name_ru')
-	// 	const value = e.target.attribute('value')
-	// 	// console.log({ value })
-	// 	// if (!isRegionNameInStatistics(regionName)) return
+	function onMapClick(e: ClickEvent) {
+		if (!e.target) return
+		const regionName = e.target.attribute('name_ru')
+		const value = e.target.attribute('value')
+		console.log({ regionName })
+		console.log({ value })
+		e.target.applySettings({
+			selected: true
+			// 'borderWidth': '5px',
+			// "borderColor": "black"
+		})
+		// debugger
+		// if (!isRegionNameInStatistics(regionName)) return
 
-	// 	// selectionsHandler({ selectedRegionName: regionName })
-	// }
+		// selectionsHandler({ selectedRegionName: regionName })
+	}
 
 	function customizeTooltip(element: any, b: any, c: any) {
 		return {
@@ -148,26 +158,6 @@ const Map: FC<Props> = ({ regionCoords }) => {
 	// }
 
 	// const colorGroups = [0, 50, 200, 1000, 5000, 300000, 1000000];
-
-	const statesData = [{
-		coordinates: [40.560076548725455, 54.53531529510556],
-		data: {
-			name: 'New York',
-			population: 19746227,
-			capital: 'Albany',
-			area: 141297,
-		},
-	}, {
-		coordinates: [69.60064097022877, 62.43771004049723],
-		offsetX: -100,
-		offsetY: -80,
-		data: {
-			name: 'Illinois',
-			population: 12880580,
-			capital: 'Springfield',
-			area: 149995,
-		},
-	}];
 
 	const markers = {
 		type: 'FeatureCollection',
@@ -230,6 +220,11 @@ const Map: FC<Props> = ({ regionCoords }) => {
 			},
 		})),
 	};
+
+	const selectionHandler = (e: SelectionChangedEvent) => {
+		debugger
+		console.log({e})
+	}
 	
 
 	return (
@@ -237,10 +232,14 @@ const Map: FC<Props> = ({ regionCoords }) => {
 			<VectorMap
 				id="vectorMap"
 				// bounds={BOUNDS}
-				// onClick={onMapClick}
+				onClick={onMapClick}
 				// onInitialized={onInitializedHandler}
 				zoomFactor={3}
 				// height="90vh"
+				onSelectionChanged={selectionHandler}
+				size={{
+					height: 650
+				}}
 			>
 				<ControlBar enabled={false}/>
 				<Layer
@@ -250,7 +249,7 @@ const Map: FC<Props> = ({ regionCoords }) => {
 					}}
 					type="area"
 					customize={customizeLayer}
-					selectionMode="single"
+					selectionMode="multiple"
 					name="regions"
 					// palette="Violet"
 					colorGroupingField="value"
@@ -262,6 +261,7 @@ const Map: FC<Props> = ({ regionCoords }) => {
 							size: 10,
 						},
 					}}
+					selectedColor="red"
 
 				// borderWidth="2px"
 				/>
@@ -296,6 +296,7 @@ const Map: FC<Props> = ({ regionCoords }) => {
       } */}
 
 <Layer
+	// selectionMode="single"
         dataSource={markers}
 				color="red"
         name="bubbles"
