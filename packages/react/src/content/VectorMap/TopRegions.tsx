@@ -9,6 +9,7 @@ import {
 	median as getMedian,
 	mode as getMode,
 } from 'simple-statistics'
+import TopRegionChart from './TopRegionChart'
 
 type Props = Readonly<{
 	
@@ -22,30 +23,30 @@ const TopRegions: FC<Props> = () => {
 
 	const dataSourceTop = [
 		{
-			region: 'Иркутская область',
+			region: 'Ирк обл',
 			value: curStatData['Иркутская область'].yearValues.slice(-1)[0].value
 		},
 		{
-			region: 'Рязанская область',
+			region: 'Ряз обл',
 			value: curStatData['Рязанская область'].yearValues.slice(-1)[0].value
 		},
 		{
-			region: 'Нижегородская область',
+			region: 'Ниж обл',
 			value: curStatData['Нижегородская область'].yearValues.slice(-1)[0].value
 		},
 	]
 
 	const dataSourceBottom = [
 		{
-			region: 'Тверская область',
+			region: 'Тв обл',
 			value: curStatData['Тверская область'].yearValues.slice(-1)[0].value
 		},
 		{
-			region: 'Томская область',
+			region: 'Том обл',
 			value: curStatData['Томская область'].yearValues.slice(-1)[0].value
 		},
 		{
-			region: 'Пермский край',
+			region: 'Пер кр',
 			value: curStatData['Пермский край'].yearValues.slice(-1)[0].value
 		},
 	]
@@ -53,98 +54,14 @@ const TopRegions: FC<Props> = () => {
 	return (
 		<div className={styles['root']}>
 			<div>
-				<p>dot: regions with significant chnage on this value in the past 5 years</p>
+				<p>year: 2017</p>
 				<p>mean: {getMean(values)}</p>
 				<p>median: {getMedian(values)}</p>
 				<p>mode: {getMode(values)}</p>
 			</div>
-		<Chart
-		title="Top regions"
-		id="chart"
-		dataSource={dataSourceTop}
-		rotated={true}
-		size={{
-			height: 50,
-			width: 100,
-		}}
-		rtlEnabled
-		>
-		<Series
-				valueField="value"
-				argumentField="region"
-				name="My oranges"
-				type="bar"
-				// color="blue"
-				/>
-		</Chart>
-
-{/* <div style={{width: 200}} > */}
-		<Chart
-				title="Bottom regions"
-		id="chart"
-		dataSource={dataSourceBottom}
-		rotated={true}
-		size={{
-			height: 60,
-			width: 130,
-		}}
-		>
-			<ValueAxis>
-				<AxisLabel visible={false} />
-				<Grid visible={false}/>
-			</ValueAxis>
-
-			<ArgumentAxis>
-				<AxisLabel
-					visible={true}
-					position="right"
-					indentFromAxis={3}
-				>
-					<Font
-					color="black"
-					size={10}
-					/>
-				</AxisLabel>
-			</ArgumentAxis>
-
-			<Legend visible={false} />
-
-			<Tooltip enabled />
-			<Series
-				// valueField="region"
-				// argumentField="value"
-				valueField="value"
-				argumentField="region"
-				name="My oranges"
-				type="bar"
-				color="green"
-				>
-					{/* <ValueAxis /> */}
-					{/* <Label
-					position="column"
-					visible
-					// position="outside"
-					// rotationAngle={45}
-					// verticalOffset={-200}
-					// horizontalOffset={650}
-					// alignment="right"
-					// template={(a: any)=> {
-
-					// 	console.log({a})
-
-					// 	return <h1>{a.argumentText}</h1>
-					// }}
-					textOverflow
-					customizeText={(a: any)=> {
-
-						console.log({a})
-
-						return `<h1 class="yo">${a.argumentText}</h1>`
-					}}
-					/> */}
-				</Series>
-		</Chart>
-{/* </div> */}
+			<TopRegionChart dataSource={dataSourceTop} />
+			<TopRegionChart dataSource={dataSourceBottom} />
+			<p>dot: regions with significant chnage on this value in the past 5 years</p>
 		</div>
 	)
 }

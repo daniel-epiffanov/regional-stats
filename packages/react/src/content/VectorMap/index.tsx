@@ -295,8 +295,8 @@ const Map: FC<Props> = ({ regionCoords }) => {
       ))
       } */}
 
-<Layer
-	// selectionMode="single"
+			<Layer
+				// selectionMode="single"
         dataSource={markers}
 				color="red"
         name="bubbles"
