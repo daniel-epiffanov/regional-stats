@@ -10,13 +10,14 @@ import {
 	mode as getMode,
 } from 'simple-statistics'
 import TopRegionChart from './TopRegionChart'
+import RegressionLine from './RegressionLine'
 
 type Props = Readonly<{
 	
 }>
 
 
-const TopRegions: FC<Props> = () => {
+const TopLeftAnnotation: FC<Props> = () => {
 	const {curStatData} = useCurValuesContext()
 	if(!curStatData) return null
 	const values = Object.values(curStatData).map(curStatItem=> curStatItem.yearValues[0].value)
@@ -59,11 +60,15 @@ const TopRegions: FC<Props> = () => {
 				<p>median: {getMedian(values)}</p>
 				<p>mode: {getMode(values)}</p>
 			</div>
+			<p>TOP regions</p>
 			<TopRegionChart dataSource={dataSourceTop} />
+			<p>BOTTOM regions</p>
 			<TopRegionChart dataSource={dataSourceBottom} />
+			<p>Regression Line</p>
+			<RegressionLine />
 			<p>dot: regions with significant chnage on this value in the past 5 years</p>
 		</div>
 	)
 }
 
-export default TopRegions
+export default TopLeftAnnotation

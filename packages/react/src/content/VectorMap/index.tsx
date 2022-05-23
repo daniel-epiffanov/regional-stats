@@ -25,7 +25,7 @@ import {
 	interquartileRange as getInterquartileRange
 } from 'simple-statistics'
 import styles from './styles/index.module.scss'
-import TopRegions from './TopRegions'
+import TopLeftAnnotation from './TopLeftAnnotation'
 import { ClickEvent, SelectionChangedEvent } from 'devextreme/viz/vector_map'
 
 type Props = Readonly<{
@@ -310,7 +310,7 @@ const Map: FC<Props> = ({ regionCoords }) => {
       </Layer>
 			</VectorMap>
 
-			<TopRegions />
+			<TopLeftAnnotation />
 		</div>
 	)
 }
