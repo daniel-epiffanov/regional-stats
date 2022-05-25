@@ -30,7 +30,7 @@ const Chart: FC<Props> = () => {
 
 	// const curRegion = curStatData['Рязанская область']
 
-	const values = curStatData['Рязанская область'].yearValues.map(yearValues=>yearValues.value)
+	const values = curStatData['Рязанская область']?.yearValues.map(yearValues=>yearValues.value)
 	console.log({values})
 
 	
@@ -40,7 +40,7 @@ const Chart: FC<Props> = () => {
 		<div className={styles['root']}>
 		 <DxChart
           // id="chart"
-          dataSource={curStatData['Рязанская область'].yearValues}
+          dataSource={curStatData['Рязанская область']?.yearValues}
           title="Population by Countries"
 					size={{
 						height: 200,

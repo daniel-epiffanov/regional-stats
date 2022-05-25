@@ -70,7 +70,7 @@ const Map: FC<Props> = ({ regionCoords }) => {
 			.values(curStatData)
 			.filter(curStatItem=> !!curStatItem)
 			.map(curStatItem => {
-				return curStatItem.yearValues[0].value
+				return curStatItem?.yearValues[0].value
 			})
 		
 		const other = _.concat(...test);
@@ -114,7 +114,7 @@ const Map: FC<Props> = ({ regionCoords }) => {
 		if(!curStatData) return
 		elements.forEach((element: any) => {
 			const regionName = element.attribute('name_ru')
-			element.attribute('value', curStatData[regionName].yearValues[0].value)
+			curStatData[regionName] && element.attribute('value', curStatData[regionName].yearValues[0].value)
 			// if (!isRegionNameInStatistics(regionName)) {
 			// 	element.applySettings({ opacity: 0.2 })
 			// }

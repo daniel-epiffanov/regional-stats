@@ -20,7 +20,7 @@ type Props = Readonly<{
 const TopLeftAnnotation: FC<Props> = () => {
 	const {curStatData} = useCurValuesContext()
 	if(!curStatData) return null
-	const values = Object.values(curStatData).map(curStatItem=> curStatItem.yearValues[0].value)
+	const values = Object.values(curStatData).map(curStatItem=> curStatItem?.yearValues[0].value)
 
 	const dataSourceTop = [
 		{
