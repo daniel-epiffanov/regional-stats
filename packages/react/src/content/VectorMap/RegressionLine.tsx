@@ -113,7 +113,7 @@ const RegressionLine: FC<Props> = () => {
 		<div style={{display: 'flex', gap: 20}}>
 
 		<div>
-			<p>slope {year - 2}: {(newdsWithTrendLineAfterPrev[1].trendLineVal - newdsWithTrendLineAfterPrev[0].trendLineVal) / (5-0)}</p>
+			<p>slope {year - 2}: {(5-0) / (newdsWithTrendLineAfterPrev[1].trendLineVal - newdsWithTrendLineAfterPrev[0].trendLineVal)}</p>
 			<Chart
 				id="chart"
 				dataSource={newdsWithTrendLineAfterPrev}
@@ -130,7 +130,7 @@ const RegressionLine: FC<Props> = () => {
 		</div>
 
 		<div>
-			<p>slope {year - 1}: {(newdsWithTrendLinePrev[1].trendLineVal - newdsWithTrendLinePrev[0].trendLineVal) / (5-0)}</p>
+			<p>slope {year - 1}: {(5-0) /  (newdsWithTrendLinePrev[1].trendLineVal - newdsWithTrendLinePrev[0].trendLineVal)}</p>
 			<Chart
 				id="chart"
 				dataSource={newdsWithTrendLinePrev}
@@ -147,7 +147,7 @@ const RegressionLine: FC<Props> = () => {
 		</div>
 
 		<div>
-			<p>slope {year + 1}: {(newdsWithTrendLineNext[1].trendLineVal - newdsWithTrendLineNext[0].trendLineVal) / (5-0)}</p>
+			<p>slope {year + 1}: { (5-0) / (newdsWithTrendLineNext[1].trendLineVal - newdsWithTrendLineNext[0].trendLineVal)}</p>
 			<Chart
 				id="chart"
 				dataSource={newdsWithTrendLineNext}
@@ -163,7 +163,7 @@ const RegressionLine: FC<Props> = () => {
 			</Chart>
 		</div>
 		<div>
-			<p>slope {year + 2}: {(newdsWithTrendLineAfterNext[1].trendLineVal - newdsWithTrendLineAfterNext[0].trendLineVal) / (5-0)}</p>
+			<p>slope {year + 2}: {(5-0) /  (newdsWithTrendLineAfterNext[1].trendLineVal - newdsWithTrendLineAfterNext[0].trendLineVal)}</p>
 			<Chart
 				id="chart"
 				dataSource={newdsWithTrendLineAfterNext}
