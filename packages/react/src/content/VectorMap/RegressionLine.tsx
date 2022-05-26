@@ -7,12 +7,9 @@ import {
 	linearRegression as getLinearRegression,
 	linearRegressionLine as getLinearRegressionLine
 } from 'simple-statistics'
+import Arrow from '../../components/Arrow'
 
 type Props = Readonly<{
-	// dataSource: Readonly<{
-	// 	region: string,
-	// 	value: number,
-	// }>[]
 }>
 
 const year = 2014
@@ -21,6 +18,8 @@ const RegressionLine: FC<Props> = () => {
 	const {curStatData} = useCurValuesContext()
 
 	if(!curStatData) return null
+
+	console.log({curStatData})
 
 	const getValuesByYear = (year: number) => {
 		return Object.entries(curStatData)
@@ -35,25 +34,26 @@ const RegressionLine: FC<Props> = () => {
 	}
 
 	const newds = getValuesByYear(year)
-	const prev = getValuesByYear(year - 1)
-	const next = getValuesByYear(year + 1)
-	const prevAfterPrev = getValuesByYear(year - 2)
-	const nextAfterNext = getValuesByYear(year + 2)
+	console.log({newds})
+	// const prev = getValuesByYear(year - 1)
+	// const next = getValuesByYear(year + 1)
+	// const prevAfterPrev = getValuesByYear(year - 2)
+	// const nextAfterNext = getValuesByYear(year + 2)
 
 	const getDataSourceWithTrendline = (values: {
     region: string;
     val: number | undefined;
-}[]) => {
+	}[]) => {
 
-		const newdsStat = values.map((value, i) => [i, parseFloat(`${value.val}`)])
-		const statData = getLinearRegression(newdsStat)
-		const fn = getLinearRegressionLine(statData)
-		return values.map((value, i)=> ({...value, trendlineVal: value.val ? fn(i) : null}))
-	}
+			const newdsStat = values.map((value, i) => [i, parseFloat(`${value.val}`)])
+			const statData = getLinearRegression(newdsStat)
+			const fn = getLinearRegressionLine(statData)
+			return values.map((value, i)=> ({...value, trendlineVal: value.val ? fn(i) : null}))
+		}
 	const getTrendingLineSlope = (values: {
-    region: string;
-    val: number | undefined;
-}[]) => {
+		region: string;
+		val: number | undefined;
+	}[]) => {
 
 		const newdsStat = values.map((value, i) => [i, parseFloat(`${value.val}`)])
 		const statData = getLinearRegression(newdsStat)
@@ -68,18 +68,25 @@ const RegressionLine: FC<Props> = () => {
 	}
 
 	const newdsWithTrendLine = getDataSourceWithTrendline(newds)
-	const newdsWithTrendLineNext = getTrendingLineSlope(next)
-	const newdsWithTrendLinePrev = getTrendingLineSlope(prev)
-	const newdsWithTrendLineAfterPrev = getTrendingLineSlope(prevAfterPrev)
-	const newdsWithTrendLineAfterNext = getTrendingLineSlope(nextAfterNext)
+	console.log({newdsWithTrendLine})
+	// const newdsWithTrendLineNext = getTrendingLineSlope(next)
+	// const newdsWithTrendLinePrev = getTrendingLineSlope(prev)
+	// const newdsWithTrendLineAfterPrev = getTrendingLineSlope(prevAfterPrev)
+	// const newdsWithTrendLineAfterNext = getTrendingLineSlope(nextAfterNext)
 
+	// const newdsWithTrendLineNextSlope = (newdsWithTrendLineNext[1].trendLineVal - newdsWithTrendLineNext[0].trendLineVal) / 5
+	// const newdsWithTrendLinePrevSlope = (newdsWithTrendLinePrev[1].trendLineVal - newdsWithTrendLinePrev[0].trendLineVal) / 5
+	// const newdsWithTrendLineAfterPrevSlope = (newdsWithTrendLineAfterPrev[1].trendLineVal - newdsWithTrendLineAfterPrev[0].trendLineVal) / 5
+	// const newdsWithTrendLineAfterNextSlope = (newdsWithTrendLineAfterNext[1].trendLineVal - newdsWithTrendLineAfterNext[0].trendLineVal) / 5
+
+	const getDeg = (slope: number) => Math.atan(slope) * (180/Math.PI)
 
 	console.log({newdsWithTrendLine})
 
 	return (
 		<div>
 
-		<Chart
+		{/* <Chart
 			id="chart"
 			dataSource={newdsWithTrendLine}
 			size={{
@@ -88,8 +95,8 @@ const RegressionLine: FC<Props> = () => {
 			}}
 			valueAxis={{
 				visualRange: {
-					endValue: 80,
-					startValue: -80,
+					endValue: 20,
+					startValue: 10,
 				}
 			}}
 		>
@@ -114,77 +121,15 @@ const RegressionLine: FC<Props> = () => {
 					visible: false,
 				}}
 				/>
-    </Chart>
+    </Chart> */}
 
 		<div style={{display: 'flex', gap: 20}}>
-
-		<div>
-			<p>slope {year - 2}: {(5-0) / (newdsWithTrendLineAfterPrev[1].trendLineVal - newdsWithTrendLineAfterPrev[0].trendLineVal)}</p>
-			<Chart
-				id="chart"
-				dataSource={newdsWithTrendLineAfterPrev}
-				size={{
-					height: 50,
-					width: 200,
-				}}
-			>
-				<Series
-					valueField="val"
-					argumentField="trendLineVal"
-					/>
-			</Chart>
+			<div>
+				{/* <p>slope {year - 2}: {(5-0) / (newdsWithTrendLineAfterPrev[1].trendLineVal - newdsWithTrendLineAfterPrev[0].trendLineVal)}</p>
+				<Arrow incline={getDeg(newdsWithTrendLineAfterPrevSlope)}/> */}
+			</div>
 		</div>
 
-		<div>
-			<p>slope {year - 1}: {(5-0) /  (newdsWithTrendLinePrev[1].trendLineVal - newdsWithTrendLinePrev[0].trendLineVal)}</p>
-			<Chart
-				id="chart"
-				dataSource={newdsWithTrendLinePrev}
-				size={{
-					height: 50,
-					width: 200,
-				}}
-			>
-				<Series
-					valueField="val"
-					argumentField="trendLineVal"
-					/>
-			</Chart>
-		</div>
-
-		<div>
-			<p>slope {year + 1}: { (5-0) / (newdsWithTrendLineNext[1].trendLineVal - newdsWithTrendLineNext[0].trendLineVal)}</p>
-			<Chart
-				id="chart"
-				dataSource={newdsWithTrendLineNext}
-				size={{
-					height: 50,
-					width: 200,
-				}}
-			>
-				<Series
-					valueField="val"
-					argumentField="trendLineVal"
-					/>
-			</Chart>
-		</div>
-		<div>
-			<p>slope {year + 2}: {(5-0) /  (newdsWithTrendLineAfterNext[1].trendLineVal - newdsWithTrendLineAfterNext[0].trendLineVal)}</p>
-			<Chart
-				id="chart"
-				dataSource={newdsWithTrendLineAfterNext}
-				size={{
-					height: 50,
-					width: 200,
-				}}
-			>
-				<Series
-					valueField="val"
-					argumentField="trendLineVal"
-					/>
-			</Chart>
-		</div>
-		</div>
 		</div>
 	)
 }
