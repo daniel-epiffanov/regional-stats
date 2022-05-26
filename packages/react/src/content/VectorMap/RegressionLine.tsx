@@ -86,6 +86,12 @@ const RegressionLine: FC<Props> = () => {
 				height: 150,
 				width: 500,
 			}}
+			valueAxis={{
+				visualRange: {
+					endValue: 80,
+					startValue: -80,
+				}
+			}}
 		>
       <CommonSeriesSettings
 			type="scatter"
