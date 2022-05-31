@@ -47,6 +47,7 @@ const RegressionLine: FC<Props> = () => {
 	console.log({mean2015})
 	console.log({slope2015})
 
+	const getDeg = (slope: number) => Math.atan(slope) * (180/Math.PI)
 
 
 	return (
