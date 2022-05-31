@@ -1,0 +1,41 @@
+.root {
+	background-color: rgb(226, 226, 226);
+	padding: 10px 0;
+}
+
+.scroll-content {
+	display: flex;
+	width: 5000;
+	gap: 20px;
+	
+	.card {
+		background-color: rgb(255, 255, 255);
+		width: 0200px;
+		display: flex;
+		gap: 5px;
+		align-items: center;
+		padding: 10px 0;
+		padding-left: 5px;
+		// border: 1px solid black;
+		border-radius: 3px;
+	
+		.card-line {
+			height: 60px;
+			border-left: green 5px solid;
+		}
+
+		.card-content {
+			display: flex;
+			flex-direction: column;
+
+			.card-procent {
+				font-size: 1.5rem;
+				font-weight: bold;
+			}
+			.card-year {
+				font-size: 0.9rem;
+				color: #b5b5b5;
+			}
+		}
+	}
+}

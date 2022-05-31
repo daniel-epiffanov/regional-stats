@@ -35,20 +35,19 @@ const RegressionLine: FC<Props> = () => {
 		return valuesFiltered
 	}
 
-	const year2014 = getValuesByYear(2009)
-	const year2015 = getValuesByYear(2010)
+	const year2014 = getValuesByYear(2014)
+	const year2015 = getValuesByYear(2015)
 	const mean2014 = getMean(year2014)
 	const mean2015 = getMean(year2015)
-	const slope2015 = Math.atan(mean2015 - mean2014) * (180/Math.PI)
+	const max = Math.max(mean2014,	mean2015)
+	const delta = mean2015 - mean2014
+	const percent = (delta * 100) / max
+	// console.log({percent})
 
-	console.log({year2014})
-	console.log({year2015})
-	console.log({mean2014})
-	console.log({mean2015})
-	console.log({slope2015})
-
-	const getDeg = (slope: number) => Math.atan(slope) * (180/Math.PI)
-
+	// console.log({year2014})
+	// console.log({year2015})
+	// console.log({mean2014})
+	// console.log({mean2015})
 
 	return (
 		<div>
