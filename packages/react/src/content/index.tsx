@@ -9,6 +9,7 @@ import LookUp from './LookUp'
 // import MeasuresMenu from '../outdated/MeasuresMenu'
 import styles from './styles/index.module.scss'
 import VectorMap from './VectorMap'
+import YearsProgress from './YearsProgress'
 
 const HomePage: FC = () => {
 	// const scrollhandler = (e: Event) => {
@@ -20,6 +21,7 @@ const HomePage: FC = () => {
 	return (
 		<ResponsiveBox>
 			<Row ratio={0}/>
+			<Row ratio={0} />
 			<Row ratio={1} />
 			<Row ratio={0} />
 			{/* <Col ratio={1} /> */}
@@ -28,23 +30,21 @@ const HomePage: FC = () => {
 			<Item>
 				<Location screen="sm md lg" row={0} col={0} rowspan={1} />
 				<LookUp />
-				{/* <div className={styles['measures-menu-container']} id="measures-menu-container">
-					<MeasuresMenu />
-				</div> */}
 			</Item>
-
+			
 			<Item>
-				<Location screen="sm md lg" row={1} col={0} />
-				{/* <div className={styles['vector-map-container']} id="vector-map-container"> */}
-					<VectorMap />
-				{/* </div> */}
+				<Location screen="sm md lg" row={1} col={0} rowspan={1} />
+				<YearsProgress />
 			</Item>
 
 			<Item>
 				<Location screen="sm md lg" row={2} col={0} />
-				{/* <div className={styles['vector-map-container']} id="vector-map-container"> */}
+					<VectorMap />
+			</Item>
+
+			<Item>
+				<Location screen="sm md lg" row={3} col={0} />
 					<Chart />
-				{/* </div> */}
 			</Item>
 
 			
