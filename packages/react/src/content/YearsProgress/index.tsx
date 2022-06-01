@@ -10,6 +10,9 @@ import styles from './styles/idnex.module.scss'
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
 import { Chart } from 'devextreme-react'
 import { CommonSeriesSettings, Series } from 'devextreme-react/chart'
+import RangeSelector, {
+  Margin, MinorTick, Scale,
+} from 'devextreme-react/range-selector'
 
 type Props = Readonly<{
 }>
@@ -17,6 +20,7 @@ type Props = Readonly<{
 const RegressionLine: FC<Props> = () => {
 	const {curStatData} = useCurValuesContext()
 	const { statYears } = useGeneralDataContext()
+	const years = statYears.filter(statYear => `${statYear}`.length === 4)
 
 	if(!curStatData) return null
 
@@ -87,15 +91,29 @@ const RegressionLine: FC<Props> = () => {
 		trendline: rl(m.year)
 	}))
 
-	console.log({merged})
-
-
-	console.log({ 2008: rl(2008) })
-	console.log({ 2009: rl(2009) })
-	console.log({ 2010: rl(2010) })
+	console.log({statYears})
 
 	return (
 		<div className={styles['root']}>
+
+		<RangeSelector
+				id="range-selector"
+				defaultValue={[2008, 2014]}
+				height={80}
+			>
+				{/* <Margin top={0} bottom={0} /> */}
+				<Scale
+					startValue={years[0]}
+					endValue={years[years.length - 1]}
+					valueType="numeric"
+					linearThreshold={1}
+					allowDecimals={false}
+					// minorTickInterval={"year"}
+					// type='logarithmic'
+					// minRange={"year"}
+					// type="discrete"
+				/>
+    </RangeSelector>
 
 			<h3>Mean annual groth (all regions)</h3>
 
@@ -128,11 +146,10 @@ const RegressionLine: FC<Props> = () => {
 			<Chart
 			id="chart"
 			dataSource={merged2}
-			width="70vw"
-			// size={{
-			// 	height: 150,
-			// 	width: 80
-			// }}
+			size={{
+				height: 150,
+				width: 700
+			}}
 			// valueAxis={{
 			// 	visualRange: {
 			// 		endValue: 1_000_000,
