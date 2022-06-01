@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useCurValuesContext } from '../context/curValuesContext'
 import {
 	mean as getMean,
@@ -73,6 +73,8 @@ const RegressionLine: FC<Props> = () => {
 
 	console.log({ yearValuesProcents })
 
+	const [chosenYears, setChosenYears] = useState([years[10], years[years.length - 1]])
+	
 	const chartValues = Object.entries(curStatData)
 		.map(curStatEntry => curStatEntry && curStatEntry[1] && curStatEntry[1].yearValues && curStatEntry[1].yearValues)
 		.filter(yearValues=> Array.isArray(yearValues) &&yearValues.length > 0)
@@ -92,27 +94,40 @@ const RegressionLine: FC<Props> = () => {
 	}))
 
 	console.log({statYears})
+	console.log({years})
+
 
 	return (
 		<div className={styles['root']}>
 
 		<RangeSelector
-				id="range-selector"
-				defaultValue={[2008, 2014]}
-				height={80}
-			>
-				{/* <Margin top={0} bottom={0} /> */}
-				<Scale
-					startValue={years[0]}
-					endValue={years[years.length - 1]}
-					valueType="numeric"
-					linearThreshold={1}
-					allowDecimals={false}
-					// minorTickInterval={"year"}
-					// type='logarithmic'
-					// minRange={"year"}
-					// type="discrete"
-				/>
+			id="range-selector"
+			defaultValue={chosenYears}
+			height={80}
+			dataSource={years.map(statYear => ({year: statYear}))}
+			dataSourceField="year"
+			onValueChanged={(e) => {
+				console.log({e})
+				if(!Array.isArray(e.value)) return
+				setChosenYears([
+					parseInt(`${e.value[0]}`),
+					parseInt(`${e.value[1]}`)
+				])
+			}}
+			value={chosenYears}
+		>
+			{/* <Margin top={0} bottom={0} /> */}
+			<Scale
+				// startValue={years[0]}
+				// endValue={years[years.length - 1]}
+				valueType="numeric"
+				// linearThreshold={1}
+				// allowDecimals={false}
+				// minorTickInterval={"year"}
+				// type='logarithmic'
+				// minRange={"year"}
+				type="discrete"
+			/>
     </RangeSelector>
 
 			<h3>Mean annual groth (all regions)</h3>
@@ -127,6 +142,7 @@ const RegressionLine: FC<Props> = () => {
 			>
 				<div className={styles['scroll-content']}>
 						{yearValuesProcents.map(({percent, year, mean}) => {
+							if(year < chosenYears[0] || year > chosenYears[1]) return null
 							let borderColor = percent > 0 ? '#00800075' : '#ff00007a'
 							if(percent === 0) borderColor = '#e2e2e2'
 
