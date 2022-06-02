@@ -74,7 +74,7 @@ const RegressionLine: FC<Props> = () => {
 	console.log({ yearValuesProcents })
 
 	const [chosenYears, setChosenYears] = useState([years[10], years[years.length - 1]])
-	
+
 	const chartValues = Object.entries(curStatData)
 		.map(curStatEntry => curStatEntry && curStatEntry[1] && curStatEntry[1].yearValues && curStatEntry[1].yearValues)
 		.filter(yearValues=> Array.isArray(yearValues) &&yearValues.length > 0)
@@ -95,7 +95,6 @@ const RegressionLine: FC<Props> = () => {
 
 	console.log({statYears})
 	console.log({years})
-
 
 	return (
 		<div className={styles['root']}>
