@@ -10,9 +10,7 @@ import styles from './styles/idnex.module.scss'
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
 import { Chart } from 'devextreme-react'
 import { CommonSeriesSettings, Series } from 'devextreme-react/chart'
-import RangeSelector, {
-  Margin, MinorTick, Scale,
-} from 'devextreme-react/range-selector'
+import RangeSelector, { Scale } from 'devextreme-react/range-selector'
 import {useToggle} from 'react-use'
 
 type Props = Readonly<{
