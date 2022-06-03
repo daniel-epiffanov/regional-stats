@@ -121,10 +121,13 @@ const Map: FC<Props> = ({ regionCoords }) => {
 		})
 	}
 
+	const {setCurValues, curRegions} = useCurValuesContext()
+
 	function onMapClick(e: ClickEvent) {
 		if (!e.target) return
 		const regionName = e.target.attribute('name_ru')
 		const value = e.target.attribute('value')
+
 		console.log({ regionName })
 		console.log({ value })
 		e.target.applySettings({
@@ -132,6 +135,14 @@ const Map: FC<Props> = ({ regionCoords }) => {
 			// 'borderWidth': '5px',
 			// "borderColor": "black"
 		})
+
+		if(curRegions.includes(regionName)) return
+		if(curRegions.length > 2) return setCurValues({ curRegions: [regionName] })
+		setCurValues({
+			curRegions: [...curRegions, regionName]
+		})
+
+
 		// debugger
 		// if (!isRegionNameInStatistics(regionName)) return
 

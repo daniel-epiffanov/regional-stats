@@ -2,7 +2,7 @@ import ResponsiveBox, {
 	Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box'
 import { FC } from 'react'
-import Chart from './Chart'
+import CurRegions from './CurRegions'
 import { CurValuesProvider } from './context/curValuesContext'
 import LookUp from './LookUp'
 // import DoughnutChart from '../outdated/DoughnutChart'
@@ -44,7 +44,7 @@ const HomePage: FC = () => {
 
 			<Item>
 				<Location screen="sm md lg" row={3} col={0} />
-					<Chart />
+					<CurRegions />
 			</Item>
 
 			

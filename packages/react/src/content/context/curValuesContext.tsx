@@ -13,7 +13,7 @@ import Message from '../../components/Message'
 import { useGeneralDataContext } from '../../context/GeneralDataContext'
 
 interface ContextValues {
-	// selectedRegionName: MongoStatisticsOfRegion['regionName'],
+	curRegions: string[],
 	// curMainSectionName: MongoMainSection['name'],
 	// curSubSectionName: MongoSubSection['name'],
 	// curSubSectionChildName?: MongoSubSection['name'],
@@ -42,7 +42,7 @@ export const CurValuesProvider: FC = ({ children }) => {
 
 	
 	const [curValuesAcc, setCurValuesAcc] = useState<ReadonlyStateValues>({
-		// selectedRegionName: statRegionNames[0],
+		curRegions: [],
 		// curMainSectionName: statMainSectionNames[0].name,
 		// curSubSectionName: '',
 		// selectedYearOnMap: statYears[0],
@@ -54,18 +54,6 @@ export const CurValuesProvider: FC = ({ children }) => {
 		setCurValuesAcc(prevSelectionParams => ({ ...prevSelectionParams, ...newSelections }))
 	}
 	
-	// const {loading, error, data} = useSubSectionData(statMainSectionNames[0].name)
-
-	// useEffect(() => {
-	// 	if(data) {
-	// 		setCurValuesAcc({...curValuesAcc, curSubSectionName: data.statSubSectionNames[0].name})
-	// 	}
-	// }, [data])
-	
-
-	// if(error) return <Message text="loading subsections error" type="error" />
-	// if(loading || !data || !curValuesAcc.curSubSectionName) return <Message text="loading subsections" type="message" />
-
 	return (
 		<CurValuesContext.Provider value={{
 			...curValuesAcc,

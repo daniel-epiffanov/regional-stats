@@ -13,6 +13,7 @@ import { CommonSeriesSettings, Series } from 'devextreme-react/chart'
 import RangeSelector, {
   Margin, MinorTick, Scale,
 } from 'devextreme-react/range-selector'
+import {useToggle} from 'react-use'
 
 type Props = Readonly<{
 }>
@@ -85,52 +86,26 @@ const RegressionLine: FC<Props> = () => {
 	.concat.apply([], chartValues)
 	// .filter((v, i)=> i < 100);
 
-	const rl = getLinearRegressionLine(getLinearRegression(merged.map(chartValue => ([chartValue.year, chartValue.value]))))
+	const rl = getLinearRegression(merged.map(chartValue => ([chartValue.year, chartValue.value])))
+
+	const rlf = getLinearRegressionLine(rl)
 
 	const merged2 = merged.map(m=>({
 		year: m.year,
 		value: m.value,
-		trendline: rl(m.year)
+		trendline: rlf(m.year)
 	}))
 
 	console.log({statYears})
 	console.log({years})
 
+	const [isRegressionLineShown, toggleIsRegressionLineShown] = useToggle(false)
+
 	return (
 		<div className={styles['root']}>
 
-		<RangeSelector
-			id="range-selector"
-			defaultValue={chosenYears}
-			height={80}
-			dataSource={years.map(statYear => ({year: statYear}))}
-			dataSourceField="year"
-			onValueChanged={(e) => {
-				console.log({e})
-				if(!Array.isArray(e.value)) return
-				setChosenYears([
-					parseInt(`${e.value[0]}`),
-					parseInt(`${e.value[1]}`)
-				])
-			}}
-			value={chosenYears}
-		>
-			{/* <Margin top={0} bottom={0} /> */}
-			<Scale
-				// startValue={years[0]}
-				// endValue={years[years.length - 1]}
-				valueType="numeric"
-				// linearThreshold={1}
-				// allowDecimals={false}
-				// minorTickInterval={"year"}
-				// type='logarithmic'
-				// minRange={"year"}
-				type="discrete"
-			/>
-    </RangeSelector>
 
-			<h3>Mean annual groth (all regions)</h3>
-
+			{/* <h3>Mean annual groth (all regions)</h3> */}
 			<ScrollView
         height={100}
 				width="100%"
@@ -158,54 +133,74 @@ const RegressionLine: FC<Props> = () => {
 				</div>
       </ScrollView>
 
-			<Chart
-			id="chart"
-			dataSource={merged2}
-			size={{
-				height: 150,
-				width: 700
-			}}
-			// valueAxis={{
-			// 	visualRange: {
-			// 		endValue: 1_000_000,
-			// 		startValue: 0,
-			// 	}
-			// }}
-		>
+			<ul>
+				<li>slope: {rl.b}</li>
+				<li>total growth since 2000: 514%</li>
+				<li>growth trend: {rl.b > 0 ? "positive" : "negative"}</li>
+				<li><button onClick={() => toggleIsRegressionLineShown()}>show regression line</button></li>
+				<li>show growth chart</li>
+			</ul>
 
-{/* <Series
-	valueField="value"
-	argumentField="year"
-	name="My oranges"
-	type="line"
-	color="#ffaa66"
-	/> */}
+			
 
-
-      <CommonSeriesSettings
-			type="scatter"
-			/>
-      <Series
-        valueField="value"
-        argumentField="year"
-				point={{
-					size: 4
+			{isRegressionLineShown && (
+				<div>
+				<Chart
+				id="chart"
+				dataSource={merged2}
+				size={{
+					height: 150,
+					width: 700
 				}}
-				/>
-      <Series
-        valueField="trendline"
-        argumentField="year"
-				type="spline"
-				dashStyle="dash"
-				width={4}
-				hoverMode="none"
-				point={{
-					visible: false,
-				}}
-				name="trendline"
-				/>
-    </Chart>
+			>
 
+				<CommonSeriesSettings
+				type="scatter"
+				/>
+				<Series
+					valueField="value"
+					argumentField="year"
+					point={{
+						size: 4
+					}}
+					/>
+				<Series
+					valueField="trendline"
+					argumentField="year"
+					type="spline"
+					dashStyle="dash"
+					width={4}
+					hoverMode="none"
+					point={{
+						visible: false,
+					}}
+					name="trendline"
+					/>
+				</Chart>
+
+				<RangeSelector
+					id="range-selector"
+					defaultValue={chosenYears}
+					height={80}
+					dataSource={years.map(statYear => ({year: statYear}))}
+					dataSourceField="year"
+					onValueChanged={(e) => {
+						console.log({e})
+						if(!Array.isArray(e.value)) return
+						setChosenYears([
+							parseInt(`${e.value[0]}`),
+							parseInt(`${e.value[1]}`)
+						])
+					}}
+					value={chosenYears}
+				>
+				<Scale
+					valueType="numeric"
+					type="discrete"
+					/>
+				</RangeSelector>
+			</div>
+			)}
 		</div>
 	)
 }

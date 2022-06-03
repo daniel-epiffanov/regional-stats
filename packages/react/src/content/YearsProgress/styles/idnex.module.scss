@@ -1,5 +1,5 @@
 .root {
-	background-color: rgb(226, 226, 226);
+	// background-color: rgb(226, 226, 226);
 	padding: 10px 0;
 }
 
@@ -7,9 +7,11 @@
 	display: flex;
 	width: 5000;
 	gap: 20px;
+	padding-top: 5px;
 	
 	.card {
 		background-color: rgb(255, 255, 255);
+		box-shadow: 1px 1px 4px #00000030;
 		width: 0200px;
 		display: flex;
 		gap: 5px;
@@ -37,5 +39,18 @@
 				color: #b5b5b5;
 			}
 		}
+	}
+}
+
+ul {
+	border-top: 2px solid #8080804a;
+  margin-top: 5px;
+  padding-top: 5px;
+	list-style-type: none;
+	li {
+		display: inline-block;
+		margin: 0 10px;
+		color: grey;
+		font-weight: bold;
 	}
 }
