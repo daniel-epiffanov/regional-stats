@@ -12,6 +12,7 @@ import { Popup, Animation, Show, Position } from 'devextreme-react/popup';
 import ScrollView from 'devextreme-react/scroll-view';
 import { useToggle } from 'react-use'
 import List from './List'
+import Menu from './Menu'
 
 type Props = Readonly<{}>
 type EditValues = Readonly<{
@@ -79,23 +80,7 @@ const LookUp: FC<Props> = (props) => {
 
 	const renderContent = () => {
 		console.log({editValues})
-    return (
-				<div>
-					<List
-						items={mainSectionNames}
-						valueChangeHandler={mainSectionChangeHandler}
-					/>
-					{subSectionNamesData && (
-						<>
-							<i className="dx-icon-chevronright"/>
-							<List
-								items={subSectionNamesData.map(statSubSectionName => statSubSectionName.name)}
-								// valueChangeHandler={subSectionChangeHandler}
-							/>
-						</>
-					)}
-				</div>
-    );
+    return <Menu mainSectionNames={mainSectionNames} />;
 	}
 
 	const [isPopupVisible, toggleIsPopupVisible] = useToggle(false)
@@ -128,6 +113,9 @@ const LookUp: FC<Props> = (props) => {
 				title="Выберите категорию"
 				showCloseButton
 				height="50vh"
+				// style={{
+				// 	background: "#ffffffd9 !important"
+				// }}
 			>
 				<Position
 					at="right bottom"

@@ -20,6 +20,7 @@ const List: FC<Props> = ({ items, valueChangeHandler }) => {
 				// ={(e) => console.log({e})}
 				selectionMode="single"
 				scrollingEnabled
+				showScrollbar="always"
 				// searchEnabled
 				height={350}
 				onSelectionChanged={(e) => {
