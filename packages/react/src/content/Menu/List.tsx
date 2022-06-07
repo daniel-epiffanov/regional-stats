@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import styles from './styles/LookUpItem.module.scss'
+// import styles from './styles/LookUpItem.module.scss'
 import {
 	List as DxList
 } from 'devextreme-react/list';
@@ -12,7 +12,7 @@ type Props = Readonly<{
 const List: FC<Props> = ({ items, valueChangeHandler }) => {
 
 	return (
-		<div className={styles['root']}>
+		<div>
 
 			<DxList
 				width={250}
