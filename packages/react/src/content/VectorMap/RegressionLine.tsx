@@ -2,7 +2,7 @@
 import { Chart } from 'devextreme-react'
 import { ArgumentAxis, AxisLabel, CommonSeriesSettings, Font, Grid, Label, Legend, Series, Tooltip, ValueAxis } from 'devextreme-react/chart'
 import { FC } from 'react'
-import { useCurValuesContext } from '../../context/C2urValuesContext'
+import { useCurValuesContext } from '../../context/CurValuesContext'
 import {
 	linearRegression as getLinearRegression,
 	linearRegressionLine as getLinearRegressionLine,

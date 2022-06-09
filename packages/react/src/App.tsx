@@ -1,7 +1,7 @@
 import './styles/App.module.scss'
 import Home from './content'
 import CustomApolloProvider from './context/CustomApolloProvider'
-import { PrefetchedValuesProvider } from './context/P2refetchedValuesContext'
+import { PrefetchedValuesProvider } from './context/PrefetchedValuesContext'
 import setLocalStorageTheme from './devExtreme/setLocalStorageTheme'
 
 setLocalStorageTheme()

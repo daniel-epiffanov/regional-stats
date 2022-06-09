@@ -2,7 +2,7 @@
 import { Chart } from 'devextreme-react'
 import { ArgumentAxis, AxisLabel, Font, Grid, Label, Legend, Series, Tooltip, ValueAxis } from 'devextreme-react/chart'
 import { FC } from 'react'
-import { useCurValuesContext } from '../../context/C2urValuesContext'
+import { useCurValuesContext } from '../../context/CurValuesContext'
 import styles from './styles/TopRegions.module.scss'
 import {
 	mean as getMean,

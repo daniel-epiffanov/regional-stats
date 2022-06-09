@@ -1,51 +1,41 @@
 import { FC } from 'react'
-import { usePrefetchedValuesContext } from '../../context/P2refetchedValuesContext'
+import { usePrefetchedValuesContext } from '../../context/PrefetchedValuesContext'
 import styles from './styles/index.module.scss'
-import { Popup, Position } from 'devextreme-react/popup';
 import { useToggle } from 'react-use'
 import Content from './Content'
+import MenuStructure from './MenuStructure';
+import Popup from '../../dxComponents/Popup'
+
 
 const Menu: FC = () => {
 	const { statMainSectionNames } = usePrefetchedValuesContext()
 
-	const mainSectionNames = statMainSectionNames
-		.map(statMainSectionName => statMainSectionName.name)
+	const [isPopupVisible, toggleIsPopupVisible] = useToggle(false)
+	
+	const showPopup = () => toggleIsPopupVisible(true)
+	const hidePopup = () => toggleIsPopupVisible(false)
 
-	const renderContent = () => {
-    return <Content mainSectionNames={mainSectionNames} />;
+	const contentRenderHandler = () => {
+		const mainSectionNames = statMainSectionNames
+			.map(statMainSectionName => statMainSectionName.name)
+		
+		return <Content mainSectionNames={mainSectionNames} hidePopup={hidePopup}/>;
 	}
 
-	const [isPopupVisible, toggleIsPopupVisible] = useToggle(false)
+
 
 	return (
-		<div className={styles.root}>
-			<div id="menu123" onClick={()=> toggleIsPopupVisible()} style={{display: "flex", gap: 5, alignItems: "center"}}>
-				<h3>Население</h3>
-				<i className="dx-icon-chevronright"/>
-				<h3>Валовый региональный продукт</h3>
-				<i className="dx-icon-chevronright"/>
-				<h3>Регион</h3>
+		<div className={styles['root']}>
+			<div id="popup-trigger" className={styles['menuStructure']} onClick={showPopup}>
+				<MenuStructure />
 			</div>
 
 			<Popup
-				id="popup"
-				contentRender={renderContent}
-				visible={isPopupVisible}
-				closeOnOutsideClick
-				onHiding={() => toggleIsPopupVisible()}
-				maxWidth={850}
-				dragEnabled={false}
-				title="Выберите категорию"
-				showCloseButton
-				height="50vh"
-			>
-				<Position
-					at="left bottom"
-					my="left top"
-					of="#menu123"
-				/>
-      </Popup>
-
+				contentRenderHandler={contentRenderHandler}
+				isVisible={isPopupVisible}
+				hidingHandler={hidePopup}
+				popupTriggerId="#popup-trigger"
+			/>
 		</div>
 	)
 }

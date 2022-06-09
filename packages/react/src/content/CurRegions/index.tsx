@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import styles from './styles/index.module.scss'
-import { useCurValuesContext } from '../../context/C2urValuesContext';
+import { useCurValuesContext } from '../../context/CurValuesContext';
 import Message from '../../components/Message';
 import {
   Chart as DxChart,

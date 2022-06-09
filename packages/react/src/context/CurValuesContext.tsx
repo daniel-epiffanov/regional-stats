@@ -1,28 +1,18 @@
 import {
-	createContext, FC, useContext, useEffect, useState,
+	createContext, FC, useContext, useState,
 } from 'react'
 import { StatData } from '../../../../sharedTypes/gqlQueries'
-import {
-	MongoMainSection,
-	MongoRegionCoords,
-	MongoStatisticsOfRegion,
-	MongoSubSection,
-	MongoStatisticsDataItem,
-} from '../../../../sharedTypes/mongoModels'
+import {	MongoRegionCoords,} from '../../../../sharedTypes/mongoModels'
 import Message from '../components/Message'
-import { usePrefetchedValuesContext } from './P2refetchedValuesContext'
+import { usePrefetchedValuesContext } from './PrefetchedValuesContext'
 
 interface ContextValues {
+	curRegionTypeOnMap: MongoRegionCoords['type'],
 	curRegions: string[],
-	// curMainSectionName: MongoMainSection['name'],
-	// curSubSectionName: MongoSubSection['name'],
-	// curSubSectionChildName?: MongoSubSection['name'],
+	curMenuVals: ReadonlyArray<string>,
 	curStatData?: Readonly<{
     [key: string]: StatData
-}> | null,
-
-	curRegionTypeOnMap: MongoRegionCoords['type'],
-	// selectedYearOnMap: MongoStatisticsDataItem['year'],
+	}> | null,
 
 	setCurValues: SetCurValues,
 }
@@ -42,12 +32,10 @@ export const CurValuesProvider: FC = ({ children }) => {
 
 	
 	const [curValuesAcc, setCurValuesAcc] = useState<ReadonlyStateValues>({
-		curRegions: [],
-		// curMainSectionName: statMainSectionNames[0].name,
-		// curSubSectionName: '',
-		// selectedYearOnMap: statYears[0],
-		curStatData: null,
 		curRegionTypeOnMap: 'region',
+		curRegions: [],
+		curMenuVals: [],
+		curStatData: null,
 	})
 
 	const setCurValues: SetCurValues = (newSelections) => {

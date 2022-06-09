@@ -14,7 +14,7 @@ import VectorMap, {
 } from 'devextreme-react/vector-map'
 import useCoordsQuery from './hooks/useCoordsQuery'
 import Message from '../../components/Message'
-import { useCurValuesContext } from '../../context/C2urValuesContext'
+import { useCurValuesContext } from '../../context/CurValuesContext'
 import { RegionCoords } from '../../../../../sharedTypes/gqlQueries'
 import _ from 'lodash'
 import {

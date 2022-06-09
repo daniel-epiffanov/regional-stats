@@ -1,14 +1,15 @@
 import { FC, useState } from 'react'
 import { StatSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
-import { usePrefetchedValuesContext } from '../../context/P2refetchedValuesContext'
-import { useCurValuesContext } from '../../context/C2urValuesContext'
-import List from './List'
+import { usePrefetchedValuesContext } from '../../context/PrefetchedValuesContext'
+import { useCurValuesContext } from '../../context/CurValuesContext'
+import List from '../../dxComponents/List'
 import getStatData from './queries/getStatData'
 import getSubSectionNamesData from './queries/getSubSectionNamesData'
 import styles from './styles/Content.module.scss'
 
 type Props = Readonly<{
 	mainSectionNames: string[],
+	hidePopup: () => void
 }>
 
 type ChosenValues = Readonly<{
@@ -16,7 +17,7 @@ type ChosenValues = Readonly<{
 	subSectionName?: string | null
 }>
 
-const Menu: FC<Props> = ({ mainSectionNames }) => {
+const Menu: FC<Props> = ({ mainSectionNames, hidePopup }) => {
 
 	const { setCurValues } = useCurValuesContext()
 	const { statMainSectionNames, statRegionNames } = usePrefetchedValuesContext()
@@ -38,12 +39,15 @@ const Menu: FC<Props> = ({ mainSectionNames }) => {
 
 		if(isChildrenExist) return
 
+		hidePopup()
+		setCurValues({ curMenuVals: [chosenValues.mainSectionName || '', newValue] })
 		const statData = await getStatData({
 			regionNames: statRegionNames,
 			mainSectionName: `${chosenValues.mainSectionName}`,
 			subSectionName: newValue,
 		})
 		if (!statData) return
+
 		setCurValues({ curStatData: statData })
 	}
 
@@ -55,6 +59,7 @@ const Menu: FC<Props> = ({ mainSectionNames }) => {
 			subSectionChildName: newValue
 		})
 		if (!statData) return
+		hidePopup()
 		setCurValues({ curStatData: statData })
 	}
 

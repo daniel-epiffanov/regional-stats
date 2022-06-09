@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { useCurValuesContext } from '../../context/C2urValuesContext'
+import { useCurValuesContext } from '../../context/CurValuesContext'
 import {
 	mean as getMean,
 	linearRegression as getLinearRegression,
@@ -7,7 +7,7 @@ import {
 } from 'simple-statistics'
 import { ScrollView } from 'devextreme-react/scroll-view'
 import styles from './styles/idnex.module.scss'
-import { usePrefetchedValuesContext } from '../../context/P2refetchedValuesContext'
+import { usePrefetchedValuesContext } from '../../context/PrefetchedValuesContext'
 import { Chart } from 'devextreme-react'
 import { CommonSeriesSettings, Series } from 'devextreme-react/chart'
 import RangeSelector, { Scale } from 'devextreme-react/range-selector'

@@ -2,7 +2,7 @@
 import { Chart } from 'devextreme-react'
 import { ArgumentAxis, AxisLabel, Font, Grid, Label, Legend, Series, Tooltip, ValueAxis } from 'devextreme-react/chart'
 import { FC } from 'react'
-import { useCurValuesContext } from '../../context/C2urValuesContext'
+import { useCurValuesContext } from '../../context/CurValuesContext'
 
 type Props = Readonly<{
 	dataSource: Readonly<{

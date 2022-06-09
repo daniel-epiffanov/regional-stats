@@ -1,6 +1,6 @@
 import { useQuery, gql } from '@apollo/client'
 import { StatRegionNames, RegionCoords } from '../../../../../../sharedTypes/gqlQueries'
-import { useCurValuesContext } from '../../../context/C2urValuesContext'
+import { useCurValuesContext } from '../../../context/CurValuesContext'
 
 interface QueryResponse {
 	regionCoords: RegionCoords,
