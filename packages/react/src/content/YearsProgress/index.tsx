@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { useCurValuesContext } from '../context/curValuesContext'
+import { useCurValuesContext } from '../../context/C2urValuesContext'
 import {
 	mean as getMean,
 	linearRegression as getLinearRegression,
@@ -7,7 +7,7 @@ import {
 } from 'simple-statistics'
 import { ScrollView } from 'devextreme-react/scroll-view'
 import styles from './styles/idnex.module.scss'
-import { useGeneralDataContext } from '../../context/GeneralDataContext'
+import { usePrefetchedValuesContext } from '../../context/P2refetchedValuesContext'
 import { Chart } from 'devextreme-react'
 import { CommonSeriesSettings, Series } from 'devextreme-react/chart'
 import RangeSelector, { Scale } from 'devextreme-react/range-selector'
@@ -18,7 +18,7 @@ type Props = Readonly<{
 
 const RegressionLine: FC<Props> = () => {
 	const {curStatData} = useCurValuesContext()
-	const { statYears } = useGeneralDataContext()
+	const { statYears } = usePrefetchedValuesContext()
 	const years = statYears.filter(statYear => `${statYear}`.length === 4)
 
 	if(!curStatData) return null

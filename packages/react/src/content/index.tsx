@@ -3,7 +3,7 @@ import ResponsiveBox, {
 } from 'devextreme-react/responsive-box'
 import { FC } from 'react'
 import CurRegions from './CurRegions'
-import { CurValuesProvider } from './context/curValuesContext'
+import { CurValuesProvider } from '../context/C2urValuesContext'
 import Menu from './Menu'
 // import DoughnutChart from '../outdated/DoughnutChart'
 // import MeasuresMenu from '../outdated/MeasuresMenu'

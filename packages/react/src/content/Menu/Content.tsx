@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { StatSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
-import { useGeneralDataContext } from '../../context/GeneralDataContext'
-import { useCurValuesContext } from '../context/curValuesContext'
+import { usePrefetchedValuesContext } from '../../context/P2refetchedValuesContext'
+import { useCurValuesContext } from '../../context/C2urValuesContext'
 import List from './List'
 import getStatData from './queries/getStatData'
 import getSubSectionNamesData from './queries/getSubSectionNamesData'
@@ -19,7 +19,7 @@ type ChosenValues = Readonly<{
 const Menu: FC<Props> = ({ mainSectionNames }) => {
 
 	const { setCurValues } = useCurValuesContext()
-	const { statMainSectionNames, statRegionNames } = useGeneralDataContext()
+	const { statMainSectionNames, statRegionNames } = usePrefetchedValuesContext()
 
 	const [chosenValues, setChosenValues] = useState<ChosenValues>({})
 	const [subSectionNames, setSubSectionNames] = useState<StatSubSectionNames | null>(null)

@@ -19,11 +19,11 @@ const QUERY = gql` query {
 	}
 }`
 
-const GeneralDataContext = createContext<ContextValues>({} as ContextValues)
+const PrefetchedValuesContext = createContext<ContextValues>({} as ContextValues)
 
-export const useGeneralDataContext = () => useContext(GeneralDataContext)
+export const usePrefetchedValuesContext = () => useContext(PrefetchedValuesContext)
 
-export const GeneralDataProvider: FC = ({ children }) => {
+export const PrefetchedValuesProvider: FC = ({ children }) => {
 	const { loading, error, data: generalData } = useQuery<ContextValues>(QUERY)
 
 	if (loading) return <Message type="message" text="We are fetching general data." />
@@ -31,8 +31,8 @@ export const GeneralDataProvider: FC = ({ children }) => {
 	if (error || !generalData) return <Message type="error" text="General data was not fetched!" />
 
 	return (
-		<GeneralDataContext.Provider value={generalData}>
+		<PrefetchedValuesContext.Provider value={generalData}>
 			{children}
-		</GeneralDataContext.Provider>
+		</PrefetchedValuesContext.Provider>
 	)
 }

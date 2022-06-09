@@ -1,16 +1,16 @@
 import './styles/App.module.scss'
 import Home from './content'
 import CustomApolloProvider from './context/CustomApolloProvider'
-import { GeneralDataProvider } from './context/GeneralDataContext'
+import { PrefetchedValuesProvider } from './context/P2refetchedValuesContext'
 import setLocalStorageTheme from './devExtreme/setLocalStorageTheme'
 
 setLocalStorageTheme()
 
 const App = () => (
 	<CustomApolloProvider>
-		<GeneralDataProvider>
+		<PrefetchedValuesProvider>
 			<Home />
-		</GeneralDataProvider>
+		</PrefetchedValuesProvider>
 	</CustomApolloProvider>
 )
 

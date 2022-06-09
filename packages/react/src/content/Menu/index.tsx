@@ -1,14 +1,12 @@
 import { FC } from 'react'
-import { useGeneralDataContext } from '../../context/GeneralDataContext'
+import { usePrefetchedValuesContext } from '../../context/P2refetchedValuesContext'
 import styles from './styles/index.module.scss'
 import { Popup, Position } from 'devextreme-react/popup';
 import { useToggle } from 'react-use'
 import Content from './Content'
 
-type Props = Readonly<{}>
-
-const Menu: FC<Props> = (props) => {
-	const { statMainSectionNames } = useGeneralDataContext()
+const Menu: FC = () => {
+	const { statMainSectionNames } = usePrefetchedValuesContext()
 
 	const mainSectionNames = statMainSectionNames
 		.map(statMainSectionName => statMainSectionName.name)

@@ -1,16 +1,16 @@
 import {
 	createContext, FC, useContext, useEffect, useState,
 } from 'react'
-import { StatData } from '../../../../../sharedTypes/gqlQueries'
+import { StatData } from '../../../../sharedTypes/gqlQueries'
 import {
 	MongoMainSection,
 	MongoRegionCoords,
 	MongoStatisticsOfRegion,
 	MongoSubSection,
 	MongoStatisticsDataItem,
-} from '../../../../../sharedTypes/mongoModels'
-import Message from '../../components/Message'
-import { useGeneralDataContext } from '../../context/GeneralDataContext'
+} from '../../../../sharedTypes/mongoModels'
+import Message from '../components/Message'
+import { usePrefetchedValuesContext } from './P2refetchedValuesContext'
 
 interface ContextValues {
 	curRegions: string[],
