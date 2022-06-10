@@ -8,6 +8,8 @@ type Props = Readonly<{
 
 const List: FC<Props> = ({ items, valueChangeHandler }) => {
 
+	if(!items) return null
+
 	return (
 		<div>
 
