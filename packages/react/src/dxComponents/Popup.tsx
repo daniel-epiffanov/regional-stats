@@ -3,13 +3,13 @@ import { FC } from 'react';
 
 type Props = Readonly<{
 	isVisible: boolean,
-	popupTriggerId: string,
+	triggerId: string,
 	hidingHandler: () => void,
 	contentRenderHandler: () => JSX.Element
 }>
 
 const Popup: FC<Props> = (props) => {
-	const {isVisible, hidingHandler, popupTriggerId, contentRenderHandler} = props
+	const {isVisible, hidingHandler, triggerId, contentRenderHandler} = props
 	return (
 		<DxPopup
 			visible={isVisible}
@@ -21,11 +21,12 @@ const Popup: FC<Props> = (props) => {
 			title="Выберите категорию"
 			showCloseButton
 			height="50vh"
+			data-testid="popup"
 		>
 			<Position
 				at="left bottom"
 				my="left top"
-				of={popupTriggerId}
+				of={triggerId}
 			/>
     </DxPopup>
 	)

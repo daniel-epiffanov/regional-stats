@@ -34,7 +34,7 @@ const Menu: FC = () => {
 				isVisible={isPopupVisible}
 				contentRenderHandler={contentRenderHandler}
 				hidingHandler={hidePopup}
-				popupTriggerId="#popup-trigger"
+				triggerId="#popup-trigger"
 			/>
 		</div>
 	)

@@ -1,46 +1,76 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 import Popup from '../Popup';
 
-const popupTriggerId = "popup-trigger"
+const CONTENT_TEXT = "test content"
+const TRIGGER_ID = "popup-trigger"
 const hidingHandler = jest.fn()
-const contentRenderHandler = () => <p>test content</p>
+const contentRenderHandler = () => <p>{CONTENT_TEXT}</p>
 
 
 describe('Popup', () => {
 	
-	it('is not displayed when isVisible is false', async () => {
+	it('popup is not displayed when isVisible is false', async () => {
 
 		const { container } = render(
 			<Popup
 				isVisible={false}
-				popupTriggerId={popupTriggerId}
+				triggerId={TRIGGER_ID}
 				hidingHandler={hidingHandler}
 				contentRenderHandler={contentRenderHandler}
 			/>
 		)
 
-		const contentDivElement = container.getElementsByClassName("dx-popup-content")[0]
-		expect(contentDivElement).toBeInTheDocument()
-		expect(contentDivElement).not.toBeVisible()
-		
-		screen.debug()
+		await waitFor(() => {
+			const contentParagraphElement = screen.queryByText(CONTENT_TEXT)
+			expect(contentParagraphElement).toBeNull()
+			
+			const rootDivElement = container.getElementsByClassName("dx-overlay")[0]
+			expect(rootDivElement).toBeInTheDocument()
+			expect(rootDivElement).toHaveClass("dx-state-invisible")
+		})
+
+		// screen.debug()
 	})
 	
-	it('is content displayed when isVisible is true', async () => {
+	it('content is displayed when isVisible is true', async () => {
 		
-		render(
+		const { container } = render(
 			<Popup
 				isVisible
-				popupTriggerId={popupTriggerId}
+				triggerId={TRIGGER_ID}
 				hidingHandler={hidingHandler}
 				contentRenderHandler={contentRenderHandler}
 			/>
 		)
-		const contentParagraphElement = await screen.findByText(/test content/i)
-		// const contentParagraphElement2 = screen.getByText(/test content/i)
-		expect(contentParagraphElement).toBeInTheDocument()
-		expect(contentParagraphElement).toBeVisible()
+		
+		await waitFor(() => {
+			const contentParagraphElement = screen.getByText(CONTENT_TEXT)
+			expect(contentParagraphElement).toBeInTheDocument()
+			
+			const rootDivElement = container.getElementsByClassName("dx-overlay")[0]
+			expect(rootDivElement).toBeInTheDocument()
+			expect(rootDivElement).not.toHaveClass("dx-state-invisible")
+
+			// screen.debug()
+		})
+
+	})
+
+	it('hidingHandler is being called on close', async () => {
+		
+		render(
+			<Popup
+				isVisible
+				triggerId={TRIGGER_ID}
+				hidingHandler={hidingHandler}
+				contentRenderHandler={contentRenderHandler}
+			/>
+		)
+		
+		const closeButtonElement = await screen.findByRole("button")
+		expect(closeButtonElement).toBeInTheDocument()
+		fireEvent.click(closeButtonElement)
+		expect(hidingHandler).toBeCalledTimes(1)
 
 		// screen.debug()
 	})
