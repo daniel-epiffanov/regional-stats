@@ -8,26 +8,19 @@ type Props = Readonly<{
 
 const List: FC<Props> = ({ items, valueChangeHandler }) => {
 
-	if(!items) return null
-
 	return (
-		<div>
-
-			<DxList
-				width={250}
-				dataSource={items}
-				selectionMode="single"
-				scrollingEnabled
-				showScrollbar="always"
-				height={350}
-				onSelectionChanged={(e) => {
-					console.log({e})
-					const item = e.addedItems[0]
-					return valueChangeHandler && valueChangeHandler(item)
-				}}
-			>
-      </DxList>
-		</div>
+		<DxList
+			width={250}
+			dataSource={items}
+			selectionMode="single"
+			scrollingEnabled
+			showScrollbar="always"
+			height={350}
+			onSelectionChanged={(e) => {
+				const item = e.addedItems[0]
+				return valueChangeHandler && valueChangeHandler(item)
+			}}
+		/>
 	)
 }
 
