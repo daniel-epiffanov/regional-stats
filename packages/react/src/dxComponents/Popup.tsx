@@ -21,6 +21,8 @@ const Popup: FC<Props> = (props) => {
 			title="Выберите категорию"
 			showCloseButton
 			height="50vh"
+			id="popup"
+			data-testid="popup"
 		>
 			<Position
 				at="left bottom"

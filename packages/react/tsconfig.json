@@ -25,6 +25,7 @@
 	],
 	"include": [
 		"src",
-		"../../sharedTypes"
+		"../../sharedTypes",
+		"./jest.config.ts"
 	]
 }
