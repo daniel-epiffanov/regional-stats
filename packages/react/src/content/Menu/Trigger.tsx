@@ -1,10 +1,10 @@
 import { useCurValuesContext } from "../../context/CurValuesContext"
 
 // @ts-ignore
-const MenuStructure: FC = () => {
+const Trigger: FC = () => {
 	const { curMenuVals } = useCurValuesContext()
 
-	if(curMenuVals.length === 0) return <h3>Menu</h3>
+	if(curMenuVals.length === 0) return <p>categories menu</p>
 
 	return curMenuVals.map((curMenuVal, i) => {
 		const isLastElement = curMenuVals.length === (i + 1)
@@ -17,4 +17,4 @@ const MenuStructure: FC = () => {
 	})
 }
 
-export default MenuStructure
+export default Trigger

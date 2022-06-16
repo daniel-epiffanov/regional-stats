@@ -18,7 +18,7 @@ const Popup: FC<Props> = (props) => {
 			closeOnOutsideClick
 			maxWidth={850}
 			dragEnabled={false}
-			title="Выберите категорию"
+			title="Choose a category"
 			showCloseButton
 			height="50vh"
 			data-testid="popup"

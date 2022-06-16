@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { StatSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
 import { usePrefetchedValuesContext } from '../../context/PrefetchedValuesContext'
 import { useCurValuesContext } from '../../context/CurValuesContext'
@@ -8,7 +8,6 @@ import getSubSectionNamesData from './queries/getSubSectionNamesData'
 import styles from './styles/Content.module.scss'
 
 type Props = Readonly<{
-	mainSectionNames: string[],
 	hidePopup: () => void
 }>
 
@@ -17,20 +16,27 @@ type ChosenValues = Readonly<{
 	subSectionName?: string | null
 }>
 
-const Menu: FC<Props> = ({ mainSectionNames, hidePopup }) => {
-
+const Menu: FC<Props> = ({ hidePopup }) => {
+	
 	const { setCurValues } = useCurValuesContext()
 	const { statMainSectionNames, statRegionNames } = usePrefetchedValuesContext()
 
+	
+	const [statSubSectionNames, setStatSubSectionNames] = useState<StatSubSectionNames | null>(null)
 	const [chosenValues, setChosenValues] = useState<ChosenValues>({})
-	const [subSectionNames, setSubSectionNames] = useState<StatSubSectionNames | null>(null)
 
-	const mainSectionChangeHandler = async (newValue: string) => {
-		const subSectionNamesData = await getSubSectionNamesData(newValue)
-		if (!subSectionNamesData) return
-		setSubSectionNames(subSectionNamesData)
-		setChosenValues({ mainSectionName: newValue })
+	const mainSectionChangeHandler = async (newMainSectionName: string) => {
+		setChosenValues({ mainSectionName: newMainSectionName })
 	}
+
+	useEffect(() => {
+		(async () => {
+			if(!chosenValues.mainSectionName) return
+			const subSectionNamesData = await getSubSectionNamesData(chosenValues.mainSectionName)
+			setStatSubSectionNames(subSectionNamesData)
+		})()
+	}, [chosenValues.mainSectionName])
+	
 
 	const subSectionChangeHandler = async (newValue: string) => {
 		setChosenValues(oldChosenValues => ({ ...oldChosenValues, subSectionName: newValue }))
@@ -63,33 +69,31 @@ const Menu: FC<Props> = ({ mainSectionNames, hidePopup }) => {
 		setCurValues({ curStatData: statData })
 	}
 
-
+	const mainSectionNames = statMainSectionNames
+		.map(statMainSectionName => statMainSectionName.name)
+	const subSectionNames = subSectionNames.map(subSectionName => subSectionName.name)
 
 	return (
 		<div className={styles['root']}>
+			<List	items={mainSectionNames} valueChangeHandler={mainSectionChangeHandler}/>
+			{subSectionNames && (
+				<>
+					<i className="dx-icon-chevronright"/>
 					<List
-						items={mainSectionNames}
-						valueChangeHandler={mainSectionChangeHandler}
+						items={subSectionNames.map(subSectionName => subSectionName.name)}
+						valueChangeHandler={subSectionChangeHandler}
 					/>
-					{subSectionNames && (
-						<>
-							<i className="dx-icon-chevronright"/>
-							<List
-								items={subSectionNames.map(subSectionName => subSectionName.name)}
-								valueChangeHandler={subSectionChangeHandler}
-							/>
-						</>
-					)}
-					{subSectionNames && chosenValues.subSectionName && (
-						<>
-							<i className="dx-icon-chevronright"/>
-							<List
-								items={subSectionNames.find(subSectionName => subSectionName.name === chosenValues.subSectionName)?.children?.map(subSectionName=> subSectionName.name) || ['']}
-								valueChangeHandler={subSectionChildChangeHandler}
-							/>
-						</>
-					)}
-
+				</>
+			)}
+			{subSectionNames && chosenValues.subSectionName && (
+				<>
+					<i className="dx-icon-chevronright"/>
+					<List
+						items={subSectionNames.find(subSectionName => subSectionName.name === chosenValues.subSectionName)?.children?.map(subSectionName=> subSectionName.name) || ['']}
+						valueChangeHandler={subSectionChildChangeHandler}
+					/>
+				</>
+			)}
 		</div>
 	)
 }
