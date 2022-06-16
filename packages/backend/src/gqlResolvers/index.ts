@@ -1,7 +1,7 @@
 import statYears from './statYears'
 import statRegionNames from './statRegionNames'
-import statMainSectionNames from './statMainSectionNames'
-import statSubSectionNames from './statSubSectionNames'
+import statMainCategories from './statMainCategories'
+import statSubCategories from './statSubCategories'
 import statData from './statData'
 import regionCoords from './regionCoords'
 
@@ -9,8 +9,8 @@ const gqlResolvers = {
 	Query: {
 		statRegionNames,
 		statYears,
-		statMainSectionNames,
-		statSubSectionNames,
+		statMainCategories,
+		statSubCategories,
 		statData,
 		regionCoords
 	},

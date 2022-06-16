@@ -3,8 +3,6 @@ import {
 } from 'react'
 import { StatData } from '../../../../sharedTypes/gqlQueries'
 import {	MongoRegionCoords,} from '../../../../sharedTypes/mongoModels'
-import Message from '../components/Message'
-import { usePrefetchedValuesContext } from './PrefetchedValuesContext'
 
 interface ContextValues {
 	curRegionTypeOnMap: MongoRegionCoords['type'],
@@ -28,7 +26,7 @@ const CurValuesContext = createContext<ReadonlyContextValues>({} as ReadonlyCont
 export const useCurValuesContext = () => useContext(CurValuesContext)
 
 export const CurValuesProvider: FC = ({ children }) => {
-	// const { statMainSectionNames, statRegionNames, statYears } = useGeneralDataContext()
+	// const { statMainCategories, statRegionNames, statYears } = useGeneralDataContext()
 
 	
 	const [curValuesAcc, setCurValuesAcc] = useState<ReadonlyStateValues>({

@@ -1,0 +1,8 @@
+	type StatSubCategoryChild {
+		name: String,
+	}
+	
+	type StatSubCategory {
+		name: String,
+		children: [StatSubCategoryChild]
+	}

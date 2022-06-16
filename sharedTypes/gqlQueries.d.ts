@@ -10,9 +10,9 @@ import {
 export type StatRegionNames = ReadonlyArray<MongoStatisticsOfRegion['regionName']>
 
 // data to be gotten by query arguments
-export type StatMainSectionNames = ReadonlyArray<{ name: string }>
 export type StatYears = ReadonlyArray<number>
-export type StatSubSectionNames = ReadonlyArray<{
+export type StatMainCategories = ReadonlyArray<{ name: string }>
+export type StatSubCategories = ReadonlyArray<{
 	name: string,
 	children: ReadonlyArray<{
 		name: string

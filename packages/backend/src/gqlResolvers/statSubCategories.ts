@@ -1,4 +1,4 @@
-import { StatSubSectionNames } from '../../../../sharedTypes/gqlQueries'
+import { StatSubCategories } from '../../../../sharedTypes/gqlQueries'
 import StatisticsModel from '../mongoModels/statistics'
 import { ResolverFnAsync } from './types/ResolverFn'
 import _ from 'lodash'
@@ -8,13 +8,13 @@ type Args = Readonly<{
 }>
 
 
-const statisticsSubSectionNames: ResolverFnAsync<StatSubSectionNames | null> = async (
+const statSubCategories: ResolverFnAsync<StatSubCategories | null> = async (
 	parent: any,
 	args: Args,
 ) => {
 	const { mainSectionName } = args
 
-	const mongoRes = await StatisticsModel.aggregate<{ _id: StatSubSectionNames[0] }>([
+	const mongoRes = await StatisticsModel.aggregate<{ _id: StatSubCategories[0] }>([
 		{ $unwind: "$mainSections" },
 		{ $match: { "mainSections.name": mainSectionName } },
 		{ $project: { "mainSections.subSections.name": 1, "mainSections.subSections.children.name": 1 } },
@@ -28,7 +28,7 @@ const statisticsSubSectionNames: ResolverFnAsync<StatSubSectionNames | null> = a
 		return _id
 	})
 
-	let draftStatSubSectionNames: {
+	let draftstatSubCategories: {
 		name: string,
 		children: {
 			name: string
@@ -41,7 +41,7 @@ const statisticsSubSectionNames: ResolverFnAsync<StatSubSectionNames | null> = a
 	for (let rawSubSectionNamesIndex = 0; rawSubSectionNamesIndex < rawSubSectionNames.length; rawSubSectionNamesIndex++) {
 		const rawSubSectionName = rawSubSectionNames[rawSubSectionNamesIndex];
 
-		const alreadyExist = !!draftStatSubSectionNames.find(rawStatSubSectionName => rawStatSubSectionName.name === rawSubSectionName.name)
+		const alreadyExist = !!draftstatSubCategories.find(rawStatSubCategory => rawStatSubCategory.name === rawSubSectionName.name)
 		if (alreadyExist) continue
 
 		if (!!rawSubSectionName.children) {
@@ -57,7 +57,7 @@ const statisticsSubSectionNames: ResolverFnAsync<StatSubSectionNames | null> = a
 				{ $sort: { _id: 1 } }
 			])
 
-			draftStatSubSectionNames.push({
+			draftstatSubCategories.push({
 				name: rawSubSectionName.name,
 				children: childrenMongoRes.length === 0 ? null : childrenMongoRes.map(({ _id: subSectionChildName }) => ({ name: subSectionChildName }))
 			})
@@ -65,16 +65,16 @@ const statisticsSubSectionNames: ResolverFnAsync<StatSubSectionNames | null> = a
 			continue
 		}
 
-		draftStatSubSectionNames.push({
+		draftstatSubCategories.push({
 			name: rawSubSectionName.name,
 			children: null
 		})
 
 	}
 
-	const statSubSectionNames: StatSubSectionNames = [...draftStatSubSectionNames]
+	const statSubCategories: StatSubCategories = [...draftstatSubCategories]
 
-	return statSubSectionNames?.length > 0 ? statSubSectionNames : null
+	return statSubCategories?.length > 0 ? statSubCategories : null
 }
 
-export default statisticsSubSectionNames
+export default statSubCategories

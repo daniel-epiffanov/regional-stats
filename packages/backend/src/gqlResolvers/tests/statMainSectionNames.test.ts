@@ -1,4 +1,4 @@
-import { StatMainSectionNames } from '../../../../../sharedTypes/gqlQueries'
+import { statMainCategories } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from '../../tests/shared/mongoConnection'
 
@@ -9,19 +9,19 @@ test('should return an array of all main sections as {name: string}[]', async ()
 
 
 	const response = await testServer.executeOperation({
-		query: `query { statMainSectionNames { name } }`
+		query: `query { statMainCategories { name } }`
 	})
 
 	expect(response.errors).toBeUndefined()
 
-	const statMainSectionNames: StatMainSectionNames | undefined = response.data?.statMainSectionNames
+	const statMainCategories: statMainCategories | undefined = response.data?.statMainCategories
 
-	if (!statMainSectionNames) fail('statMainSectionNames is falsy')
+	if (!statMainCategories) fail('statMainCategories is falsy')
 
-	expect(Array.isArray(statMainSectionNames)).toBe(true)
-	expect(statMainSectionNames.length).toBeGreaterThan(0)
+	expect(Array.isArray(statMainCategories)).toBe(true)
+	expect(statMainCategories.length).toBeGreaterThan(0)
 
-	statMainSectionNames.forEach((statisticsMainSectionName) => {
+	statMainCategories.forEach((statisticsMainSectionName) => {
 		expect(typeof statisticsMainSectionName.name === 'string').toBe(true)
 		expect(statisticsMainSectionName.name.length).toBeGreaterThan(0)
 	})

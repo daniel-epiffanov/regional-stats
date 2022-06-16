@@ -32,7 +32,7 @@ const HomePage: FC = () => {
 				<Menu />
 			</Item>
 			
-			<Item>
+			{/* <Item>
 				<Location screen="sm md lg" row={1} col={0} rowspan={1} />
 				<YearsProgress />
 			</Item>
@@ -45,7 +45,7 @@ const HomePage: FC = () => {
 			<Item>
 				<Location screen="sm md lg" row={3} col={0} />
 					<CurRegions />
-			</Item>
+			</Item> */}
 
 			
 

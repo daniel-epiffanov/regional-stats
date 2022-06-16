@@ -1,4 +1,4 @@
-import { StatData, StatSubSectionNames } from '../../../../../sharedTypes/gqlQueries'
+import { StatData, statSubCategories } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from '../../tests/shared/mongoConnection'
 import statRegionNames from './resolversData/getStatRegionNames'
@@ -123,7 +123,7 @@ describe('Tests the statData query with a parameter', () => {
 			for (let mainSectionNameIndex = 0; mainSectionNameIndex < mainSectionNames.length; mainSectionNameIndex += 1) {
 				const mainSectionName = mainSectionNames[mainSectionNameIndex]
 
-				const rawSubSectionNames = await StatisticsModel.aggregate<{ _id: StatSubSectionNames[0] }>([
+				const rawSubSectionNames = await StatisticsModel.aggregate<{ _id: statSubCategories[0] }>([
 					{ $match: { regionName } },
 					{ $unwind: "$mainSections" },
 					{ $match: { "mainSections.name": mainSectionName.name } },

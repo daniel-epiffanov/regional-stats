@@ -1,10 +1,10 @@
 import { useCurValuesContext } from "../../context/CurValuesContext"
 
 // @ts-ignore
-const Trigger: FC = () => {
+const PopupTriggerContent: FC = () => {
 	const { curMenuVals } = useCurValuesContext()
 
-	if(curMenuVals.length === 0) return <p>categories menu</p>
+	if(curMenuVals.length === 0) return <p>statistics categories</p>
 
 	return curMenuVals.map((curMenuVal, i) => {
 		const isLastElement = curMenuVals.length === (i + 1)
@@ -17,4 +17,4 @@ const Trigger: FC = () => {
 	})
 }
 
-export default Trigger
+export default PopupTriggerContent
