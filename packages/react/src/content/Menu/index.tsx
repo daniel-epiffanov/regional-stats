@@ -24,15 +24,6 @@ const Menu: FC = () => {
 				<PopupTriggerContent />
 			</div>
 
-			{/* <List
-				width={250}
-				dataSource={[{name: '123'}, {name: '584'}]}
-				selectionMode="single"
-				scrollingEnabled
-				showScrollbar="always"
-				height={350}
-			/> */}
-
 			<Popup
 				isVisible={isPopupVisible}
 				contentRenderHandler={contentRenderHandler}

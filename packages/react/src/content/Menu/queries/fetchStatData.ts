@@ -4,9 +4,9 @@ import { hostApi } from '../../../helpers/host'
 
 type Props = Readonly<{
 	regionNames: ReadonlyArray<string>,
-	mainSectionName: string
-	subSectionName: string
-	subSectionChildName?: string
+	mainCategory: string
+	subCategory: string
+	subSubCategory?: string
 }>
 
 type StatDataResponse = Readonly<{
@@ -15,20 +15,20 @@ type StatDataResponse = Readonly<{
 	}
 }>
 
-const getStatData = async (props: Props) => {
+const fetchStatData = async (props: Props) => {
 	const {
 		regionNames,
-		mainSectionName,
-		subSectionName,
-		subSectionChildName
+		mainCategory,
+		subCategory,
+		subSubCategory
 	} = props
 
-	const subSectionChildNamePar = subSectionChildName ? `subSectionChildName: "${subSectionChildName}"` : ''
+	const subSectionChildNamePar = subSubCategory ? `subSectionChildName: "${subSubCategory}"` : ''
 
 	const statDataQuery = regionNames.map((regionName, i) => `region_${i}: statData (
 		regionName: "${regionName}",
-		mainSectionName: "${mainSectionName}",
-		subSectionName: "${subSectionName}",
+		mainSectionName: "${mainCategory}",
+		subSectionName: "${subCategory}",
 		${subSectionChildNamePar}
 	) {
 		name,
@@ -64,4 +64,4 @@ const getStatData = async (props: Props) => {
 	return statData
 }
 
-export default getStatData
+export default fetchStatData

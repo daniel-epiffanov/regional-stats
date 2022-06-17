@@ -3,9 +3,10 @@ import { StatSubCategories } from '../../../../../sharedTypes/gqlQueries'
 import { usePrefetchedValuesContext } from '../../context/PrefetchedValuesContext'
 import { useCurValuesContext } from '../../context/CurValuesContext'
 import List from '../../dxComponents/List'
-import getStatData from './queries/getStatData'
+import fetchStatData from './queries/fetchStatData'
 import fetchSubCategories from './queries/fetchSubCategories'
 import styles from './styles/Content.module.scss'
+import useCategories from './hooks/useCategories'
 
 type Props = Readonly<{
 	hidePopup: () => void
@@ -23,6 +24,8 @@ const PopupContent: FC<Props> = ({ hidePopup }) => {
 	
 	const { setCurValues } = useCurValuesContext()
 	const { statMainCategories, statRegionNames } = usePrefetchedValuesContext()
+
+	const {mainCategoriesStr} = useCategories()
 	
 	const [menuValues, setMenuValues] = useState<MenuValues>({})
 	const [statSubCategories, setStatSubCategories] = useState<StatSubCategories | null>(null)
@@ -31,33 +34,21 @@ const PopupContent: FC<Props> = ({ hidePopup }) => {
 		setMenuValues({ mainSectionName: newMainSectionName })
 	}
 
-
-
-	useEffect(() => {
-		const fetchAndSaveSubCategories = async () => {
-			if(!menuValues.mainSectionName) return
-			const subSectionNamesData = await fetchSubCategories(menuValues.mainSectionName)
-			setStatSubCategories(subSectionNamesData)
-		}
-		
-		fetchAndSaveSubCategories()
-	}, [menuValues.mainSectionName])
-
-	useEffect(() => {
-		(async () => {
-			if(!menuValues.mainSectionName || !menuValues.subSectionName) return
-			const children = statSubCategories?.find(subSectionName => subSectionName.name === menuValues.subSectionName)?.children
-			const isChildrenExist = Array.isArray(children) && children.length > 0
-			if(isChildrenExist) return
-			const statData = await getStatData({
-				regionNames: statRegionNames,
-				mainSectionName: menuValues.mainSectionName,
-				subSectionName: menuValues.subSectionName,
-			})
-			if(!statData) return
-			setCurValues({ curStatData: statData })
-		})()
-	}, [menuValues.subSectionName])
+	// useEffect(() => {
+	// 	(async () => {
+	// 		if(!menuValues.mainSectionName || !menuValues.subSectionName) return
+	// 		const children = statSubCategories?.find(subSectionName => subSectionName.name === menuValues.subSectionName)?.children
+	// 		const isChildrenExist = Array.isArray(children) && children.length > 0
+	// 		if(isChildrenExist) return
+	// 		const statData = await getStatData({
+	// 			regionNames: statRegionNames,
+	// 			mainSectionName: menuValues.mainSectionName,
+	// 			subSectionName: menuValues.subSectionName,
+	// 		})
+	// 		if(!statData) return
+	// 		setCurValues({ curStatData: statData })
+	// 	})()
+	// }, [menuValues.subSectionName])
 	
 
 	const subSectionChangeHandler = async (newSubSectionName: string) => {
@@ -70,14 +61,11 @@ const PopupContent: FC<Props> = ({ hidePopup }) => {
 		hidePopup()
 	}
 
-	const mainSectionNames = statMainCategories
-		.map(statMainSectionName => statMainSectionName.name)
-
 	// const subSectionNames = subSectionNames.map(subSectionName => subSectionName.name)
 
 	return (
 		<div className={styles['root']}>
-			<List	items={mainSectionNames} valueChangeHandler={mainSectionChangeHandler}/>
+			<List	items={mainCategories} valueChangeHandler={mainSectionChangeHandler}/>
 			{/* {subSectionNames && (
 				<>
 					<i className="dx-icon-chevronright"/>
