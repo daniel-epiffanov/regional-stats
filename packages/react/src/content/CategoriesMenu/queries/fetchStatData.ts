@@ -23,12 +23,12 @@ const fetchStatData = async (props: Props) => {
 		subSubCategory
 	} = props
 
-	const subSectionChildNamePar = subSubCategory ? `subSectionChildName: "${subSubCategory}"` : ''
+	const subSectionChildNamePar = subSubCategory ? `subSubCategory: "${subSubCategory}"` : ''
 
 	const statDataQuery = regionNames.map((regionName, i) => `region_${i}: statData (
 		regionName: "${regionName}",
-		mainSectionName: "${mainCategory}",
-		subSectionName: "${subCategory}",
+		mainCategory: "${mainCategory}",
+		subCategory: "${subCategory}",
 		${subSectionChildNamePar}
 	) {
 		name,

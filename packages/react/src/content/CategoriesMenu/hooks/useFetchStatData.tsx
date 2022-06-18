@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StatSubCategories } from '../../../../../../sharedTypes/gqlQueries'
+import { StatAnyCategories } from '../../../../../../sharedTypes/gqlQueries'
 import fetchSubCategories from '../queries/fetchSubCategories'
 import fetchStatData from '../queries/fetchStatData'
 import { CurCategories } from './useCategories'
@@ -8,7 +8,7 @@ import { useCurValuesContext } from '../../../context/CurValuesContext'
 
 type UseWatchStatData = (curCategories: CurCategories) => void
 
-const useWatchStatData: UseWatchStatData = (curCategories) => {
+const useFetchStatData: UseWatchStatData = (curCategories) => {
 		const { statRegionNames } = usePrefetchedValuesContext()
 		const { setCurValues } = useCurValuesContext()
 
@@ -32,4 +32,4 @@ const useWatchStatData: UseWatchStatData = (curCategories) => {
 	}, [curCategories.isComplete])
 }
 
-export default useWatchStatData
+export default useFetchStatData

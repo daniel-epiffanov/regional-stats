@@ -4,7 +4,7 @@ import ResponsiveBox, {
 import { FC } from 'react'
 import CurRegions from './CurRegions'
 import { CurValuesProvider } from '../context/CurValuesContext'
-import Menu from './Menu'
+import CategoriesMenu from './CategoriesMenu'
 // import DoughnutChart from '../outdated/DoughnutChart'
 // import MeasuresMenu from '../outdated/MeasuresMenu'
 import styles from './styles/index.module.scss'
@@ -29,7 +29,7 @@ const HomePage: FC = () => {
 
 			<Item>
 				<Location screen="sm md lg" row={0} col={0} rowspan={1} />
-				<Menu />
+				<CategoriesMenu />
 			</Item>
 			
 			{/* <Item>

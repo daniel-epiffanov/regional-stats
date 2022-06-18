@@ -7,17 +7,12 @@ import {
 } from './mongoModels'
 
 // general data
-export type StatRegionNames = ReadonlyArray<MongoStatisticsOfRegion['regionName']>
+export type StatRegionNames = ReadonlyArray<string>
 
 // data to be gotten by query arguments
 export type StatYears = ReadonlyArray<number>
-export type StatMainCategories = ReadonlyArray<{ name: string }>
-export type StatSubCategories = ReadonlyArray<{
-	name: string,
-	children: ReadonlyArray<{
-		name: string
-	}> | null
-}>
+export type StatMainCategories = ReadonlyArray<string>
+export type StatAnyCategories = ReadonlyArray<string>
 export type StatData = Readonly<{
 	name: string,
 	measure: string,

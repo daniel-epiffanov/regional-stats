@@ -1,11 +1,11 @@
 import axios from "axios"
-import { StatSubCategories } from "../../../../../../sharedTypes/gqlQueries"
+import { StatAnyCategories } from "../../../../../../sharedTypes/gqlQueries"
 import { hostApi } from "../../../helpers/host"
 
 
 type SubSectionDataResponse = Readonly<{
 	data: {
-		statSubCategories: StatSubCategories
+		statSubCategories: StatAnyCategories
 	}
 }>
 

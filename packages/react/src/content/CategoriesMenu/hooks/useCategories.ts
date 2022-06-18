@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { StatMainCategories, StatSubCategories } from '../../../../../../sharedTypes/gqlQueries'
+import { StatMainCategories, StatAnyCategories } from '../../../../../../sharedTypes/gqlQueries'
 import { usePrefetchedValuesContext } from '../../../context/PrefetchedValuesContext'
 import fetchSubCategories from '../queries/fetchSubCategories'
-import useWatchStatData from './useWatchStatData'
-import useWatchSubCategories from './useWatchSubCategories'
+import useFetchStatData from './useFetchStatData'
+import useFetchStatSubCategories from './useFetchStatSubCategories'
 
 export type CurCategories = Readonly<{
 	categoriesChain: string[],
@@ -19,9 +19,9 @@ const useCategories = () => {
 		isComplete: false
 	})
 
-	useWatchStatData(curCategories)
+	useFetchStatData(curCategories)
 
-	const subCategories = useWatchSubCategories(curCategories.categoriesChain[0])
+	const subCategories = useFetchStatSubCategories(curCategories.categoriesChain[0])
 	
 	
 	const changeMainCategory = async (newMainCategoryName: string) => {
@@ -46,10 +46,10 @@ const useCategories = () => {
 
 
 	return {
-		mainCategoriesName: statMainCategories.map(statMainSectionName => statMainSectionName.name),
+		mainCategoryNames: statMainCategories.map(statMainSectionName => statMainSectionName.name),
 		changeMainCategory,
 
-		subCategoriesName: subCategories?.map(subCategory => subCategory.name),
+		subCategoryNames: subCategories?.map(subCategory => subCategory.name),
 	}
 }
 

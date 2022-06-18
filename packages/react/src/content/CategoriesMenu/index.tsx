@@ -1,20 +1,18 @@
 import { FC } from 'react'
-import { usePrefetchedValuesContext } from '../../context/PrefetchedValuesContext'
 import styles from './styles/index.module.scss'
 import { useToggle } from 'react-use'
-import Content from './PopupContent'
+import PopupContent from './PopupContent'
 import PopupTriggerContent from './PopupTriggerContent';
 import Popup from '../../dxComponents/Popup'
-import { List } from 'devextreme-react'
 
 
-const Menu: FC = () => {
+const CategoriesMenu: FC = () => {
 	const [isPopupVisible, toggleIsPopupVisible] = useToggle(false)
 	
 	const showPopup = () => toggleIsPopupVisible(true)
 	const hidePopup = () => toggleIsPopupVisible(false)
 
-	const contentRenderHandler = () =>  <Content hidePopup={hidePopup}/>
+	const contentRenderHandler = () =>  <PopupContent hidePopup={hidePopup}/>
 
 
 
@@ -34,4 +32,4 @@ const Menu: FC = () => {
 	)
 }
 
-export default Menu
+export default CategoriesMenu

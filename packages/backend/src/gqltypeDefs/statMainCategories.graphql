@@ -1,3 +1,4 @@
-	type StatMainSectionName {
-		name: String
-	}
+type StatMainCategories {
+	name: String,
+	children: [StatMainCategories]
+}

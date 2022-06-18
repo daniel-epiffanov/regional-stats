@@ -1,8 +1,8 @@
-import { StatMainCategories } from '../../../../sharedTypes/gqlQueries'
+import { StatAnyCategories } from '../../../../sharedTypes/gqlQueries'
 import StatisticsModel from '../mongoModels/statistics'
 import { ResolverFnAsync } from './types/ResolverFn'
 
-const statisticsMainSectionNames: ResolverFnAsync<StatMainCategories> = async () => {
+const statFirstCategories: ResolverFnAsync<StatAnyCategories> = async () => {
 	const mongoRes = await StatisticsModel.aggregate<{ _id: string }>([
 		{ $project: { "mainSections.name": 1 } },
 		{ $unwind: "$mainSections" },
@@ -10,7 +10,8 @@ const statisticsMainSectionNames: ResolverFnAsync<StatMainCategories> = async ()
 		{ $sort: { _id: 1 } }
 	])
 
-	return mongoRes.map(({ _id: name }) => ({ name }))
+	return mongoRes.map(({ _id: name }) => name)
+
 }
 
-export default statisticsMainSectionNames
+export default statFirstCategories
