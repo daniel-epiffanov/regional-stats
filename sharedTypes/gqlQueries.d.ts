@@ -11,8 +11,7 @@ export type StatRegionNames = ReadonlyArray<string>
 
 // data to be gotten by query arguments
 export type StatYears = ReadonlyArray<number>
-export type StatMainCategories = ReadonlyArray<string>
-export type StatAnyCategories = ReadonlyArray<string>
+export type StatCategories = ReadonlyArray<string>
 export type StatData = Readonly<{
 	name: string,
 	measure: string,

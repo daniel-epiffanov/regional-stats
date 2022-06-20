@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { StatAnyCategories } from '../../../../../../sharedTypes/gqlQueries'
-import fetchSubCategories from '../queries/fetchSubCategories'
+import { StatCategories } from '../../../../../../sharedTypes/gqlQueries'
+import fetchStatSecondCategories from '../queries/fetchStatSecondCategories'
 import fetchStatData from '../queries/fetchStatData'
 import { CurCategories } from './useCategories'
 import { usePrefetchedValuesContext } from '../../../context/PrefetchedValuesContext'
@@ -14,13 +14,13 @@ const useFetchStatData: UseWatchStatData = (curCategories) => {
 
 		useEffect(() => {
 			const fetchAndSaveStatData = async () => {
-				if(!curCategories.isComplete) return
+				if(!curCategories.isChainComplete) return
 
 				const curStatData = await fetchStatData({
 					regionNames: statRegionNames,
-					mainCategory: curCategories.categoriesChain[0],
-					subCategory: curCategories.categoriesChain[1],
-					subSubCategory: curCategories.categoriesChain[2] || undefined,
+					mainCategory: curCategories.statCategoriesChain[0],
+					subCategory: curCategories.statCategoriesChain[1],
+					subSubCategory: curCategories.statCategoriesChain[2] || undefined,
 				})
 
 				if(!curStatData) return
@@ -29,7 +29,7 @@ const useFetchStatData: UseWatchStatData = (curCategories) => {
 
 
 		fetchAndSaveStatData()
-	}, [curCategories.isComplete])
+	}, [curCategories.isChainComplete])
 }
 
 export default useFetchStatData

@@ -40,7 +40,6 @@ const fetchStatData = async (props: Props) => {
     }
 	}`)
 
-	// debugger
 
 	const query = `query{
 		${statDataQuery}

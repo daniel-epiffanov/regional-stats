@@ -6,7 +6,7 @@ import PopupTriggerContent from './PopupTriggerContent';
 import Popup from '../../dxComponents/Popup'
 
 
-const CategoriesMenu: FC = () => {
+const StatCategoriesMenu: FC = () => {
 	const [isPopupVisible, toggleIsPopupVisible] = useToggle(false)
 	
 	const showPopup = () => toggleIsPopupVisible(true)
@@ -18,7 +18,7 @@ const CategoriesMenu: FC = () => {
 
 	return (
 		<div className={styles['root']}>
-			<div id="popup-trigger" className={styles['menuStructure']} onClick={showPopup}>
+			<div id="popup-trigger" className={styles['popup-trigger']} onClick={showPopup}>
 				<PopupTriggerContent />
 			</div>
 
@@ -32,4 +32,4 @@ const CategoriesMenu: FC = () => {
 	)
 }
 
-export default CategoriesMenu
+export default StatCategoriesMenu

@@ -7,7 +7,7 @@ import {	MongoRegionCoords,} from '../../../../sharedTypes/mongoModels'
 interface ContextValues {
 	curRegionTypeOnMap: MongoRegionCoords['type'],
 	curRegions: string[],
-	curMenuVals: ReadonlyArray<string>,
+	curStatCategoriesChain: string[],
 	curStatData?: Readonly<{
     [key: string]: StatData
 	}> | null,
@@ -32,7 +32,7 @@ export const CurValuesProvider: FC = ({ children }) => {
 	const [curValuesAcc, setCurValuesAcc] = useState<ReadonlyStateValues>({
 		curRegionTypeOnMap: 'region',
 		curRegions: [],
-		curMenuVals: [],
+		curStatCategoriesChain: [],
 		curStatData: null,
 	})
 

@@ -2,21 +2,19 @@ import { useQuery, gql } from '@apollo/client'
 import {
 	createContext, FC, useContext,
 } from 'react'
-import { StatMainCategories, StatRegionNames, StatYears } from '../../../../sharedTypes/gqlQueries'
+import { StatCategories, StatRegionNames, StatYears } from '../../../../sharedTypes/gqlQueries'
 import Message from '../components/Message'
 
 type ContextValues = Readonly<{
 	statRegionNames: StatRegionNames,
 	statYears: StatYears,
-	statMainCategories: StatMainCategories
+	statFirstCategories: StatCategories
 }>
 
 const QUERY = gql` query {
 	statRegionNames,
 	statYears,
-	statMainCategories {
-		name
-	}
+	statFirstCategories
 }`
 
 const PrefetchedValuesContext = createContext<ContextValues>({} as ContextValues)

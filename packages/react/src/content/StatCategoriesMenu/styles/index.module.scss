@@ -5,7 +5,7 @@
 	padding: 8px 15px;
 }
 
-.menuStructure {
+.popup-trigger {
 	display: flex;
 	gap: 5px;
 	align-items: center;
@@ -13,5 +13,9 @@
 	
 	i {
 		font-size: 1.3rem;
+	}
+
+	:hover {
+		cursor: pointer;
 	}
 }

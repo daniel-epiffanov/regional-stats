@@ -2,7 +2,7 @@ import { FC } from 'react'
 import {List as DxList } from 'devextreme-react/list';
 
 export type Props = Readonly<{
-	items: string[],
+	items: ReadonlyArray<string>,
 	valueChangeHandler?: (newValue: string) => void,
 }>
 
