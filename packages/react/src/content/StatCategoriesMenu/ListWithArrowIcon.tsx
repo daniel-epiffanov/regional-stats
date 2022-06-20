@@ -6,7 +6,7 @@ type Props = ListProps
 
 const ListWithIcon: FC<Props> = ({items, valueChangeHandler}) => (
 	<>
-		<i className="dx-icon-chevronright"/>
+		<i className="dx-icon-chevronright" testdata-id/>
 		<List
 			items={items}
 			valueChangeHandler={valueChangeHandler}
