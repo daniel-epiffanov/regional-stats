@@ -1,17 +1,16 @@
-import { FC } from "react";
-import List from "../../dxComponents/List";
-import { Props as ListProps } from '../../dxComponents/List'
+import { FC } from 'react';
+import List, { Props as ListProps } from '../../dxComponents/List';
 
 type Props = ListProps
 
-const ListWithIcon: FC<Props> = ({items, valueChangeHandler}) => (
-	<>
-		<i className="dx-icon-chevronright" testdata-id/>
-		<List
-			items={items}
-			valueChangeHandler={valueChangeHandler}
-		/>
-	</>
-)
+const ListWithIcon: FC<Props> = ({ items, valueChangeHandler }) => (
+  <>
+    <i className="dx-icon-chevronright" data-testid="dx-icon-chevronright" />
+    <List
+      items={items}
+      valueChangeHandler={valueChangeHandler}
+    />
+  </>
+);
 
-export default ListWithIcon
+export default ListWithIcon;

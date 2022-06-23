@@ -1,6 +1,6 @@
-import { useQuery, gql } from '@apollo/client'
-import { useState } from 'react'
-import { StatRegionNames, RegionCoords } from '../../../../../sharedTypes/gqlQueries'
+import { useQuery, gql } from '@apollo/client';
+import { useState } from 'react';
+import { StatRegionNames, RegionCoords } from '../../../../../sharedTypes/gqlQueries';
 
 type QueryResponse = {
 	regionCoords: RegionCoords,
@@ -18,28 +18,28 @@ export type SelectedSectionNamesHandler = (
 ) => void
 
 const DEFAULT_SELECTED_SECTIONS = {
-	selectedMainSectionName: '',
-	selectedSubSectionTitle: '',
-}
+  selectedMainSectionName: '',
+  selectedSubSectionTitle: '',
+};
 
 const useSelectedSectionNames = () => {
-	const [selectedSectionNames,
-		setSelectedSectionNames] = useState<SelectedSections>(DEFAULT_SELECTED_SECTIONS)
+  const [selectedSectionNames,
+    setSelectedSectionNames] = useState<SelectedSections>(DEFAULT_SELECTED_SECTIONS);
 
-	const selectedSectionNamesHandler: SelectedSectionNamesHandler = (
-		selectedMainSectionName, selectedSubSectionTitle,
-	) => {
-		setSelectedSectionNames({
-			selectedMainSectionName,
-			selectedSubSectionTitle,
-		})
-	}
+  const selectedSectionNamesHandler: SelectedSectionNamesHandler = (
+    selectedMainSectionName, selectedSubSectionTitle,
+  ) => {
+    setSelectedSectionNames({
+      selectedMainSectionName,
+      selectedSubSectionTitle,
+    });
+  };
 
-	return {
-		selectedMainSectionName: selectedSectionNames.selectedMainSectionName,
-		selectedSubSectionTitle: selectedSectionNames.selectedSubSectionTitle,
-		selectedSectionNamesHandler,
-	}
-}
+  return {
+    selectedMainSectionName: selectedSectionNames.selectedMainSectionName,
+    selectedSubSectionTitle: selectedSectionNames.selectedSubSectionTitle,
+    selectedSectionNamesHandler,
+  };
+};
 
-export default useSelectedSectionNames
+export default useSelectedSectionNames;

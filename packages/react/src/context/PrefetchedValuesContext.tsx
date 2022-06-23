@@ -1,9 +1,9 @@
-import { useQuery, gql } from '@apollo/client'
+import { useQuery, gql } from '@apollo/client';
 import {
-	createContext, FC, useContext,
-} from 'react'
-import { StatCategories, StatRegionNames, StatYears } from '../../../../sharedTypes/gqlQueries'
-import Message from '../components/Message'
+  createContext, FC, useContext,
+} from 'react';
+import { StatCategories, StatRegionNames, StatYears } from '../../../../sharedTypes/gqlQueries';
+import Message from '../components/Message';
 
 type ContextValues = Readonly<{
 	statRegionNames: StatRegionNames,
@@ -15,22 +15,22 @@ const QUERY = gql` query {
 	statRegionNames,
 	statYears,
 	statFirstCategories
-}`
+}`;
 
-const PrefetchedValuesContext = createContext<ContextValues>({} as ContextValues)
+const PrefetchedValuesContext = createContext<ContextValues>({} as ContextValues);
 
-export const usePrefetchedValuesContext = () => useContext(PrefetchedValuesContext)
+export const usePrefetchedValuesContext = () => useContext(PrefetchedValuesContext);
 
 export const PrefetchedValuesProvider: FC = ({ children }) => {
-	const { loading, error, data: generalData } = useQuery<ContextValues>(QUERY)
+  const { loading, error, data: generalData } = useQuery<ContextValues>(QUERY);
 
-	if (loading) return <Message type="message" text="We are fetching general data." />
+  if (loading) return <Message type="message" text="We are fetching general data." />;
 
-	if (error || !generalData) return <Message type="error" text="General data was not fetched!" />
+  if (error || !generalData) return <Message type="error" text="General data was not fetched!" />;
 
-	return (
-		<PrefetchedValuesContext.Provider value={generalData}>
-			{children}
-		</PrefetchedValuesContext.Provider>
-	)
-}
+  return (
+    <PrefetchedValuesContext.Provider value={generalData}>
+      {children}
+    </PrefetchedValuesContext.Provider>
+  );
+};

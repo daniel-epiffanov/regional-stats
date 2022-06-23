@@ -9,27 +9,29 @@ type Props = Readonly<{
 }>
 
 const Popup: FC<Props> = (props) => {
-	const {isVisible, hidingHandler, triggerId, contentRenderHandler} = props
-	return (
-		<DxPopup
-			visible={isVisible}
-			contentRender={contentRenderHandler}
-			onHiding={hidingHandler}
-			closeOnOutsideClick
-			maxWidth={850}
-			dragEnabled={false}
-			title="Choose a category"
-			showCloseButton
-			height="50vh"
-			data-testid="popup"
-		>
-			<Position
-				at="left bottom"
-				my="left top"
-				of={triggerId}
-			/>
+  const {
+    isVisible, hidingHandler, triggerId, contentRenderHandler,
+  } = props;
+  return (
+    <DxPopup
+      visible={isVisible}
+      contentRender={contentRenderHandler}
+      onHiding={hidingHandler}
+      closeOnOutsideClick
+      maxWidth={850}
+      dragEnabled={false}
+      title="Choose a category"
+      showCloseButton
+      height="50vh"
+      data-testid="popup"
+    >
+      <Position
+        at="left bottom"
+        my="left top"
+        of={triggerId}
+      />
     </DxPopup>
-	)
-}
+  );
+};
 
-export default Popup
+export default Popup;

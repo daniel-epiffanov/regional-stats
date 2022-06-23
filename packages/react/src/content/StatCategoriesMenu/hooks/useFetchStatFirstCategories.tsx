@@ -1,29 +1,23 @@
-import { useEffect, useState } from 'react'
-import { StatCategories } from '../../../../../../sharedTypes/gqlQueries'
-import fetchStatFirstCategories from '../queries/fetchStatFirstCategories'
+import { useEffect, useState } from 'react';
+import { StatCategories } from '../../../../../../sharedTypes/gqlQueries';
+import fetchStatFirstCategories from '../queries/fetchStatFirstCategories';
 
 type UseFetchFirstCategories = () => StatCategories | null
 
-
 const useFetchStatFirstCategories: UseFetchFirstCategories = () => {
+  const [firstCategories, setFirstCategories] = useState<StatCategories | null>(null);
 
-	const [firstCategories, setFirstCategories] = useState<StatCategories | null>(null)
+  useEffect(() => {
+    const fetchAndSaveStatFirstCategories = async () => {
+      const subCategories = await fetchStatFirstCategories();
+      if (!subCategories) return;
+      setFirstCategories(subCategories);
+    };
 
+    fetchAndSaveStatFirstCategories();
+  }, []);
 
-	useEffect(() => {
-		const fetchAndSaveStatFirstCategories = async () => {
-			const subCategories = await fetchStatFirstCategories()
-			if(!subCategories) return
-			setFirstCategories(subCategories)
-		}
-		
-		fetchAndSaveStatFirstCategories()
-	}, [])
-	
+  return firstCategories;
+};
 
-
-
-	return firstCategories
-}
-
-export default useFetchStatFirstCategories
+export default useFetchStatFirstCategories;

@@ -1,5 +1,5 @@
 const bigNumberFormatter = (bigNumber: number) => {
-	return new Intl.NumberFormat('ru-RU').format(bigNumber)
-}
+  return new Intl.NumberFormat('ru-RU').format(bigNumber);
+};
 
-export default bigNumberFormatter
+export default bigNumberFormatter;

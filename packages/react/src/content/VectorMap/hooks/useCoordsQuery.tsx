@@ -1,6 +1,6 @@
-import { useQuery, gql } from '@apollo/client'
-import { StatRegionNames, RegionCoords } from '../../../../../../sharedTypes/gqlQueries'
-import { useCurValuesContext } from '../../../context/CurValuesContext'
+import { useQuery, gql } from '@apollo/client';
+import { StatRegionNames, RegionCoords } from '../../../../../../sharedTypes/gqlQueries';
+import { useCurValuesContext } from '../../../context/CurValuesContext';
 
 interface QueryResponse {
 	regionCoords: RegionCoords,
@@ -10,8 +10,8 @@ interface QueryResponse {
 type ReadonlyQueryResponse = Readonly<QueryResponse>
 
 const useCoordsQuery = () => {
-	const { curRegionTypeOnMap: selectedRegionTypeOnMap } = useCurValuesContext()
-	const QUERY = gql` query {
+  const { curRegionTypeOnMap: selectedRegionTypeOnMap } = useCurValuesContext();
+  const QUERY = gql` query {
 		regionCoords(regionType: "region") {
 			type,
 			geometry {
@@ -23,12 +23,12 @@ const useCoordsQuery = () => {
 				name_ru
 			}
 		}
-	}`
+	}`;
 
-	const methods = useQuery<ReadonlyQueryResponse>(QUERY)
-	const { loading, error, data } = methods
+  const methods = useQuery<ReadonlyQueryResponse>(QUERY);
+  const { loading, error, data } = methods;
 
-	return methods
-}
+  return methods;
+};
 
-export default useCoordsQuery
+export default useCoordsQuery;

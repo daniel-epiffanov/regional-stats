@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 type Return<Instance> = [Instance | null, OnInitializedHandler]
 
@@ -10,13 +10,13 @@ interface Event {
 type OnInitializedHandler = (e: Event) => void
 
 const useComponentInstance = <Instance, P = any>(): Return<Instance> => {
-	const [instance, setInstance] = useState<Instance | null>(null)
+  const [instance, setInstance] = useState<Instance | null>(null);
 
-	const onInitializedHandler: OnInitializedHandler = (e) => {
-		if (e.component) setInstance(e.component)
-	}
+  const onInitializedHandler: OnInitializedHandler = (e) => {
+    if (e.component) setInstance(e.component);
+  };
 
-	return [instance, onInitializedHandler]
-}
+  return [instance, onInitializedHandler];
+};
 
-export default useComponentInstance
+export default useComponentInstance;

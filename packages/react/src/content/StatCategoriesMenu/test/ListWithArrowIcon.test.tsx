@@ -1,22 +1,14 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import List from '../List';
+import { render, screen } from '@testing-library/react';
+import ListWithArrowIcon from '../ListWithArrowIcon';
 
-const ITEMS = ['first list item', 'second list item']
-const firstItem = ITEMS[0]
-const secondItem = ITEMS[1]
-const valueChangeHandler = jest.fn()
+const ITEMS = ['first list item', 'second list item'];
 
-describe('List', () => {
-	
-	it('renders all passed items corectly', () => {
-		render(<List items={ITEMS} />)
+describe('ListWithArrowIcon', () => {
+  it('renders dx-icon-chevronright before List', () => {
+    render(<ListWithArrowIcon items={ITEMS} />);
 
-		const firstDivElement = screen.getByText(firstItem)
-		const secondDivElement = screen.getByText(firstItem)
-		expect(firstDivElement).toBeInTheDocument()
-		expect(secondDivElement).toBeInTheDocument()
-	
-		// screen.debug()
-	})
-
-})
+    const iconElement = screen.getByTestId('dx-icon-chevronright');
+    expect(iconElement).toBeInTheDocument();
+    expect(iconElement).toBeVisible();
+  });
+});
