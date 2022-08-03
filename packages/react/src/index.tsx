@@ -1,16 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './content/App';
 import reportWebVitals from './reportWebVitals';
-import Layout from './layout';
 import './styles/globals.scss';
 import './styles/dxOverrides.scss';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Layout>
-      <App />
-    </Layout>
+    <App />
   </React.StrictMode>,
   document.getElementById('root'),
 );
