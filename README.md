@@ -16,8 +16,8 @@ Functional component code structure guideline:
 7. other logic
 
 Component passing props order:
-1. id
-2. className
+1. className
+2. id
 3. eventHandlers
 4. other properties
 

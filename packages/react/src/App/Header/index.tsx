@@ -1,16 +1,18 @@
 import { Toolbar, Item } from 'devextreme-react/toolbar';
 import { FC } from 'react';
-import styles from './styles/Header.module.scss';
-import Logo from '../Logo';
-import chageTheme from '../../devExtreme/chageThemeHundler';
+import styles from './Header.module.scss';
+import Logo from './Logo';
+import chageTheme from '../../devExtremeHelpers/chageThemeHundler';
 import { GITHUB_LINK, TELEGRAM_LINK } from '../../config/constants';
 
 const Header: FC = () => {
+  const myGithubClickHandler = () => window.open(GITHUB_LINK);
+  const myTelegramClickHandler = () => window.open(TELEGRAM_LINK);
+  const themeClickHandler = () => chageTheme();
+
   return (
-    <div className={styles.root}>
-      <Toolbar
-        className={styles.root}
-      >
+    <div className={styles['root']}>
+      <Toolbar>
         <Item
           location="before"
           render={Logo}
@@ -19,33 +21,27 @@ const Header: FC = () => {
           location="after"
           widget="dxButton"
           options={{
-            text: 'Author\'s GitHub',
+            onClick: myGithubClickHandler,
+            text: 'My GitHub',
             icon: 'fab fa-github',
-            onClick: () => {
-              window.open(GITHUB_LINK);
-            },
           }}
         />
         <Item
           location="after"
           widget="dxButton"
           options={{
-            text: 'Author\'s Telegram',
+            onClick: myTelegramClickHandler,
+            text: 'My Telegram',
             icon: 'fab fa-telegram',
-            onClick: () => {
-              window.open(TELEGRAM_LINK);
-            },
           }}
         />
         <Item
           location="after"
           widget="dxButton"
           options={{
+            onClick: themeClickHandler,
             icon: 'far fa-lightbulb',
-            onClick: () => {
-              chageTheme();
-            },
-            text: 'theme',
+            text: 'Theme',
           }}
         />
       </Toolbar>

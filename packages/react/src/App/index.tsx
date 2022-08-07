@@ -1,9 +1,9 @@
-import './styles/App.module.scss';
-import Home from './Main';
+import Main from './Main';
 import CustomApolloProvider from '../context/CustomApolloProvider';
 import { PrefetchedValuesProvider } from '../context/PrefetchedValuesContext';
-import setLocalStorageTheme from '../devExtreme/setLocalStorageTheme';
+import setLocalStorageTheme from '../devExtremeHelpers/setLocalStorageTheme';
 import { CurValuesProvider } from '../context/CurValuesContext';
+import Header from './Header';
 
 setLocalStorageTheme();
 
@@ -11,7 +11,8 @@ const App = () => (
   <CustomApolloProvider>
     <PrefetchedValuesProvider>
       <CurValuesProvider>
-        <Home />
+        <Header />
+        <Main />
       </CurValuesProvider>
     </PrefetchedValuesProvider>
   </CustomApolloProvider>

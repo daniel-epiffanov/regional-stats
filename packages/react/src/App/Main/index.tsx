@@ -2,7 +2,7 @@ import ResponsiveBox, {
   Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box';
 import { FC } from 'react';
-import CurRegions from '../CurRegions';
+import CurRegions from './CurRegions';
 import { CurValuesProvider } from '../../context/CurValuesContext';
 import StatCategoriesMenu from './StatCategoriesMenu';
 // import DoughnutChart from '../outdated/DoughnutChart'
@@ -11,7 +11,7 @@ import styles from './styles/index.module.scss';
 import VectorMap from './VectorMap';
 import YearsProgress from './YearsProgress';
 
-const HomePage: FC = () => {
+const Main: FC = () => {
   // const scrollhandler = (e: Event) => {
   // 	debugger
   // 	console.log('scroll')
@@ -53,7 +53,7 @@ const HomePage: FC = () => {
 
 const HomePagePreloads: FC = () => {
   return (
-    <HomePage />
+    <Main />
   );
 };
 

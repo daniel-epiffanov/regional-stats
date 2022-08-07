@@ -7,8 +7,8 @@ import {
   Label,
 } from 'devextreme-react/chart';
 import styles from './styles/index.module.scss';
-import { useCurValuesContext } from '../../context/CurValuesContext';
-import Message from '../../components/Message';
+import { useCurValuesContext } from '../../../context/CurValuesContext';
+import Message from '../../../components/Message';
 
 type Props = Readonly<{
 
