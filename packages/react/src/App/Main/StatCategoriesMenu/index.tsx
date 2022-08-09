@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { useToggle } from 'react-use';
 import styles from './styles/index.module.scss';
 import PopupContent from './PopupContent';
-import PopupTriggerContent from './PopupTriggerContent';
 import Popup from '../../../dxComponents/Popup';
+import MenuOutput from './MenuOutput';
 
 const StatCategoriesMenu: FC = () => {
   const [isPopupVisible, toggleIsPopupVisible] = useToggle(false);
@@ -16,7 +16,7 @@ const StatCategoriesMenu: FC = () => {
   return (
     <div className={styles.root}>
       <div id="popup-trigger" className={styles['popup-trigger']} onClick={showPopup}>
-        <PopupTriggerContent />
+        <MenuOutput />
       </div>
 
       <Popup
