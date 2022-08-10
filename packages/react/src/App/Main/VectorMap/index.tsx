@@ -23,7 +23,7 @@ import {
 import { ClickEvent, SelectionChangedEvent } from 'devextreme/viz/vector_map';
 import useCoordsQuery from './hooks/useCoordsQuery';
 import Message from '../../../components/Message';
-import { useCurValuesContext } from '../../../context/CurValuesContext';
+import { useCurMenuValuesContext } from '../../../context/CurMenuValuesContext';
 import { RegionCoords } from '../../../../../../sharedTypes/gqlQueries';
 import styles from './styles/index.module.scss';
 import TopLeftAnnotation from './TopLeftAnnotation';
@@ -57,7 +57,7 @@ function AnnotationTemplate(annotation: any) {
 }
 
 const Map: FC<Props> = ({ regionCoords }) => {
-  const { curStatData } = useCurValuesContext();
+  const { curStatData } = useCurMenuValuesContext();
 
   const [colorGroups, setColorGroups] = useState<ReadonlyArray<number> | null>(
     [326.6, 52907.853489932866, 115397.40348993287, 177886.95348993287, 240376.50348993286, 302866.0534899329, 3971424.9],
@@ -118,7 +118,7 @@ const Map: FC<Props> = ({ regionCoords }) => {
     });
   }
 
-  const { setCurValues, curRegions } = useCurValuesContext();
+  const { setCurMenuValues: setCurValues, curRegions } = useCurMenuValuesContext();
 
   function onMapClick(e: ClickEvent) {
     if (!e.target) return;

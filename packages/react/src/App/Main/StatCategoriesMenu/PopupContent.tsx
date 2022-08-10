@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { StatCategories } from '../../../../../../sharedTypes/gqlQueries';
 import { usePrefetchedValuesContext } from '../../../context/PrefetchedValuesContext';
-import { useCurValuesContext } from '../../../context/CurValuesContext';
+import { useCurMenuValuesContext } from '../../../context/CurMenuValuesContext';
 import List from '../../../dxComponents/List';
 import fetchStatData from './queries/fetchStatData';
 import fetchStatSecondCategories from './queries/fetchStatSecondCategories';

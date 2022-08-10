@@ -4,13 +4,13 @@ import fetchStatSecondCategories from '../queries/fetchStatSecondCategories';
 import fetchStatData from '../queries/fetchStatData';
 import { CurCategories } from './useCategories';
 import { usePrefetchedValuesContext } from '../../../../context/PrefetchedValuesContext';
-import { useCurValuesContext } from '../../../../context/CurValuesContext';
+import { useCurMenuValuesContext } from '../../../../context/CurMenuValuesContext';
 
 type UseWatchStatData = (curCategories: CurCategories) => void
 
 const useFetchStatData: UseWatchStatData = (curCategories) => {
   const { statRegionNames } = usePrefetchedValuesContext();
-  const { setCurValues } = useCurValuesContext();
+  const { setCurMenuValues: setCurValues } = useCurMenuValuesContext();
 
   useEffect(() => {
     const fetchAndSaveStatData = async () => {

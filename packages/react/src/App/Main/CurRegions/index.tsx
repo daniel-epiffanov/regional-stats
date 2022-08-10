@@ -7,7 +7,7 @@ import {
   Label,
 } from 'devextreme-react/chart';
 import styles from './styles/index.module.scss';
-import { useCurValuesContext } from '../../../context/CurValuesContext';
+import { useCurMenuValuesContext } from '../../../context/CurMenuValuesContext';
 import Message from '../../../components/Message';
 
 type Props = Readonly<{
@@ -22,7 +22,7 @@ const format = {
 };
 
 const Chart: FC<Props> = () => {
-  const { curStatData, curRegions } = useCurValuesContext();
+  const { curStatData, curRegions } = useCurMenuValuesContext();
 
   if (!curStatData || curRegions.length === 0) return <>yo</>;
   // <Message type='message' text="Please, choose a region on the map"/>
@@ -73,7 +73,7 @@ const Chart: FC<Props> = () => {
         />
         <Series
           argumentField="year"
-					 	valueField={curRegions[2]}
+          valueField={curRegions[2]}
           name={curRegions[2]}
         />
         <ArgumentAxis>

@@ -9,7 +9,7 @@ import {
   linearRegressionLine as getLinearRegressionLine,
   mean as getMean,
 } from 'simple-statistics';
-import { useCurValuesContext } from '../../../context/CurValuesContext';
+import { useCurMenuValuesContext } from '../../../context/CurMenuValuesContext';
 import Arrow from '../../../components/Arrow';
 
 type Props = Readonly<{
@@ -18,7 +18,7 @@ type Props = Readonly<{
 const year = 2014;
 
 const RegressionLine: FC<Props> = () => {
-  const { curStatData } = useCurValuesContext();
+  const { curStatData } = useCurMenuValuesContext();
 
   if (!curStatData) return null;
 

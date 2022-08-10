@@ -2,7 +2,7 @@ import Main from './Main';
 import CustomApolloProvider from '../context/CustomApolloProvider';
 import { PrefetchedValuesProvider } from '../context/PrefetchedValuesContext';
 import setLocalStorageTheme from '../devExtremeHelpers/setLocalStorageTheme';
-import { CurValuesProvider } from '../context/CurValuesContext';
+import { CurMenuValuesProvider } from '../context/CurMenuValuesContext';
 import Header from './Header';
 
 setLocalStorageTheme();
@@ -10,10 +10,10 @@ setLocalStorageTheme();
 const App = () => (
   <CustomApolloProvider>
     <PrefetchedValuesProvider>
-      <CurValuesProvider>
+      <CurMenuValuesProvider>
         <Header />
         <Main />
-      </CurValuesProvider>
+      </CurMenuValuesProvider>
     </PrefetchedValuesProvider>
   </CustomApolloProvider>
 );

@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import { CurValuesProvider } from '../../../../context/CurValuesContext';
+import { CurMenuValuesProvider } from '../../../../context/CurMenuValuesContext';
 import ListWithArrowIcon from '../ListWithArrowIcon';
 import PopupTriggerContent from '../PopupTriggerContent';
 
 describe('PopupTriggerContent', () => {
   it('renders text "statistics categories" if curStatCategoriesChain arr is empty', () => {
     render(
-      <CurValuesProvider curStatCategoriesChain={[]}>
+      <CurMenuValuesProvider>
         <PopupTriggerContent />
-      </CurValuesProvider>
+      </CurMenuValuesProvider>
     );
 
     const noDataTextParagraphElement = screen.getByTestId('no-data-text');

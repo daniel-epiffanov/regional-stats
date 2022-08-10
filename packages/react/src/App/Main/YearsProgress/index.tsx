@@ -11,13 +11,13 @@ import RangeSelector, { Scale } from 'devextreme-react/range-selector';
 import { useToggle } from 'react-use';
 import { usePrefetchedValuesContext } from '../../../context/PrefetchedValuesContext';
 import styles from './styles/idnex.module.scss';
-import { useCurValuesContext } from '../../../context/CurValuesContext';
+import { useCurMenuValuesContext } from '../../../context/CurMenuValuesContext';
 
 type Props = Readonly<{
 }>
 
 const RegressionLine: FC<Props> = () => {
-  const { curStatData } = useCurValuesContext();
+  const { curStatData } = useCurMenuValuesContext();
   const { statYears } = usePrefetchedValuesContext();
   const years = statYears.filter(statYear => `${statYear}`.length === 4);
 

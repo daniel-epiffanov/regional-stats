@@ -9,7 +9,7 @@ import {
   median as getMedian,
   mode as getMode,
 } from 'simple-statistics';
-import { useCurValuesContext } from '../../../context/CurValuesContext';
+import { useCurMenuValuesContext } from '../../../context/CurMenuValuesContext';
 import styles from './styles/TopRegions.module.scss';
 import TopRegionChart from './TopRegionChart';
 import RegressionLine from './RegressionLine';
@@ -19,7 +19,7 @@ type Props = Readonly<{
 }>
 
 const TopLeftAnnotation: FC<Props> = () => {
-  const { curStatData } = useCurValuesContext();
+  const { curStatData } = useCurMenuValuesContext();
   if (!curStatData) return null;
   const values = Object.values(curStatData).map(curStatItem => curStatItem?.yearValues[0].value);
 

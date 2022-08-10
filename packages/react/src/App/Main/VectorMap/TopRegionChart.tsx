@@ -4,7 +4,7 @@ import {
   ArgumentAxis, AxisLabel, Font, Grid, Label, Legend, Series, Tooltip, ValueAxis,
 } from 'devextreme-react/chart';
 import { FC } from 'react';
-import { useCurValuesContext } from '../../../context/CurValuesContext';
+import { useCurMenuValuesContext } from '../../../context/CurMenuValuesContext';
 
 type Props = Readonly<{
 	dataSource: Readonly<{
@@ -14,7 +14,7 @@ type Props = Readonly<{
 }>
 
 const TopRegionChart: FC<Props> = ({ dataSource }) => {
-  const { curStatData } = useCurValuesContext();
+  const { curStatData } = useCurMenuValuesContext();
   if (!curStatData) return null;
 
   return (

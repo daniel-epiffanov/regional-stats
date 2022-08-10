@@ -1,27 +1,26 @@
 import { FC } from 'react';
-import { useCurValuesContext } from '../../../../context/CurValuesContext';
-import _ from 'lodash';
+import { useCurMenuValuesContext } from '../../../../context/CurMenuValuesContext';
 import styles from './MenuOutput.module.scss';
 
 const MenuOutput: FC = () => {
-  const { curStatCategoriesChain } = useCurValuesContext();
+  const { curStatCategories: curStatCategoriesMenu } = useCurMenuValuesContext();
 
-  if (curStatCategoriesChain.length === 0) return (
+  if (curStatCategoriesMenu.length === 0) return (
     <p data-testid="no-data-text">statistics categories</p>
   );
 
   return (
     <p className={styles['root']}>
       {
-        curStatCategoriesChain.map((curStatCategory, i) => {
-          const isLastElement = curStatCategoriesChain.length === (i + 1);
+        curStatCategoriesMenu.map((curStatCategory, i) => {
+          const isLastElement = curStatCategoriesMenu.length === (i + 1);
+          console.log({curStatCategoriesChain: curStatCategoriesMenu});
           return (
             <>
-              <span data-testid="cur-stat-category-text">
-                {/* {_.truncate(curStatCategory, {length: isLastElement ? 50 : 15})} */}
+              <span>
                 {curStatCategory}
               </span>
-              {!isLastElement && <i data-testid="dx-icon-chevronright" className="dx-icon-chevronright" />}
+              {!isLastElement && <i className="dx-icon-chevronright" />}
             </>
           );
         })

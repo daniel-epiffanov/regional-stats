@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
 import { StatCategories } from '../../../../../../../sharedTypes/gqlQueries';
-import { usePrefetchedValuesContext } from '../../../../context/PrefetchedValuesContext';
-import fetchStatSecondCategories from '../queries/fetchStatSecondCategories';
 import useFetchStatFirstCategories from './useFetchStatFirstCategories';
-import useFetchStatData from './useFetchStatData';
 import useFetchStatSecondCategories from './useFetchStatSecondCategories';
 import fetchStatThirdCategories from '../queries/fetchStatThirdCategories';
-import { useCurValuesContext } from '../../../../context/CurValuesContext';
+import { useCurMenuValuesContext } from '../../../../context/CurMenuValuesContext';
 
 export type CurCategories = Readonly<{
 	statCategoriesChain: string[],
@@ -15,7 +12,7 @@ export type CurCategories = Readonly<{
 
 const useCategories = () => {
   const statFirstCategories = useFetchStatFirstCategories();
-  const { setCurValues } = useCurValuesContext();
+  const { setCurMenuValues: setCurValues } = useCurMenuValuesContext();
 
   const [curStatCategories, setCurStatCategories] = useState<CurCategories>({
     statCategoriesChain: [],
@@ -30,7 +27,7 @@ const useCategories = () => {
   useEffect(() => {
     if (isChainComplete) {
       setCurValues({
-        curStatCategoriesChain: [curStatFirstCategory, curStatSecondCategory, curStatThirdCategory],
+        curStatCategories: [curStatFirstCategory, curStatSecondCategory, curStatThirdCategory],
       });
     }
   }, [curStatFirstCategory, curStatSecondCategory, curStatThirdCategory, isChainComplete]);
@@ -55,7 +52,7 @@ const useCategories = () => {
     setCurStatCategories({ statCategoriesChain: [curStatFirstCategory, newStatSecondCategory], isChainComplete: true });
   };
 
-  const changeStaThirdCategory = async (newStatThirdCategory: string) => {
+  const changeStatThirdCategory = async (newStatThirdCategory: string) => {
     setCurStatCategories({
       statCategoriesChain: [curStatFirstCategory, curStatSecondCategory, newStatThirdCategory],
       isChainComplete: true,
@@ -70,7 +67,7 @@ const useCategories = () => {
     changeStatSecondCategory,
 
     statThirdCategories,
-    changeStaThirdCategory,
+    changeStaThirdCategory: changeStatThirdCategory,
 
     // subCategoryNames: subCategories?.map(subCategory => subCategory.name),
   };
