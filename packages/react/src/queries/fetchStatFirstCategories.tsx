@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { StatCategories } from '../../../../../../../sharedTypes/gqlQueries';
-import { hostApi } from '../../../../helpers/host';
+import { StatCategories } from '../../../../sharedTypes/gqlQueries';
+import { hostApi } from '../helpers/host';
 
 type StatFirstCategoriesDataResponse = Readonly<{
 	data: {

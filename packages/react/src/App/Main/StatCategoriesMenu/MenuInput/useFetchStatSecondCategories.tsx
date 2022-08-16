@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StatCategories } from '../../../../../../../sharedTypes/gqlQueries';
-import fetchStatSecondCategories from '../queries/fetchStatSecondCategories';
+import fetchStatSecondCategories from '../../../../queries/fetchStatSecondCategories';
 
 type UseFetchStatSecondCategories = (statFirstCategory: string) => StatCategories | null
 

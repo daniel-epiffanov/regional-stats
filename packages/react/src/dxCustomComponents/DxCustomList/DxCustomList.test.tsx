@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import List from '../List';
+import DxCustomList from '.';
 
 const ITEMS = ['first list item', 'second list item'];
 const firstItem = ITEMS[0];
@@ -7,22 +7,22 @@ const secondItem = ITEMS[1];
 const valueChangeHandler = jest.fn();
 
 describe('List', () => {
-  it('renders all passed items corectly', () => {
-    render(<List items={ITEMS} />);
+  it('renders all passed items corectly', async () => {
+    render(<DxCustomList items={ITEMS} />);
 
-    const firstDivElement = screen.getByText(firstItem);
-    const secondDivElement = screen.getByText(firstItem);
+    const firstDivElement = await screen.findByText(firstItem);
+    const secondDivElement = await screen.findByText(firstItem);
     expect(firstDivElement).toBeInTheDocument();
     expect(secondDivElement).toBeInTheDocument();
 
     // screen.debug()
   });
 
-  it('valueChangeHandler callback is called on item click and povides clicked item value', () => {
-    render(<List items={ITEMS} valueChangeHandler={valueChangeHandler} />);
+  it('valueChangeHandler callback', async () => {
+    render(<DxCustomList items={ITEMS} valueChangeHandler={valueChangeHandler} />);
 
-    const firstDivElement = screen.getByText(firstItem);
-    const secondDivElement = screen.getByText(secondItem);
+    const firstDivElement = await screen.findByText(firstItem);
+    const secondDivElement = await screen.findByText(secondItem);
 
     fireEvent.click(firstDivElement);
     expect(valueChangeHandler).toBeCalledWith(firstItem);

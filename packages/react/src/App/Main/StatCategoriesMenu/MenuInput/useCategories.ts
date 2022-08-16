@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { StatCategories } from '../../../../../../../sharedTypes/gqlQueries';
 import useFetchStatFirstCategories from './useFetchStatFirstCategories';
 import useFetchStatSecondCategories from './useFetchStatSecondCategories';
-import fetchStatThirdCategories from '../queries/fetchStatThirdCategories';
-import { useCurMenuValuesContext } from '../../../../context/CurMenuValuesContext';
+import fetchStatThirdCategories from '../../../../queries/fetchStatThirdCategories';
+import { useCurMenuValuesContext } from '../../../../context/MenuContext';
 
 export type CurCategories = Readonly<{
 	statCategoriesChain: string[],
@@ -12,7 +12,7 @@ export type CurCategories = Readonly<{
 
 const useCategories = () => {
   const statFirstCategories = useFetchStatFirstCategories();
-  const { setCurMenuValues: setCurValues } = useCurMenuValuesContext();
+  const { setMenuValues: setCurMenuValues } = useCurMenuValuesContext();
 
   const [curStatCategories, setCurStatCategories] = useState<CurCategories>({
     statCategoriesChain: [],
@@ -26,8 +26,12 @@ const useCategories = () => {
 
   useEffect(() => {
     if (isChainComplete) {
-      setCurValues({
-        curStatCategories: [curStatFirstCategory, curStatSecondCategory, curStatThirdCategory],
+      setCurMenuValues({
+        curStatCategories: {
+          firstCategory: curStatFirstCategory,
+          secondCategory: curStatSecondCategory,
+          thirdCategory: curStatThirdCategory
+        },
       });
     }
   }, [curStatFirstCategory, curStatSecondCategory, curStatThirdCategory, isChainComplete]);
@@ -67,9 +71,7 @@ const useCategories = () => {
     changeStatSecondCategory,
 
     statThirdCategories,
-    changeStaThirdCategory: changeStatThirdCategory,
-
-    // subCategoryNames: subCategories?.map(subCategory => subCategory.name),
+    changeStatThirdCategory,
   };
 };
 

@@ -2,14 +2,14 @@ import ResponsiveBox, {
   Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box';
 import { FC } from 'react';
-import CurRegions from './CurRegions';
-import { CurMenuValuesProvider } from '../../context/CurMenuValuesContext';
+// import CurRegions from './CurRegions';
+// import { CurMenuValuesProvider } from '../../context/CurMenuValuesContext';
 import StatCategoriesMenu from './StatCategoriesMenu';
 // import DoughnutChart from '../outdated/DoughnutChart'
 // import MeasuresMenu from '../outdated/MeasuresMenu'
 import styles from './styles/index.module.scss';
-import VectorMap from './VectorMap';
-import YearsProgress from './YearsProgress';
+// import VectorMap from './VectorMap';
+// import YearsProgress from './YearsProgress';
 
 const Main: FC = () => {
   // const scrollhandler = (e: Event) => {
