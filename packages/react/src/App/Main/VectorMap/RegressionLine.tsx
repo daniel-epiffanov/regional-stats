@@ -8,7 +8,7 @@ import {
   linearRegressionLine as getLinearRegressionLine,
   mean as getMean,
 } from 'simple-statistics';
-import { useCurMenuValuesContext } from '../../../context/MenuContext';
+import { useMenuValuesContext } from '../../../context/MenuContext';
 import Arrow from '../../../components/Arrow';
 
 type Props = Readonly<{

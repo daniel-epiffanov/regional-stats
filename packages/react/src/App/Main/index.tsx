@@ -1,22 +1,24 @@
 import ResponsiveBox, {
   Row, Col, Item, Location,
 } from 'devextreme-react/responsive-box';
-import { FC } from 'react';
-// import CurRegions from './CurRegions';
+import { FC, useEffect } from 'react';
+import { useStatDataContext } from '../../context/StatDataContext';
+import CurRegions from './CurRegions';
 // import { CurMenuValuesProvider } from '../../context/CurMenuValuesContext';
 import StatCategoriesMenu from './StatCategoriesMenu';
 // import DoughnutChart from '../outdated/DoughnutChart'
 // import MeasuresMenu from '../outdated/MeasuresMenu'
 import styles from './styles/index.module.scss';
-// import VectorMap from './VectorMap';
-// import YearsProgress from './YearsProgress';
+import VectorMap from './VectorMap';
+import YearsProgress from './DashboardCards';
+
 
 const Main: FC = () => {
-  // const scrollhandler = (e: Event) => {
-  // 	debugger
-  // 	console.log('scroll')
-  // 	e.preventDefault()
-  // }
+  const statData = useStatDataContext();
+
+  useEffect(()=>{
+    console.log(statData);
+  }, [statData]);
 
   return (
     <ResponsiveBox>
@@ -32,20 +34,20 @@ const Main: FC = () => {
         <StatCategoriesMenu />
       </Item>
 
+      <Item>
+        <Location screen="sm md lg" row={1} col={0} rowspan={1} />
+        <YearsProgress />
+      </Item>
+
+      <Item>
+        <Location screen="sm md lg" row={2} col={0} />
+        <VectorMap />
+      </Item>
+
       {/* <Item>
-				<Location screen="sm md lg" row={1} col={0} rowspan={1} />
-				<YearsProgress />
-			</Item>
-
-			<Item>
-				<Location screen="sm md lg" row={2} col={0} />
-					<VectorMap />
-			</Item>
-
-			<Item>
-				<Location screen="sm md lg" row={3} col={0} />
-					<CurRegions />
-			</Item> */}
+        <Location screen="sm md lg" row={3} col={0} />
+        <CurRegions />
+      </Item> */}
 
     </ResponsiveBox>
   );

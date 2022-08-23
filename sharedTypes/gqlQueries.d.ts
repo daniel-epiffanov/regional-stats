@@ -19,3 +19,8 @@ export type StatData = Readonly<{
 	yearValues: ReadonlyArray<Readonly<{year: number, value: number}>>
 }>
 export type RegionCoords = ReadonlyArray<MongoRegionCoords>
+export type StatYearValuePercents = ReadonlyArray<Readonly<{
+	percent: number,
+	year: number,
+	value: number
+}>>

@@ -3,7 +3,7 @@ import {
   ArgumentAxis, AxisLabel, Font, Grid, Label, Legend, Series, Tooltip, ValueAxis,
 } from 'devextreme-react/chart';
 import { FC } from 'react';
-import { useCurMenuValuesContext } from '../../../context/MenuContext';
+import { useMenuValuesContext } from '../../../context/MenuContext';
 
 type Props = Readonly<{
 	dataSource: Readonly<{

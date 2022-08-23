@@ -1,11 +1,10 @@
 import axios from 'axios';
 import { StatCategories } from '../../../../sharedTypes/gqlQueries';
 import { hostApi } from '../helpers/host';
+import { GraphqlResponse } from './queries';
 
-type StatSecondCategoriesDataResponse = Readonly<{
-	data: {
-		statSecondCategories: StatCategories
-	}
+type Response = GraphqlResponse<{
+  statSecondCategories: StatCategories
 }>
 
 const fetchStatSecondCategories = async (statFirstCategory: string) => {
@@ -14,7 +13,7 @@ const fetchStatSecondCategories = async (statFirstCategory: string) => {
 	}`;
 
   try {
-    const axiosResponse = await axios.post<StatSecondCategoriesDataResponse>(hostApi, { query });
+    const axiosResponse = await axios.post<Response>(hostApi, { query });
     const { data } = axiosResponse.data;
     if (!data?.statSecondCategories
 			|| data.statSecondCategories.length === 0) return null;

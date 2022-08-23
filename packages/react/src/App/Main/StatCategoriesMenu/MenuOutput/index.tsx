@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useWindowSize } from 'react-use';
-import { useCurMenuValuesContext } from '../../../../context/MenuContext';
+import { useMenuValuesContext } from '../../../../context/MenuContext';
 import styles from './MenuOutput.module.scss';
 import _ from 'lodash';
 
@@ -13,7 +13,7 @@ const truncatedText = (text: string, windowWidth: number) => {
 };
 
 const MenuOutput: FC = () => {
-  const { curStatCategories } = useCurMenuValuesContext();
+  const { curStatCategories } = useMenuValuesContext();
   const { width: windowWidth } = useWindowSize();
 
   if (!curStatCategories.firstCategory) return (

@@ -8,7 +8,7 @@ import {
   median as getMedian,
   mode as getMode,
 } from 'simple-statistics';
-import { useCurMenuValuesContext } from '../../../context/MenuContext';
+import { useMenuValuesContext } from '../../../context/MenuContext';
 import styles from './styles/TopRegions.module.scss';
 import TopRegionChart from './TopRegionChart';
 import RegressionLine from './RegressionLine';

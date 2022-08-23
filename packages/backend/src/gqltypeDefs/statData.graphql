@@ -8,3 +8,8 @@ type StatData {
 	parentMeasure: String,
 	yearValues: [YearValue],
 }
+
+input YearValueInput {
+	year: Int,
+	value: Float
+}

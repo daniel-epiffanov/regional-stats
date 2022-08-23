@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { StatData } from '../../../../sharedTypes/gqlQueries';
-import { hostApi } from '../helpers/host';
+import { StatData } from '../../../../../sharedTypes/gqlQueries';
+import { hostApi } from '../../helpers/host';
 
 type Props = Readonly<{
 	regionNames: ReadonlyArray<string>,

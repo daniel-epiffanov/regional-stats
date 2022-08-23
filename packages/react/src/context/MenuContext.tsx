@@ -24,7 +24,7 @@ type SetMenuValues = (newSelections: Partial<ContextStateValues>) => void
 
 const MenuContext = createContext<ContextValues>({} as ContextValues);
 
-export const useCurMenuValuesContext = () => useContext(MenuContext);
+export const useMenuValuesContext = () => useContext(MenuContext);
 
 export const MenuProvider: FC<Partial<ContextStateValues>> = (props) => {
   const {

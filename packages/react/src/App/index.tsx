@@ -4,6 +4,7 @@ import { PrefetchedValuesProvider } from '../context/PrefetchedValuesContext';
 import setLocalStorageTheme from '../devExtremeHelpers/setLocalStorageTheme';
 import { MenuProvider } from '../context/MenuContext';
 import Header from './Header';
+import { StatDataProvider } from '../context/StatDataContext';
 
 setLocalStorageTheme();
 
@@ -11,8 +12,10 @@ const App = () => (
   <CustomApolloProvider>
     <PrefetchedValuesProvider>
       <MenuProvider>
-        <Header />
-        <Main />
+        <StatDataProvider>
+          <Header />
+          <Main />
+        </StatDataProvider>
       </MenuProvider>
     </PrefetchedValuesProvider>
   </CustomApolloProvider>
