@@ -3,10 +3,10 @@ import { StatCategories } from '../../../../../../../sharedTypes/gqlQueries';
 import useFetchStatFirstCategories from './useFetchStatFirstCategories';
 import useFetchStatSecondCategories from './useFetchStatSecondCategories';
 import fetchStatThirdCategories from '../../../../queries/fetchStatThirdCategories';
-import { useMenuValuesContext } from '../../../../context/MenuContext';
+import { useMenuContext } from '../../../../context/MenuContext';
 
 const useCategories = () => {
-  const { setMenuValues, curStatCategories } = useMenuValuesContext();
+  const { changeMenuValues: setMenuValues, curStatCategories } = useMenuContext();
 
   const statFirstCategories = useFetchStatFirstCategories();
   const statSecondCategories = useFetchStatSecondCategories(curStatCategories.firstCategory || '');

@@ -12,15 +12,15 @@ const statYearValuePercents: ResolverFnAsync<StatYearValuePercents> = async (
   const { yearValues } = args
   console.log({ yearValues })
 
-  if (!yearValues) {
+  if (!Array.isArray(yearValues) || yearValues.length === 0) {
     return ([{
       percent: 0,
       value: 0,
-      year: 2007,
+      year: 0,
     }])
   }
 
-  const yearValuesMeans = yearValues.map(({ year, value }, i) => {
+  const yearValuePercents = yearValues.map(({ year, value }, i) => {
     // if (!value) return null
     if (i === 0) {
       return {
@@ -44,7 +44,7 @@ const statYearValuePercents: ResolverFnAsync<StatYearValuePercents> = async (
   })
     .filter(item => !!item)
 
-  return yearValuesMeans
+  return yearValuePercents
 
 //   return ([{
 //     percent: 0,

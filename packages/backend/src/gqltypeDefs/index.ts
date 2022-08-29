@@ -8,12 +8,14 @@ export default gql`
 	${fs.readFileSync(path.join(__dirname, 'statSubCategories.graphql'), 'utf8')}
 	${fs.readFileSync(path.join(__dirname, 'statMainCategories.graphql'), 'utf8')}
 	${fs.readFileSync(path.join(__dirname, 'statYearValuePercents.graphql'), 'utf8')}
+	${fs.readFileSync(path.join(__dirname, 'statYearMeanPercents.graphql'), 'utf8')}
 
 	input SD {
 		year: Int
 	}
 
 	type Query {
+		statYearMeanPercents(yearValues: [YearValueInput]): [StatYearMeanPercent],
 		statYearValuePercents(yearValues: [YearValueInput]): [StatYearValuePercent],
 		statRegionNames: [String],
 		statFirstCategories: [String],

@@ -1,0 +1,5 @@
+type StatYearMeanPercent {
+	percent: Int,
+	year: Int,
+    mean: Float
+}

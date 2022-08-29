@@ -14,17 +14,17 @@ type ContextValues = Readonly<{
 	curRegions: string[],
 	curStatCategories: StatCategories,
 
-	setMenuValues: SetMenuValues,
+	changeMenuValues: ChangeMenuValues,
 }>
 
-type ContextStateValues = Omit<ContextValues, 'setMenuValues'>
+type ContextStateValues = Omit<ContextValues, 'changeMenuValues'>
 
-type SetMenuValues = (newSelections: Partial<ContextStateValues>) => void
+type ChangeMenuValues = (newSelections: Partial<ContextStateValues>) => void
 
 
 const MenuContext = createContext<ContextValues>({} as ContextValues);
 
-export const useMenuValuesContext = () => useContext(MenuContext);
+export const useMenuContext = () => useContext(MenuContext);
 
 export const MenuProvider: FC<Partial<ContextStateValues>> = (props) => {
   const {
@@ -38,14 +38,14 @@ export const MenuProvider: FC<Partial<ContextStateValues>> = (props) => {
     curStatCategories: curStatCategories || {},
   });
 
-  const setMenuValues: SetMenuValues = (newSelections) => {
+  const changeMenuValues: ChangeMenuValues = (newSelections) => {
     setMenuValuesAcc(prevSelectionParams => ({ ...prevSelectionParams, ...newSelections }));
   };
 
   return (
     <MenuContext.Provider value={{
       ...menuValuesAcc,
-      setMenuValues,
+      changeMenuValues,
     }}
     >
       {children}

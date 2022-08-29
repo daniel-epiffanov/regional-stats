@@ -1,6 +1,6 @@
 import { useQuery, gql } from '@apollo/client';
-import { StatRegionNames, RegionCoords } from '../../../../../../../sharedTypes/gqlQueries';
-import { useMenuValuesContext } from '../../../../context/MenuContext';
+import { StatRegionNames, RegionCoords } from '../../../../../../sharedTypes/gqlQueries';
+import { useMenuContext } from '../../../context/MenuContext';
 
 interface QueryResponse {
 	regionCoords: RegionCoords,
@@ -10,7 +10,7 @@ interface QueryResponse {
 type ReadonlyQueryResponse = Readonly<QueryResponse>
 
 const useCoordsQuery = () => {
-  const { curRegionTypeOnMap: selectedRegionTypeOnMap } = useMenuValuesContext();
+  const { curRegionTypeOnMap: selectedRegionTypeOnMap } = useMenuContext();
   const QUERY = gql` query {
 		regionCoords(regionType: "region") {
 			type,

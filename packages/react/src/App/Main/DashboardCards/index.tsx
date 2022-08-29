@@ -1,11 +1,10 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { ScrollView } from 'devextreme-react/scroll-view';
 import styles from './DashboarCards.module.scss';
 import { useStatDataContext } from '../../../context/StatDataContext';
-import getStatYearValuePercents from '../../../queries/fetchStatYearValuePercents';
-import { StatYearValuePercents } from '../../../../../../sharedTypes/gqlQueries';
 import Card from './Card';
+import useYearMeanPercents from './useYearMeanPercent';
 
 type Props = Readonly<{
 
@@ -14,24 +13,10 @@ type Props = Readonly<{
 
 const DashboardCards: FC<Props> = () => {
   const {statData} = useStatDataContext();
-  // const { statYears } = usePrefetchedValuesContext();
-  // const years = statYears.filter(statYear => `${statYear}`.length === 4);
-  // const [chosenYears, setChosenYears] = useState([2005, 2010]);
+  const yearMeanPercents = useYearMeanPercents();
 
-  const [yearValuePercent, setYearValuePercent] = useState<null | StatYearValuePercents>(null);
-
-  useEffect(()=> {
-    const getQuery = async () => {
-      if(!statData) return;
-      const yearValuesPercents = await getStatYearValuePercents(statData['Рязанская область'].yearValues);
-      setYearValuePercent(yearValuesPercents);
-    };
-    getQuery();
-  }, [statData]);
   if (!statData) return <p>waiting for data</p>;
-  console.log({yearValuePercent});
-
-  if(!yearValuePercent) return <p>waiting for yearValuePercent</p>;
+  if(!yearMeanPercents) return <p>waiting for yearValuePercent</p>;
 
   // console.log({ statData });
   // // console.log({ years });
@@ -127,14 +112,14 @@ const DashboardCards: FC<Props> = () => {
         scrollByContent
       >
         <div className={styles['scroll-content']}>
-          {yearValuePercent.map(({ percent, year, value }) => {
+          {yearMeanPercents.map(({ percent, year, mean }) => {
             // if (year < chosenYears[0] || year > chosenYears[1]) return null;
 
             return <Card
               key={year} 
               percent={percent}
               year={year}
-              mean={value}/>;
+              mean={mean}/>;
           })}
         </div>
       </ScrollView>

@@ -24,3 +24,8 @@ export type StatYearValuePercents = ReadonlyArray<Readonly<{
 	year: number,
 	value: number
 }>>
+export type StatYearMeanPercents = ReadonlyArray<Readonly<{
+	percent: number,
+	year: number,
+	mean: number
+}>>

@@ -4,12 +4,12 @@ import MenuInput from './MenuInput';
 import DxCustomPopup from '../../../dxCustomComponents/DxCustomPopup';
 import MenuOutput from './MenuOutput';
 import usePopupState from './usePopupState';
-import { useMenuValuesContext } from '../../../context/MenuContext';
+import { useMenuContext } from '../../../context/MenuContext';
 
 const StatCategoriesMenu: FC = () => {
   const {isPopupVisible, showPopup, hidePopup} = usePopupState();
   const contentRenderHandler = () => <MenuInput />;
-  const {curStatCategories} = useMenuValuesContext();
+  const {curStatCategories} = useMenuContext();
 
   const getTitle = useCallback(
     () => {

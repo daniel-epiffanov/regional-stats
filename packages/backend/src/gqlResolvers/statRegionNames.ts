@@ -3,8 +3,9 @@ import StatisticsModel from '../mongoModels/statistics'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 const statisticsRegionNames: ResolverFnAsync<StatRegionNames> = async () => {
-	const mongoRes = await StatisticsModel.distinct('regionName')
-	return mongoRes
+  const mongoRes: ReadonlyArray<string> = await StatisticsModel.distinct('regionName')
+  const regions: ReadonlyArray<string> = mongoRes.filter(region => region !== 'Российская Федерация')
+  return regions
 }
 
 export default statisticsRegionNames

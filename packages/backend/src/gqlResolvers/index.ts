@@ -6,6 +6,7 @@ import statThirdCategories from './statThirdCategories'
 import statData from './statData'
 import regionCoords from './regionCoords'
 import statYearValuePercents from './statYearValuePercents'
+import statYearMeanPercents from './statYearMeanPercents'
 
 const gqlResolvers = {
   Query: {
@@ -17,6 +18,7 @@ const gqlResolvers = {
     statData,
     regionCoords,
     statYearValuePercents,
+    statYearMeanPercents,
   },
 }
 

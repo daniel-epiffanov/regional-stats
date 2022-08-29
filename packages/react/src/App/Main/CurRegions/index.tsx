@@ -7,9 +7,10 @@ import {
   Label,
 } from 'devextreme-react/chart';
 import styles from './styles/index.module.scss';
-import { useMenuValuesContext } from '../../../context/MenuContext';
+import { useMenuContext } from '../../../context/MenuContext';
 import Message from '../../../components/Message';
 import { useStatDataContext } from '../../../context/StatDataContext';
+import moscowImg from '../../../assets/regions/moscow.jpg';
 
 type Props = Readonly<{
 
@@ -25,7 +26,7 @@ const format = {
 const Chart: FC<Props> = () => {
   const { statData } = useStatDataContext();
   // const {curRegions} = useMenuValuesContext();
-  const curRegions = ['Рязанская область', 'Тульская область'];
+  const curRegions = ['Рязанская область', 'Тульская область', 'Тамбовская область'];
 
   if (!statData || curRegions.length === 0) return <>yo</>;
 
@@ -43,7 +44,8 @@ const Chart: FC<Props> = () => {
   console.log({ test });
 
   return (
-    <div className={styles.root}>
+    <div className={styles['root']}>
+      <img src={moscowImg} alt="moscow"/>
       <p>Selected regions:
         {' '}
         {curRegions.map(region => (

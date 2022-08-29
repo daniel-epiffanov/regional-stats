@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import VectorMap, {
   Layer,
   Tooltip,
@@ -7,8 +7,6 @@ import VectorMap, {
   Source,
   Font,
   ControlBar,
-  CommonAnnotationSettings,
-  Annotation,
   Label,
 } from 'devextreme-react/vector-map';
 import _ from 'lodash';
@@ -20,13 +18,14 @@ import {
   interquartileRange as getInterquartileRange,
 } from 'simple-statistics';
 import { ClickEvent, SelectionChangedEvent } from 'devextreme/viz/vector_map';
-import useCoordsQuery from './hooks/useCoordsQuery';
+import useCoordsQuery from './useCoordsQuery';
 import Message from '../../../components/Message';
-import { useMenuValuesContext } from '../../../context/MenuContext';
+import { useMenuContext } from '../../../context/MenuContext';
 import { RegionCoords } from '../../../../../../sharedTypes/gqlQueries';
-import styles from './styles/index.module.scss';
+import styles from './VectorMap.module.scss';
 import TopLeftAnnotation from './TopLeftAnnotation';
 import { useStatDataContext } from '../../../context/StatDataContext';
+import { useMapContext } from '../../../context/MapContext';
 
 type Props = Readonly<{
 	regionCoords: RegionCoords
@@ -58,6 +57,7 @@ function AnnotationTemplate(annotation: any) {
 
 const Map: FC<Props> = ({ regionCoords }) => {
   const { statData } = useStatDataContext();
+  const {addCurRegionNames, curRegionNames} = useMapContext();
 
   const [colorGroups, setColorGroups] = useState<ReadonlyArray<number> | null>(
     [326.6, 52907.853489932866, 115397.40348993287, 177886.95348993287, 240376.50348993286, 302866.0534899329, 3971424.9],
@@ -107,37 +107,39 @@ const Map: FC<Props> = ({ regionCoords }) => {
   }, [statData]);
 
   function customizeLayer(elements: any) {
-    // debugger
-    if (!statData) return;
-    elements.forEach((element: any) => {
+    // console.log('click');
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i];
       const regionName = element.attribute('name_ru');
-      statData[regionName] && element.attribute('value', statData[regionName].yearValues[0].value);
-      // if (!isRegionNameInStatistics(regionName)) {
-      // 	element.applySettings({ opacity: 0.2 })
-      // }
-    });
+      if (curRegionNames.includes(regionName)) {
+        // element.applySettings({ borderColor: 'red', borderWidth:5, });
+        // console.log({regionName});
+        // break;
+        element.selected(true);
+      }
+    }
   }
 
-  const { setMenuValues, curRegions } = useMenuValuesContext();
+  const { changeMenuValues, curRegions } = useMenuContext();
 
   function onMapClick(e: ClickEvent) {
     if (!e.target) return;
     const regionName = e.target.attribute('name_ru');
-    const value = e.target.attribute('value');
+    // const value = e.target.attribute('value');
 
-    console.log({ regionName });
-    console.log({ value });
-    e.target.applySettings({
-      selected: true,
-      // 'borderWidth': '5px',
-      // "borderColor": "black"
-    });
+    // e.target.applySettings({
+    //   borderWidth: '5px',
+    //   borderColor: 'black'
+    // });
+    // e.target.selected(true);
 
-    if (curRegions.includes(regionName)) return;
-    if (curRegions.length > 2) return setMenuValues({ curRegions: [regionName] });
-    setMenuValues({
-      curRegions: [...curRegions, regionName],
-    });
+    addCurRegionNames(regionName);
+
+    // if (curRegions.includes(regionName)) return;
+    // if (curRegions.length > 2) return setMenuValues({ curRegions: [regionName] });
+    // setMenuValues({
+    //   curRegions: [...curRegions, regionName],
+    // });
 
     // debugger
     // if (!isRegionNameInStatistics(regionName)) return
@@ -145,11 +147,11 @@ const Map: FC<Props> = ({ regionCoords }) => {
     // selectionsHandler({ selectedRegionName: regionName })
   }
 
-  function customizeTooltip(element: any, b: any, c: any) {
-    return {
-      text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
-    };
-  }
+  // function customizeTooltip(element: any, b: any, c: any) {
+  //   return {
+  //     text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
+  //   };
+  // }
 
   // const customizeText = (args: { end: number, start: number, index: number }) => {
   // 	const { end, start, index } = args
@@ -237,11 +239,8 @@ const Map: FC<Props> = ({ regionCoords }) => {
     <div className={styles.root}>
       <VectorMap
         id="vectorMap"
-        // bounds={BOUNDS}
         onClick={onMapClick}
-        // onInitialized={onInitializedHandler}
         zoomFactor={3}
-        // height="90vh"
         onSelectionChanged={selectionHandler}
         size={{
           height: 650,
@@ -257,7 +256,6 @@ const Map: FC<Props> = ({ regionCoords }) => {
           customize={customizeLayer}
           selectionMode="multiple"
           name="regions"
-          // palette="Violet"
           colorGroupingField="value"
           colorGroups={colorGroups}
           label={{
@@ -268,24 +266,24 @@ const Map: FC<Props> = ({ regionCoords }) => {
             },
           }}
           selectedColor="red"
+          selectedBorderWidth={3}
 
-          // borderWidth="2px"
         />
 
-        <Tooltip
+        {/* <Tooltip
           enabled
           customizeTooltip={customizeTooltip}
         >
           <Border visible />
           <Font color="#fff" />
-        </Tooltip>
+        </Tooltip> */}
 
         <Legend>
           <Source layer="regions" grouping="color" />
         </Legend>
 
         <Layer
-          // selectionMode="single"
+          selectionMode="multiple"
           dataSource={markers}
           color="red"
           name="bubbles"
@@ -295,6 +293,7 @@ const Map: FC<Props> = ({ regionCoords }) => {
           maxSize={40}
           sizeGroups={[0, 8000, 10000, 50000]}
           opacity="0.8"
+          
         >
           <Label enabled={false} />
         </Layer>

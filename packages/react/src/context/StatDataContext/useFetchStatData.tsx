@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { StatData } from '../../../../../sharedTypes/gqlQueries';
-import { useMenuValuesContext } from '../MenuContext';
+import { useMenuContext } from '../MenuContext';
+import { usePrefetchedValuesContext } from '../PrefetchedValuesContext';
 import fetchStatData from './fetchStatData';
 
 
 const useFetchStatData= () => {
-  // const { statRegionNames } = usePrefetchedValuesContext();
-  const { curStatCategories } = useMenuValuesContext();
+  const { statRegionNames } = usePrefetchedValuesContext();
+  const { curStatCategories } = useMenuContext();
   const [
     stateData, setStatData
   ] = useState<Readonly<{ [key: string]: StatData}> | null>(null);
@@ -16,11 +17,13 @@ const useFetchStatData= () => {
       if (!curStatCategories.secondCategory) return;
 
       const curStatData = await fetchStatData({
-        regionNames: ['Рязанская область', 'Тульская область', 'Тверская область'],
+        regionNames: statRegionNames,
         mainCategory: curStatCategories.firstCategory || '',
         subCategory: curStatCategories.secondCategory,
         subSubCategory: curStatCategories.thirdCategory || '',
       });
+
+      console.log({curStatData});
 
       if (!curStatData) return;
       setStatData(curStatData);
@@ -30,7 +33,7 @@ const useFetchStatData= () => {
       fetchAndSaveStatData();
     }
 
-  }, [curStatCategories.firstCategory, curStatCategories.secondCategory, curStatCategories.thirdCategory]);
+  }, [statRegionNames, curStatCategories.firstCategory, curStatCategories.secondCategory, curStatCategories.thirdCategory]);
 
   return stateData;
 };

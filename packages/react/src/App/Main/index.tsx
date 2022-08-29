@@ -11,6 +11,7 @@ import StatCategoriesMenu from './StatCategoriesMenu';
 import styles from './styles/index.module.scss';
 import VectorMap from './VectorMap';
 import YearsProgress from './DashboardCards';
+import { MapProvider } from '../../context/MapContext';
 
 
 const Main: FC = () => {
@@ -36,12 +37,14 @@ const Main: FC = () => {
 
       <Item>
         <Location screen="sm md lg" row={1} col={0} rowspan={1} />
-        <YearsProgress />
+        {/* <YearsProgress /> */}
       </Item>
 
       <Item>
         <Location screen="sm md lg" row={2} col={0} />
-        <VectorMap />
+        <MapProvider>
+          <VectorMap />
+        </MapProvider>
       </Item>
 
       {/* <Item>

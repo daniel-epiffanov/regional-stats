@@ -8,7 +8,7 @@ type Response = GraphqlResponse<{
   statYearValuePercents: StatYearValuePercents
 }>
 
-const getStatYearValuePercents = async (yearValues: StatData['yearValues']) => {
+const fetchStatYearValuePercents = async (yearValues: StatData['yearValues']) => {
   const query = jsonToGraphQLQuery({
     query: {
       statYearValuePercents: {
@@ -37,4 +37,4 @@ const getStatYearValuePercents = async (yearValues: StatData['yearValues']) => {
   }
 };
 
-export default getStatYearValuePercents;
+export default fetchStatYearValuePercents;
