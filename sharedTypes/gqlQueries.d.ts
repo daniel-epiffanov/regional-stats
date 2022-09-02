@@ -29,3 +29,11 @@ export type StatYearMeanPercents = ReadonlyArray<Readonly<{
 	year: number,
 	mean: number
 }>>
+
+export type GqlStatRating = Readonly<{
+	value: number,
+	place: number,
+	regionName: string
+}>
+
+export type GqlMapRegionNames = ReadonlyArray<string>

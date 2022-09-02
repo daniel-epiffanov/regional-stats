@@ -6,6 +6,12 @@ import Chart from './Chart';
 import PlacesChart from './PlacesChart';
 import GrowthChart from './GrowthChart';
 import { useMapContext } from '../../../../context/MapContext';
+import Gauge from './Gauge';
+// import List from 'devextreme-react/list';
+import { usePrefetchedValuesContext } from '../../../../context/PrefetchedValuesContext';
+import RegionsRating from './RegionsRating';
+import CurYearSingleRegion from './CurYearSingleRegion';
+import CurYearMultipleRegions from './CurYearMultipleRegions';
 
 type Props = Readonly<{
 
@@ -14,28 +20,28 @@ type Props = Readonly<{
 const TopLeftAnnotation: FC<Props> = () => {
   const { statData } = useStatDataContext();
   const { curRegionNames } = useMapContext();
-  if (!statData) return null;
+  if (!statData || !curRegionNames) return null;
 
+  console.log({curRegionNames});
+  console.log({statData});
   return (
     <div className={styles['root']}>
-      <h4>Текущий год</h4>
-      <h4>...</h4>
-      <h4>Все года</h4>
-      <div className={styles['header']}>
+      {curRegionNames.length <= 1 ? (      <div className={styles['header']}>
         <img
           src={moscowImg}
           alt="moscow"
           width={200}
         />
         <div>
-          <h4>{curRegionNames.join(', ')}</h4>
-          <h4>2002</h4>
-          <p>Trend line: negative</p>
-          <p>Номер: 53</p>
-          <p>2002 year value: 153.12</p>
-          <p>measure: миллионы</p>
+          <h3>{curRegionNames.join(', ')}</h3>
+          <h1>58,12</h1>
         </div>
-      </div>
+      </div>) : <h2>Режим сравнения</h2>}
+      <h4>Текущий год</h4>
+      {curRegionNames.length <= 1 ? <CurYearSingleRegion /> : <CurYearMultipleRegions />}
+      <RegionsRating />
+      
+      <h4>Все года</h4>
       <div style={{width: 300, padding: '20px 0'}}>
         <Chart />
       </div>

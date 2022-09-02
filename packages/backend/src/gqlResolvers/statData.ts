@@ -1,5 +1,5 @@
 import { StatData } from '../../../../sharedTypes/gqlQueries'
-import statisticsModel from '../mongoModels/statistics'
+import StatisticsModel from '../mongoModels/statistics'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 if (process.env.NODE_ENV !== 'production') {
@@ -22,7 +22,7 @@ const statisticsData: ResolverFnAsync<StatData | null> = async (
   } = args
 
   if (subSubCategory) {
-    const mongoRes = await statisticsModel.aggregate<StatData>([
+    const mongoRes = await StatisticsModel.aggregate<StatData>([
       { $match: { regionName } },
       { $unwind: '$mainSections' },
       { $match: { 'mainSections.name': mainCategory } },
@@ -42,7 +42,7 @@ const statisticsData: ResolverFnAsync<StatData | null> = async (
     return statData?.yearValues ? statData : null
   }
 
-  const mongoRes = await statisticsModel.aggregate<StatData>([
+  const mongoRes = await StatisticsModel.aggregate<StatData>([
     { $match: { regionName } },
     { $unwind: '$mainSections' },
     { $match: { 'mainSections.name': mainCategory } },

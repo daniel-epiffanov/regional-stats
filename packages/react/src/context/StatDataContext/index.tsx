@@ -11,7 +11,7 @@ type ContextValues = Readonly<{
 }>
 
 // *** this context must be wrapped
-// into Menu Context ***
+// into Menu Context and PrefetchedValues Context ***
 
 
 const StatDataContext = createContext<ContextValues>({} as ContextValues);

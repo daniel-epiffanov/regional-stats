@@ -1,0 +1,17 @@
+.doughnut-container {
+    display: flex;
+    // justify-content: center;
+    align-items: center;
+}
+
+.cur-values {
+    display: flex;
+	width: 100%;
+	justify-content: space-around;
+    flex-direction: column;
+    text-align: center;
+	.big {
+		font-size: 4rem;
+		font-weight: bold;
+	}
+}

@@ -26,7 +26,7 @@ const fetchStatYearValuePercents = async (yearValues: StatData['yearValues']) =>
     const axiosResponse = await axios.post<Response>(hostApi, { query });
     const { data } = axiosResponse.data;
   
-    console.log({data});
+    // console.log({data});
     if (!data?.statYearValuePercents
           || data.statYearValuePercents.length === 0) return null;
     

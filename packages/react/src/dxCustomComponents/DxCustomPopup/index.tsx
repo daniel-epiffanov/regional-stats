@@ -11,7 +11,7 @@ type Props = Readonly<{
 }>
 
 const titleRender = (title: string) => {
-  console.log({title});
+  // console.log({title});
   return (
     <div className={styles['title-container']}>
       <h4>{title}</h4>

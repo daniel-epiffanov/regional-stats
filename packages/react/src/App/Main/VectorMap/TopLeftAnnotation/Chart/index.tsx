@@ -32,12 +32,12 @@ const Chart: FC = () => {
         ]
       ))
     ];
-    console.log({entries});
-    console.log({entries2: Object.fromEntries(entries)});
+    // console.log({entries});
+    // console.log({entries2: Object.fromEntries(entries)});
     return Object.fromEntries(entries);
   });
 
-  console.log({test});
+  //   console.log({test});
 
   return (
     <div>

@@ -6,7 +6,7 @@ type Args = Readonly<{
 	regionType: string,
 }>
 
-const coordsByRegionType: ResolverFnAsync<MongoRegionCoords[] | null> = async (
+const mapRegionCoords: ResolverFnAsync<MongoRegionCoords[] | null> = async (
   parent: any,
   args: Args,
 ) => {
@@ -16,4 +16,4 @@ const coordsByRegionType: ResolverFnAsync<MongoRegionCoords[] | null> = async (
   return mongoRes?.length > 0 ? mongoRes : null
 }
 
-export default coordsByRegionType
+export default mapRegionCoords

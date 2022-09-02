@@ -22,7 +22,7 @@ const RegressionLine: FC<Props> = () => {
 
   if (!statData) return null;
 
-  console.log({ curStatData: statData });
+  // console.log({ curStatData: statData });
 
   const getValuesByYear = (year: number) => {
     const values = Object.entries(statData)

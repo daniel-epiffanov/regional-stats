@@ -4,9 +4,11 @@ import statFirstCategories from './statFirstCategories'
 import statSecondCategories from './statSecondCategories'
 import statThirdCategories from './statThirdCategories'
 import statData from './statData'
-import regionCoords from './regionCoords'
+import mapRegionCoords from './mapRegionCoords'
+import mapRegionNames from './mapRegionNames'
 import statYearValuePercents from './statYearValuePercents'
 import statYearMeanPercents from './statYearMeanPercents'
+import statRating from './statRating'
 
 const gqlResolvers = {
   Query: {
@@ -16,9 +18,11 @@ const gqlResolvers = {
     statSecondCategories,
     statThirdCategories,
     statData,
-    regionCoords,
+    mapRegionCoords,
     statYearValuePercents,
     statYearMeanPercents,
+    statRating,
+    mapRegionNames,
   },
 }
 

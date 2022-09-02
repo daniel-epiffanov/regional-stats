@@ -1,3 +1,11 @@
 .root {
 	position: relative;
+	// height: 600px;
+	flex-grow: 1;
+}
+
+:global {
+	#vectorMap {
+		height: 100%;
+	}
 }

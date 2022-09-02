@@ -1,0 +1,5 @@
+	type StatRating {
+		regionName: String,
+		value: Float,
+		place: Int,
+	}

@@ -23,7 +23,7 @@ const useFetchStatData= () => {
         subSubCategory: curStatCategories.thirdCategory || '',
       });
 
-      console.log({curStatData});
+      // console.log({curStatData});
 
       if (!curStatData) return;
       setStatData(curStatData);

@@ -1,13 +1,12 @@
 import { FC, useEffect, useState } from 'react';
-import VectorMap, {
+import DxVectorMap, {
   Layer,
   Tooltip,
   Border,
   Legend,
   Source,
   Font,
-  ControlBar,
-  Label,
+  ControlBar
 } from 'devextreme-react/vector-map';
 import _ from 'lodash';
 import {
@@ -18,18 +17,20 @@ import {
   interquartileRange as getInterquartileRange,
 } from 'simple-statistics';
 import { ClickEvent, SelectionChangedEvent } from 'devextreme/viz/vector_map';
-import useCoordsQuery from './useCoordsQuery';
+import useCoordsQuery from '../../../context/MapContext/useCoordsQuery';
 import Message from '../../../components/Message';
-import { useMenuContext } from '../../../context/MenuContext';
 import { RegionCoords } from '../../../../../../sharedTypes/gqlQueries';
 import styles from './VectorMap.module.scss';
 import TopLeftAnnotation from './TopLeftAnnotation';
 import { useStatDataContext } from '../../../context/StatDataContext';
 import { useMapContext } from '../../../context/MapContext';
+import makeColorGroupsRange from './makeColorGroupsRange';
+import bigNumberFormatter from '../../../helpers/bigNumberFormatter';
+import useStatRatingQuery from './TopLeftAnnotation/RegionsRating/useStatRatingQuery';
 
-type Props = Readonly<{
-	regionCoords: RegionCoords
-}>
+// type Props = Readonly<{
+// 	regionCoords: RegionCoords
+// }>
 
 const BOUNDS = [71, 97, 45, 26];
 const PALLETE = ['#eeacc5', '#db9eba', '#c88fb0', '#b581a5', '#a1739a', '#8e6490', '#7b5685'];
@@ -55,196 +56,68 @@ function AnnotationTemplate(annotation: any) {
   );
 }
 
-const Map: FC<Props> = ({ regionCoords }) => {
+const VectorMap: FC = () => {
   const { statData } = useStatDataContext();
-  const {addCurRegionNames, curRegionNames} = useMapContext();
+  const {addCurRegionNames, curRegionNames, mapRegionCoords: regionCoords} = useMapContext();
+  console.log({curRegionNames});
+  const statRating = useStatRatingQuery();
 
   const [colorGroups, setColorGroups] = useState<ReadonlyArray<number> | null>(
-    [326.6, 52907.853489932866, 115397.40348993287, 177886.95348993287, 240376.50348993286, 302866.0534899329, 3971424.9],
+    [0, 10, 20, 30, 40, 50, 60, 70, 80, 82],
   );
 
-  useEffect(() => {
-    if (!statData) return;
-    const test = Object
-      .values(statData)
-      .filter(curStatItem => !!curStatItem)
-      .map(curStatItem => {
-        return curStatItem?.yearValues[0].value;
-      });
-
-    const other = _.concat(...test);
-
-    const min = Math.min(...other);
-    const max = Math.max(...other);
-    const interquartileRange = getInterquartileRange(other);
-    const halfInterquartileRange = interquartileRange / 2;
-    const standardDeviation = getStandardDeviation(other);
-    const cutStandardDeviation = standardDeviation / 3;
-    const mean = getMean(other);
-    const median = getMedian(other);
-    const mode = getMode(other);
-
-    const newColorSetting = [
-      min,
-      (mode - min) / 2,
-      (mode - min) / 3,
-      (mode - min) / 4,
-      (mode - min) / 5,
-      (mode - min) / 6,
-      mode,
-      (max - mode) / 6,
-      (max - mode) / 5,
-      (max - mode) / 4,
-      (max - mode) / 3,
-      (max - mode) / 2,
-      max,
-    ];
-
-    setColorGroups(newColorSetting);
-    console.log({ newColorSetting });
-
-    // debugger
-  }, [statData]);
-
   function customizeLayer(elements: any) {
-    // console.log('click');
+    if(!statData) return null;
     for (let i = 0; i < elements.length; i++) {
       const element = elements[i];
       const regionName = element.attribute('name_ru');
+      element.attribute('value', statData[regionName].yearValues[0].value);
+      element.attribute('place', statRating?.find(item=> item.regionName === regionName)?.place || 0);
       if (curRegionNames.includes(regionName)) {
-        // element.applySettings({ borderColor: 'red', borderWidth:5, });
-        // console.log({regionName});
-        // break;
         element.selected(true);
       }
     }
   }
 
-  const { changeMenuValues, curRegions } = useMenuContext();
 
   function onMapClick(e: ClickEvent) {
     if (!e.target) return;
     const regionName = e.target.attribute('name_ru');
-    // const value = e.target.attribute('value');
-
-    // e.target.applySettings({
-    //   borderWidth: '5px',
-    //   borderColor: 'black'
-    // });
-    // e.target.selected(true);
-
     addCurRegionNames(regionName);
-
-    // if (curRegions.includes(regionName)) return;
-    // if (curRegions.length > 2) return setMenuValues({ curRegions: [regionName] });
-    // setMenuValues({
-    //   curRegions: [...curRegions, regionName],
-    // });
-
-    // debugger
-    // if (!isRegionNameInStatistics(regionName)) return
-
-    // selectionsHandler({ selectedRegionName: regionName })
   }
 
-  // function customizeTooltip(element: any, b: any, c: any) {
-  //   return {
-  //     text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
-  //   };
-  // }
+  function customizeTooltip(element: any, b: any, c: any) {
+    return {
+      text: `${element.attribute('name_ru')} ${element.attribute('value')}`,
+    };
+  }
 
-  // const customizeText = (args: { end: number, start: number, index: number }) => {
-  // 	const { end, start, index } = args
-  // 	// const formattedStart = bigNumberFormatter(start)
-  // 	// const formattedEnd = bigNumberFormatter(end)
-  // 	// const percent = ((index * 2) / 10) * 100
-  // 	// const isLowestGroup = percent === 0
-  // 	// const isHighestGroup = percent === 100
-  // 	// if (isLowestGroup) return `<b>low</b> (${formattedStart} - ${formattedEnd})`
-  // 	// if (isHighestGroup) return `<b>high</b> (${formattedStart} - ${formattedEnd})`
+  const customizeText = (args: { end: number, start: number, index: number }) => {
+    const { end, start, index } = args;
+    const formattedStart = bigNumberFormatter(start);
+    const formattedEnd = bigNumberFormatter(end);
+    const percent = ((index * 2) / 10) * 100;
+    const isLowestGroup = percent === 0;
+    const isHighestGroup = percent === 100;
+    if (isLowestGroup) return `<b>low</b> (${formattedStart} - ${formattedEnd})`;
+    if (isHighestGroup) return `<b>high</b> (${formattedStart} - ${formattedEnd})`;
 
-  // 	return `${percent}%`
-  // }
-
-  // const colorGroups = [0, 50, 200, 1000, 5000, 300000, 1000000];
-
-  const markers = {
-    type: 'FeatureCollection',
-    features: [
-      {
-        coordinates: [159, 56],
-        text: 'New York City',
-        value: 8406,
-      },
-      {
-        coordinates: [160, 57],
-        text: 'Bangkok',
-        value: 8281,
-      },
-      {
-        coordinates: [40.04923925434538, 51.17876373322016],
-        text: 'Baghdad',
-        value: 7181,
-      },
-      {
-        coordinates: [37.62, 55.75],
-        text: 'Moscow',
-        value: 12111,
-      },
-      {
-        coordinates: [38.961649341699925, 60.07807077542048],
-        text: 'Shanghai',
-        value: 24150,
-      },
-      {
-        coordinates: [69.60064097022877, 62.43771004049723],
-        text: 'Rio de Janeiro',
-        value: 6429,
-      },
-      {
-        coordinates: [40.560076548725455, 54.53531529510556],
-        text: 'Cairo',
-        value: 8922,
-      },
-      {
-        coordinates: [39, 53],
-        text: 'Istanbul',
-        value: 14160,
-      },
-      {
-        coordinates: [38, 61],
-        text: 'Seoul',
-        value: 10388,
-      },
-    ].map((data) => ({
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: data.coordinates,
-      },
-      properties: {
-        text: data.text,
-        value: data.value,
-        tooltip: `<b>${data.text}</b>\n${data.value}K`,
-      },
-    })),
+    return `${percent}%`;
   };
 
+  
   const selectionHandler = (e: SelectionChangedEvent) => {
     // debugger;
-    console.log({ e });
+    // console.log({ e });
   };
 
   return (
     <div className={styles.root}>
-      <VectorMap
+      <DxVectorMap
         id="vectorMap"
         onClick={onMapClick}
         zoomFactor={3}
         onSelectionChanged={selectionHandler}
-        size={{
-          height: 650,
-        }}
       >
         <ControlBar enabled={false} />
         <Layer
@@ -256,8 +129,9 @@ const Map: FC<Props> = ({ regionCoords }) => {
           customize={customizeLayer}
           selectionMode="multiple"
           name="regions"
-          colorGroupingField="value"
+          colorGroupingField="place"
           colorGroups={colorGroups}
+          palette={['#7b5686', '#eeacc6']}
           label={{
             enabled: true,
             dataField: 'name_ru',
@@ -267,62 +141,24 @@ const Map: FC<Props> = ({ regionCoords }) => {
           }}
           selectedColor="red"
           selectedBorderWidth={3}
-
         />
 
-        {/* <Tooltip
+        <Tooltip
           enabled
           customizeTooltip={customizeTooltip}
         >
           <Border visible />
           <Font color="#fff" />
-        </Tooltip> */}
+        </Tooltip>
 
-        <Legend>
+        <Legend customizeText={customizeText}>
           <Source layer="regions" grouping="color" />
         </Legend>
-
-        <Layer
-          selectionMode="multiple"
-          dataSource={markers}
-          color="red"
-          name="bubbles"
-          elementType="dot"
-          dataField="value"
-          minSize={20}
-          maxSize={40}
-          sizeGroups={[0, 8000, 10000, 50000]}
-          opacity="0.8"
-          
-        >
-          <Label enabled={false} />
-        </Layer>
-      </VectorMap>
+      </DxVectorMap>
 
       <TopLeftAnnotation />
     </div>
   );
 };
 
-const MapPreloads: FC = () => {
-  // graphql response
-  const { loading, error, data } = useCoordsQuery();
-
-  if (loading) return <Message type="message" text="Map data is loading." positionId="vector-map-container" />;
-
-  const coordsByRegionType = data?.regionCoords;
-
-  // debugger
-
-  if (error || !data || !coordsByRegionType) return <Message type="error" text="Error while loading the map data." />;
-
-  return <Map regionCoords={coordsByRegionType} />;
-};
-
-// const MapPreloads = () => {
-
-// }
-
-// const MapPreloads: FC = () => <h1>mock</h1>;
-
-export default MapPreloads;
+export default VectorMap;

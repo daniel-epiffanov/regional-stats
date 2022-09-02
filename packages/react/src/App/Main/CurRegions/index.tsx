@@ -41,7 +41,7 @@ const Chart: FC<Props> = () => {
     [curRegions[2]]: allData[2] && allData[2][yearIndex],
   }));
 
-  console.log({ test });
+  // console.log({ test });
 
   return (
     <div className={styles['root']}>

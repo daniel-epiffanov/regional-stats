@@ -6,7 +6,7 @@ interface Props {
 }
 
 const Arrow: FC<Props> = ({ incline }) => {
-  console.log({ incline });
+  // console.log({ incline });
 
   return (
     <div className={styles.root}>
