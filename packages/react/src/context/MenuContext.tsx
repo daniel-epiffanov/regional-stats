@@ -1,7 +1,6 @@
 import {
   createContext, FC, useContext, useState,
 } from 'react';
-import {	MongoRegionCoords } from '../../../../sharedTypes/mongoModels';
 
 type StatCategories = Readonly<{
   firstCategory?: string | null,
@@ -10,8 +9,6 @@ type StatCategories = Readonly<{
 }>
 
 type ContextValues = Readonly<{
-	curRegionTypeOnMap: MongoRegionCoords['type'],
-	curRegions: string[],
 	curStatCategories: StatCategories,
 
 	changeMenuValues: ChangeMenuValues,
@@ -33,8 +30,6 @@ export const MenuProvider: FC<Partial<ContextStateValues>> = (props) => {
   } = props;
 	
   const [menuValuesAcc, setMenuValuesAcc] = useState<ContextStateValues>({
-    curRegionTypeOnMap: 'region',
-    curRegions: [],
     curStatCategories: curStatCategories || {},
   });
 

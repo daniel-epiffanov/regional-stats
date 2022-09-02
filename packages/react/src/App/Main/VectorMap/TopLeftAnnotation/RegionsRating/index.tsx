@@ -1,8 +1,7 @@
 import { FC } from 'react';
 import {
-  DataGrid, Paging, Export, Column
+  DataGrid, Paging, Column
 } from 'devextreme-react/data-grid';
-import { usePrefetchedValuesContext } from '../../../../../context/PrefetchedValuesContext';
 import styles from './List.module.scss';
 import useStatRatingQuery from './useStatRatingQuery';
 import { RowPreparedEvent } from 'devextreme/ui/data_grid';
@@ -10,13 +9,7 @@ import { useMapContext } from '../../../../../context/MapContext';
 
 
 const RegionsRating: FC = () => {
-  const {statRegionNames} = usePrefetchedValuesContext();
   const {curRegionNames} = useMapContext();
-  // const dataSource = statRegionNames.map((statRegionName, i) => ({
-  //   place: i+1,
-  //   regionName: statRegionName,
-  //   flag: 'mosc'
-  // }));
 
   const statRating = useStatRatingQuery();
   console.log({statRating});
@@ -25,8 +18,6 @@ const RegionsRating: FC = () => {
     console.log({e});
     if(!e.values?.includes(curRegionNames[0])) return null;
     e.rowElement.style.background = 'lightgreen';
-    // eslint-disable-next-line no-debugger
-    // debugger;
   };
 
   return (

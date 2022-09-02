@@ -9,14 +9,17 @@ import useCoordsQuery from './useCoordsQuery';
 type ContextValues = Readonly<{
     curRegionNames: ReadonlyArray<string>
     mapRegionCoords: RegionCoords
-    mapRegionNames: GqlMapRegionNames
+    mapRegionNames: GqlMapRegionNames,
+    curYear: number
     
+    changeCurYear: ChangeCurYear,
     changeCurRegionNames: ChangeCurRegionNames,
     addCurRegionNames: AddCurRegionName
 }>
 
 type ContextStateValues = Omit<ContextValues, 'setCurRegion'>
 type ChangeCurRegionNames = (newCurRegion: ContextValues['curRegionNames']) => void
+type ChangeCurYear = (newCurYear: number) => void
 type AddCurRegionName = (newCurRegion: string) => void
   
   
@@ -32,8 +35,12 @@ export const MapProvider: FC<Partial<ContextStateValues>> = (props) => {
 
   const regionCoords = useCoordsQuery();
       
+  const [curYear, setCurYear] = useState<number>(2002);
   const [curRegionNames, setCurRegionNames] = useState<ContextValues['curRegionNames']>(defaultCurRegionNames || ['Рязанская область']);
   
+  const changeCurYear: ChangeCurYear = (newCurYear) => {
+    setCurYear(newCurYear);
+  };
   const changeCurRegionNames: ChangeCurRegionNames = (newCurRegionNames) => {
     setCurRegionNames(newCurRegionNames);
   };
@@ -57,6 +64,8 @@ export const MapProvider: FC<Partial<ContextStateValues>> = (props) => {
       curRegionNames: curRegionNames,
       mapRegionCoords: regionCoords.mapRegionCoords,
       mapRegionNames: regionCoords.mapRegionNames,
+      curYear,
+      changeCurYear,
       changeCurRegionNames,
       addCurRegionNames
     }}

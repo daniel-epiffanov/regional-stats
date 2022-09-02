@@ -7,8 +7,6 @@ import {
   Label,
 } from 'devextreme-react/chart';
 import styles from './styles/index.module.scss';
-import { useMenuContext } from '../../../context/MenuContext';
-import Message from '../../../components/Message';
 import { useStatDataContext } from '../../../context/StatDataContext';
 import moscowImg from '../../../assets/regions/moscow.jpg';
 

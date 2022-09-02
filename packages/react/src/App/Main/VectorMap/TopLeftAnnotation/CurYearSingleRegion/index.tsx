@@ -5,13 +5,13 @@ import styles from './CurYearSingleRegion.module.scss';
 
 const CurYearSingleRegion: FC = ()  => {
   const {statData} = useStatDataContext();
-  const {curRegionNames} = useMapContext();
+  const {curRegionNames, curYear} = useMapContext();
 
   if(!statData || !statData[curRegionNames[0]]) return null;
   return (
     <div className={styles['cur-values']}>
       <div>
-        <span className={styles['big']}>2002</span>
+        <span className={styles['big']}>{curYear}</span>
         <span>год</span>
       </div>
       <div>

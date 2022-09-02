@@ -9,24 +9,14 @@ import DxVectorMap, {
   ControlBar
 } from 'devextreme-react/vector-map';
 import _ from 'lodash';
-import {
-  mean as getMean,
-  median as getMedian,
-  mode as getMode,
-  standardDeviation as getStandardDeviation,
-  interquartileRange as getInterquartileRange,
-} from 'simple-statistics';
 import { ClickEvent, SelectionChangedEvent } from 'devextreme/viz/vector_map';
-import useCoordsQuery from '../../../context/MapContext/useCoordsQuery';
-import Message from '../../../components/Message';
-import { RegionCoords } from '../../../../../../sharedTypes/gqlQueries';
 import styles from './VectorMap.module.scss';
 import TopLeftAnnotation from './TopLeftAnnotation';
 import { useStatDataContext } from '../../../context/StatDataContext';
 import { useMapContext } from '../../../context/MapContext';
-import makeColorGroupsRange from './makeColorGroupsRange';
 import bigNumberFormatter from '../../../helpers/bigNumberFormatter';
 import useStatRatingQuery from './TopLeftAnnotation/RegionsRating/useStatRatingQuery';
+import YearSlider from './YearSlider';
 
 // type Props = Readonly<{
 // 	regionCoords: RegionCoords
@@ -58,12 +48,12 @@ function AnnotationTemplate(annotation: any) {
 
 const VectorMap: FC = () => {
   const { statData } = useStatDataContext();
-  const {addCurRegionNames, curRegionNames, mapRegionCoords: regionCoords} = useMapContext();
+  const {addCurRegionNames, curRegionNames, mapRegionCoords} = useMapContext();
   console.log({curRegionNames});
   const statRating = useStatRatingQuery();
 
   const [colorGroups, setColorGroups] = useState<ReadonlyArray<number> | null>(
-    [0, 10, 20, 30, 40, 50, 60, 70, 80, 82],
+    [0, 3, 10, 40, 70, 80, 82],
   );
 
   function customizeLayer(elements: any) {
@@ -123,7 +113,7 @@ const VectorMap: FC = () => {
         <Layer
           dataSource={{
             type: 'FeatureCollection',
-            features: regionCoords,
+            features: mapRegionCoords,
           }}
           type="area"
           customize={customizeLayer}
@@ -131,7 +121,7 @@ const VectorMap: FC = () => {
           name="regions"
           colorGroupingField="place"
           colorGroups={colorGroups}
-          palette={['#7b5686', '#eeacc6']}
+          palette={['#3eaaf5', '#eeacc6', 'red']}
           label={{
             enabled: true,
             dataField: 'name_ru',
@@ -157,6 +147,7 @@ const VectorMap: FC = () => {
       </DxVectorMap>
 
       <TopLeftAnnotation />
+      <YearSlider />
     </div>
   );
 };

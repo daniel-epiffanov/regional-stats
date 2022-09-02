@@ -1,15 +1,7 @@
-import { Chart } from 'devextreme-react';
-import {
-  ArgumentAxis, AxisLabel, CommonSeriesSettings, Font, Grid, Label, Legend, Series, Tooltip, ValueAxis,
-} from 'devextreme-react/chart';
 import { FC } from 'react';
 import {
-  linearRegression as getLinearRegression,
-  linearRegressionLine as getLinearRegressionLine,
   mean as getMean,
 } from 'simple-statistics';
-import { useMenuContext } from '../../../../context/MenuContext';
-import Arrow from '../../../../components/Arrow';
 import { useStatDataContext } from '../../../../context/StatDataContext';
 
 type Props = Readonly<{
