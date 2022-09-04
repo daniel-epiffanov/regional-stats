@@ -7,7 +7,9 @@ type StatData {
 	measure: String,
 	parentMeasure: String,
 	yearValues: [YearValue],
+	flag: String,
 }
+
 
 input YearValueInput {
 	year: Int,

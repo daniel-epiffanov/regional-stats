@@ -2,4 +2,5 @@
 		regionName: String,
 		value: Float,
 		place: Int,
+		flag: String,
 	}

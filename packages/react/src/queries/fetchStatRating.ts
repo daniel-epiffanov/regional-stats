@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { GqlStatRating } from '../../../../sharedTypes/gqlQueries';
-import { hostApi } from '../helpers/host';
+import { hostApi } from '../config/host';
 import { GraphqlResponse } from './queries';
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
 
@@ -36,7 +36,8 @@ const fetchStatRating: FetchStatRating = async (args) => {
         },
         value: true,
         place: true,
-        regionName: true
+        regionName: true,
+        flag: true,
       }
     }
   }, { pretty: true });

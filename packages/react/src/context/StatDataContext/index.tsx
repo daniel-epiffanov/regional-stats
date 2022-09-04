@@ -1,12 +1,12 @@
 import {
   createContext, FC, useContext, useState,
 } from 'react';
-import { StatData } from '../../../../../sharedTypes/gqlQueries';
+import { GqlStatData } from '../../../../../sharedTypes/gqlQueries';
 import useFetchStatData from './useFetchStatData';
 
 type ContextValues = Readonly<{
 	statData: Readonly<{
-    [key: string]: StatData,
+    [key: string]: GqlStatData,
   }> | null
 }>
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StatData, StatYearMeanPercents } from '../../../../../../sharedTypes/gqlQueries';
+import { GqlStatData, StatYearMeanPercents } from '../../../../../../sharedTypes/gqlQueries';
 import { useStatDataContext } from '../../../context/StatDataContext';
 import fetchStatYearMeanPercents from '../../../queries/fetchStatYearMeanPercents';
 import _ from 'lodash';

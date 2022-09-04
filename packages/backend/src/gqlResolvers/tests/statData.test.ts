@@ -1,4 +1,4 @@
-import { StatData, statSubCategories } from '../../../../../sharedTypes/gqlQueries'
+import { GqlStatData, statSubCategories } from '../../../../../sharedTypes/gqlQueries'
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from '../../tests/shared/mongoConnection'
 import statRegionNames from './resolversData/getStatRegionNames'
@@ -6,7 +6,7 @@ import StatisticsModel from '../../mongoModels/statistics'
 
 testMongoConenction()
 
-const statisticsDataExpect = (statData: StatData) => {
+const statisticsDataExpect = (statData: GqlStatData) => {
   expect(Array.isArray(statData.yearValues)).toBe(true)
   expect(statData.yearValues.length).toBeGreaterThan(0)
 
@@ -149,7 +149,7 @@ describe('Tests the statData query with a parameter', () => {
 
             expect(response.errors).toBeUndefined()
 
-            const statData: StatData | undefined = response.data?.statData
+            const statData: GqlStatData | undefined = response.data?.statData
 
             if (!statData) fail('statData is not truthy')
 
@@ -174,7 +174,7 @@ describe('Tests the statData query with a parameter', () => {
 
             expect(response.errors).toBeUndefined()
 
-            const statData: StatData | undefined = response.data?.statData
+            const statData: GqlStatData | undefined = response.data?.statData
 
             if (!statData) fail('statData is not truthy')
 

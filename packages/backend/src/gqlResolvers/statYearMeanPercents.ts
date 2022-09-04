@@ -1,9 +1,9 @@
 import { mean as getMean } from 'simple-statistics'
-import { StatData, StatYearMeanPercents } from '../../../../sharedTypes/gqlQueries'
+import { GqlStatData, StatYearMeanPercents } from '../../../../sharedTypes/gqlQueries'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 type Args = Readonly<{
-	yearValues: StatData['yearValues']
+	yearValues: GqlStatData['yearValues']
 }>
 
 type YearMean = Readonly<{

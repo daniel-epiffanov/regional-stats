@@ -49,7 +49,6 @@ function AnnotationTemplate(annotation: any) {
 const VectorMap: FC = () => {
   const { statData } = useStatDataContext();
   const {addCurRegionNames, curRegionNames, mapRegionCoords} = useMapContext();
-  console.log({curRegionNames});
   const statRating = useStatRatingQuery();
 
   const [colorGroups, setColorGroups] = useState<ReadonlyArray<number> | null>(
@@ -146,7 +145,7 @@ const VectorMap: FC = () => {
         </Legend>
       </DxVectorMap>
 
-      <TopLeftAnnotation />
+      {curRegionNames.length && <TopLeftAnnotation />}
       <YearSlider />
     </div>
   );

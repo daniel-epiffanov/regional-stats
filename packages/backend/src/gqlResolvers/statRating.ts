@@ -1,6 +1,7 @@
-import { GqlStatRating, StatCategories } from '../../../../sharedTypes/gqlQueries'
-import StatisticsModel from '../mongoModels/statistics'
-import { ResolverFnAsync } from './types/ResolverFn'
+import { GqlStatRating } from '../../../../sharedTypes/gqlQueries';
+import { getFlagUrl } from '../config/flagsUrls';
+import StatisticsModel from '../mongoModels/statistics';
+import { ResolverFnAsync } from './types/ResolverFn';
 
 type Args = Readonly<{
 	year: number,
@@ -19,10 +20,11 @@ const resCleanup = (mongoRes: MongoRes[], regionNames: Args['regionNames']) => {
       regionName: item.regionName,
       value: item.value,
       place: i + 1,
-    }))
+      flag: getFlagUrl(item.regionName),
+    }));
 
-  return res
-}
+  return res;
+};
 
 const statRating: ResolverFnAsync<GqlStatRating[]> = async (
   parent: any,
@@ -30,7 +32,7 @@ const statRating: ResolverFnAsync<GqlStatRating[]> = async (
 ) => {
   const {
     year, mainCategory, subCategory, subSubCategory, regionNames,
-  } = args
+  } = args;
 
   if (subSubCategory) {
     const mongoRes = await StatisticsModel.aggregate<MongoRes>([
@@ -44,9 +46,9 @@ const statRating: ResolverFnAsync<GqlStatRating[]> = async (
       { $match: { 'mainSections.subSections.children.yearValues.year': year } },
       { $sort: { 'mainSections.subSections.children.yearValues.value': -1 } },
       { $project: { value: '$mainSections.subSections.children.yearValues.value', regionName: '$regionName' } },
-    ])
+    ]);
 
-    return resCleanup(mongoRes, regionNames)
+    return resCleanup(mongoRes, regionNames);
   }
 
   const mongoRes = await StatisticsModel.aggregate<MongoRes>([
@@ -58,9 +60,9 @@ const statRating: ResolverFnAsync<GqlStatRating[]> = async (
     { $match: { 'mainSections.subSections.yearValues.year': year } },
     { $sort: { 'mainSections.subSections.yearValues.value': -1 } },
     { $project: { value: '$mainSections.subSections.yearValues.value', regionName: '$regionName' } },
-  ])
+  ]);
 
-  return resCleanup(mongoRes, regionNames)
-}
+  return resCleanup(mongoRes, regionNames);
+};
 
-export default statRating
+export default statRating;

@@ -1,8 +1,8 @@
-import { StatData, StatYearValuePercents } from '../../../../sharedTypes/gqlQueries'
+import { GqlStatData, StatYearValuePercents } from '../../../../sharedTypes/gqlQueries'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 type Args = Readonly<{
-	yearValues: StatData['yearValues']
+	yearValues: GqlStatData['yearValues']
 }>
 
 const statYearValuePercents: ResolverFnAsync<StatYearValuePercents> = async (

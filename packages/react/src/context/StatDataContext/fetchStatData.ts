@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { StatData } from '../../../../../sharedTypes/gqlQueries';
-import { hostApi } from '../../helpers/host';
+import { GqlStatData } from '../../../../../sharedTypes/gqlQueries';
+import { hostApi } from '../../config/host';
 
 type Props = Readonly<{
 	regionNames: ReadonlyArray<string>,
@@ -11,7 +11,7 @@ type Props = Readonly<{
 
 type StatDataResponse = Readonly<{
 	readonly data: {
-		[key: string]: StatData
+		[key: string]: GqlStatData
 	}
 }>
 
@@ -37,7 +37,8 @@ const fetchStatData = async (props: Props) => {
     yearValues {
       year,
 			value
-    }
+    },
+    flag,
 	}`);
 
   const query = `query{
@@ -56,7 +57,7 @@ const fetchStatData = async (props: Props) => {
     });
 
   const statData: Readonly<{
-    [key: string]: StatData
+    [key: string]: GqlStatData
 }> | null = Object.fromEntries(statDataEntries);
 
   return statData;

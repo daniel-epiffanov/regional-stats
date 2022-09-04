@@ -6,9 +6,6 @@ import Chart from './Chart';
 import PlacesChart from './PlacesChart';
 import GrowthChart from './GrowthChart';
 import { useMapContext } from '../../../../context/MapContext';
-import Gauge from './Gauge';
-// import List from 'devextreme-react/list';
-import { usePrefetchedValuesContext } from '../../../../context/PrefetchedValuesContext';
 import RegionsRating from './RegionsRating';
 import CurYearSingleRegion from './CurYearSingleRegion';
 import CurYearMultipleRegions from './CurYearMultipleRegions';
@@ -22,15 +19,14 @@ const TopLeftAnnotation: FC<Props> = () => {
   const { curRegionNames } = useMapContext();
   if (!statData || !curRegionNames) return null;
 
-  console.log({curRegionNames});
-  console.log({statData});
   return (
     <div className={styles['root']}>
       {curRegionNames.length <= 1 ? (      <div className={styles['header']}>
         <img
-          src={moscowImg}
+          src={statData[curRegionNames[0]].flag}
           alt="moscow"
-          width={200}
+          width={150}
+          height={80}
         />
         <div>
           <h3>{curRegionNames.join(', ')}</h3>

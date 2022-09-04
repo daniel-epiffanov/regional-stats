@@ -1,9 +1,10 @@
-import { StatData } from '../../../../sharedTypes/gqlQueries'
-import StatisticsModel from '../mongoModels/statistics'
-import { ResolverFnAsync } from './types/ResolverFn'
+import { GqlStatData } from '../../../../sharedTypes/gqlQueries';
+import { getFlagUrl } from '../config/flagsUrls';
+import StatisticsModel from '../mongoModels/statistics';
+import { ResolverFnAsync } from './types/ResolverFn';
 
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
+  require('dotenv').config();
 }
 
 type Args = Readonly<{
@@ -13,16 +14,16 @@ type Args = Readonly<{
 	subSubCategory: string,
 }>
 
-const statisticsData: ResolverFnAsync<StatData | null> = async (
+const statisticsData: ResolverFnAsync<GqlStatData | null> = async (
   parent: any,
   args: Args,
 ) => {
   const {
     regionName, mainCategory, subCategory, subSubCategory,
-  } = args
+  } = args;
 
   if (subSubCategory) {
-    const mongoRes = await StatisticsModel.aggregate<StatData>([
+    const mongoRes = await StatisticsModel.aggregate<GqlStatData>([
       { $match: { regionName } },
       { $unwind: '$mainSections' },
       { $match: { 'mainSections.name': mainCategory } },
@@ -35,25 +36,33 @@ const statisticsData: ResolverFnAsync<StatData | null> = async (
           name: '$mainSections.subSections.children.name', measure: '$mainSections.subSections.children.measure', parentMeasure: '$mainSections.subSections.measure', yearValues: '$mainSections.subSections.children.yearValues',
         },
       },
-    ])
+    ]);
 
-    const statData = mongoRes[0]
+    const statData = mongoRes[0];
+    const statDataWithFalg = {
+      ...statData,
+      flag: getFlagUrl(regionName),
+    };
 
-    return statData?.yearValues ? statData : null
+    return statData?.yearValues ? statDataWithFalg : null;
   }
 
-  const mongoRes = await StatisticsModel.aggregate<StatData>([
+  const mongoRes = await StatisticsModel.aggregate<GqlStatData>([
     { $match: { regionName } },
     { $unwind: '$mainSections' },
     { $match: { 'mainSections.name': mainCategory } },
     { $unwind: '$mainSections.subSections' },
     { $match: { 'mainSections.subSections.name': subCategory } },
     { $project: { name: '$mainSections.subSections.name', measure: '$mainSections.subSections.measure', yearValues: '$mainSections.subSections.yearValues' } },
-  ])
+  ]);
 
-  const statData = mongoRes[0]
+  const statData = mongoRes[0];
+  const statDataWithFalg = {
+    ...statData,
+    flag: getFlagUrl(regionName),
+  };
 
-  return statData?.yearValues ? statData : null
-}
+  return statData?.yearValues ? statDataWithFalg : null;
+};
 
-export default statisticsData
+export default statisticsData;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StatData } from '../../../../../sharedTypes/gqlQueries';
+import { GqlStatData } from '../../../../../sharedTypes/gqlQueries';
 import { useMenuContext } from '../MenuContext';
 import { usePrefetchedValuesContext } from '../PrefetchedValuesContext';
 import fetchStatData from './fetchStatData';
@@ -10,7 +10,7 @@ const useFetchStatData= () => {
   const { curStatCategories } = useMenuContext();
   const [
     stateData, setStatData
-  ] = useState<Readonly<{ [key: string]: StatData}> | null>(null);
+  ] = useState<Readonly<{ [key: string]: GqlStatData}> | null>(null);
 
   useEffect(() => {
     const fetchAndSaveStatData = async () => {

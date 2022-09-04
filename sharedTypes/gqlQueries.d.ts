@@ -12,11 +12,12 @@ export type StatRegionNames = ReadonlyArray<string>
 // data to be gotten by query arguments
 export type StatYears = ReadonlyArray<number>
 export type StatCategories = ReadonlyArray<string>
-export type StatData = Readonly<{
+export type GqlStatData = Readonly<{
 	name: string,
 	measure: string,
 	parentMeasure?: string,
-	yearValues: ReadonlyArray<Readonly<{year: number, value: number}>>
+	yearValues: ReadonlyArray<Readonly<{year: number, value: number}>>,
+	flag: url,
 }>
 export type RegionCoords = ReadonlyArray<MongoRegionCoords>
 export type StatYearValuePercents = ReadonlyArray<Readonly<{
@@ -33,7 +34,8 @@ export type StatYearMeanPercents = ReadonlyArray<Readonly<{
 export type GqlStatRating = Readonly<{
 	value: number,
 	place: number,
-	regionName: string
+	regionName: string,
+	flag: string
 }>
 
 export type GqlMapRegionNames = ReadonlyArray<string>

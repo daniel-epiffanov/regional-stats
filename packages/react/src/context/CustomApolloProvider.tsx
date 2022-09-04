@@ -4,7 +4,7 @@ import {
   InMemoryCache,
   ApolloProvider,
 } from '@apollo/client';
-import { hostApi } from '../helpers/host';
+import { hostApi } from '../config/host';
 
 const client = new ApolloClient({
   uri: hostApi,

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { StatCategories } from '../../../../sharedTypes/gqlQueries';
-import { hostApi } from '../helpers/host';
+import { hostApi } from '../config/host';
 import { GraphqlResponse } from './queries';
 
 type Response = GraphqlResponse<{

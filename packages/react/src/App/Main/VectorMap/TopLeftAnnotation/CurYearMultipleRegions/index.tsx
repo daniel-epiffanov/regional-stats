@@ -3,11 +3,17 @@ import { useMapContext } from '../../../../../context/MapContext';
 import { useStatDataContext } from '../../../../../context/StatDataContext';
 import styles from './CurYearMultipleRegions.module.scss';
 import {
-  DataGrid, Paging, Export, Column
+  DataGrid, Column
 } from 'devextreme-react/data-grid';
-import { Chart, Series } from 'devextreme-react/chart';
+import { Series } from 'devextreme-react/chart';
 import { PieChart } from 'devextreme-react';
 import { Legend } from 'devextreme-react/pie-chart';
+
+const renderGridCell = (cellData: Readonly<{value: string}>) => (
+  <div>
+    <img src={cellData.value} width={48} height={25}></img>
+  </div>
+);
 
 const CurYearMultipleRegions: FC = ()  => {
   const {statData} = useStatDataContext();
@@ -18,7 +24,8 @@ const CurYearMultipleRegions: FC = ()  => {
   const dataSource = curRegionNames.map(curRegionName => ({
     region: curRegionName,
     val: statData[curRegionName]?.yearValues[0].value,
-    percent: '+20%'
+    percent: '+20%',
+    flag: statData[curRegionName].flag
   }));
 
   console.log({dataSource});
@@ -31,15 +38,11 @@ const CurYearMultipleRegions: FC = ()  => {
       <DataGrid
         id="dataGrid"
         dataSource={dataSource}
-        // keyExpr="place"
-        // onRowPrepared={rowPreparedHandler}
       >
-        <Export enabled={true} />
-        {/* <Paging pageSize={5} defaultPageIndex={10} /> */}
-
-        {/* <Column dataField="place" width={50}/>
-        <Column dataField="value" width={100}/>
-      <Column dataField="regionName"/> */}
+        <Column dataField="flag" width={50} cellRender={renderGridCell}/>
+        <Column dataField="region" />
+        <Column dataField="percent" width={100}/>
+        <Column dataField="val" width={100} />
       </DataGrid>
       <div className={styles['doughnut-container']}>
         <PieChart id="chart" dataSource={dataSource} size={{width: 150, height: 200}}>

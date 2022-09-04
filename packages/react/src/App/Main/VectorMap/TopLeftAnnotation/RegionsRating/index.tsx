@@ -7,6 +7,11 @@ import useStatRatingQuery from './useStatRatingQuery';
 import { RowPreparedEvent } from 'devextreme/ui/data_grid';
 import { useMapContext } from '../../../../../context/MapContext';
 
+const renderGridCell = (cellData: Readonly<{value: string}>) => (
+  <div>
+    <img src={cellData.value} width={48} height={25}></img>
+  </div>
+);
 
 const RegionsRating: FC = () => {
   const {curRegionNames} = useMapContext();
@@ -32,6 +37,7 @@ const RegionsRating: FC = () => {
         {/* <Export enabled={true} /> */}
         <Paging pageSize={5} defaultPageIndex={10} />
 
+        <Column dataField="flag" width={50} cellRender={renderGridCell}/>
         <Column dataField="place" width={50}/>
         <Column dataField="value" width={100}/>
         <Column dataField="regionName"/>
