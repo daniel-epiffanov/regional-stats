@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { GqlStatData } from '../../../../../sharedTypes/gqlQueries';
-import { hostApi } from '../../config/host';
+import { GqlStatData } from '../../../../sharedTypes/gqlQueries';
+import { hostApi } from '../config/host';
 
 type Props = Readonly<{
 	regionNames: ReadonlyArray<string>,
@@ -36,7 +36,9 @@ const fetchStatData = async (props: Props) => {
     parentMeasure,
     yearValues {
       year,
-			value
+			value,
+      prettyValue,
+      percent
     },
     flag,
 	}`);

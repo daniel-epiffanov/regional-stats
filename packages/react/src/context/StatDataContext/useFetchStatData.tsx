@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { GqlStatData } from '../../../../../sharedTypes/gqlQueries';
 import { useMenuContext } from '../MenuContext';
 import { usePrefetchedValuesContext } from '../PrefetchedValuesContext';
-import fetchStatData from './fetchStatData';
+import fetchStatData from '../../queries/fetchStatData';
 
 
 const useFetchStatData= () => {

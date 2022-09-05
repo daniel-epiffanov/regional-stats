@@ -1,4 +1,4 @@
-export const LOGO_TEXT = 'Stat Visual'.toUpperCase();
+export const LOGO_TEXT = 'РЕГИОНЫ РОССИИ'.toUpperCase();
 
 export const LIGHT_THEME_NAME = 'material.blue.light';
 export const DARK_THEME_NAME = 'material.blue.dark.compact';

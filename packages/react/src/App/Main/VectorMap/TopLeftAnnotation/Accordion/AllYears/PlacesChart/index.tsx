@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { useStatDataContext } from '../../../../../context/StatDataContext';
+import { useStatDataContext } from '../../../../../../../context/StatDataContext';
 import {
   Chart as DxChart,
   Series,
@@ -9,7 +9,7 @@ import {
 } from 'devextreme-react/chart';
 import { RangeSlider } from 'devextreme-react';
 
-const GrowthChart: FC = () => {
+const PlacesChart: FC = () => {
   const {statData} = useStatDataContext();
   const curRegions = ['Рязанская область', 'Тульская область', 'Тамбовская область'];
   const [range, setRange] = useState([2005, 2009]);
@@ -59,7 +59,7 @@ const GrowthChart: FC = () => {
       // id="chart"
       // @ts-ignore
         dataSource={dataSource}
-        title="График роста"
+        title="Позиция в рейтинге"
         size={{
           height: 250,
           width: 450,
@@ -132,4 +132,4 @@ const GrowthChart: FC = () => {
   );
 };
 
-export default GrowthChart;
+export default PlacesChart;

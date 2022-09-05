@@ -16,16 +16,21 @@ export type GqlStatData = Readonly<{
 	name: string,
 	measure: string,
 	parentMeasure?: string,
-	yearValues: ReadonlyArray<Readonly<{year: number, value: number}>>,
+	yearValues: ReadonlyArray<Readonly<{
+		year: number,
+		value: number,
+		prettyValue: string,
+		percent: number,
+	}>>,
 	flag: url,
 }>
 export type RegionCoords = ReadonlyArray<MongoRegionCoords>
-export type StatYearValuePercents = ReadonlyArray<Readonly<{
+export type GqlStatYearValuePercents = ReadonlyArray<Readonly<{
 	percent: number,
 	year: number,
 	value: number
 }>>
-export type StatYearMeanPercents = ReadonlyArray<Readonly<{
+export type GqlStatYearMeanPercents = ReadonlyArray<Readonly<{
 	percent: number,
 	year: number,
 	mean: number

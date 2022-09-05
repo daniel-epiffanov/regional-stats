@@ -15,7 +15,7 @@ import TopLeftAnnotation from './TopLeftAnnotation';
 import { useStatDataContext } from '../../../context/StatDataContext';
 import { useMapContext } from '../../../context/MapContext';
 import bigNumberFormatter from '../../../helpers/bigNumberFormatter';
-import useStatRatingQuery from './TopLeftAnnotation/RegionsRating/useStatRatingQuery';
+import useStatRatingQuery from './TopLeftAnnotation/Accordion/CurYear/RegionsRating/useStatRatingQuery';
 import YearSlider from './YearSlider';
 
 // type Props = Readonly<{

@@ -22,7 +22,7 @@ const Header: FC = () => {
           widget="dxButton"
           options={{
             onClick: myGithubClickHandler,
-            text: 'My GitHub',
+            text: 'GitHub',
             icon: 'fab fa-github',
           }}
         />
@@ -31,7 +31,7 @@ const Header: FC = () => {
           widget="dxButton"
           options={{
             onClick: myTelegramClickHandler,
-            text: 'My Telegram',
+            text: 'Telegram',
             icon: 'fab fa-telegram',
           }}
         />
@@ -41,7 +41,7 @@ const Header: FC = () => {
           options={{
             onClick: themeClickHandler,
             icon: 'far fa-lightbulb',
-            text: 'Theme',
+            text: 'Тема',
           }}
         />
       </Toolbar>

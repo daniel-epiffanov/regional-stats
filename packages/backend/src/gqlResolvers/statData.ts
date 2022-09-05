@@ -1,5 +1,7 @@
 import { GqlStatData } from '../../../../sharedTypes/gqlQueries';
 import { getFlagUrl } from '../config/flagsUrls';
+import getGrowthPercent from '../helpers/getGrowthPercent';
+import getPrettifiedNumber from '../helpers/getPrettifiedNumber';
 import StatisticsModel from '../mongoModels/statistics';
 import { ResolverFnAsync } from './types/ResolverFn';
 
@@ -39,12 +41,17 @@ const statisticsData: ResolverFnAsync<GqlStatData | null> = async (
     ]);
 
     const statData = mongoRes[0];
-    const statDataWithFalg = {
+    const statDataExtended = {
       ...statData,
       flag: getFlagUrl(regionName),
+      yearValeus: statData.yearValues.map((yearValue, i) => ({
+        ...yearValue,
+        prettyValue: getPrettifiedNumber(yearValue.value),
+        percent: i === 0 ? 0 : getGrowthPercent(yearValue.value, statData.yearValues[i - 1].value),
+      })),
     };
 
-    return statData?.yearValues ? statDataWithFalg : null;
+    return statData?.yearValues ? statDataExtended : null;
   }
 
   const mongoRes = await StatisticsModel.aggregate<GqlStatData>([
@@ -57,12 +64,17 @@ const statisticsData: ResolverFnAsync<GqlStatData | null> = async (
   ]);
 
   const statData = mongoRes[0];
-  const statDataWithFalg = {
+  const statDataExtended = {
     ...statData,
     flag: getFlagUrl(regionName),
+    yearValues: statData.yearValues.map((yearValue, i) => ({
+      ...yearValue,
+      prettyValue: getPrettifiedNumber(yearValue.value) || '',
+      percent: i === 0 ? 0 : getGrowthPercent(yearValue.value, statData.yearValues[i - 1].value),
+    })),
   };
 
-  return statData?.yearValues ? statDataWithFalg : null;
+  return statData?.yearValues ? statDataExtended : null;
 };
 
 export default statisticsData;

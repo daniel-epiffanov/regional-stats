@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { useStatDataContext } from '../../../../../context/StatDataContext';
+import { useStatDataContext } from '../../../../../../../context/StatDataContext';
 import {
   Chart as DxChart,
   Series,
@@ -8,36 +8,49 @@ import {
   Label,
 } from 'devextreme-react/chart';
 import { RangeSlider } from 'devextreme-react';
-import { useMapContext } from '../../../../../context/MapContext';
 
-const Chart: FC = () => {
+const GrowthChart: FC = () => {
   const {statData} = useStatDataContext();
-  //   const curRegions = ['Рязанская область', 'Тульская область', 'Тамбовская область'];
-  const {curRegionNames} = useMapContext();
+  const curRegions = ['Рязанская область', 'Тульская область', 'Тамбовская область'];
   const [range, setRange] = useState([2005, 2009]);
 
-  if (!statData || curRegionNames.length === 0) return <>yo</>;
+  if (!statData || curRegions.length === 0) return <>yo</>;
 
   const getValues = (region: string) => statData[region]?.yearValues.map(yearValue => yearValue.value);
   const getYears = (region: string) => statData[region]?.yearValues.map(yearValue => yearValue.year);
 
-  const allData = curRegionNames.map(curRegion => getValues(curRegion));
-  const test = getYears(curRegionNames[0]).map((year, yearIndex) => {
-    const entries = [
-      ['year', year],
-      ...curRegionNames.map((curRegionName, curRegionNameIndex)=>(
-        [
-          curRegionName,
-          allData[curRegionNameIndex][yearIndex]
-        ]
-      ))
-    ];
-    // console.log({entries});
-    // console.log({entries2: Object.fromEntries(entries)});
-    return Object.fromEntries(entries);
-  });
+  const allData = curRegions.map(curRegion => getValues(curRegion));
 
-  //   console.log({test});
+
+  const dataSource = [{
+    day: 2006,
+    oranges: 5,
+    apples: 2,
+  }, {
+    day: 2005,
+    oranges: 6,
+    apples: 3,
+  }, {
+    day: 2004,
+    oranges: 9,
+    apples: 2,
+  }, {
+    day: 2003,
+    oranges: 6,
+    apples: 7,
+  }, {
+    day: 2002,
+    oranges: 7,
+    apples: 2,
+  }, {
+    day: 2001,
+    oranges: 4,
+    apples: 2,
+  }, {
+    day: 2000,
+    oranges: 9,
+    apples: 6,
+  }];
 
   return (
     <div>
@@ -45,8 +58,8 @@ const Chart: FC = () => {
       <DxChart
       // id="chart"
       // @ts-ignore
-        dataSource={test}
-        title={statData[curRegionNames[0]].name}
+        dataSource={dataSource}
+        title="График роста"
         size={{
           height: 250,
           width: 450,
@@ -74,20 +87,26 @@ const Chart: FC = () => {
         //     }
         //   }}
       >
-        {curRegionNames.map(curRegionName=> (
-          <Series
-            key={curRegionName}
-            argumentField="year"
-            valueField={curRegionName}
-            name={curRegionName}
-            type="bar"
-            // color="#1dff0040"
-          />
-        ))}
+        <Series
+          valueField="oranges"
+          argumentField="day"
+          //   valueField={curRegions[0]}
+          name={curRegions[0]}
+          //   type="bar"
+          color="#1dff0040"
+        />
+        <Series
+          valueField="apples"
+          argumentField="day"
+          //   valueField={curRegions[0]}
+          name={curRegions[0]}
+          //   type="bar"
+          color="#1dff0040"
+        />
         {/* <Series
           argumentField="year"
-          valueField={curRegionNames[2]}
-          name={curRegionNames[2]}
+          valueField={curRegions[2]}
+          name={curRegions[2]}
           type="bar"
         /> */}
         <ArgumentAxis
@@ -113,4 +132,4 @@ const Chart: FC = () => {
   );
 };
 
-export default Chart;
+export default GrowthChart;

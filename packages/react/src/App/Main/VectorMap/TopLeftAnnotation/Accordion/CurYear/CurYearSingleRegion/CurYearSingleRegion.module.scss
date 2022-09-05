@@ -1,4 +1,4 @@
-.cur-values {
+.root {
 	display: flex;
 	width: 100%;
 	justify-content: space-around;
@@ -11,5 +11,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		min-width: 50%;
+		text-align: center;
 	}
 }

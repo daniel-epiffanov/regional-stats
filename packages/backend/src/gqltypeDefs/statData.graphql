@@ -1,6 +1,8 @@
 type YearValue {
 	year: Int,
-	value: Float
+	value: Float,
+	prettyValue: String,
+	percent: Float,
 }
 type StatData {
 	name: String,

@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { useMapContext } from '../../../../../context/MapContext';
-import { useStatDataContext } from '../../../../../context/StatDataContext';
+import { useMapContext } from '../../../../../../../context/MapContext';
+import { useStatDataContext } from '../../../../../../../context/StatDataContext';
 import styles from './CurYearMultipleRegions.module.scss';
 import {
   DataGrid, Column

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { GqlStatData, StatYearMeanPercents } from '../../../../../../sharedTypes/gqlQueries';
+import { GqlStatData, GqlStatYearMeanPercents } from '../../../../../../sharedTypes/gqlQueries';
 import { useStatDataContext } from '../../../context/StatDataContext';
 import fetchStatYearMeanPercents from '../../../queries/fetchStatYearMeanPercents';
 import _ from 'lodash';
 
 const useYearMeanPercents = () => {
   const {statData} = useStatDataContext();
-  const [yearMeanPercents, setYearMeanPercents] = useState<null | StatYearMeanPercents>(null);
+  const [yearMeanPercents, setYearMeanPercents] = useState<null | GqlStatYearMeanPercents>(null);
   
   useEffect(()=> {
     const getAllYearValues = () => {

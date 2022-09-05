@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
-import { GqlStatData, StatYearMeanPercents } from '../../../../sharedTypes/gqlQueries';
+import { GqlStatData, GqlStatYearMeanPercents } from '../../../../sharedTypes/gqlQueries';
 import { hostApi } from '../config/host';
 import { GraphqlResponse } from './queries';
 
 type Response = GraphqlResponse<{
-  statYearMeanPercents: StatYearMeanPercents
+  statYearMeanPercents: GqlStatYearMeanPercents
 }>
 
 const fetchStatYearMeanPercents = async (yearValues: GqlStatData['yearValues']) => {

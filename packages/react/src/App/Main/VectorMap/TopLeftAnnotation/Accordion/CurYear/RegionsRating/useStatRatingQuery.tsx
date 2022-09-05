@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { GqlStatRating } from '../../../../../../../../sharedTypes/gqlQueries';
-import { useMapContext } from '../../../../../context/MapContext';
-import { useMenuContext } from '../../../../../context/MenuContext';
-import fetchStatRating from '../../../../../queries/fetchStatRating';
+import { GqlStatRating } from '../../../../../../../../../../sharedTypes/gqlQueries';
+import { useMapContext } from '../../../../../../../context/MapContext';
+import { useMenuContext } from '../../../../../../../context/MenuContext';
+import fetchStatRating from '../../../../../../../queries/fetchStatRating';
 
 const useStatRatingQuery = () => {
   const [statRating, setStatRating] = useState<null | ReadonlyArray<GqlStatRating>>();
