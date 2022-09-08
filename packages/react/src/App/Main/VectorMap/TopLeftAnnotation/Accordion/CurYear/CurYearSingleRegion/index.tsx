@@ -29,6 +29,10 @@ const CurYearSingleRegion: FC = ()  => {
         }}>{yearValue.percent}%</span>
         <span>годовой рост показателя</span>
       </div>
+      <div>
+        <span className={styles['big']}>20</span>
+        <span>Место в рейтинге</span>
+      </div>
     </div>
   );
 };

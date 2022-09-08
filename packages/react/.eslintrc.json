@@ -46,6 +46,7 @@
             "error",
             "always"
         ],
-        "linebreak-style": "off"
+        "linebreak-style": "off",
+        "no-debugger": "warn"
     }
 }

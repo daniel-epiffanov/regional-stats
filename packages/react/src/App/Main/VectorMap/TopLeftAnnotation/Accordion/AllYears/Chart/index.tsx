@@ -9,12 +9,14 @@ import {
 } from 'devextreme-react/chart';
 import { RangeSlider } from 'devextreme-react';
 import { useMapContext } from '../../../../../../../context/MapContext';
+import { useYearsRangeContext } from '../../../../../../../context/YearsRangeContext';
 
 const Chart: FC = () => {
   const {statData} = useStatDataContext();
   //   const curRegions = ['Рязанская область', 'Тульская область', 'Тамбовская область'];
   const {curRegionNames} = useMapContext();
-  const [range, setRange] = useState([2005, 2009]);
+  // const [range, setRange] = useState([2005, 2009]);
+  const {yearsRange} = useYearsRangeContext();
 
   if (!statData || curRegionNames.length === 0) return <>yo</>;
 
@@ -41,38 +43,14 @@ const Chart: FC = () => {
 
   return (
     <div>
-
       <DxChart
-      // id="chart"
-      // @ts-ignore
         dataSource={test}
         title={statData[curRegionNames[0]].name}
         size={{
-          height: 250,
+          height: 450,
           width: 450,
         }}
-        // scrollBar={{
-        //   visible: true,
-        // // position: 'bottom',
-        // }}
-        //   adjustOnZoom
-        // resizePanesOnZoom
-        //   zoomAndPan={{
-        //     argumentAxis: 'pan'
-        //   }}
-        //   argumentAxis={{
-        //     tickInterval: 3,
-        //     allowDecimals: false,
-        //     type: 'discrete',
-        //     maxValueMargin: 1,
-        //     valueMarginsEnabled: true,
-        //     // @ts-ignore
-        //     defaulVisualRange:{
-        //     //   startValue: 2000,
-        //       //   endValue: 2020,
-        //       length: 5
-        //     }
-        //   }}
+        palette={['#3eaaf5', '#eeacc6', 'red']}
       >
         {curRegionNames.map(curRegionName=> (
           <Series
@@ -81,34 +59,29 @@ const Chart: FC = () => {
             valueField={curRegionName}
             name={curRegionName}
             type="bar"
-            // color="#1dff0040"
-          />
+          >
+            <Label visible rotationAngle={270}/>
+          </Series>
         ))}
-        {/* <Series
-          argumentField="year"
-          valueField={curRegionNames[2]}
-          name={curRegionNames[2]}
-          type="bar"
-        /> */}
         <ArgumentAxis
           type="discrete"
           visualRange={{
-            startValue: range[0],
-            endValue: range[1],
+            startValue: yearsRange[0],
+            endValue: yearsRange[1],
           }}
         >
           <Label
             wordWrap="none"
           />
         </ArgumentAxis>
-        <Legend visible={false} />
+        <Legend verticalAlignment="bottom" orientation="horizontal" horizontalAlignment="center"/>
       </DxChart>
-      <RangeSlider
+      {/* <RangeSlider
         min={2000}
         max={2020}
         defaultValue={[2005, 2009]}
         onValueChanged={(val)=>setRange(val.value)}
-      />
+      /> */}
     </div>
   );
 };

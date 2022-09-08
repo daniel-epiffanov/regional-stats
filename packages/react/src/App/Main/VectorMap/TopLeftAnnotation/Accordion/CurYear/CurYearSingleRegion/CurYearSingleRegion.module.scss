@@ -1,7 +1,10 @@
 .root {
-	display: flex;
+	display: grid;
 	width: 100%;
-	justify-content: space-around;
+	// justify-content: space-around;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows:  1fr, 1fr;
+	row-gap: 1.5rem;
 	.big {
 		font-size: 2rem;
 		font-weight: bold;
