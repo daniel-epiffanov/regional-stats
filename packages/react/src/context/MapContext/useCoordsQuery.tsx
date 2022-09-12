@@ -1,8 +1,8 @@
 import { useQuery, gql } from '@apollo/client';
-import { StatRegionNames, RegionCoords, GqlMapRegionNames } from '../../../../../sharedTypes/gqlQueries';
+import { StatRegionNames, GqlRegionCoords, GqlMapRegionNames } from '../../../../../sharedTypes/gqlQueries';
 
 interface QueryResponse {
-	mapRegionCoords: RegionCoords,
+	mapRegionCoords: GqlRegionCoords,
 	statRegionNames: StatRegionNames,
 	mapRegionNames: GqlMapRegionNames
 }
@@ -20,7 +20,8 @@ const useCoordsQuery = () => {
 			properties {
 				name_en
 				name_ru
-			}
+			},
+			dot
 		},
 		mapRegionNames(regionType: "region")
 	}`;

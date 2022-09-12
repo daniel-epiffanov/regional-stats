@@ -7,15 +7,12 @@ import {
   Legend,
   Label,
 } from 'devextreme-react/chart';
-import { RangeSlider } from 'devextreme-react';
 import { useMapContext } from '../../../../../../../context/MapContext';
 import { useYearsRangeContext } from '../../../../../../../context/YearsRangeContext';
 
 const Chart: FC = () => {
   const {statData} = useStatDataContext();
-  //   const curRegions = ['Рязанская область', 'Тульская область', 'Тамбовская область'];
   const {curRegionNames} = useMapContext();
-  // const [range, setRange] = useState([2005, 2009]);
   const {yearsRange} = useYearsRangeContext();
 
   if (!statData || curRegionNames.length === 0) return <>yo</>;
@@ -34,12 +31,20 @@ const Chart: FC = () => {
         ]
       ))
     ];
+    // console.log({test});
     // console.log({entries});
     // console.log({entries2: Object.fromEntries(entries)});
     return Object.fromEntries(entries);
   });
-
+  console.log({test});
   //   console.log({test});
+
+
+  const formatHandler = (value: any) => {
+    const dataItem = statData[curRegionNames[0]]?.yearValues.find(dataItem => dataItem.value === value);
+    // console.log({value});
+    return dataItem?.prettyValue || '';
+  };
 
   return (
     <div>
@@ -60,7 +65,11 @@ const Chart: FC = () => {
             name={curRegionName}
             type="bar"
           >
-            <Label visible rotationAngle={270}/>
+            <Label
+              visible
+              rotationAngle={270}
+              format={formatHandler}
+            />
           </Series>
         ))}
         <ArgumentAxis
@@ -76,12 +85,6 @@ const Chart: FC = () => {
         </ArgumentAxis>
         <Legend verticalAlignment="bottom" orientation="horizontal" horizontalAlignment="center"/>
       </DxChart>
-      {/* <RangeSlider
-        min={2000}
-        max={2020}
-        defaultValue={[2005, 2009]}
-        onValueChanged={(val)=>setRange(val.value)}
-      /> */}
     </div>
   );
 };

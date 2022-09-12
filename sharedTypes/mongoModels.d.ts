@@ -10,7 +10,8 @@ export type MongoRegionCoords = Readonly<{
 		readonly name_ru: string,
 		readonly name_en: string,
 		readonly alt_names: ReadonlyArray<string>
-	}
+	},
+	dot: ReadonlyArray<number>
 }>
 
 

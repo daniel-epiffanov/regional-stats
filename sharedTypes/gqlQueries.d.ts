@@ -24,7 +24,7 @@ export type GqlStatData = Readonly<{
 	}>>,
 	flag: url,
 }>
-export type RegionCoords = ReadonlyArray<MongoRegionCoords>
+export type GqlRegionCoords = ReadonlyArray<MongoRegionCoords>
 export type GqlStatYearValuePercents = ReadonlyArray<Readonly<{
 	percent: number,
 	year: number,

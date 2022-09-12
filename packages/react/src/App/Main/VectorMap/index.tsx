@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import DxVectorMap, {
   Layer,
   Tooltip,
@@ -17,6 +17,7 @@ import { useMapContext } from '../../../context/MapContext';
 import bigNumberFormatter from '../../../helpers/bigNumberFormatter';
 import useStatRatingQuery from './TopLeftAnnotation/Accordion/CurYear/RegionsRating/useStatRatingQuery';
 import YearSlider from './YearSlider';
+import useCurRegionMarkers from './useCurRegionMarkers';
 
 // type Props = Readonly<{
 // 	regionCoords: RegionCoords
@@ -100,6 +101,8 @@ const VectorMap: FC = () => {
     // console.log({ e });
   };
 
+  const curRegionCoords = useCurRegionMarkers();
+
   return (
     <div className={styles.root}>
       <DxVectorMap
@@ -128,8 +131,16 @@ const VectorMap: FC = () => {
               size: 10,
             },
           }}
-          selectedColor="red"
-          selectedBorderWidth={3}
+          // selectedColor="white"
+          selectedBorderWidth={1}
+          selectedBorderColor="white"
+        />
+
+        {/* <CurRegionMarkers /> */}
+        <Layer
+          dataSource={curRegionCoords}
+          color="red"
+          size={20}
         />
 
         <Tooltip

@@ -7,7 +7,7 @@ import PlacesChart from './Accordion/AllYears/PlacesChart';
 import GrowthChart from './Accordion/AllYears/GrowthChart';
 import { useMapContext } from '../../../../context/MapContext';
 import RegionsRating from './Accordion/CurYear/RegionsRating';
-import CurYearSingleRegion from './Accordion/CurYear/CurYearSingleRegion';
+import CurRegionIndicators from './Accordion/CurYear/CurRegionIndicators';
 import CurYearMultipleRegions from './Accordion/CurYear/CurYearMultipleRegions';
 import Title from './Title';
 import Accordion from './Accordion';

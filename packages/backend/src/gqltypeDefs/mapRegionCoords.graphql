@@ -12,5 +12,6 @@ type Properties {
 type MapRegionCoords {
 	type: String,
 	properties: Properties,
-	geometry: Geometry
+	geometry: Geometry,
+	dot: [Float]
 }

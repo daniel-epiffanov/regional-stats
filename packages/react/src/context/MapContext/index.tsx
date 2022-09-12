@@ -1,14 +1,14 @@
 import {
   createContext, FC, useContext, useState,
 } from 'react';
-import { GqlMapRegionNames, RegionCoords } from '../../../../../sharedTypes/gqlQueries';
+import { GqlMapRegionNames, GqlRegionCoords } from '../../../../../sharedTypes/gqlQueries';
 import Message from '../../components/Message';
 import useCoordsQuery from './useCoordsQuery';
   
   
 type ContextValues = Readonly<{
     curRegionNames: ReadonlyArray<string>
-    mapRegionCoords: RegionCoords
+    mapRegionCoords: GqlRegionCoords
     mapRegionNames: GqlMapRegionNames,
     curYear: number
     

@@ -1,5 +1,5 @@
 import {
-  createContext, FC, useContext, useState,
+  createContext, FC, useContext,
 } from 'react';
 import { GqlStatData } from '../../../../../sharedTypes/gqlQueries';
 import useFetchStatData from './useFetchStatData';
@@ -10,10 +10,12 @@ type ContextValues = Readonly<{
   }> | null,
   getPrettyValueByYear: GetPrettyValueByYear,
   getYearValue: GetYearValue,
+  getRegionStatData: GetRegionStatData
 }>
 
 type GetPrettyValueByYear = (regionName: string, year: number) => string | null
 type GetYearValue = (regionName: string, year: number) => GqlStatData['yearValues'][0] | null
+type GetRegionStatData = (regionName: string) => GqlStatData | null
 
 // *** this context must be wrapped
 // into Menu Context and PrefetchedValues Context ***
@@ -41,8 +43,20 @@ export const StatDataProvider: FC = ({children}) => {
     return curYearValue || null;
   };
 
+  const getRegionStatData: GetRegionStatData = (regionName) => {
+    if(!statData) return null;
+    const regionStatData = statData[regionName];
+    if(!regionStatData) return null;
+    return regionStatData;
+  };
+
   return (
-    <StatDataContext.Provider value={{statData, getPrettyValueByYear, getYearValue}}
+    <StatDataContext.Provider value={{
+      statData,
+      getPrettyValueByYear,
+      getYearValue,
+      getRegionStatData
+    }}
     >
       {children}
     </StatDataContext.Provider>

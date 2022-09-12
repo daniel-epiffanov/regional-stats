@@ -1,25 +1,11 @@
-import ResponsiveBox, {
-  Row, Col, Item, Location,
-} from 'devextreme-react/responsive-box';
-import { FC, useEffect } from 'react';
-import { useStatDataContext } from '../../context/StatDataContext';
-import CurRegions from './CurRegions';
-// import { CurMenuValuesProvider } from '../../context/CurMenuValuesContext';
+import { FC } from 'react';
 import StatCategoriesMenu from './StatCategoriesMenu';
-// import DoughnutChart from '../outdated/DoughnutChart'
-// import MeasuresMenu from '../outdated/MeasuresMenu'
 import styles from './Main.module.scss';
 import VectorMap from './VectorMap';
-import YearsProgress from './DashboardCards';
 import { MapProvider } from '../../context/MapContext';
 
 
 const Main: FC = () => {
-  const statData = useStatDataContext();
-
-  // useEffect(()=>{
-  //   console.log(statData);
-  // }, [statData]);
 
   return (
     <div className={styles['root']}>

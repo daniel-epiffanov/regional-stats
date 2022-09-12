@@ -1,5 +1,5 @@
-import { Schema, model, models } from 'mongoose'
-import { MongoRegionCoords } from '../../../../sharedTypes/mongoModels'
+import { Schema, model, models } from 'mongoose';
+import { MongoRegionCoords } from '../../../../sharedTypes/mongoModels';
 
 const RegionsCoordsSchema = new Schema<MongoRegionCoords>({
   type: {
@@ -25,6 +25,7 @@ const RegionsCoordsSchema = new Schema<MongoRegionCoords>({
     },
     alt_names: [String],
   },
-})
+  dot: [Number],
+});
 
-export default models.MapCoords || model('RegionsCoords', RegionsCoordsSchema)
+export default models.MapCoords || model('RegionsCoords', RegionsCoordsSchema);
