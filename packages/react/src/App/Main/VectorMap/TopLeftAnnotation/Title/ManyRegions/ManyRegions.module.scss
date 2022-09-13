@@ -1,21 +1,23 @@
 .root {
 	display: flex;
-	gap: 1rem;
-    width: 100%;
+	gap: 0.8rem;
+    width: calc(100% - 32px);
     justify-content: space-evenly;
+    margin: 0 auto;
 }
 
 .region-container {
     display: flex;
 	gap: 1rem;
     flex-direction: column;
-    max-width: 150px;
+    max-width: 140px;
 }
 
 .title {
     h3 {
         font-size: 0.9rem;
         text-align: center;
+        font-weight: 400;
     }
 }
 

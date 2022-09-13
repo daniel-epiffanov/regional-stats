@@ -1,15 +1,17 @@
 import { FC } from 'react';
 import { useMapContext } from '../../../../../../../context/MapContext';
 import { useStatDataContext } from '../../../../../../../context/StatDataContext';
-import getPercentColor from './getPercentColor';
+import getPercentColor from '../getPercentColor';
 import styles from './CurRegionIndicators.module.scss';
 
 type Props = Readonly<{
   curRegionName: string,
+  rootClassName?: string
 }>
 
 const CurRegionIndicators: FC<Props> = ({
   curRegionName,
+  rootClassName
 })  => {
   const {getPrettyValueByYear, getYearValue, getRegionStatData} = useStatDataContext();
   const {curYear} = useMapContext();
@@ -22,7 +24,7 @@ const CurRegionIndicators: FC<Props> = ({
   if(!yearValue) return null;
 
   return (
-    <div className={styles['root']}>
+    <div className={`${styles['root']} ${rootClassName}`}>
       <div className={styles['indicator-container']}>
         <span className={styles['indicator']}>{getPrettyValueByYear(curRegionName, curYear)}</span>
         <span>{regionStatData.parentMeasure}</span>

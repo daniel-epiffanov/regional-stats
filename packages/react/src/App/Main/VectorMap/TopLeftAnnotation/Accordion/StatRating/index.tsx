@@ -3,10 +3,10 @@ import {
   DataGrid, Paging, Column, Button
 } from 'devextreme-react/data-grid';
 import styles from './RegionsRating.module.scss';
-import useFetchStatRating from '../../../../../../../queryHooks/useFetchStatRating';
+import useFetchStatRating from '../../../../../../queryHooks/useFetchStatRating';
 import { RowClickEvent, RowPreparedEvent } from 'devextreme/ui/data_grid';
-import { useMapContext } from '../../../../../../../context/MapContext';
-import { GqlStatRating } from '../../../../../../../../../../sharedTypes/gqlQueries';
+import { useMapContext } from '../../../../../../context/MapContext';
+import { GqlStatRating } from '../../../../../../../../../sharedTypes/gqlQueries';
 
 const renderGridCell = (cellData: Readonly<{value: string}>) => (
   <div>
@@ -47,7 +47,7 @@ const StatRating: FC = () => {
 
   return (
     <div className={styles['root']}>
-      <h3>Общий рейтинг за текущий год</h3>
+      {/* <h3>Общий рейтинг за текущий год</h3> */}
       <DataGrid
         id="dataGrid"
         dataSource={statRating || undefined}

@@ -40,10 +40,13 @@ const Chart: FC = () => {
   //   console.log({test});
 
 
-  const formatHandler = (value: any) => {
-    const dataItem = statData[curRegionNames[0]]?.yearValues.find(dataItem => dataItem.value === value);
-    // console.log({value});
-    return dataItem?.prettyValue || '';
+
+  const formatHandler = (curRegionName: string) => {
+    return (value: number) => {
+      const dataItem = statData[curRegionName]?.yearValues.find(dataItem => dataItem.value === value);
+      // console.log({testValue: value});
+      return dataItem?.prettyValue || '';
+    };
   };
 
   return (
@@ -68,7 +71,7 @@ const Chart: FC = () => {
             <Label
               visible
               rotationAngle={270}
-              format={formatHandler}
+              format={formatHandler(curRegionName)}
             />
           </Series>
         ))}

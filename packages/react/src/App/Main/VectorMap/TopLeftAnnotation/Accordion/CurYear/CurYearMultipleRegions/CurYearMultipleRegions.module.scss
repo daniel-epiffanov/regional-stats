@@ -1,17 +1,17 @@
-.doughnut-container {
+.root {
     display: flex;
-    // justify-content: center;
-    align-items: center;
+    gap: 1rem;
+    justify-content: space-evenly;
 }
 
-.cur-values {
-    display: flex;
-	width: 100%;
-	justify-content: space-around;
+.indicators-container {
+    max-width: 150px;
     flex-direction: column;
-    text-align: center;
-	.big {
-		font-size: 4rem;
-		font-weight: bold;
-	}
+
+    span:nth-child(1) {
+        font-size: 1.2rem !important;
+    }
+    span:nth-child(2), span:nth-child(3) {
+        font-size: 0.7rem !important;
+    }
 }

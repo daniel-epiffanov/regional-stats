@@ -8,7 +8,6 @@ type Props = Readonly<{
 }>
 
 const ManyRegions: FC<Props> = ({curRegionNames}) => {
-  const {curYear} = useMapContext();
   const {statData} = useStatDataContext();
 
   if(!statData) return null;
@@ -21,7 +20,7 @@ const ManyRegions: FC<Props> = ({curRegionNames}) => {
             className={styles['img']}
             src={statData[curRegionName].flag}
             alt="moscow"
-            width={150}
+            width={140}
             height={80}
           />
           <div className={styles['title']}>
