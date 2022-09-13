@@ -11,11 +11,12 @@ const dataSource: DataSource = [
   { 'title': 'Данные за все года' }
 ];
 
+const itemRednerHandler = (e: DataSource[0]) => {
+  if(e.title === 'Данные за текущий год') return <CurYear />;
+  return <AllYears />;
+};
+
 const Accordion: FC = () => {
-  const itemRednerHandler = (e: DataSource[0]) => {
-    if(e.title === 'Данные за текущий год') return <CurYear />;
-    return <AllYears />;
-  };
   return (
     <DxAccordion
       dataSource={dataSource}

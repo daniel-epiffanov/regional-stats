@@ -4,7 +4,7 @@ import {
 } from 'devextreme-react/data-grid';
 import styles from './RegionsRating.module.scss';
 import useFetchStatRating from '../../../../../../../queryHooks/useFetchStatRating';
-import { RowPreparedEvent } from 'devextreme/ui/data_grid';
+import { RowClickEvent, RowPreparedEvent } from 'devextreme/ui/data_grid';
 import { useMapContext } from '../../../../../../../context/MapContext';
 import { GqlStatRating } from '../../../../../../../../../../sharedTypes/gqlQueries';
 
@@ -18,13 +18,13 @@ const PAGE_SIZE = 5;
 
 const StatRating: FC = () => {
   const [pageIndex, setPageIndex] = useState(0);
-  const {curRegionNames} = useMapContext();
+  const {curRegionNames, addCurRegionNames} = useMapContext();
 
   const statRating = useFetchStatRating();
 
   const flagRenderingHandler = async (e: RowPreparedEvent<GqlStatRating>) => {
     if(!curRegionNames.includes(e?.data?.regionName)) return null;
-    e.rowElement.style.background = 'lightgreen';
+    e.rowElement.style.background = '#3eaaf5';
   };
 
   useEffect(()=>{
@@ -39,6 +39,10 @@ const StatRating: FC = () => {
     setPageIndex(newPageIndex);
   };
 
+  const rowClickHandler = (e: RowClickEvent<GqlStatRating>) => {
+    addCurRegionNames(e.data.regionName);
+  };
+
   
 
   return (
@@ -50,6 +54,7 @@ const StatRating: FC = () => {
         keyExpr="place"
         onRowPrepared={flagRenderingHandler}
         hoverStateEnabled
+        onRowClick={rowClickHandler}
       >
         <Paging
           pageSize={PAGE_SIZE}

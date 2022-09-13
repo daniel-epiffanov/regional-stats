@@ -1,0 +1,24 @@
+.root {
+	display: flex;
+	gap: 1rem;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.region-container {
+    display: flex;
+	gap: 1rem;
+    flex-direction: column;
+    max-width: 150px;
+}
+
+.title {
+    h3 {
+        font-size: 0.9rem;
+        text-align: center;
+    }
+}
+
+.img {
+    box-shadow: 1px 1px 5px #00000036;
+}

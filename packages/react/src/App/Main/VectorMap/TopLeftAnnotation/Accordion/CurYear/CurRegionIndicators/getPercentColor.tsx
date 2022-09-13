@@ -1,6 +1,6 @@
 const getPercentColor = (percent: number) => {
   if(percent === 0) return 'grey';
-  if(percent > 0) return '#90ee91';
+  if(percent > 0) return '#3eaaf5';
   return 'red';
 };
 
