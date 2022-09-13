@@ -38,6 +38,7 @@ const fetchStatRating: FetchStatRating = async (args) => {
         place: true,
         regionName: true,
         flag: true,
+        prettyValue: true
       }
     }
   }, { pretty: true });

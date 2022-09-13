@@ -1,6 +1,7 @@
 	type StatRating {
 		regionName: String,
 		value: Float,
+		prettyValue: String,
 		place: Int,
 		flag: String,
 	}

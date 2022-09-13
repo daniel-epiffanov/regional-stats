@@ -40,7 +40,8 @@ export type GqlStatRating = Readonly<{
 	value: number,
 	place: number,
 	regionName: string,
-	flag: string
+	flag: string,
+	prettyValue: string,
 }>
 
 export type GqlMapRegionNames = ReadonlyArray<string>

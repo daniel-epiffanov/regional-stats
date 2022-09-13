@@ -15,7 +15,7 @@ import TopLeftAnnotation from './TopLeftAnnotation';
 import { useStatDataContext } from '../../../context/StatDataContext';
 import { useMapContext } from '../../../context/MapContext';
 import bigNumberFormatter from '../../../helpers/bigNumberFormatter';
-import useStatRatingQuery from './TopLeftAnnotation/Accordion/CurYear/RegionsRating/useStatRatingQuery';
+import useFetchStatRating from '../../../queryHooks/useFetchStatRating';
 import YearSlider from './YearSlider';
 import useCurRegionMarkers from './useCurRegionMarkers';
 
@@ -50,7 +50,7 @@ function AnnotationTemplate(annotation: any) {
 const VectorMap: FC = () => {
   const { statData } = useStatDataContext();
   const {addCurRegionNames, curRegionNames, mapRegionCoords} = useMapContext();
-  const statRating = useStatRatingQuery();
+  const statRating = useFetchStatRating();
 
   const [colorGroups, setColorGroups] = useState<ReadonlyArray<number> | null>(
     [0, 3, 10, 40, 70, 80, 82],

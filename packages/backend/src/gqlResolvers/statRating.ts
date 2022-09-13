@@ -1,5 +1,6 @@
 import { GqlStatRating } from '../../../../sharedTypes/gqlQueries';
 import { getFlagUrl } from '../config/flagsUrls';
+import getPrettifiedNumber from '../helpers/getPrettifiedNumber';
 import StatisticsModel from '../mongoModels/statistics';
 import { ResolverFnAsync } from './types/ResolverFn';
 
@@ -21,7 +22,10 @@ const resCleanup = (mongoRes: MongoRes[], regionNames: Args['regionNames']) => {
       value: item.value,
       place: i + 1,
       flag: getFlagUrl(item.regionName),
+      prettyValue: getPrettifiedNumber(item.value) || '',
     }));
+
+  console.log(res);
 
   return res;
 };

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { GqlStatRating } from '../../../../../../../../../../sharedTypes/gqlQueries';
-import { useMapContext } from '../../../../../../../context/MapContext';
-import { useMenuContext } from '../../../../../../../context/MenuContext';
-import fetchStatRating from '../../../../../../../queries/fetchStatRating';
+import { GqlStatRating } from '../../../../sharedTypes/gqlQueries';
+import { useMapContext } from '../context/MapContext';
+import { useMenuContext } from '../context/MenuContext';
+import fetchStatRating from '../queries/fetchStatRating';
 
-const useStatRatingQuery = () => {
+const useFetchStatRating = () => {
   const [statRating, setStatRating] = useState<null | ReadonlyArray<GqlStatRating>>();
   const {curStatCategories} = useMenuContext();
   const {curRegionNames, mapRegionNames, curYear} = useMapContext();
@@ -28,4 +28,4 @@ const useStatRatingQuery = () => {
   return statRating;
 };
 
-export default useStatRatingQuery;
+export default useFetchStatRating;

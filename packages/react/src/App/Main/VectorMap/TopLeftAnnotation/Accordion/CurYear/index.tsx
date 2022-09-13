@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useMapContext } from '../../../../../../context/MapContext';
 import CurYearMultipleRegions from './CurYearMultipleRegions';
 import CurRegionIndicators from './CurRegionIndicators';
-import RegionsRating from './RegionsRating';
+import StatRating from './StatRating';
 
 const CurYear: FC = () => {
   const {curRegionNames} = useMapContext();
@@ -12,14 +12,14 @@ const CurYear: FC = () => {
   if(curRegionNames.length <= 1 ) return (
     <>
       <CurRegionIndicators curRegionName={curRegionName}/>
-      <RegionsRating />
+      <StatRating />
     </>
   );
 
   return (
     <>
       <CurYearMultipleRegions />
-      <RegionsRating />
+      <StatRating />
     </>
   );
 };
