@@ -17,7 +17,7 @@ const MenuOutput: FC = () => {
   const { width: windowWidth } = useWindowSize();
 
   if (!curStatCategories.firstCategory) return (
-    <p data-testid="no-data-text">Category is not chosen</p>
+    <p data-testid="no-data-text">Категория не выбрана</p>
   );
 
   return (

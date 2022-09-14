@@ -17,7 +17,7 @@ const MenuInput: FC<Props> = () => {
     changeStatThirdCategory,
   } = useCategories();
 
-  if (!statFirstCategories) return <p data-testid="no-data-text">please, wait</p>;
+  if (!statFirstCategories) return <p data-testid="no-data-text">Пожалуйста, подождите</p>;
 
   return (
     <div className={styles['root']}>

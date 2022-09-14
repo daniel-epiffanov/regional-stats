@@ -10,16 +10,16 @@ const useCurRegionMarkers = () => {
   const {curRegionNames, mapRegionCoords} = useMapContext();
   const [curRegionMarkers, setCurRegionMarkers] = useState<CurRegionMarkers>([]);
 
-  useEffect(()=>{
-    if(!curRegionNames || curRegionNames.length === 0) return; 
-    const newCurRegionMarkers = mapRegionCoords
-      .filter(mapRegionCoordsItem => curRegionNames.includes(mapRegionCoordsItem.properties.name_ru))
-      .map(mapRegionCoordsItem => ({
-        coordinates: mapRegionCoordsItem.dot
-      }));
+  // useEffect(()=>{
+  //   if(!curRegionNames || curRegionNames.length === 0) return; 
+  //   const newCurRegionMarkers = mapRegionCoords
+  //     .filter(mapRegionCoordsItem => curRegionNames.includes(mapRegionCoordsItem.properties.name))
+  //     .map(mapRegionCoordsItem => ({
+  //       coordinates: mapRegionCoordsItem.dot
+  //     }));
 
-    setCurRegionMarkers(newCurRegionMarkers);
-  }, [curRegionNames, mapRegionCoords]);
+  //   setCurRegionMarkers(newCurRegionMarkers);
+  // }, [curRegionNames, mapRegionCoords]);
 
   return curRegionMarkers;
 };

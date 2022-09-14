@@ -1,19 +1,3 @@
-// RegionsCoords schema
-
-export type MongoRegionCoords = Readonly<{
-	type: 'federalDistrict' | 'region',
-	geometry: {
-		readonly type: 'Polygon' | 'MultiPolygon',
-		readonly coordinates: ReadonlyArray<ReadonlyArray<ReadonlyArray<string>>>
-	},
-	properties: {
-		readonly name_ru: string,
-		readonly name_en: string,
-		readonly alt_names: ReadonlyArray<string>
-	},
-	dot: ReadonlyArray<number>
-}>
-
 
 
 // statistics schema

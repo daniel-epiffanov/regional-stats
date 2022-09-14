@@ -51,14 +51,17 @@ const Chart: FC = () => {
 
   return (
     <div>
+      {/* <h3>{statData[curRegionNames[0]].name}</h3>
+      <p>{statData[curRegionNames[0]].parentMeasure}</p>
+      <p>{statData[curRegionNames[0]].measure}</p> */}
       <DxChart
         dataSource={test}
-        title={statData[curRegionNames[0]].name}
         size={{
           height: 450,
           width: 450,
         }}
         palette={['#3eaaf5', '#eeacc6', 'red']}
+        title={statData[curRegionNames[0]].name}
       >
         {curRegionNames.map(curRegionName=> (
           <Series
@@ -84,6 +87,7 @@ const Chart: FC = () => {
         >
           <Label
             wordWrap="none"
+            // text={statData[curRegionNames[0]].measure}
           />
         </ArgumentAxis>
         <Legend verticalAlignment="bottom" orientation="horizontal" horizontalAlignment="center"/>

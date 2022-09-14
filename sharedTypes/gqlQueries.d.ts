@@ -1,6 +1,5 @@
 import {
 	MongoMainSection,
-	MongoRegionCoords,
 	MongoStatisticsOfRegion,
 	MongoStatisticsDataItem,
 	MongoSubSection
@@ -24,7 +23,7 @@ export type GqlStatData = Readonly<{
 	}>>,
 	flag: url,
 }>
-export type GqlRegionCoords = ReadonlyArray<MongoRegionCoords>
+
 export type GqlStatYearValuePercents = ReadonlyArray<Readonly<{
 	percent: number,
 	year: number,
@@ -45,3 +44,17 @@ export type GqlStatRating = Readonly<{
 }>
 
 export type GqlMapRegionNames = ReadonlyArray<string>
+
+type Polygon = Readonly<{
+	type: 'Polygon' | 'MultiPolygon',
+	coordinates: ReadonlyArray<ReadonlyArray<ReadonlyArray<string>>>
+}>
+
+type GqlMapRegionPolygon = Readonly<{
+	geometry: Polygon,
+	properties: Readonly<{
+		name: string
+	}>,
+}>
+
+export type GqlMapRegionPolygons = ReadonlyArray<GqlMapRegionPolygon>

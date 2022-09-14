@@ -1,14 +1,14 @@
 import {
   createContext, FC, useContext, useState,
 } from 'react';
-import { GqlMapRegionNames, GqlRegionCoords } from '../../../../../sharedTypes/gqlQueries';
+import { GqlMapRegionNames, GqlMapRegionPolygons } from '../../../../../sharedTypes/gqlQueries';
 import Message from '../../components/Message';
 import useCoordsQuery from './useCoordsQuery';
   
   
 type ContextValues = Readonly<{
     curRegionNames: ReadonlyArray<string>
-    mapRegionCoords: GqlRegionCoords
+    mapRegionCoords: GqlMapRegionPolygons
     mapRegionNames: GqlMapRegionNames,
     curYear: number
     
@@ -62,7 +62,7 @@ export const MapProvider: FC<Partial<ContextStateValues>> = (props) => {
   return (
     <MapContext.Provider value={{
       curRegionNames: curRegionNames,
-      mapRegionCoords: regionCoords.mapRegionCoords,
+      mapRegionCoords: regionCoords.mapRegionPolygons,
       mapRegionNames: regionCoords.mapRegionNames,
       curYear,
       changeCurYear,

@@ -4,7 +4,7 @@ import statFirstCategories from './statFirstCategories';
 import statSecondCategories from './statSecondCategories';
 import statThirdCategories from './statThirdCategories';
 import statData from './statData';
-import mapRegionCoords from './mapRegionCoords';
+import mapRegionPolygons from './mapRegionPolygons';
 import mapRegionNames from './mapRegionNames';
 import statRating from './statRating';
 
@@ -16,7 +16,7 @@ const gqlResolvers = {
     statSecondCategories,
     statThirdCategories,
     statData,
-    mapRegionCoords,
+    mapRegionPolygons,
     statRating,
     mapRegionNames,
   },

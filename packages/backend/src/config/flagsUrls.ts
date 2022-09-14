@@ -5,6 +5,7 @@ const EXTESION = 'png';
 type RegionFlags = Readonly<{
     [key: string]: string,
 }>
+
 const regionFlags: RegionFlags = {
   'Алтайский край': 'altai',
   'Амурская область': 'amur',
@@ -58,7 +59,6 @@ const regionFlags: RegionFlags = {
   'Республика Калмыкия': 'kalmykia',
   'Республика Карелия': 'karelia',
   'Республика Коми': 'komi',
-  //   'Республика Крым': '',
   'Республика Марий Эл': 'mari',
   'Республика Мордовия': 'mordovia',
   'Республика Саха (Якутия)': 'sakha',
@@ -93,14 +93,16 @@ const regionFlags: RegionFlags = {
   'Чукотский автономный округ': 'chukotka',
   'Ямало-Ненецкий автономный округ': 'yamal-nenets',
 
-  'Приволжский федеральный округ': '',
-  'Северо-Западный федеральный округ': '',
-  'Северо-Кавказский федеральный округ': '',
-  'Сибирский федеральный округ': '',
-  'Уральский федеральный округ': '',
-  'Центральный федеральный округ': '',
-  'Южный федеральный округ': '',
-  'Дальневосточный федеральный округ': '',
+  'Приволжский федеральный округ': 'nizny-novgorod',
+  'Северо-Западный федеральный округ': 'spb',
+  'Северо-Кавказский федеральный округ': 'stavoropl',
+  'Сибирский федеральный округ': 'novosibirsk',
+  'Уральский федеральный округ': 'sverdlovsk',
+  'Центральный федеральный округ': 'moscow',
+  'Южный федеральный округ': 'rostov',
+  'Дальневосточный федеральный округ': 'primorsky-krai',
 };
 
-export const getFlagUrl = (regionName: string) => `${host}/static/flags/${regionFlags[regionName]}.${EXTESION}`;
+export const getFlagUrl = (regionName: string) => {
+  return `${host}/static/flags/${regionFlags[regionName]}.${EXTESION}`;
+};

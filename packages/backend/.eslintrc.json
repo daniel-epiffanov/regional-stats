@@ -20,9 +20,8 @@
             "error",
             "always"
         ],
-		"no-tabs": "off",
 		"indent": [
-            "error",
+			"error",
             2
         ],
 		"no-unused-vars": "warn",
@@ -33,13 +32,16 @@
 				"ts": "never"
 			}
 		],
+		"no-tabs": "off",
 		"radix": "off",
 		"arrow-parens": "off",
 		"linebreak-style": "off",
+		"import/prefer-default-export": "off",
+		"arrow-body-style": "off",
 		"import/no-extraneous-dependencies": "warn",
 		"global-require": "warn",
 		"no-console": "warn",
-		"import/prefer-default-export": "off"
+		"camelcase": "off"
 	},
 	"settings": {
 		"import/resolver": {

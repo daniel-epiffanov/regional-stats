@@ -21,7 +21,7 @@ const Message: FC<Props> = ({ text, type, positionId }) => {
   if (type === 'message') {
     return (
       <div>
-        <span>{text} Please, wait...</span>
+        <span>{text} Пожалуйста, подождите...</span>
         <LoadPanel visible shadingColor="#5757579c" position={{ of: `#${positionId}` }} />
       </div>
     );

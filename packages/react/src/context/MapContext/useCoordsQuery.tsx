@@ -1,8 +1,8 @@
 import { useQuery, gql } from '@apollo/client';
-import { StatRegionNames, GqlRegionCoords, GqlMapRegionNames } from '../../../../../sharedTypes/gqlQueries';
+import { StatRegionNames, GqlMapRegionPolygons, GqlMapRegionNames } from '../../../../../sharedTypes/gqlQueries';
 
 interface QueryResponse {
-	mapRegionCoords: GqlRegionCoords,
+	mapRegionPolygons: GqlMapRegionPolygons,
 	statRegionNames: StatRegionNames,
 	mapRegionNames: GqlMapRegionNames
 }
@@ -11,17 +11,14 @@ type ReadonlyQueryResponse = Readonly<QueryResponse>
 
 const useCoordsQuery = () => {
   const QUERY = gql` query {
-		mapRegionCoords(regionType: "region") {
-			type,
+		mapRegionPolygons(regionType: "region") {
 			geometry {
 				type,
 				coordinates
 			},
 			properties {
-				name_en
-				name_ru
-			},
-			dot
+				name
+			}
 		},
 		mapRegionNames(regionType: "region")
 	}`;
@@ -31,12 +28,12 @@ const useCoordsQuery = () => {
 
   if (loading) return null;
 
-  const mapRegionCoords = data?.mapRegionCoords;
+  const mapRegionPolygons = data?.mapRegionPolygons;
   const mapRegionNames = data?.mapRegionNames;
 
-  if (error || !data || !mapRegionCoords || !mapRegionNames) return null;
+  if (error || !data || !mapRegionPolygons || !mapRegionNames) return null;
 
-  return ({mapRegionCoords, mapRegionNames});
+  return ({mapRegionPolygons, mapRegionNames});
 };
 
 export default useCoordsQuery;

@@ -1,26 +1,29 @@
-import { GqlMapRegionNames } from '../../../../sharedTypes/gqlQueries'
-import RegionsCoordsSchema from '../mongoModels/regionsCoords'
-import { ResolverFnAsync } from './types/ResolverFn'
+import { GqlMapRegionNames } from '../../../../sharedTypes/gqlQueries';
+import RegionsCoordsSchema from '../mongoModels/mapRegion';
+import { ResolverFnAsync } from './types/ResolverFn';
 
 type Args = Readonly<{
 	regionType: string,
 }>
 
 type MongoRes = ReadonlyArray<Readonly<{
-    regionName: string
+    name: string
 }>>
 
 const mapRegionNames: ResolverFnAsync<GqlMapRegionNames | null> = async (
   parent: any,
   args: Args,
 ) => {
-  const { regionType } = args
+  const { regionType } = args;
 
   const mongoRes: MongoRes = await RegionsCoordsSchema.aggregate([
     { $match: { type: regionType } },
-    { $project: { regionName: '$properties.name_ru' } },
-  ])
-  return mongoRes?.length > 0 ? mongoRes.map(regionNameObj => regionNameObj.regionName) : null
-}
+    { $project: { name: '$name' } },
+  ]);
 
-export default mapRegionNames
+  if (mongoRes?.length < 1) return null;
+  const gqlRes = mongoRes.map(mapDataItem => mapDataItem.name);
+  return gqlRes;
+};
+
+export default mapRegionNames;

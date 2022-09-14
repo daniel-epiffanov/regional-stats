@@ -1,9 +1,9 @@
 import { useQuery, gql } from '@apollo/client';
 import { useState } from 'react';
-import { StatRegionNames, GqlRegionCoords } from '../../../../sharedTypes/gqlQueries';
+import { StatRegionNames, GqlMapRegionPolygons } from '../../../../sharedTypes/gqlQueries';
 
 type QueryResponse = {
-	regionCoords: GqlRegionCoords,
+	regionCoords: GqlMapRegionPolygons,
 	statRegionNames: StatRegionNames
 }
 

@@ -1,0 +1,13 @@
+type Geometry {
+	type: String,
+	coordinates: [[[String]]],
+}
+
+type Properties {
+	name: String,
+}
+
+type MapRegionPolygons {
+	properties: Properties,
+	geometry: Geometry
+}
