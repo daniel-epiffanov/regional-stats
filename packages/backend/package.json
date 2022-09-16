@@ -22,7 +22,6 @@
     "graphql-fields": "^2.0.3",
     "lodash": "^4.17.21",
     "mongoose": "^6.0.7",
-    "simple-statistics": "^7.7.6",
     "xlsx": "^0.16.9"
   },
   "devDependencies": {

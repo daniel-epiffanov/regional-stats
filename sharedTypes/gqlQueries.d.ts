@@ -1,15 +1,11 @@
-import {
-	MongoMainSection,
-	MongoStatisticsOfRegion,
-	MongoStatisticsDataItem,
-	MongoSubSection
-} from './mongoModels'
+export type GqlAnnualStatsYears = ReadonlyArray<number>
+
+
 
 // general data
 export type StatRegionNames = ReadonlyArray<string>
 
 // data to be gotten by query arguments
-export type StatYears = ReadonlyArray<number>
 export type StatCategories = ReadonlyArray<string>
 export type GqlStatData = Readonly<{
 	name: string,

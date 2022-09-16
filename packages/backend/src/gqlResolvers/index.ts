@@ -1,4 +1,4 @@
-import statYears from './statYears';
+import annualStatsYears from './annualStatsYears';
 import statRegionNames from './statRegionNames';
 import statFirstCategories from './statFirstCategories';
 import statSecondCategories from './statSecondCategories';
@@ -11,7 +11,7 @@ import statRating from './statRating';
 const gqlResolvers = {
   Query: {
     statRegionNames,
-    statYears,
+    annualStatsYears,
     statFirstCategories,
     statSecondCategories,
     statThirdCategories,

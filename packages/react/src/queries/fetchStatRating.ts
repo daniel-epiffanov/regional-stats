@@ -41,7 +41,7 @@ const fetchStatRating: FetchStatRating = async (args) => {
         prettyValue: true
       }
     }
-  }, { pretty: true });
+  });
 
   try {
     const axiosResponse = await axios.post<Response>(hostApi, { query });

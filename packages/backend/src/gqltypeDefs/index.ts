@@ -14,15 +14,17 @@ export default gql`
 	}
 
 	type Query {
+		annualStatsYears: [Int],
+		
 		mapRegionPolygons(regionType: String): [MapRegionPolygons],
 		mapRegionNames(regionType: String): [String],
 
+		
 		statRating(year: Int, mainCategory: String, subCategory: String, subSubCategory: String, regionNames: [String]): [StatRating],
 		statRegionNames: [String],
 		statFirstCategories: [String],
 		statSecondCategories(firstCategory: String): [String],
 		statThirdCategories(firstCategory: String, secondCategory: String): [String],
-		statYears: [Int],
 		statData(regionName: String, mainCategory: String, subCategory: String, subSubCategory: String): StatData,
 	}
 `;

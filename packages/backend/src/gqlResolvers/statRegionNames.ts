@@ -1,5 +1,5 @@
 import { StatRegionNames } from '../../../../sharedTypes/gqlQueries'
-import StatisticsModel from '../mongoModels/statistics'
+import StatisticsModel from '../mongoModels/annualStatsOfRegion'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 const statisticsRegionNames: ResolverFnAsync<StatRegionNames> = async () => {

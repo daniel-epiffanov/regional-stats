@@ -1,7 +1,7 @@
 import { GqlStatRating } from '../../../../sharedTypes/gqlQueries';
 import { getFlagUrl } from '../config/flagsUrls';
 import getPrettifiedNumber from '../helpers/getPrettifiedNumber';
-import StatisticsModel from '../mongoModels/statistics';
+import StatisticsModel from '../mongoModels/annualStatsOfRegion';
 import { ResolverFnAsync } from './types/ResolverFn';
 
 type Args = Readonly<{

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { StatCategories } from '../../../../sharedTypes/gqlQueries'
-import StatisticsModel from '../mongoModels/statistics'
+import StatisticsModel from '../mongoModels/annualStatsOfRegion'
 import { ResolverFnAsync } from './types/ResolverFn'
 
 type Args = Readonly<{

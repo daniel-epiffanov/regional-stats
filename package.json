@@ -8,5 +8,8 @@
     "@types/node": "^18.7.14",
     "lerna": "^4.0.0",
     "npm-check-updates": "^12.0.2"
+  },
+  "dependencies": {
+    "json-to-graphql-query": "^2.2.4"
   }
 }

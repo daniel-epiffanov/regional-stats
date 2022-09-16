@@ -2,12 +2,12 @@ import { GqlStatData } from '../../../../sharedTypes/gqlQueries';
 import { getFlagUrl } from '../config/flagsUrls';
 import getGrowthPercent from '../helpers/getGrowthPercent';
 import getPrettifiedNumber from '../helpers/getPrettifiedNumber';
-import StatisticsModel from '../mongoModels/statistics';
+import StatisticsModel from '../mongoModels/annualStatsOfRegion';
 import { ResolverFnAsync } from './types/ResolverFn';
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config();
+// }
 
 type Args = Readonly<{
 	regionName: string,

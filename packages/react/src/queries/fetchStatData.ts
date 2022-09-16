@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { GqlStatData } from '../../../../sharedTypes/gqlQueries';
 import { hostApi } from '../config/host';
+import { jsonToGraphQLQuery } from 'json-to-graphql-query';
 
 type Props = Readonly<{
 	regionNames: ReadonlyArray<string>,

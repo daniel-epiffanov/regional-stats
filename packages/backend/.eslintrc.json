@@ -38,10 +38,10 @@
 		"linebreak-style": "off",
 		"import/prefer-default-export": "off",
 		"arrow-body-style": "off",
+		"no-undef": "off",
+		"no-console": "off",
 		"import/no-extraneous-dependencies": "warn",
-		"global-require": "warn",
-		"no-console": "warn",
-		"camelcase": "off"
+		"global-require": "warn"
 	},
 	"settings": {
 		"import/resolver": {

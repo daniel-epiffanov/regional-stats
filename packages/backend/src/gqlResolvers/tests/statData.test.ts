@@ -2,7 +2,7 @@ import { GqlStatData, statSubCategories } from '../../../../../sharedTypes/gqlQu
 import { getNewApolloServer } from '../../services/startApollo'
 import testMongoConenction from '../../tests/shared/mongoConnection'
 import statRegionNames from './resolversData/getStatRegionNames'
-import StatisticsModel from '../../mongoModels/statistics'
+import StatisticsModel from '../../mongoModels/annualStatsOfRegion'
 
 testMongoConenction()
 
