@@ -5,7 +5,7 @@ import { GqlAnnualStatsCategoryNames } from '../../../../../sharedTypes/gqlQueri
 import connectToMongo from '../../services/connectToMongo';
 import { getNewApolloServer } from '../../services/startApollo';
 
-describe('gql annualStatsSubCategoryNames query', () => {
+describe('gql annualStatsSubSubCategoryNames query', () => {
   let mongoConnection: Connection;
   let apolloServer: ApolloServer;
 
@@ -23,23 +23,24 @@ describe('gql annualStatsSubCategoryNames query', () => {
     const response = await apolloServer.executeOperation({
       query: jsonToGraphQLQuery({
         query: {
-          annualStatsSubCategoryNames: {
+          annualStatsSubSubCategoryNames: {
             __args: {
               mainCategoryName: 'Население',
+              subCategoryName: 'Распределение числа выбывших по направлениям передвижения',
             },
           },
         },
       }),
     });
 
-    const annualStatsSubCategoryNames: GqlAnnualStatsCategoryNames = response
-      .data?.annualStatsSubCategoryNames;
+    const annualStatsSubSubCategoryNames: GqlAnnualStatsCategoryNames = response
+      .data?.annualStatsSubSubCategoryNames;
 
-    expect(annualStatsSubCategoryNames.length).toBeGreaterThan(0);
+    expect(annualStatsSubSubCategoryNames.length).toBeGreaterThan(0);
 
-    annualStatsSubCategoryNames.forEach((annualStatsSubCategoryName) => {
-      expect(typeof annualStatsSubCategoryName === 'string').toBe(true);
-      expect(annualStatsSubCategoryName.length).toBeGreaterThan(0);
+    annualStatsSubSubCategoryNames.forEach((annualStatsSubSubCategoryName) => {
+      expect(typeof annualStatsSubSubCategoryName === 'string').toBe(true);
+      expect(annualStatsSubSubCategoryName.length).toBeGreaterThan(0);
     });
   });
 });

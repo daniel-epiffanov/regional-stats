@@ -4,22 +4,25 @@ import { ResolverFnAsync } from '../types/ResolverFn';
 
 type Args = Readonly<{
 	mainCategoryName: string,
+	subCategoryName: string,
 }>
 
-const annualStatsSubCategoryNames: ResolverFnAsync<GqlAnnualStatsCategoryNames> = async (
+const annualStatsSubSubCategoryNames: ResolverFnAsync<GqlAnnualStatsCategoryNames> = async (
   parent: any,
   args: Args,
 ) => {
-  const { mainCategoryName } = args;
+  const { mainCategoryName, subCategoryName } = args;
 
-  if (!mainCategoryName) return null;
+  if (!mainCategoryName || !subCategoryName) return null;
 
   const mongoRes = await AnnualStatsOfRegionModel
     .aggregate<{ _id: GqlAnnualStatsCategoryNames[0] }>([
       { $unwind: '$mainSections' },
       { $match: { 'mainSections.name': mainCategoryName } },
       { $unwind: '$mainSections.subSections' },
-      { $group: { _id: '$mainSections.subSections.name' } },
+      { $match: { 'mainSections.subSections.name': subCategoryName } },
+      { $unwind: '$mainSections.subSections.subSubSections' },
+      { $group: { _id: '$mainSections.subSections.subSubSections.name' } },
       { $sort: { _id: 1 } },
     ]);
 
@@ -31,4 +34,4 @@ const annualStatsSubCategoryNames: ResolverFnAsync<GqlAnnualStatsCategoryNames> 
   return rawSubSectionNames;
 };
 
-export default annualStatsSubCategoryNames;
+export default annualStatsSubSubCategoryNames;

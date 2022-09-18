@@ -18,6 +18,10 @@ export default gql`
 		annualStatsYears: [Int],
 		annualStatsMainCategoryNames: [String],
 		annualStatsSubCategoryNames(mainCategoryName: String): [String],
+		annualStatsSubSubCategoryNames(
+			mainCategoryName: String
+			subCategoryName: String
+		): [String],
 		
 	}
 	`;
@@ -26,6 +30,5 @@ export default gql`
 
 // eslint-disable-next-line max-len
 // statRating(year: Int, mainCategory: String, subCategory: String, subSubCategory: String, regionNames: [String]): [StatRating],
-// statThirdCategories(firstCategory: String, secondCategory: String): [String],
 // eslint-disable-next-line max-len
 // statData(regionName: String, mainCategory: String, subCategory: String, subSubCategory: String): StatData,
