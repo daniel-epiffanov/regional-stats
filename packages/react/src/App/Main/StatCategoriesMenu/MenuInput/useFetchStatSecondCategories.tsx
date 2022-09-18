@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { StatCategories } from '../../../../../../../sharedTypes/gqlQueries';
+import { GqlAnnualStatsCategoryNames } from '../../../../../../../sharedTypes/gqlQueries';
 import fetchStatSecondCategories from '../../../../queries/fetchStatSecondCategories';
 
-type UseFetchStatSecondCategories = (statFirstCategory: string) => StatCategories | null
+type UseFetchStatSecondCategories = (statFirstCategory: string) => GqlAnnualStatsCategoryNames | null
 
 const useFetchStatSecondCategories: UseFetchStatSecondCategories = (statFirstCategory) => {
-  const [statSecondCategories, setStatSecondCategories] = useState<StatCategories | null>(null);
+  const [statSecondCategories, setStatSecondCategories] = useState<GqlAnnualStatsCategoryNames | null>(null);
 
   useEffect(() => {
     const fetchAndSaveStatSecondCategories = async () => {

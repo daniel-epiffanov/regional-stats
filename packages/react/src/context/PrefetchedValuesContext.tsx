@@ -2,13 +2,13 @@ import { useQuery, gql } from '@apollo/client';
 import {
   createContext, FC, useContext,
 } from 'react';
-import { StatCategories, StatRegionNames, GqlStatYears } from '../../../../sharedTypes/gqlQueries';
+import { GqlAnnualStatsCategoryNames, StatRegionNames, GqlStatYears } from '../../../../sharedTypes/gqlQueries';
 import Message from '../components/Message';
 
 type ContextValues = Readonly<{
 	statRegionNames: StatRegionNames,
 	statYears: GqlStatYears,
-	statFirstCategories: StatCategories
+	statFirstCategories: GqlAnnualStatsCategoryNames
 }>
 
 const QUERY = gql` query {

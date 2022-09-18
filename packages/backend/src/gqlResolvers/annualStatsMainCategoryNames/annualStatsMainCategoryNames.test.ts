@@ -1,11 +1,11 @@
 import { ApolloServer } from 'apollo-server-express';
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
 import { Connection } from 'mongoose';
-import { GqlAnnualStatsYears } from '../../../../../sharedTypes/gqlQueries';
+import { GqlAnnualStatsCategoryNames } from '../../../../../sharedTypes/gqlQueries';
 import connectToMongo from '../../services/connectToMongo';
 import { getNewApolloServer } from '../../services/startApollo';
 
-describe('gql annualStatsYears query', () => {
+describe('gql annualStatsMainCategoryNames query', () => {
   let mongoConnection: Connection;
   let apolloServer: ApolloServer;
 
@@ -19,22 +19,23 @@ describe('gql annualStatsYears query', () => {
     await apolloServer.stop();
   });
 
-  test('presence, type, format', async () => {
+  test('presence, type', async () => {
     const response = await apolloServer.executeOperation({
       query: jsonToGraphQLQuery({
         query: {
-          annualStatsYears: true,
+          annualStatsMainCategoryNames: true,
         },
       }),
     });
 
-    const annualStatsYears: GqlAnnualStatsYears = response.data?.annualStatsYears;
+    const annualStatsMainCategoryNames: GqlAnnualStatsCategoryNames = response
+      .data?.annualStatsMainCategoryNames;
 
-    expect(annualStatsYears.length).toBeGreaterThan(0);
+    expect(annualStatsMainCategoryNames.length).toBeGreaterThan(0);
 
-    annualStatsYears.forEach((annualStatsYear) => {
-      expect(typeof annualStatsYear === 'number').toBe(true);
-      expect(annualStatsYear.toString().length).toBe(4);
+    annualStatsMainCategoryNames.forEach((statisticsMainSectionName) => {
+      expect(typeof statisticsMainSectionName === 'string').toBe(true);
+      expect(statisticsMainSectionName.length).toBeGreaterThan(0);
     });
   });
 });

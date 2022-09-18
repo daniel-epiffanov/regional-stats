@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { StatCategories } from '../../../../sharedTypes/gqlQueries'
+import { GqlAnnualStatsCategoryNames } from '../../../../sharedTypes/gqlQueries'
 import StatisticsModel from '../mongoModels/annualStatsOfRegion'
 import { ResolverFnAsync } from './types/ResolverFn'
 
@@ -9,7 +9,7 @@ type Args = Readonly<{
 }>
 
 export const getSubCategories = async (firstCategory: string, secondCategory: string) => {
-  const mongoRes = await StatisticsModel.aggregate<{ _id: StatCategories[0] }>([
+  const mongoRes = await StatisticsModel.aggregate<{ _id: GqlAnnualStatsCategoryNames[0] }>([
     { $unwind: '$mainSections' },
     { $match: { 'mainSections.name': firstCategory } },
     { $project: { 'mainSections.subSections.name': 1, 'mainSections.subSections.children.name': 1 } },
@@ -26,7 +26,7 @@ export const getSubCategories = async (firstCategory: string, secondCategory: st
   return rawSubSectionNames
 }
 
-const statThirdCategories: ResolverFnAsync<StatCategories | null> = async (
+const statThirdCategories: ResolverFnAsync<GqlAnnualStatsCategoryNames | null> = async (
   parent: any,
   args: Args,
 ) => {

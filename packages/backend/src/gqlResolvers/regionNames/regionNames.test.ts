@@ -34,9 +34,9 @@ describe('gql regionNames query', () => {
 
     expect(regionNames.length).toBeGreaterThan(0);
 
-    regionNames.forEach((statisticsRegionName) => {
-      expect(typeof statisticsRegionName === 'string').toBe(true);
-      expect(statisticsRegionName.length).toBeGreaterThan(0);
+    regionNames.forEach((regionName) => {
+      expect(typeof regionName === 'string').toBe(true);
+      expect(regionName.length).toBeGreaterThan(0);
     });
   });
 

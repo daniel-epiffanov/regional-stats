@@ -1,7 +1,7 @@
 import annualStatsYears from './annualStatsYears';
 import regionNames from './regionNames';
-import statFirstCategories from './statFirstCategories';
-import statSecondCategories from './statSecondCategories';
+import annualStatsMainCategoryNames from './annualStatsMainCategoryNames';
+import annualStatsSubCategoryNames from './annualStatsSubCategoryNames';
 import statThirdCategories from './statThirdCategories';
 import statData from './statData';
 import mapRegionPolygons from './mapRegionPolygons';
@@ -11,8 +11,8 @@ const gqlResolvers = {
   Query: {
     regionNames,
     annualStatsYears,
-    // statFirstCategories,
-    // statSecondCategories,
+    annualStatsMainCategoryNames,
+    annualStatsSubCategoryNames,
     // statThirdCategories,
     // statData,
     // mapRegionPolygons,

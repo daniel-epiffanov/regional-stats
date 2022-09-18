@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StatCategories } from '../../../../../../../sharedTypes/gqlQueries';
+import { GqlAnnualStatsCategoryNames } from '../../../../../../../sharedTypes/gqlQueries';
 import useFetchStatFirstCategories from './useFetchStatFirstCategories';
 import useFetchStatSecondCategories from './useFetchStatSecondCategories';
 import fetchStatThirdCategories from '../../../../queries/fetchStatThirdCategories';
@@ -10,7 +10,7 @@ const useCategories = () => {
 
   const statFirstCategories = useFetchStatFirstCategories();
   const statSecondCategories = useFetchStatSecondCategories(curStatCategories.firstCategory || '');
-  const [statThirdCategories, setStatThirdCategories] = useState<StatCategories | null>(null);
+  const [statThirdCategories, setStatThirdCategories] = useState<GqlAnnualStatsCategoryNames | null>(null);
 
 
   const changeStatFirstCategory = async (newStatFirstCategory: string) => {

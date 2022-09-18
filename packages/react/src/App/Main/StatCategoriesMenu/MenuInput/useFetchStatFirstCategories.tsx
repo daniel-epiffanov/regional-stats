@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { StatCategories } from '../../../../../../../sharedTypes/gqlQueries';
+import { GqlAnnualStatsCategoryNames } from '../../../../../../../sharedTypes/gqlQueries';
 import fetchStatFirstCategories from '../../../../queries/fetchStatFirstCategories';
 
-type UseFetchFirstCategories = () => StatCategories | null
+type UseFetchFirstCategories = () => GqlAnnualStatsCategoryNames | null
 
 const useFetchStatFirstCategories: UseFetchFirstCategories = () => {
-  const [statFirstCategories, setStatFirstCategories] = useState<StatCategories | null>(null);
+  const [statFirstCategories, setStatFirstCategories] = useState<GqlAnnualStatsCategoryNames | null>(null);
 
   useEffect(() => {
     let isMounted = true;

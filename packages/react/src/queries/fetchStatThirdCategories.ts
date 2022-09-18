@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { StatCategories } from '../../../../sharedTypes/gqlQueries';
+import { GqlAnnualStatsCategoryNames } from '../../../../sharedTypes/gqlQueries';
 import { hostApi } from '../config/host';
 import { GraphqlResponse } from './queries';
 
 type Response = GraphqlResponse<{
-  statThirdCategories: StatCategories
+  statThirdCategories: GqlAnnualStatsCategoryNames
 }>
 
 const fetchStatThirdCategories = async (statFirstCategory: string, statSecondCategory: string) => {
