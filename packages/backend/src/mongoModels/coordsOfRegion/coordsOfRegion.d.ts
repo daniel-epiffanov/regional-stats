@@ -1,5 +1,7 @@
+import { RegionTypeArg } from '../../../../../sharedTypes/gqlQueries';
+
 export type MongoCoordsOfRegion = Readonly<{
-	regionType: 'federalDistrict' | 'region',
+	regionType: RegionTypeArg,
 	polygon: Readonly<{
 		type: 'Polygon' | 'MultiPolygon',
 		coordinates: ReadonlyArray<

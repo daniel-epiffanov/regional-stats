@@ -4,10 +4,10 @@ type Geometry {
 }
 
 type Properties {
-	name: String,
+	regionName: String,
 }
 
-type MapRegionPolygons {
+type CoordsPolygons {
 	properties: Properties,
 	geometry: Geometry
 }

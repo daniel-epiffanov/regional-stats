@@ -1,4 +1,0 @@
-type StatMainCategories {
-	name: String,
-	children: [StatMainCategories]
-}

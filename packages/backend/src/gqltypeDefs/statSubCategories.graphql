@@ -1,4 +1,0 @@
-type StatSubCategory {
-	name: String,
-	children: [String]
-}

@@ -4,9 +4,7 @@ import path from 'path';
 
 export default gql`
 	${fs.readFileSync(path.join(__dirname, 'statData.graphql'), 'utf8')}
-	${fs.readFileSync(path.join(__dirname, 'mapRegionPolygons.graphql'), 'utf8')}
-	${fs.readFileSync(path.join(__dirname, 'statSubCategories.graphql'), 'utf8')}
-	${fs.readFileSync(path.join(__dirname, 'statMainCategories.graphql'), 'utf8')}
+	${fs.readFileSync(path.join(__dirname, 'coordsPolygons.graphql'), 'utf8')}
 	${fs.readFileSync(path.join(__dirname, 'statRating.graphql'), 'utf8')}
 
 	input SD {
@@ -22,11 +20,10 @@ export default gql`
 			mainCategoryName: String
 			subCategoryName: String
 		): [String],
+		coordsPolygons(regionType: String): [CoordsPolygons],
 		
 	}
 	`;
-
-// mapRegionPolygons(regionType: String): [MapRegionPolygons],
 
 // eslint-disable-next-line max-len
 // statRating(year: Int, mainCategory: String, subCategory: String, subSubCategory: String, regionNames: [String]): [StatRating],

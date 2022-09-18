@@ -2,6 +2,25 @@ export type GqlAnnualStatsYears = ReadonlyArray<number>
 export type GqlRegionNames = ReadonlyArray<string>
 export type GqlAnnualStatsCategoryNames = ReadonlyArray<string>
 
+type Polygon = Readonly<{
+	type: 'Polygon' | 'MultiPolygon',
+	coordinates: ReadonlyArray<ReadonlyArray<ReadonlyArray<string>>>
+}>
+
+type GqlCoordsPolygon = Readonly<{
+	geometry: Polygon,
+	properties: Readonly<{
+		regionName: string
+	}>,
+}>
+
+export type GqlCoordsPolygons = ReadonlyArray<GqlCoordsPolygon>
+
+
+export type RegionTypeArg = 'region' | 'federalDistrict'
+
+
+
 
 // data to be gotten by query arguments
 export type GqlStatData = Readonly<{
@@ -38,16 +57,3 @@ export type GqlStatRating = Readonly<{
 
 export type GqlMapRegionNames = ReadonlyArray<string>
 
-type Polygon = Readonly<{
-	type: 'Polygon' | 'MultiPolygon',
-	coordinates: ReadonlyArray<ReadonlyArray<ReadonlyArray<string>>>
-}>
-
-type GqlMapRegionPolygon = Readonly<{
-	geometry: Polygon,
-	properties: Readonly<{
-		name: string
-	}>,
-}>
-
-export type GqlMapRegionPolygons = ReadonlyArray<GqlMapRegionPolygon>
