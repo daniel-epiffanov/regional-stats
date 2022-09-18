@@ -1,9 +1,6 @@
 export type GqlAnnualStatsYears = ReadonlyArray<number>
+export type GqlRegionNames = ReadonlyArray<string>
 
-
-
-// general data
-export type StatRegionNames = ReadonlyArray<string>
 
 // data to be gotten by query arguments
 export type StatCategories = ReadonlyArray<string>

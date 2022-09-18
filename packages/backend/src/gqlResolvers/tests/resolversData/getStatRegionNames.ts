@@ -1,5 +1,5 @@
 import { ApolloServer } from "apollo-server-express"
-import { StatRegionNames } from "../../../../../../sharedTypes/gqlQueries"
+import { GqlRegionNames } from "../../../../../../sharedTypes/gqlQueries"
 
 type Props = Readonly<{
 	testServer: ApolloServer
@@ -12,7 +12,7 @@ const statRegionNames = async (props: Props) => {
 		query: 'query { statRegionNames }',
 	})
 
-	const statRegionNames: StatRegionNames | undefined = response.data?.statRegionNames
+	const statRegionNames: GqlRegionNames | undefined = response.data?.statRegionNames
 
 	if (!statRegionNames) throw new Error('statisticsRegionNames is falsy')
 

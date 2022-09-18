@@ -55,7 +55,7 @@ const getStatProgress = async (yearValues: any) => {
         value: true
       }
     }
-  }, { pretty: true });
+  });
   
   try {
     const axiosResponse = await axios.post<StatFirstCategoriesDataResponse>(hostApi, { query });

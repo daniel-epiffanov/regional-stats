@@ -1,23 +1,26 @@
+import { ApolloServer } from 'apollo-server-express';
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
+import { Connection } from 'mongoose';
 import { GqlAnnualStatsYears } from '../../../../../sharedTypes/gqlQueries';
 import connectToMongo from '../../services/connectToMongo';
 import { getNewApolloServer } from '../../services/startApollo';
 
 describe('gql annualStatsYears query', () => {
-  let connection: any;
+  let mongoConnection: Connection;
+  let apolloServer: ApolloServer;
 
   beforeAll(async () => {
-    connection = await connectToMongo();
+    mongoConnection = await connectToMongo();
+    apolloServer = getNewApolloServer();
   });
 
   afterAll(async () => {
-    await connection.close();
+    await mongoConnection.close();
+    await apolloServer.stop();
   });
 
   test('presence, type, format', async () => {
-    const testServer = getNewApolloServer();
-
-    const response = await testServer.executeOperation({
+    const response = await apolloServer.executeOperation({
       query: jsonToGraphQLQuery({
         query: {
           annualStatsYears: true,
@@ -25,11 +28,7 @@ describe('gql annualStatsYears query', () => {
       }),
     });
 
-    expect(response.errors).toBeUndefined();
-
-    const annualStatsYears: GqlAnnualStatsYears | null = response.data?.annualStatsYears || null;
-
-    if (!annualStatsYears) fail('annualStatsYears in response is falsy');
+    const annualStatsYears: GqlAnnualStatsYears = response.data?.annualStatsYears;
 
     expect(annualStatsYears.length).toBeGreaterThan(0);
 

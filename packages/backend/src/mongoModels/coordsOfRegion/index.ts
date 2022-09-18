@@ -1,8 +1,8 @@
 import { Schema, model, models } from 'mongoose';
-import { MongoMapRegion } from './mapRegion';
+import { MongoCoordsOfRegion } from './coordsOfRegion';
 
-const MapSchema = new Schema<MongoMapRegion>({
-  type: {
+const MapSchema = new Schema<MongoCoordsOfRegion>({
+  regionType: {
     type: String,
     required: true,
     enum: ['region', 'federalDistrict'],
@@ -14,11 +14,11 @@ const MapSchema = new Schema<MongoMapRegion>({
     },
     coordinates: [[[Number]]],
   },
-  name: {
+  regionName: {
     type: String,
     required: true,
   },
   dot: [Number],
 });
 
-export default models.Map || model('MapRegion', MapSchema);
+export default models.Map || model('CoordsOfRegion', MapSchema);

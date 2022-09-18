@@ -1,24 +1,22 @@
 import annualStatsYears from './annualStatsYears';
-import statRegionNames from './statRegionNames';
+import regionNames from './regionNames';
 import statFirstCategories from './statFirstCategories';
 import statSecondCategories from './statSecondCategories';
 import statThirdCategories from './statThirdCategories';
 import statData from './statData';
 import mapRegionPolygons from './mapRegionPolygons';
-import mapRegionNames from './mapRegionNames';
 import statRating from './statRating';
 
 const gqlResolvers = {
   Query: {
-    statRegionNames,
+    regionNames,
     annualStatsYears,
-    statFirstCategories,
-    statSecondCategories,
-    statThirdCategories,
-    statData,
-    mapRegionPolygons,
-    statRating,
-    mapRegionNames,
+    // statFirstCategories,
+    // statSecondCategories,
+    // statThirdCategories,
+    // statData,
+    // mapRegionPolygons,
+    // statRating,
   },
 };
 
