@@ -1,6 +1,39 @@
 export type GqlAnnualStatsYears = ReadonlyArray<number>
 export type GqlRegionNames = ReadonlyArray<string>
 export type GqlAnnualStatsCategoryNames = ReadonlyArray<string>
+export type GqlCoordsPolygons = ReadonlyArray<GqlCoordsPolygon>
+export type GqlAnnualStats = ReadonlyArray<GqlAnnualStatsItem>
+
+export type GqlAnnualStatsRating = ReadonlyArray<GqlAnnualStatsRatingItem>
+
+export type GqlAnnualStatsRatingItem = Readonly<{
+	regionName: string,
+	value: number,
+	prettyValue: string,
+	regionRank: number,
+	regionFlagUrl: string,
+}>
+
+export type RegionTypeArg = 'region' | 'federalDistrict'
+
+
+export type GqlAnnualStatsItem = Readonly<{
+	regionName: string
+	regionFlagUrl: string,
+	measure: string,
+	parentMeasure?: string,
+	annualData: ReadonlyArray<AnnualDataItem>,
+}>
+
+type AnnualDataItem = Readonly<{
+	year: number,
+	value: number,
+	prettyValue: string,
+	annualGrowthPercent: number,
+	totalGrowthPercent: number,
+	regionRank: number
+}>
+
 
 type Polygon = Readonly<{
 	type: 'Polygon' | 'MultiPolygon',
@@ -13,47 +46,3 @@ type GqlCoordsPolygon = Readonly<{
 		regionName: string
 	}>,
 }>
-
-export type GqlCoordsPolygons = ReadonlyArray<GqlCoordsPolygon>
-
-
-export type RegionTypeArg = 'region' | 'federalDistrict'
-
-
-
-
-// data to be gotten by query arguments
-export type GqlStatData = Readonly<{
-	name: string,
-	measure: string,
-	parentMeasure?: string,
-	yearValues: ReadonlyArray<Readonly<{
-		year: number,
-		value: number,
-		prettyValue: string,
-		percent: number,
-	}>>,
-	flag: url,
-}>
-
-export type GqlStatYearValuePercents = ReadonlyArray<Readonly<{
-	percent: number,
-	year: number,
-	value: number
-}>>
-export type GqlStatYearMeanPercents = ReadonlyArray<Readonly<{
-	percent: number,
-	year: number,
-	mean: number
-}>>
-
-export type GqlStatRating = Readonly<{
-	value: number,
-	place: number,
-	regionName: string,
-	flag: string,
-	prettyValue: string,
-}>
-
-export type GqlMapRegionNames = ReadonlyArray<string>
-

@@ -4,7 +4,7 @@ import { ResolverFnAsync } from '../types/ResolverFn';
 
 const annualStatsYears: ResolverFnAsync<GqlAnnualStatsYears> = async () => {
   const mongoRes = await AnnualStatsOfRegionModel
-    .distinct('mainSections.subSections.annualStats.year');
+    .distinct('mainSections.subSections.annualData.year');
   return mongoRes;
 };
 

@@ -1,12 +1,12 @@
-export type MongoAnnualStats = Readonly<{
+export type MongoAnnualData = Readonly<{
     year: number,
-    value: string,
+    value: number,
 }>
 export type MongoSubSection = Readonly<{
     name: string,
     orderNumber: string,
     subSubSections: ReadonlyArray<MongoSubSection>,
-    annualStats: ReadonlyArray<MongoAnnualStats>,
+    annualData: ReadonlyArray<MongoAnnualData>,
 }>
 export type MongoMainSection = Readonly<{
     name: string,

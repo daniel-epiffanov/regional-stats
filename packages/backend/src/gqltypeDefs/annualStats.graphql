@@ -1,0 +1,15 @@
+type AnnualDataItem {
+	year: Int,
+	value: Float,
+	prettyValue: String,
+	annualGrowthPercent: Float,
+	totalGrowthPercent: Float,
+	regionRank: Int,
+}
+type AnnualStatsItem {
+	regionName: String,
+	regionFlagUrl: String,
+	measure: String,
+	parentMeasure: String,
+	annualData: [AnnualDataItem],
+}

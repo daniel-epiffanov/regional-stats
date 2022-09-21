@@ -1,7 +1,7 @@
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import path from 'path';
-import { DEFAULT_PORT } from './config/defaults';
+import { DEFAULT_PORT } from './config/constants';
 import connectToMongo from './services/connectToMongo';
 import startApollo from './services/startApollo';
 

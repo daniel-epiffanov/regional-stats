@@ -1,0 +1,7 @@
+	type AnnualStatsRating {
+		regionName: String,
+		regionRank: Int,
+		regionFlagUrl: String,
+		value: Float,
+		prettyValue: String,
+	}

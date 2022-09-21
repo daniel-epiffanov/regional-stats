@@ -3,9 +3,9 @@ import regionNames from './regionNames';
 import annualStatsMainCategoryNames from './annualStatsMainCategoryNames';
 import annualStatsSubCategoryNames from './annualStatsSubCategoryNames';
 import annualStatsSubSubCategoryNames from './annualStatsSubSubCategoryNames';
-import statData from './statData';
+import annualStats from './annualStats';
 import coordsPolygons from './coordsPolygons';
-import statRating from './statRating';
+import annualStatsRating from './annualStatsRating';
 
 const gqlResolvers = {
   Query: {
@@ -15,8 +15,8 @@ const gqlResolvers = {
     annualStatsSubCategoryNames,
     annualStatsSubSubCategoryNames,
     coordsPolygons,
-    // statData,
-    // statRating,
+    annualStats,
+    annualStatsRating,
   },
 };
 

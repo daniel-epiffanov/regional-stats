@@ -1,11 +1,11 @@
 import { Schema, model } from 'mongoose';
 import {
-  MongoMainSection, MongoSubSection, MongoAnnualStats, MongoAnnualStatsOfRegion,
+  MongoMainSection, MongoSubSection, MongoAnnualData, MongoAnnualStatsOfRegion,
 } from './annualStatsOfRegion';
 
-const AnnualStats = new Schema<MongoAnnualStats>({
+const AnnualData = new Schema<MongoAnnualData>({
   year: Number,
-  value: String,
+  value: Number,
 });
 
 const SubSectionSchema = new Schema<MongoSubSection>();
@@ -13,7 +13,7 @@ SubSectionSchema.add({
   orderNumber: String,
   name: String,
   subSubSections: [SubSectionSchema],
-  annualStats: AnnualStats,
+  annualData: AnnualData,
 });
 
 const MainSectionSchema = new Schema<MongoMainSection>({
