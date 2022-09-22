@@ -1,55 +1,58 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import Header from '.';
-import { DARK_THEME_NAME, DEFAULT_THEME, GITHUB_LINK, LIGHT_THEME_NAME, TELEGRAM_LINK } from '../../config/constants';
-
+import {
+  DARK_THEME_NAME,
+  DEFAULT_THEME,
+  GITHUB_LINK,
+  LIGHT_THEME_NAME,
+  TELEGRAM_LINK
+} from '../../config/constants';
+import themes from 'devextreme/ui/themes';
 
 const spyWindowOpen = jest.spyOn(window, 'open');
 const spyLocalStorageSetItem = jest.spyOn(window.localStorage.__proto__, 'setItem');
 
-describe('Header actions', () => {
+describe('Header', () => {
 
-  it('github link is working', () => {
+  it('github link', () => {
     render(<Header  />);
 
-    const divElement = screen.getByText('My GitHub');
+    const divElement = screen.getByText('GitHub');
     expect(divElement).toBeInTheDocument();
 
-    fireEvent.click(divElement)
+    fireEvent.click(divElement);
 
-    expect(spyWindowOpen).toBeCalledTimes(1)
-    expect(spyWindowOpen).toBeCalledWith(GITHUB_LINK)
+    expect(spyWindowOpen).toBeCalledTimes(1);
+    expect(spyWindowOpen).toBeCalledWith(GITHUB_LINK);
   });
 
-  it('telegram link is working', () => {
+  it('telegram link', () => {
     render(<Header  />);
 
-    const divElement = screen.getByText('My Telegram');
+    const divElement = screen.getByText('Telegram');
     expect(divElement).toBeInTheDocument();
 
-    fireEvent.click(divElement)
+    fireEvent.click(divElement);
 
-    expect(spyWindowOpen).toBeCalledTimes(1)
-    expect(spyWindowOpen).toBeCalledWith(TELEGRAM_LINK)
+    expect(spyWindowOpen).toBeCalledTimes(1);
+    expect(spyWindowOpen).toBeCalledWith(TELEGRAM_LINK);
   });
 
-  it('theme is changing', () => {
+  it('theme toggle', () => {
     render(<Header  />);
 
-    const divElement = screen.getByText('Theme');
+    const divElement = screen.getByText('Тема');
     expect(divElement).toBeInTheDocument();
 
-    fireEvent.click(divElement)
+    fireEvent.click(divElement);
+    expect(spyLocalStorageSetItem).toBeCalledTimes(1);
 
-    expect(spyLocalStorageSetItem).toBeCalledTimes(1)
-
-    const curTheme = window.localStorage.getItem('dx-theme')
+    const curTheme = window.localStorage.getItem('dx-theme') || DEFAULT_THEME;
 
     if(curTheme === DARK_THEME_NAME) {
-      expect(spyLocalStorageSetItem).toBeCalledWith('dx-theme', LIGHT_THEME_NAME)
-    } else if(curTheme === LIGHT_THEME_NAME) {
-      expect(spyLocalStorageSetItem).toBeCalledWith('dx-theme', DARK_THEME_NAME)
+      expect(spyLocalStorageSetItem).toBeCalledWith('dx-theme', LIGHT_THEME_NAME);
     } else {
-        expect(spyLocalStorageSetItem).toBeCalledWith('dx-theme', DEFAULT_THEME)
+      expect(spyLocalStorageSetItem).toBeCalledWith('dx-theme', DARK_THEME_NAME);
     }
   });
 

@@ -1,24 +1,26 @@
-import Main from './Main';
+// import Main from './Main';
 import CustomApolloProvider from '../context/CustomApolloProvider';
-import { PrefetchedValuesProvider } from '../context/PrefetchedValuesContext';
-import setLocalStorageTheme from '../devExtremeHelpers/setLocalStorageTheme';
-import { MenuProvider } from '../context/MenuContext';
+import { RegionNamesProvider } from '../context/RegionNamesContext';
+import setInitialTheme from '../helpers/setInitialTheme';
+// import { MenuProvider } from '../context/MenuContext';
 import Header from './Header';
-import { StatDataProvider } from '../context/StatDataContext';
+// import { StatDataProvider } from '../context/StatDataContext';
 
-setLocalStorageTheme();
+setInitialTheme();
 
-const App = () => (
-  <CustomApolloProvider>
-    <PrefetchedValuesProvider>
-      <MenuProvider>
-        <StatDataProvider>
-          <Header />
-          <Main />
-        </StatDataProvider>
-      </MenuProvider>
-    </PrefetchedValuesProvider>
-  </CustomApolloProvider>
-);
+const App = () => {
+  return(
+    <CustomApolloProvider>
+      <RegionNamesProvider>
+        {/* <MenuProvider> */}
+        {/* <StatDataProvider> */}
+        <Header />
+        {/* <Main /> */}
+        {/* </StatDataProvider> */}
+        {/* </MenuProvider> */}
+      </RegionNamesProvider>
+    </CustomApolloProvider>
+  );
+};
 
 export default App;

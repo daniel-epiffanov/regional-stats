@@ -27,5 +27,5 @@
 		"src",
 		"../../sharedTypes",
 		"./jest.config.ts"
-	]
+, "depricated/queryHooks", "depricated/queries", "depricated/hooks", "depricated/StatDataContext", "depricated/MapContext", "depricated/Main"	]
 }

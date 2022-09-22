@@ -8,15 +8,15 @@ describe('Logo', () => {
 
     const bElement = screen.getByTestId('text');
     expect(bElement).toBeInTheDocument();
-    expect(bElement.innerHTML).toBe(LOGO_TEXT)
+    expect(bElement.innerHTML).toBe(LOGO_TEXT);
   });
 
-  it('Image is present', () => {
+  it('Img is present', () => {
     render(<Logo  />);
 
     const imgElement: HTMLImageElement = screen.getByAltText('logo');
     expect(imgElement).toBeInTheDocument();
-    expect(imgElement.src).toContain('logo')
+    expect(imgElement.src).toContain('logo');
   });
 
 });

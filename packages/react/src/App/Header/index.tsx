@@ -2,13 +2,13 @@ import { Toolbar, Item } from 'devextreme-react/toolbar';
 import { FC } from 'react';
 import styles from './Header.module.scss';
 import Logo from './Logo';
-import chageTheme from '../../devExtremeHelpers/chageThemeHundler';
+import toggleTheme from '../../helpers/toggleTheme';
 import { GITHUB_LINK, TELEGRAM_LINK } from '../../config/constants';
 
 const Header: FC = () => {
   const myGithubClickHandler = () => window.open(GITHUB_LINK);
   const myTelegramClickHandler = () => window.open(TELEGRAM_LINK);
-  const themeClickHandler = () => chageTheme();
+  const themeClickHandler = () => toggleTheme();
 
   return (
     <div className={styles['root']}>

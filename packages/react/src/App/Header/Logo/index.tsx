@@ -11,7 +11,7 @@ const Logo: FC = () => (
       alt="logo"
     />
     <div className={styles['text']}>
-      <b data-testid="text">{LOGO_TEXT}</b>
+      <h1 data-testid="text">{LOGO_TEXT}</h1>
     </div>
   </div>
 );
