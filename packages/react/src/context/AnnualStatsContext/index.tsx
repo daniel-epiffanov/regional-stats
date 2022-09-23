@@ -1,7 +1,7 @@
 import {
   createContext, FC, useContext,
 } from 'react';
-import { GqlAnnualStats, GqlAnnualStatsItem } from '../../../../../sharedTypes/gqlQueries';
+import { AnnualDataItem, GqlAnnualStats, GqlAnnualStatsItem } from '../../../../../sharedTypes/gqlQueries';
 import Message from '../../components/Message';
 import useAnnualStatsQuery from './useAnnualStatsQuery';
 
@@ -9,6 +9,7 @@ type ContextValues = Readonly<{
 	annualStats: GqlAnnualStats,
   getAnnualStatsItem: GetAnnualStatsItem,
   getRegionFlagUrl: GetRegionFlagUrl,
+  getAnnualDataItem: GetAnnualDataItem
 }>
 
 // type GetPrettyValueByYear = (regionName: string, year: number) => string | null
@@ -20,6 +21,7 @@ type ContextValues = Readonly<{
 
 type GetRegionFlagUrl = (regionName: string) => string | null
 type GetAnnualStatsItem = (regionName: string) => GqlAnnualStatsItem | null
+type GetAnnualDataItem = (regionName: string, year: number) => AnnualDataItem | null
 
 
 const AnnualStatsContext = createContext<ContextValues>({} as ContextValues);
@@ -59,6 +61,13 @@ export const AnnualStatsProvider: FC<ProviderProps> = (props) => {
     const annualStatsItem = getAnnualStatsItem(regionName);
     return annualStatsItem?.regionFlagUrl || null;
   };
+  const getAnnualDataItem: GetAnnualDataItem = (regionName, year) => {
+    if(!annualStats) return null;
+    const annualStatsItem = getAnnualStatsItem(regionName);
+    const annualDataItem =  annualStatsItem?.annualData
+      .find(annualDataItem => annualDataItem.year === year) || null;
+    return annualDataItem || null;
+  };
 
   // const getPrettyValueByYear: GetPrettyValueByYear = (regionName, year) => {
   //   if(!statData || !statData[regionName]) return null;
@@ -88,7 +97,8 @@ export const AnnualStatsProvider: FC<ProviderProps> = (props) => {
     <AnnualStatsContext.Provider value={{
       annualStats,
       getAnnualStatsItem,
-      getRegionFlagUrl
+      getRegionFlagUrl,
+      getAnnualDataItem
     }}
     >
       {children}

@@ -2,6 +2,7 @@ import { FC } from 'react';
 import styles from './AnnualStats.module.scss';
 import Title from './Title';
 import { useRegionNamesContext } from '../../../context/RegionNamesContext';
+import Accordion from './Accordion';
 
 type Props = Readonly<{
 
@@ -12,12 +13,12 @@ const AnnualStats: FC<Props> = () => {
 
   const className = `${styles['root']} dx-theme-background-color`;
 
-  if (!curRegionNames.length) return null;
+  // if (!curRegionNames.length) return null;
 
   return (
     <div className={className}>
-      <Title />
-      {/* <Accordion /> */}
+      {!!curRegionNames.length && <Title />}
+      <Accordion />
     </div>
   );
 };

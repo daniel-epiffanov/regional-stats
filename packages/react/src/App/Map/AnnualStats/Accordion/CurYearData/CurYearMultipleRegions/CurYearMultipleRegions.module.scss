@@ -1,0 +1,19 @@
+.root {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-evenly;
+}
+
+.indicators-container {
+    max-width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+
+    span:nth-child(1) {
+        font-size: 1.2rem !important;
+    }
+    span:nth-child(2), span:nth-child(3) {
+        font-size: 0.7rem !important;
+    }
+}

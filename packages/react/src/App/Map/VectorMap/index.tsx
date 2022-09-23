@@ -6,7 +6,8 @@ import DxVectorMap, {
   Legend,
   Source,
   Font,
-  ControlBar
+  ControlBar,
+  Background
 } from 'devextreme-react/vector-map';
 import _ from 'lodash';
 import { ClickEvent, SelectionChangedEvent } from 'devextreme/viz/vector_map';
@@ -21,7 +22,7 @@ import { BOUNDS, CENTER, MAX_ZOOM_FACTOR, ZOOM_FACTOR } from '../../../config/ma
 
 const VectorMap: FC = () => {
   const { coordsPolygons } = useMapContext();
-  const {addCurRegionNames} = useRegionNamesContext();
+  const {addCurRegionNames, curRegionNames} = useRegionNamesContext();
   // const { statData } = useStatDataContext();
   // const {addCurRegionNames, curRegionNames, mapRegionCoords} = useMapContext();
   // const statRating = useFetchStatRating();
@@ -72,7 +73,12 @@ const VectorMap: FC = () => {
   // const curRegionCoords = useCurRegionMarkers();
 
   return (
-    <div className={styles['root']}>
+    <div
+      className={styles['root']}
+      // style={{
+      //   width: curRegionNames.length ? 'calc(100vw - 460px)' : '100vw'
+      // }}
+    >
       <DxVectorMap
         id="vectorMap"
         onClick={mapClickHandler}
@@ -83,6 +89,7 @@ const VectorMap: FC = () => {
         bounds={BOUNDS}
         // onSelectionChanged={selectionHandler}
       >
+        <Background borderColor="transparent"/>
         <ControlBar enabled={false} />
         <Layer
           dataSource={{

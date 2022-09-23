@@ -1,7 +1,8 @@
 .root {
 	position: relative;
 	// height: 600px;
-	flex-grow: 1;
+	// flex-grow: 1;
+	width: calc(100vw - 460px);
 }
 
 :global {
