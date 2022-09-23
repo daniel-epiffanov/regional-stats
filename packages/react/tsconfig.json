@@ -27,5 +27,5 @@
 		"src",
 		"../../sharedTypes",
 		"./jest.config.ts"
-, "depricated/queryHooks", "depricated/queries", "depricated/hooks", "depricated/StatDataContext", "depricated/MapContext", "depricated/Main"	]
+, "depricated/Map/YearProgressCards", "depricated/Map/VectorMap/useCurRegionMarkers.tsx", "depricated/Map/VectorMap/YearSlider", "depricated/Map/VectorMap/TopLeftAnnotation", "depricated/Map/VectorMap/RegressionLine", "depricated/Map/DashboardCards", "depricated/Map/CurRegions", "depricated/queryHooks", "depricated/queries", "depricated/hooks", "depricated/StatDataContext", "depricated/MapContext", "depricated/Main"	]
 }

@@ -6,7 +6,7 @@ type GqlRes = Readonly<{
 	annualStatsSubCategoryNames: GqlAnnualStatsCategoryNames,
 }>
 
-const useFetchAnnualStatsSubCategoryNames = (mainCategoryName: string | null) => {
+const useAnnualStatsSubCategoryNames = (mainCategoryName: string | null) => {
   const query = gql(jsonToGraphQLQuery({
     query: {
       __variables: {
@@ -31,4 +31,4 @@ const useFetchAnnualStatsSubCategoryNames = (mainCategoryName: string | null) =>
   return data.annualStatsSubCategoryNames;
 };
 
-export default useFetchAnnualStatsSubCategoryNames;
+export default useAnnualStatsSubCategoryNames;

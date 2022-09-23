@@ -21,7 +21,7 @@ export default gql`
 			mainCategoryName: String,
 			subCategoryName: String,
 			subSubCategoryName: String
-		): [AnnualStatsItem]
+		): [AnnualStatsItem],
 		annualStatsSubSubCategoryNames(
 			mainCategoryName: String
 			subCategoryName: String

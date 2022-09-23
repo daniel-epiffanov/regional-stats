@@ -1,35 +1,41 @@
 import { gql, useQuery } from '@apollo/client';
 import { jsonToGraphQLQuery, VariableType } from 'json-to-graphql-query';
-import { GqlRegionNames, RegionTypeArg } from '../../../../../sharedTypes/gqlQueries';
+import { GqlCoordsPolygons, RegionTypeArg } from '../../../../../sharedTypes/gqlQueries';
 
 type GqlRes = Readonly<{
-	regionNames: GqlRegionNames,
+	coordsPolygons: GqlCoordsPolygons,
 }>
 
-const useFetchRegionNames = (regionType: RegionTypeArg) => {
+const useCoordsPolygonsQuery = (regionType: RegionTypeArg) => {
   const query = gql(jsonToGraphQLQuery({
     query: {
       __variables: {
         regionType: 'String!',
       },
-      regionNames: {
+      coordsPolygons: {
         __args: {
           regionType: new VariableType('regionType')
+        },
+        geometry: {
+          type: true,
+          coordinates: true
+        },
+        properties: {
+          regionName: true
         }
       }
     }
   }));
 
-  console.log({query});
   const { loading, error, data } = useQuery<GqlRes>(query, {
     variables: { regionType }
   });
   
   if (loading || error || !data) return null;
 
-  if(!data?.regionNames?.length) return null;
+  if(!data?.coordsPolygons?.length) return null;
 
-  return data.regionNames;
+  return data.coordsPolygons;
 };
 
-export default useFetchRegionNames;
+export default useCoordsPolygonsQuery;

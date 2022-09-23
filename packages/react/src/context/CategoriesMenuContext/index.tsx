@@ -2,9 +2,9 @@ import {
   createContext, FC, useContext, useState,
 } from 'react';
 import { GqlAnnualStatsCategoryNames } from '../../../../../sharedTypes/gqlQueries';
-import useFetchAnnualStatsMainCategoryNames from './useFetchAnnualStatsMainCategoryNames';
-import useFetchAnnualStatsSubCategoryNames from './useFetchAnnualStatsSubCategoryNames';
-import useFetchAnnualStatsSubSubCategoryNames from './useFetchAnnualStatsSubSubCategoryNames';
+import useAnnualStatsMainCategoryNames from './useAnnualStatsMainCategoryNames';
+import useAnnualStatsSubCategoryNames from './useAnnualStatsSubCategoryNames';
+import useAnnualStatsSubSubCategoryNames from './useAnnualStatsSubSubCategoryNames';
 
 type CurCategoryNames = Readonly<{
   curMainCategoryName: string | null,
@@ -24,20 +24,20 @@ type ContextValues = Readonly<{
   subSubCategoryNames: GqlAnnualStatsCategoryNames | null,
 }>
 
-type ContextStateValues = Omit<ContextValues, 'changeCurMainCategoryName' | 
-  'changeCurSubCategoryName' |
-  'changeCurSubSubCategoryName'>
-
 type ChangeCurMainCategoryName = (newCurMainCategoryName: string) => void
 type ChangeCurSubCategoryName = (newCurSubCategoryName: string) => void
 type ChangeCurSubSubCategoryName = (newCurSubSubCategoryName: string) => void
+
+type ProviderProps = Omit<ContextValues, 'changeCurMainCategoryName' | 
+  'changeCurSubCategoryName' |
+  'changeCurSubSubCategoryName'>
 
 
 const CategoriesMenuContext = createContext<ContextValues>({} as ContextValues);
 
 export const useCategoriesMenuContext = () => useContext(CategoriesMenuContext);
 
-export const CategoriesMenuProvider: FC<Partial<ContextStateValues>> = (props) => {
+export const CategoriesMenuProvider: FC<Partial<ProviderProps>> = (props) => {
   const {
     children,
     curCategoryNames: defaultCurCategoryNames
@@ -52,9 +52,9 @@ export const CategoriesMenuProvider: FC<Partial<ContextStateValues>> = (props) =
 
   const {curMainCategoryName, curSubCategoryName} = curCategoryNames;
 
-  const mainCategoryNames = useFetchAnnualStatsMainCategoryNames();
-  const subCategoryNames = useFetchAnnualStatsSubCategoryNames(curMainCategoryName);
-  const subSubCategoryNames = useFetchAnnualStatsSubSubCategoryNames(
+  const mainCategoryNames = useAnnualStatsMainCategoryNames();
+  const subCategoryNames = useAnnualStatsSubCategoryNames(curMainCategoryName);
+  const subSubCategoryNames = useAnnualStatsSubSubCategoryNames(
     curMainCategoryName, curSubCategoryName
   );
 	

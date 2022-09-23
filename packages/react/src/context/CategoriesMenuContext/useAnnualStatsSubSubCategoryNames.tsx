@@ -6,7 +6,7 @@ type GqlRes = Readonly<{
 	annualStatsSubSubCategoryNames: GqlAnnualStatsCategoryNames,
 }>
 
-const useFetchAnnualStatsSubSubCategoryNames = (
+const useAnnualStatsSubSubCategoryNames = (
   mainCategoryName: string | null,
   subCategoryName: string | null,
 ) => {
@@ -36,4 +36,4 @@ const useFetchAnnualStatsSubSubCategoryNames = (
   return data.annualStatsSubSubCategoryNames;
 };
 
-export default useFetchAnnualStatsSubSubCategoryNames;
+export default useAnnualStatsSubSubCategoryNames;
