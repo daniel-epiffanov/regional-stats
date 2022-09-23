@@ -11,7 +11,7 @@ import DxVectorMap, {
 import _ from 'lodash';
 import { ClickEvent, SelectionChangedEvent } from 'devextreme/viz/vector_map';
 import styles from './VectorMap.module.scss';
-import TopLeftAnnotation from '../../../../depricated/Map/VectorMap/TopLeftAnnotation';
+// import TopLeftAnnotation from '../../../../depricated/Map/VectorMap/TopLeftAnnotation';
 import bigNumberFormatter from '../../../helpers/bigNumberFormatter';
 import YearSlider from '../../../../depricated/Map/VectorMap/YearSlider';
 import useCurRegionMarkers from '../../../../depricated/Map/VectorMap/useCurRegionMarkers';

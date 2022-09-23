@@ -3,9 +3,10 @@ import { AnnualStatsProvider } from '../../context/AnnualStatsContext';
 import { useCategoriesMenuContext } from '../../context/CategoriesMenuContext';
 import { MapProvider } from '../../context/MapContext';
 import { useRegionNamesContext } from '../../context/RegionNamesContext';
-import styles from './Main.module.scss';
+import { YearsProvider } from '../../context/YearsContext';
+import AnnualStats from './AnnualStats';
+import styles from './Map.module.scss';
 import VectorMap from './VectorMap';
-
 
 const Map: FC = () => {
   const {regionType} = useRegionNamesContext();
@@ -20,10 +21,12 @@ const Map: FC = () => {
         curSubCategoryName={curSubCategoryName}
         curSubSubCategoryName={curSubSubCategoryName}
       >
-
-        <MapProvider regionType={regionType}>
-          <VectorMap />
-        </MapProvider>
+        <YearsProvider>
+          <AnnualStats />
+          <MapProvider regionType={regionType}>
+            <VectorMap />
+          </MapProvider>
+        </YearsProvider>
       </AnnualStatsProvider>
     </div>
     

@@ -1,15 +1,14 @@
 import {
   createContext, FC, useContext,
 } from 'react';
-import { GqlAnnualStats } from '../../../../../sharedTypes/gqlQueries';
+import { GqlAnnualStats, GqlAnnualStatsItem } from '../../../../../sharedTypes/gqlQueries';
 import Message from '../../components/Message';
 import useAnnualStatsQuery from './useAnnualStatsQuery';
 
 type ContextValues = Readonly<{
 	annualStats: GqlAnnualStats,
-  // getPrettyValueByYear: GetPrettyValueByYear,
-  // getYearValue: GetYearValue,
-  // getRegionStatData: GetRegionStatData
+  getAnnualStatsItem: GetAnnualStatsItem,
+  getRegionFlagUrl: GetRegionFlagUrl,
 }>
 
 // type GetPrettyValueByYear = (regionName: string, year: number) => string | null
@@ -18,6 +17,9 @@ type ContextValues = Readonly<{
 
 // *** this context must be wrapped
 // into Menu Context and PrefetchedValues Context ***
+
+type GetRegionFlagUrl = (regionName: string) => string | null
+type GetAnnualStatsItem = (regionName: string) => GqlAnnualStatsItem | null
 
 
 const AnnualStatsContext = createContext<ContextValues>({} as ContextValues);
@@ -46,7 +48,17 @@ export const AnnualStatsProvider: FC<ProviderProps> = (props) => {
     curSubSubCategoryName
   );
 
-  console.log({annualStats});
+  const getAnnualStatsItem: GetAnnualStatsItem = (regionName) => {
+    if(!annualStats) return null;
+    const annualStatsItem = annualStats.find(annualStatsItem=>annualStatsItem.regionName === regionName);
+    return annualStatsItem || null;
+  };
+
+  const getRegionFlagUrl: GetRegionFlagUrl = (regionName) => {
+    if(!annualStats) return null;
+    const annualStatsItem = getAnnualStatsItem(regionName);
+    return annualStatsItem?.regionFlagUrl || null;
+  };
 
   // const getPrettyValueByYear: GetPrettyValueByYear = (regionName, year) => {
   //   if(!statData || !statData[regionName]) return null;
@@ -75,9 +87,8 @@ export const AnnualStatsProvider: FC<ProviderProps> = (props) => {
   return (
     <AnnualStatsContext.Provider value={{
       annualStats,
-      // getPrettyValueByYear,
-      // getYearValue,
-      // getRegionStatData
+      getAnnualStatsItem,
+      getRegionFlagUrl
     }}
     >
       {children}

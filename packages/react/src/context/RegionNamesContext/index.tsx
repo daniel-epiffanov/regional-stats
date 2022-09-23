@@ -57,9 +57,9 @@ export const RegionNamesProvider: FC = ({ children }) => {
   return (
     <RegionNamesContext.Provider value={{
       regionType,
-      changeRegionType,
       regionNames,
       curRegionNames,
+      changeRegionType,
       changeCurRegionNames,
       addCurRegionNames
     }}>
