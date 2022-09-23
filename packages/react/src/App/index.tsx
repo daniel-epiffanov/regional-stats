@@ -19,11 +19,11 @@ const App = () => {
       <Header />
       <CategoriesMenuProvider>
         <CategoriesMenu />
-      </CategoriesMenuProvider>
       
-      <RegionNamesProvider>
-        <Map />
-      </RegionNamesProvider>
+        <RegionNamesProvider>
+          <Map />
+        </RegionNamesProvider>
+      </CategoriesMenuProvider>
     </CustomApolloProvider>
   );
 };

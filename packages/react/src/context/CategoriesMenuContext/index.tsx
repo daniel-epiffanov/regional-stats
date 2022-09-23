@@ -45,8 +45,8 @@ export const CategoriesMenuProvider: FC<Partial<ProviderProps>> = (props) => {
 
   const [curCategoryNames, setCurCategoryName] = useState<CurCategoryNames>(
     defaultCurCategoryNames || {
-      curMainCategoryName: null,
-      curSubCategoryName: null,
+      curMainCategoryName: 'Валовой региональный продукт',
+      curSubCategoryName: 'Валовой региональный продукт',
       curSubSubCategoryName: null
     });
 

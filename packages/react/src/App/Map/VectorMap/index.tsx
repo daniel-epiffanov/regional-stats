@@ -17,6 +17,7 @@ import YearSlider from '../../../../depricated/Map/VectorMap/YearSlider';
 import useCurRegionMarkers from '../../../../depricated/Map/VectorMap/useCurRegionMarkers';
 import { useMapContext } from '../../../context/MapContext';
 import { useRegionNamesContext } from '../../../context/RegionNamesContext';
+import { BOUNDS, CENTER, MAX_ZOOM_FACTOR, ZOOM_FACTOR } from '../../../config/map';
 
 const VectorMap: FC = () => {
   const { coordsPolygons } = useMapContext();
@@ -75,7 +76,11 @@ const VectorMap: FC = () => {
       <DxVectorMap
         id="vectorMap"
         onClick={mapClickHandler}
-        zoomFactor={3}
+        center={CENTER}
+        zoomFactor={ZOOM_FACTOR}
+        // zoomingEnabled={false}
+        maxZoomFactor={MAX_ZOOM_FACTOR}
+        bounds={BOUNDS}
         // onSelectionChanged={selectionHandler}
       >
         <ControlBar enabled={false} />
