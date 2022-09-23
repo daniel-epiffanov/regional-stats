@@ -15,7 +15,7 @@ describe('Popup', () => {
         isVisible={false}
         triggerId={TRIGGER_ID}
         hidingHandler={hidingHandler}
-        contentRenderHandler={contentRenderHandler}
+        contentRender={contentRenderHandler}
       />,
     );
 
@@ -36,7 +36,7 @@ describe('Popup', () => {
         isVisible
         triggerId={TRIGGER_ID}
         hidingHandler={hidingHandler}
-        contentRenderHandler={contentRenderHandler}
+        contentRender={contentRenderHandler}
       />,
     );
 

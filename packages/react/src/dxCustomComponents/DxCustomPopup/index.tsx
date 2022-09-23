@@ -6,12 +6,11 @@ type Props = Readonly<{
 	isVisible: boolean,
 	triggerId: string,
 	hidingHandler: () => void,
-	contentRenderHandler: () => JSX.Element,
+	contentRender: () => JSX.Element,
   title?: string
 }>
 
 const titleRender = (title: string) => {
-  // console.log({title});
   return (
     <div className={styles['title-container']}>
       <h4>{title}</h4>
@@ -34,7 +33,7 @@ const DxCustomPopup: FC<Props> = (props) => {
     isVisible,
     hidingHandler,
     triggerId,
-    contentRenderHandler,
+    contentRender: contentRenderHandler,
     title = 'test title'
   } = props;
 
