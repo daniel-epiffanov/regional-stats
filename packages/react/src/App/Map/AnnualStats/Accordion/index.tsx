@@ -28,7 +28,7 @@ const Accordion: FC = () => {
       // defaultSelectedItems={dataSource}
       itemRender={itemRedner}
       multiple
-      // width="100%"
+      width="-webkit-fill-available"
       collapsible
     />
   );

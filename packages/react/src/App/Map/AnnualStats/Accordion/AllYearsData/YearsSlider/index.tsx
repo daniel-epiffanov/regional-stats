@@ -1,42 +1,54 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styles from './YearsSlider.module.scss';
 import { RangeSlider } from 'devextreme-react';
 import { ValueChangedEvent } from 'devextreme/ui/range_slider';
 import { useYearsRangeContext } from '../../../../../../context/YearsRangeContext';
+import { useYearsContext } from '../../../../../../context/YearsContext';
+import { useDebounce } from 'react-use';
 
 
 const YearsSlider: FC = () => {
   const {yearsRange, changeYearsRange} = useYearsRangeContext();
+  const {years} = useYearsContext();
+  const [localYearsRange, setLocalYearsLange] = useState<ReadonlyArray<number>>(yearsRange);
+
+  useDebounce(
+    () => {
+      changeYearsRange(localYearsRange);
+    },
+    400,
+    [localYearsRange]
+  );  
 
   const yearChangeHandler = (e: ValueChangedEvent) => {
     const newCurYear = e.value;
     const abs = Math.abs(newCurYear[1] - newCurYear[0]);
     if(abs > 12) {
-      if(newCurYear[0] < yearsRange[0]) {
-        changeYearsRange([yearsRange[0] - 1, yearsRange[1] - 1]);
+      if(newCurYear[0] < localYearsRange[0]) {
+        setLocalYearsLange([localYearsRange[0] - 1, localYearsRange[1] - 1]);
         e.component.repaint();
         return;
       } else {
-        return changeYearsRange([yearsRange[0] + 1, yearsRange[1] + 1]);
+        return setLocalYearsLange([localYearsRange[0] + 1, localYearsRange[1] + 1]);
       }
     }
-    changeYearsRange(newCurYear);
+    setLocalYearsLange(newCurYear);
   };
 
 
   return (
     <div className={styles['root']}>
-      <p className={styles['value']}>{yearsRange[0]}</p>
+      <p className={styles['value']}>{localYearsRange[0]}</p>
       <div className={styles['slider-container']}>
         <RangeSlider
-          min={2000}
-          max={2020}
+          min={years[0]}
+          max={years[years.length - 1]}
           defaultValue={yearsRange}
           onValueChanged={yearChangeHandler}
-          value={yearsRange as number[]}
+          value={localYearsRange as number[]}
         />
       </div>
-      <p className={styles['value']}>{yearsRange[1]}</p>
+      <p className={styles['value']}>{localYearsRange[1]}</p>
     </div>
   );
 };
