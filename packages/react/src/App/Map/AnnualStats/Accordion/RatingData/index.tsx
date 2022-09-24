@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import {
   DataGrid, Paging, Column
 } from 'devextreme-react/data-grid';
-import styles from './Rating.module.scss';
+import styles from './RatingData.module.scss';
 import { RowClickEvent, RowPreparedEvent } from 'devextreme/ui/data_grid';
 import { useRegionNamesContext } from '../../../../../context/RegionNamesContext';
 import useAnnualStatsRatingQuery from './useAnnualStatsRatingQuery';
@@ -19,7 +19,7 @@ const renderGridCell = (cellData: Readonly<{value: string}>) => (
 
 const PAGE_SIZE = 5;
 
-const Rating: FC = () => {
+const RatingData: FC = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const {regionType,curRegionNames, addCurRegionNames} = useRegionNamesContext();
   const {curYear} = useYearsContext();
@@ -102,4 +102,4 @@ const Rating: FC = () => {
   );
 };
 
-export default Rating;
+export default RatingData;

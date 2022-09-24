@@ -1,13 +1,11 @@
 import { FC } from 'react';
 import { Accordion as DxAccordion } from 'devextreme-react/accordion';
 import CurYearData from './CurYearData';
-import Rating from './Rating';
-import { useRegionNamesContext } from '../../../../context/RegionNamesContext';
+import RatingData from './RatingData';
 import AllYearsData from './AllYearsData';
 
 type DataSource = Readonly<{
-    title: string,
-    ID?: number
+    title: string
 }>[]
 const dataSource: DataSource = [
   { 'title': 'Данные за текущий год'},
@@ -17,25 +15,23 @@ const dataSource: DataSource = [
 
 const itemRedner = (e: DataSource[0]) => {
   if(e.title === 'Данные за текущий год') return <CurYearData />;
-  if(e.title === 'Общий рейтинг за текущий год') return <Rating />;
+  if(e.title === 'Общий рейтинг за текущий год') return <RatingData />;
   if(e.title === 'Данные за все года') return <AllYearsData />;
   return null;
 };
 
 const Accordion: FC = () => {
-  const {curRegionNames} = useRegionNamesContext();
 
-  if(curRegionNames.length) return (
+  return (
     <DxAccordion
       dataSource={dataSource}
-      defaultSelectedItems={dataSource}
+      // defaultSelectedItems={dataSource}
       itemRender={itemRedner}
       multiple
-      width="100%"
+      // width="100%"
+      collapsible
     />
   );
-
-  return <Rating />;
 };
 
 export default Accordion;

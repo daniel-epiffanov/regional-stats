@@ -3,6 +3,7 @@ import styles from './AnnualStats.module.scss';
 import Title from './Title';
 import { useRegionNamesContext } from '../../../context/RegionNamesContext';
 import Accordion from './Accordion';
+import RatingData from './Accordion/RatingData';
 
 type Props = Readonly<{
 
@@ -11,14 +12,16 @@ type Props = Readonly<{
 const AnnualStats: FC<Props> = () => {
   const { curRegionNames } = useRegionNamesContext();
 
-  const className = `${styles['root']} dx-theme-background-color`;
-
-  // if (!curRegionNames.length) return null;
+  if (!curRegionNames.length) return (
+    <div className={styles['root']}>
+      <RatingData />
+    </div>
+  );
 
   return (
-    <div className={className}>
-      {!!curRegionNames.length && <Title />}
-      <Accordion />
+    <div className={styles['root']}>
+      <Title />
+      <Accordion/>
     </div>
   );
 };
