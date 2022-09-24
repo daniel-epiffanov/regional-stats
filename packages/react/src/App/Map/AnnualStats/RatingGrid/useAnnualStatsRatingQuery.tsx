@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 import { jsonToGraphQLQuery, VariableType } from 'json-to-graphql-query';
-import { GqlAnnualStatsRating, RegionTypeArg } from '../../../../../../../../sharedTypes/gqlQueries';
+import { GqlAnnualStatsRating, RegionTypeArg } from '../../../../../../../sharedTypes/gqlQueries';
 
 type GqlRes = Readonly<{
 	annualStatsRating: GqlAnnualStatsRating,

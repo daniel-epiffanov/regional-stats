@@ -22,7 +22,6 @@ const SingleRegion: FC<Props> = ({curRegionName}) => {
       />
       <div className={styles['title']}>
         <h3>{curRegionName}</h3>
-        <p>{curYear}</p>
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ const YearsSlider: FC = () => {
   const yearChangeHandler = (e: ValueChangedEvent) => {
     const newCurYear = e.value;
     const abs = Math.abs(newCurYear[1] - newCurYear[0]);
-    if(abs > 12) {
+    if(abs > 10) {
       if(newCurYear[0] < localYearsRange[0]) {
         setLocalYearsLange([localYearsRange[0] - 1, localYearsRange[1] - 1]);
         e.component.repaint();
@@ -43,7 +43,7 @@ const YearsSlider: FC = () => {
         <RangeSlider
           min={years[0]}
           max={years[years.length - 1]}
-          defaultValue={yearsRange}
+          defaultValue={localYearsRange}
           onValueChanged={yearChangeHandler}
           value={localYearsRange as number[]}
         />

@@ -1,0 +1,16 @@
+.root {
+    width: -webkit-fill-available;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin: 1rem 1rem;
+}
+
+.slider-container {
+    flex-grow: 1;
+}
+
+.value {
+    font-size: 2rem;
+    text-align: right;
+}

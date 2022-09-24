@@ -16,8 +16,8 @@ const ManyRegions: FC<Props> = ({curRegionNames}) => {
             className={styles['img']}
             src={getRegionFlagUrl(curRegionName) || ''}
             alt="moscow"
-            width={140}
-            height={80}
+            width={120}
+            height={70}
           />
           <div className={styles['title']}>
             <h3>{curRegionName}</h3>

@@ -1,15 +1,17 @@
 import { FC, useEffect, useState } from 'react';
 import {
-  DataGrid, Paging, Column
+  DataGrid, Paging, Column, Export
 } from 'devextreme-react/data-grid';
 import styles from './RatingData.module.scss';
 import { RowClickEvent, RowPreparedEvent } from 'devextreme/ui/data_grid';
-import { useRegionNamesContext } from '../../../../../context/RegionNamesContext';
+import { useRegionNamesContext } from '../../../../context/RegionNamesContext';
 import useAnnualStatsRatingQuery from './useAnnualStatsRatingQuery';
-import { useYearsContext } from '../../../../../context/YearsContext';
-import { useCategoriesMenuContext } from '../../../../../context/CategoriesMenuContext';
-import Message from '../../../../../components/Message';
-import { GqlAnnualStatsRatingItem } from '../../../../../../../../sharedTypes/gqlQueries';
+import { useYearsContext } from '../../../../context/YearsContext';
+import { useCategoriesMenuContext } from '../../../../context/CategoriesMenuContext';
+import Message from '../../../../components/Message';
+import { GqlAnnualStatsRatingItem } from '../../../../../../../sharedTypes/gqlQueries';
+import { PAGE_SIZE } from '../../../../config/ratingGrid';
+import { useAnnualStatsContext } from '../../../../context/AnnualStatsContext';
 
 const renderGridCell = (cellData: Readonly<{value: string}>) => (
   <div>
@@ -17,13 +19,18 @@ const renderGridCell = (cellData: Readonly<{value: string}>) => (
   </div>
 );
 
-const PAGE_SIZE = 5;
+type Props = Readonly<{
+  pageSize?: number
+}>
 
-const RatingData: FC = () => {
+const RatingGrid: FC<Props> = (props) => {
+  const pageSize = props.pageSize || PAGE_SIZE;
+
   const [pageIndex, setPageIndex] = useState(0);
   const {regionType,curRegionNames, addCurRegionNames} = useRegionNamesContext();
   const {curYear} = useYearsContext();
   const {curCategoryNames} = useCategoriesMenuContext();
+  const {annualStats} = useAnnualStatsContext();
   const {curMainCategoryName, curSubCategoryName, curSubSubCategoryName} = curCategoryNames;
 
   const flagRenderingHandler = async (e: RowPreparedEvent<GqlAnnualStatsRatingItem>) => {
@@ -51,7 +58,7 @@ const RatingData: FC = () => {
     if(!annualStatsRating || !curRegionNames[0]) return;
     const regionIndex = annualStatsRating
       .findIndex(annualStatsRatingItem=>annualStatsRatingItem.regionName === curRegionNames[0]);
-    const page = Math.floor(regionIndex / PAGE_SIZE);
+    const page = Math.floor(regionIndex / pageSize);
     setPageIndex(page);
   }, [annualStatsRating, curRegionNames[0]]);
 
@@ -59,6 +66,7 @@ const RatingData: FC = () => {
 
   return (
     <div className={styles['root']}>
+      <p>Единица измерения значений, на основании которых выстроен рейтинг - {annualStats[0].measure}</p>
       <DataGrid
         id="dataGrid"
         dataSource={annualStatsRating || undefined}
@@ -68,7 +76,7 @@ const RatingData: FC = () => {
         onRowClick={rowClickHandler}
       >
         <Paging
-          pageSize={PAGE_SIZE}
+          pageSize={pageSize}
           onPageIndexChange={pageIndexChangeHandler}
           pageIndex={pageIndex}
         />
@@ -102,4 +110,4 @@ const RatingData: FC = () => {
   );
 };
 
-export default RatingData;
+export default RatingGrid;

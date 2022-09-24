@@ -44,7 +44,7 @@ const AllYearsData: FC = () => {
       <YearsSlider />
       <DxMultipleSeriesChart
         dataSource={getDataSource('value')}
-        title="Статистика по выбранной категории"
+        title={'Статистика по выбранной категории'}
         seriesType="bar"
         tooltipContentTemplate={tooltipContentTemplateAnnualData}
       />
@@ -54,6 +54,7 @@ const AllYearsData: FC = () => {
         isValueAxisDiscrete
         seriesType="line"
         isSeriesLabelVisible
+        isValueAxisInverted
       />
       <DxMultipleSeriesChart
         dataSource={getDataSource('annualGrowthPercent')}
@@ -63,7 +64,7 @@ const AllYearsData: FC = () => {
       />
       <DxMultipleSeriesChart
         dataSource={getDataSource('totalGrowthPercent')}
-        title="Общий рост показателя (%)"
+        title={`Общий рост показателя c ${years[0]} года (%)`}
         seriesType="bar"
         tooltipContentTemplate={tooltipContentTemplateWithPercent}
       />

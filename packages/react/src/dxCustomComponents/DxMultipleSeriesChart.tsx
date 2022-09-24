@@ -7,6 +7,9 @@ import {
   Label,
   ValueAxis,
   Tooltip,
+  Export,
+  Title,
+  VisualRange,
 } from 'devextreme-react/chart';
 import { useRegionNamesContext } from '../context/RegionNamesContext';
 import { useYearsRangeContext } from '../context/YearsRangeContext';
@@ -19,6 +22,7 @@ type Props = Readonly<{
     isValueAxisDiscrete?: boolean,
     seriesType: 'bar' | 'line',
     isSeriesLabelVisible?: boolean,
+    isValueAxisInverted?: boolean,
     tooltipContentTemplate?: TooltipContentTemplate
 }>
 
@@ -36,7 +40,8 @@ const DxMultipleSeriesChart: FC<Props> = (props) => {
     seriesType,
     isValueAxisDiscrete,
     isSeriesLabelVisible,
-    tooltipContentTemplate
+    tooltipContentTemplate,
+    isValueAxisInverted
   } = props;
   const {curRegionNames} = useRegionNamesContext();
   const {yearsRange} = useYearsRangeContext();
@@ -77,18 +82,16 @@ const DxMultipleSeriesChart: FC<Props> = (props) => {
 
         <ValueAxis
           type={isValueAxisDiscrete ? 'discrete' : null}
+          inverted={isValueAxisInverted}
         />
 
-        <ArgumentAxis
-          type="discrete"
-          visualRange={{
-            startValue: yearsRange[0],
-            endValue: yearsRange[1],
-          }}
-        >
-          <Label
-            wordWrap="none"
+        <ArgumentAxis type="discrete">
+          <VisualRange
+            startValue={yearsRange[0]}
+            endValue={yearsRange[1]}
           />
+          <Label wordWrap="none" />
+          <Title text="год показателя" />
         </ArgumentAxis>
         <Legend verticalAlignment="bottom" orientation="horizontal" horizontalAlignment="center"/>
       </DxChart>

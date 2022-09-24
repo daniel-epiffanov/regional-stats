@@ -20,7 +20,7 @@ const CategoriesMenu: FC = () => {
         className={styles['popup-trigger']}
         onClick={showPopup}
       >
-        {!isPopupVisible && <TriggerContent />}
+        <TriggerContent />
       </div>
 
       <DxCustomPopup
