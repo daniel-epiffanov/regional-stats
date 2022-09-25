@@ -1,6 +1,13 @@
 .root {
     flex-grow: 1;
-    display: flex;
     overflow: auto;
+    // display: flex;
+    display: grid;
+    grid-template-columns: calc(460px + 1.1rem) 1fr;
+    grid-template-rows: 50px 1fr;
     // color: #f0f0f0;
+
+    >div:first-child {
+        grid-row: 1 / 3;
+    }
 }

@@ -29,7 +29,6 @@ const YearSlider: FC = () => {
 
   return (
     <div className={styles['root']}>
-      <p className={styles['value']}>{localCurYear}</p>
       <div className={styles['slider-container']}>
         <Slider
           min={years[0]}
@@ -39,6 +38,7 @@ const YearSlider: FC = () => {
           onValueChanged={yearChangeHandler}
         />
       </div>
+      <h3 className={styles['value']}>{localCurYear} год</h3>
     </div>
   );
 };

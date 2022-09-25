@@ -96,6 +96,8 @@ const annualStatsRating: ResolverFnAsync<GqlAnnualStatsRating> = async (
       paletteColor: getColor(i + 1) || '',
     }));
 
+  apolloServer.stop();
+
   return gqlRes;
 };
 

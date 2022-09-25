@@ -44,6 +44,15 @@ const Header: FC = () => {
             text: 'Тема',
           }}
         />
+        <Item
+          location="after"
+          widget="dxButton"
+          options={{
+            onClick: themeClickHandler,
+            icon: 'fa fa-info-circle',
+            text: 'О проекте',
+          }}
+        />
       </Toolbar>
     </div>
   );

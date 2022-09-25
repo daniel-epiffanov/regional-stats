@@ -126,7 +126,10 @@ const annualStats: ResolverFnAsync<GqlAnnualStats> = async (
 
   const annualStatsRatingData = annualStatsRatingMongoRes[0];
 
-  if (!annualStatsRatingData) return null;
+  if (!annualStatsRatingData) {
+    apolloServer.stop();
+    return null;
+  }
 
   const gqlRes: GqlAnnualStats = annualDataMongoRes.map(annualStatsItem => ({
     ...annualStatsItem,

@@ -1,9 +1,10 @@
 .root {
     width: -webkit-fill-available;
+    max-width: 250px;
     display: flex;
-    gap: 1rem;
+    // gap: 1rem;
     align-items: center;
-    margin: 1rem 1rem;
+    // margin: 1rem 1rem;
 }
 
 .slider-container {
@@ -11,6 +12,6 @@
 }
 
 .value {
-    font-size: 2rem;
-    text-align: right;
+    // font-size: 2rem;
+    // text-align: right;
 }

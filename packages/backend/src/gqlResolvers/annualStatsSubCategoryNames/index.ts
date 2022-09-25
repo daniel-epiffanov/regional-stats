@@ -28,6 +28,7 @@ const annualStatsSubCategoryNames: ResolverFnAsync<GqlAnnualStatsCategoryNames> 
   const rawSubSectionNames = mongoRes.map(({ _id }) => {
     return _id;
   });
+
   return rawSubSectionNames;
 };
 

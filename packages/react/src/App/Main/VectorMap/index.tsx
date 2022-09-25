@@ -72,6 +72,7 @@ const VectorMap: FC = () => {
         zoomFactor={ZOOM_FACTOR}
         maxZoomFactor={MAX_ZOOM_FACTOR}
         bounds={BOUNDS}
+        // redrawOnResize
       >
         <Background borderColor="transparent"/>
         <ControlBar enabled={false} />

@@ -5,6 +5,7 @@ import { MapProvider } from '../../context/MapContext';
 import { useRegionNamesContext } from '../../context/RegionNamesContext';
 import { YearsProvider } from '../../context/YearsContext';
 import AnnualStats from './AnnualStats';
+import Controls from './Controls';
 import styles from './Main.module.scss';
 import VectorMap from './VectorMap';
 
@@ -23,6 +24,7 @@ const Main: FC = () => {
       >
         <YearsProvider>
           <AnnualStats />
+          <Controls />
           <MapProvider regionType={regionType}>
             <VectorMap />
           </MapProvider>
