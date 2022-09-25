@@ -1,1 +1,1 @@
-export const LOGO_TEXT = 'РЕГИОНЫ РОССИИ'.toUpperCase();
+export const LOGO_TEXT = 'РЕГИОНАЛЬНАЯ СТАТИСТИКА'.toUpperCase();

@@ -25,7 +25,7 @@ const TriggerContent: FC = () => {
     <p data-testid="text">
       {getTitle(
         getTruncatedText(curMainCategoryName, windowWidth),
-        curSubCategoryName && getTruncatedText(curSubCategoryName, windowWidth),
+        curSubCategoryName, //&& getTruncatedText(curSubCategoryName, windowWidth),
         curSubSubCategoryName && getTruncatedText(curSubSubCategoryName, windowWidth)
       )}
     </p>

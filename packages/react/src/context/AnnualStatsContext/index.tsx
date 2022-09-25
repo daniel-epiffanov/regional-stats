@@ -12,13 +12,6 @@ type ContextValues = Readonly<{
   getAnnualDataItem: GetAnnualDataItem
 }>
 
-// type GetPrettyValueByYear = (regionName: string, year: number) => string | null
-// type GetYearValue = (regionName: string, year: number) => GqlStatData['yearValues'][0] | null
-// type GetRegionStatData = (regionName: string) => GqlStatData | null
-
-// *** this context must be wrapped
-// into Menu Context and PrefetchedValues Context ***
-
 type GetRegionFlagUrl = (regionName: string) => string | null
 type GetAnnualStatsItem = (regionName: string) => GqlAnnualStatsItem | null
 type GetAnnualDataItem = (regionName: string, year: number) => AnnualDataItem | null
@@ -68,28 +61,6 @@ export const AnnualStatsProvider: FC<ProviderProps> = (props) => {
       .find(annualDataItem => annualDataItem.year === year) || null;
     return annualDataItem || null;
   };
-
-  // const getPrettyValueByYear: GetPrettyValueByYear = (regionName, year) => {
-  //   if(!statData || !statData[regionName]) return null;
-  //   const curYearValue = statData[regionName].yearValues
-  //     .find(yearValue => yearValue.year === year);
-    
-  //   return curYearValue?.prettyValue || null;
-  // };
-  // const getYearValue: GetYearValue = (regionName, year) => {
-  //   if(!statData || !statData[regionName]) return null;
-  //   const curYearValue = statData[regionName].yearValues
-  //     .find(yearValue => yearValue.year === year);
-    
-  //   return curYearValue || null;
-  // };
-
-  // const getRegionStatData: GetRegionStatData = (regionName) => {
-  //   if(!statData) return null;
-  //   const regionStatData = statData[regionName];
-  //   if(!regionStatData) return null;
-  //   return regionStatData;
-  // };
 
   if (!annualStats) return <Message type="message" text="Загрузка данных" positionId="vector-map-container" />;
 

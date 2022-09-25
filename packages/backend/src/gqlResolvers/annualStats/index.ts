@@ -59,67 +59,70 @@ const annualStats: ResolverFnAsync<GqlAnnualStats> = async (
 
   if (!Array.isArray(regionNames) || !regionNames.length) return null;
 
-  // if (subSubCategory) {
-  //   const mongoRes = await AnnualStatsOfRegionModel.aggregate<GqlStatData>([
-  //     { $match: { regionName } },
-  //     { $unwind: '$mainSections' },
-  //     { $match: { 'mainSections.name': mainCategory } },
-  //     { $unwind: '$mainSections.subSections' },
-  //     { $match: { 'mainSections.subSections.name': subCategory } },
-  //     { $unwind: '$mainSections.subSections.children' },
-  //     { $match: { 'mainSections.subSections.children.name': subSubCategory } },
-  //     {
-  //       $project: {
-  //         name: '$mainSections.subSections.children.name',
-  // measure: '$mainSections.subSections.children.measure',
-  // parentMeasure: '$mainSections.subSections.measure',
-  // yearValues: '$mainSections.subSections.children.yearValues',
-  //       },
-  //     },
-  //   ]);
+  let annualDataMongoRes: ReadonlyArray<AnnualDataMongoRes>;
+  let annualStatsRatingMongoRes: ReadonlyArray<AnnualStatsRatingMongoRes>;
 
-  //   const statData = mongoRes[0];
-  //   const statDataExtended = {
-  //     ...statData,
-  //     flag: getFlagUrl(regionName),
-  //     yearValeus: statData.yearValues.map((yearValue, i) => ({
-  //       ...yearValue,
-  //       prettyValue: getPrettifiedNumber(yearValue.value),
-  //       percent: i === 0 ? 0 : getGrowthPercent(yearValue.value,
-  // statData.yearValues[i - 1].value),
-  //     })),
-  //   };
-
-  //   return statData?.yearValues ? statDataExtended : null;
-  // }
-
-  const annualDataMongoRes = await AnnualStatsOfRegionModel.aggregate<AnnualDataMongoRes>([
-    { $match: { $or: regionNames.map(regionName => ({ regionName })) } },
-    { $unwind: '$mainSections' },
-    { $match: { 'mainSections.name': mainCategoryName } },
-    { $unwind: '$mainSections.subSections' },
-    { $match: { 'mainSections.subSections.name': subCategoryName } },
-    { $project: { regionName: '$regionName', measure: '$mainSections.subSections.measure', annualData: '$mainSections.subSections.annualData' } },
-  ]);
-
-  const annualStatsRatingMongoRes = await AnnualStatsOfRegionModel
-    .aggregate<AnnualStatsRatingMongoRes>([
-      {
-        $facet: _.merge({}, ...years.map(year => ({
-          [year]: [
-            { $match: { $or: regionNames.map(regionName => ({ regionName })) } },
-            { $unwind: '$mainSections' },
-            { $match: { 'mainSections.name': mainCategoryName } },
-            { $unwind: '$mainSections.subSections' },
-            { $match: { 'mainSections.subSections.name': subCategoryName } },
-            { $unwind: '$mainSections.subSections.annualData' },
-            { $match: { 'mainSections.subSections.annualData.year': year } },
-            { $sort: { 'mainSections.subSections.annualData.value': -1 } },
-            { $project: { value: '$mainSections.subSections.annualData.value', regionName: '$regionName' } },
-          ],
-        }))),
-      },
+  if (subSubCategoryName) {
+    annualDataMongoRes = await AnnualStatsOfRegionModel.aggregate<AnnualDataMongoRes>([
+      { $match: { $or: regionNames.map(regionName => ({ regionName })) } },
+      { $unwind: '$mainSections' },
+      { $match: { 'mainSections.name': mainCategoryName } },
+      { $unwind: '$mainSections.subSections' },
+      { $match: { 'mainSections.subSections.name': subCategoryName } },
+      { $unwind: '$mainSections.subSections.subSubSections' },
+      { $match: { 'mainSections.subSections.subSubSections.name': subSubCategoryName } },
+      { $project: { regionName: '$regionName', measure: '$mainSections.subSections.subSubSections.measure', annualData: '$mainSections.subSections.subSubSections.annualData' } },
     ]);
+
+    annualStatsRatingMongoRes = await AnnualStatsOfRegionModel
+      .aggregate<AnnualStatsRatingMongoRes>([
+        {
+          $facet: _.merge({}, ...years.map(year => ({
+            [year]: [
+              { $match: { $or: regionNames.map(regionName => ({ regionName })) } },
+              { $unwind: '$mainSections' },
+              { $match: { 'mainSections.name': mainCategoryName } },
+              { $unwind: '$mainSections.subSections' },
+              { $match: { 'mainSections.subSections.name': subCategoryName } },
+              { $unwind: '$mainSections.subSections.subSubSections' },
+              { $match: { 'mainSections.subSections.subSubSections.name': subSubCategoryName } },
+              { $unwind: '$mainSections.subSections.subSubSections.annualData' },
+              { $match: { 'mainSections.subSections.subSubSections.annualData.year': year } },
+              { $sort: { 'mainSections.subSections.subSubSections.annualData.value': -1 } },
+              { $project: { value: '$mainSections.subSections.subSubSections.annualData.value', regionName: '$regionName' } },
+            ],
+          }))),
+        },
+      ]);
+  } else {
+    annualDataMongoRes = await AnnualStatsOfRegionModel.aggregate<AnnualDataMongoRes>([
+      { $match: { $or: regionNames.map(regionName => ({ regionName })) } },
+      { $unwind: '$mainSections' },
+      { $match: { 'mainSections.name': mainCategoryName } },
+      { $unwind: '$mainSections.subSections' },
+      { $match: { 'mainSections.subSections.name': subCategoryName } },
+      { $project: { regionName: '$regionName', measure: '$mainSections.subSections.measure', annualData: '$mainSections.subSections.annualData' } },
+    ]);
+
+    annualStatsRatingMongoRes = await AnnualStatsOfRegionModel
+      .aggregate<AnnualStatsRatingMongoRes>([
+        {
+          $facet: _.merge({}, ...years.map(year => ({
+            [year]: [
+              { $match: { $or: regionNames.map(regionName => ({ regionName })) } },
+              { $unwind: '$mainSections' },
+              { $match: { 'mainSections.name': mainCategoryName } },
+              { $unwind: '$mainSections.subSections' },
+              { $match: { 'mainSections.subSections.name': subCategoryName } },
+              { $unwind: '$mainSections.subSections.annualData' },
+              { $match: { 'mainSections.subSections.annualData.year': year } },
+              { $sort: { 'mainSections.subSections.annualData.value': -1 } },
+              { $project: { value: '$mainSections.subSections.annualData.value', regionName: '$regionName' } },
+            ],
+          }))),
+        },
+      ]);
+  }
 
   const annualStatsRatingData = annualStatsRatingMongoRes[0];
 

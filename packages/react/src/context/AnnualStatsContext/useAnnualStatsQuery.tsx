@@ -51,6 +51,10 @@ const useAnnualStatsQuery = (
       subSubCategoryName: curSubSubCategoryName
     }
   });
+
+  console.log({data});
+  console.log({error});
+  console.log({loading});
   
   if (loading || error || !data) return null;
 

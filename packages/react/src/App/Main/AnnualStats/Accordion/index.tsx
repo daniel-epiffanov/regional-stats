@@ -25,7 +25,7 @@ const Accordion: FC = () => {
   return (
     <DxAccordion
       dataSource={dataSource}
-      // defaultSelectedItems={dataSource}
+      defaultSelectedItems={dataSource}
       itemRender={itemRedner}
       multiple
       width="-webkit-fill-available"

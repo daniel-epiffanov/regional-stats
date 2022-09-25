@@ -45,35 +45,35 @@ const annualStatsRating: ResolverFnAsync<GqlAnnualStatsRating> = async (
 
   const regionNames: GqlRegionNames = response.data?.regionNames;
 
-  // if (subSubCategory) {
-  //   const mongoRes = await StatisticsModel.aggregate<MongoRes>([
-  //     { $unwind: '$mainSections' },
-  //     { $match: { 'mainSections.name': mainCategory } },
-  //     { $unwind: '$mainSections.subSections' },
-  //     { $match: { 'mainSections.subSections.name': subCategory } },
-  //     { $unwind: '$mainSections.subSections.children' },
-  //     { $match: { 'mainSections.subSections.children.name': subSubCategory } },
-  //     { $unwind: '$mainSections.subSections.children.yearValues' },
-  //     { $match: { 'mainSections.subSections.children.yearValues.year': year } },
-  //     { $sort: { 'mainSections.subSections.children.yearValues.value': -1 } },
-  // eslint-disable-next-line max-len
-  //     { $project: { value: '$mainSections.subSections.children.yearValues.value', regionName: '$regionName' } },
-  //   ]);
+  let mongoRes: ReadonlyArray<MongoRes>;
 
-  //   return resCleanup(mongoRes, regionNames);
-  // }
-
-  const mongoRes = await AnnualStatsOfRegionModel.aggregate<MongoRes>([
-    { $match: { $or: regionNames.map(regionName => ({ regionName })) } },
-    { $unwind: '$mainSections' },
-    { $match: { 'mainSections.name': mainCategoryName } },
-    { $unwind: '$mainSections.subSections' },
-    { $match: { 'mainSections.subSections.name': subCategoryName } },
-    { $unwind: '$mainSections.subSections.annualData' },
-    { $match: { 'mainSections.subSections.annualData.year': year } },
-    { $sort: { 'mainSections.subSections.annualData.value': -1 } },
-    { $project: { value: '$mainSections.subSections.annualData.value', regionName: '$regionName' } },
-  ]);
+  if (subSubCategoryName) {
+    mongoRes = await AnnualStatsOfRegionModel.aggregate<MongoRes>([
+      { $match: { $or: regionNames.map(regionName => ({ regionName })) } },
+      { $unwind: '$mainSections' },
+      { $match: { 'mainSections.name': mainCategoryName } },
+      { $unwind: '$mainSections.subSections' },
+      { $match: { 'mainSections.subSections.name': subCategoryName } },
+      { $unwind: '$mainSections.subSections.subSubSections' },
+      { $match: { 'mainSections.subSections.subSubSections.name': subSubCategoryName } },
+      { $unwind: '$mainSections.subSections.subSubSections.annualData' },
+      { $match: { 'mainSections.subSections.subSubSections.annualData.year': year } },
+      { $sort: { 'mainSections.subSections.subSubSections.annualData.value': -1 } },
+      { $project: { value: '$mainSections.subSections.subSubSections.annualData.value', regionName: '$regionName' } },
+    ]);
+  } else {
+    mongoRes = await AnnualStatsOfRegionModel.aggregate<MongoRes>([
+      { $match: { $or: regionNames.map(regionName => ({ regionName })) } },
+      { $unwind: '$mainSections' },
+      { $match: { 'mainSections.name': mainCategoryName } },
+      { $unwind: '$mainSections.subSections' },
+      { $match: { 'mainSections.subSections.name': subCategoryName } },
+      { $unwind: '$mainSections.subSections.annualData' },
+      { $match: { 'mainSections.subSections.annualData.year': year } },
+      { $sort: { 'mainSections.subSections.annualData.value': -1 } },
+      { $project: { value: '$mainSections.subSections.annualData.value', regionName: '$regionName' } },
+    ]);
+  }
 
   const colors = generateColors(MAP_PALETTE as string[], REGIONS_COLOR_GROUPS.length, {});
 
