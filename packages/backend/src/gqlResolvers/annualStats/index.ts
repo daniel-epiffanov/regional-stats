@@ -140,7 +140,7 @@ const annualStats: ResolverFnAsync<GqlAnnualStats> = async (
         : getGrowthPercent(value, annualStatsItem.annualData[0].value),
       regionRank: annualStatsRatingData[year]?.findIndex(item => {
         return item.regionName === annualStatsItem.regionName;
-      }),
+      }) + 1,
     })),
   }));
 

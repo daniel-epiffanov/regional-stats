@@ -1,0 +1,43 @@
+.root {
+    // max-width: 400px;
+}
+
+.title-container {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.title {
+    font-size: 1.5rem;
+}
+
+.value {
+    font-size: 2rem;
+    // text-align: center;
+}
+
+.measure {
+    // text-align: center;
+    font-size: 0.6rem;
+}
+
+.indicators-container {
+    margin-top: 0.6rem;
+    display: flex;
+    gap: 0.3rem;
+    align-items: baseline;
+    text-align: center;
+    width: 100%;
+    justify-content: center;
+
+    >div{
+        width: 130px;
+    }
+
+    >div>p:first-child {
+        font-size: 1.6rem;
+    }
+    >div>p:nth-child(2) {
+        font-size: 0.6rem;
+    }
+}

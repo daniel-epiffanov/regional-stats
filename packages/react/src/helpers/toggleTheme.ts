@@ -1,4 +1,4 @@
-import { DARK_THEME_NAME, DEFAULT_THEME, LIGHT_THEME_NAME } from '../config/constants';
+import { DARK_THEME_NAME, DEFAULT_THEME, LIGHT_THEME_NAME } from '../config/theme';
 import themes from 'devextreme/ui/themes';
 
 const isTestEnv = !!process.env?.JEST_WORKER_ID;

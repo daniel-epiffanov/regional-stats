@@ -3,7 +3,7 @@ import { FC } from 'react';
 import styles from './Header.module.scss';
 import Logo from './Logo';
 import toggleTheme from '../../helpers/toggleTheme';
-import { GITHUB_LINK, TELEGRAM_LINK } from '../../config/constants';
+import { GITHUB_LINK, TELEGRAM_LINK } from '../../config/links';
 
 const Header: FC = () => {
   const myGithubClickHandler = () => window.open(GITHUB_LINK);

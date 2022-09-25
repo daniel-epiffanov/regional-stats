@@ -1,5 +1,5 @@
 import themes from 'devextreme/ui/themes';
-import { DEFAULT_THEME } from '../config/constants';
+import { DEFAULT_THEME } from '../config/theme';
 
 const setInitialTheme = () => {
   const curTheme = window.localStorage.getItem('dx-theme') || DEFAULT_THEME;

@@ -3,11 +3,9 @@ import Header from '.';
 import {
   DARK_THEME_NAME,
   DEFAULT_THEME,
-  GITHUB_LINK,
   LIGHT_THEME_NAME,
-  TELEGRAM_LINK
-} from '../../config/constants';
-import themes from 'devextreme/ui/themes';
+} from '../../config/theme';
+import { GITHUB_LINK, TELEGRAM_LINK } from '../../config/links';
 
 const spyWindowOpen = jest.spyOn(window, 'open');
 const spyLocalStorageSetItem = jest.spyOn(window.localStorage.__proto__, 'setItem');

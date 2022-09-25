@@ -5,10 +5,10 @@ import { MapProvider } from '../../context/MapContext';
 import { useRegionNamesContext } from '../../context/RegionNamesContext';
 import { YearsProvider } from '../../context/YearsContext';
 import AnnualStats from './AnnualStats';
-import styles from './Map.module.scss';
+import styles from './Main.module.scss';
 import VectorMap from './VectorMap';
 
-const Map: FC = () => {
+const Main: FC = () => {
   const {regionType} = useRegionNamesContext();
   const {curCategoryNames} = useCategoriesMenuContext();
   const {curMainCategoryName, curSubCategoryName, curSubSubCategoryName} = curCategoryNames;
@@ -33,4 +33,4 @@ const Map: FC = () => {
   );
 };
 
-export default Map;
+export default Main;
