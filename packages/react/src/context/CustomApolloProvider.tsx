@@ -4,10 +4,10 @@ import {
   InMemoryCache,
   ApolloProvider,
 } from '@apollo/client';
-import { hostApi } from '../config/host';
+import { HOST_API } from '../config/links';
 
 const client = new ApolloClient({
-  uri: hostApi,
+  uri: HOST_API,
   cache: new InMemoryCache(),
 });
 

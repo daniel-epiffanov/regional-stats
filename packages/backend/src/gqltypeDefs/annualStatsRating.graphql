@@ -4,4 +4,5 @@
 		regionFlagUrl: String,
 		value: Float,
 		prettyValue: String,
+		paletteColor: String
 	}

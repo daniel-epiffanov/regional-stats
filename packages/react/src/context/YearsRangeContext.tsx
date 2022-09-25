@@ -17,7 +17,7 @@ export const YearsRangeProvider: FC = (props) => {
     children,
   } = props;
 
-  const [yearsRange, setYearsRange] = useState<ReadonlyArray<number>>([2007, 2008]);
+  const [yearsRange, setYearsRange] = useState<ReadonlyArray<number>>([2013, 2019]);
   const changeYearsRange: ChangeYearsRange = (newYearsRange) => {
     setYearsRange(newYearsRange);
   };

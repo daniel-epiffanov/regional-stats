@@ -13,6 +13,7 @@ export type GqlAnnualStatsRatingItem = Readonly<{
 	prettyValue: string,
 	regionRank: number,
 	regionFlagUrl: string,
+	paletteColor: string
 }>
 
 export type RegionTypeArg = 'region' | 'federalDistrict'

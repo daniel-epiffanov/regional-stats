@@ -6,10 +6,10 @@ import useCoordsQueries from './useCoordsQueries';
   
 type ContextValues = Readonly<{
   coordsPolygons: GqlCoordsPolygons,
-  coordsPoints: GqlCoordsPoints
+  coordsPoints: GqlCoordsPoints,
 }>
 
-type ProviderProps = Readonly<{//Omit<ContextValues, 'setCurRegion'> & {
+type ProviderProps = Readonly<{
   regionType: RegionTypeArg
 }>
 
@@ -25,7 +25,7 @@ export const MapProvider: FC<ProviderProps> = (props) => {
   const coords = useCoordsQueries(regionType);
 
   if (!coords) return <Message type="message" text="Загрузка координат" positionId="vector-map-container" />;
-  
+
   const {coordsPoints, coordsPolygons} = coords;
 
   console.log({coordsPoints});
@@ -33,7 +33,7 @@ export const MapProvider: FC<ProviderProps> = (props) => {
   return (
     <MapContext.Provider value={{
       coordsPolygons,
-      coordsPoints
+      coordsPoints,
     }}
     >
       {children}

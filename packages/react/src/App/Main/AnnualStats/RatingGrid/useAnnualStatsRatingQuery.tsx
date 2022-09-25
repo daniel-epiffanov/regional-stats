@@ -35,6 +35,7 @@ const useAnnualStatsRatingQuery = (
         regionFlagUrl: true,
         value: true,
         prettyValue: true,
+        paletteColor: true,
       }
     }
   }));

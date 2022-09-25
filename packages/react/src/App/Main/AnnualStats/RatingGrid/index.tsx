@@ -33,9 +33,10 @@ const RatingGrid: FC<Props> = (props) => {
   const {annualStats} = useAnnualStatsContext();
   const {curMainCategoryName, curSubCategoryName, curSubSubCategoryName} = curCategoryNames;
 
-  const flagRenderingHandler = async (e: RowPreparedEvent<GqlAnnualStatsRatingItem>) => {
+  const rowPreparedHandler = async (e: RowPreparedEvent<GqlAnnualStatsRatingItem>) => {
+    e.rowElement.style.background = e?.data?.paletteColor;//'#3eaaf5';
     if(!curRegionNames.includes(e?.data?.regionName)) return null;
-    e.rowElement.style.background = '#3eaaf5';
+    e.rowElement.style.background = '#d9514e';
   };
 
   const pageIndexChangeHandler = (newPageIndex: number) => {
@@ -57,10 +58,11 @@ const RatingGrid: FC<Props> = (props) => {
   useEffect(()=>{
     if(!annualStatsRating || !curRegionNames[0]) return;
     const regionIndex = annualStatsRating
-      .findIndex(annualStatsRatingItem=>annualStatsRatingItem.regionName === curRegionNames[0]);
+      // @ts-ignore
+      .findIndex(annualStatsRatingItem=>annualStatsRatingItem.regionName === curRegionNames.at(-1));
     const page = Math.floor(regionIndex / pageSize);
     setPageIndex(page);
-  }, [annualStatsRating, curRegionNames[0]]);
+  }, [annualStatsRating, curRegionNames]);
 
   if (!annualStatsRating) return <Message type="message" text="Загрузка рейтинга регионов" />;
 
@@ -71,7 +73,7 @@ const RatingGrid: FC<Props> = (props) => {
         id="dataGrid"
         dataSource={annualStatsRating || undefined}
         keyExpr="regionRank"
-        onRowPrepared={flagRenderingHandler}
+        onRowPrepared={rowPreparedHandler}
         hoverStateEnabled
         onRowClick={rowClickHandler}
       >

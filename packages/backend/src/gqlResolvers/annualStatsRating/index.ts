@@ -1,10 +1,12 @@
 import { jsonToGraphQLQuery } from 'json-to-graphql-query';
+import { generateColors } from 'devextreme/viz/palette';
 import { GqlRegionNames, GqlAnnualStatsRating } from '../../../../../sharedTypes/gqlQueries';
 import { getFlagUrl } from '../../config/flagsUrls';
 import getPrettifiedNumber from '../../helpers/getPrettifiedNumber';
 import AnnualStatsOfRegionModel from '../../mongoModels/annualStatsOfRegion';
 import { getNewApolloServer } from '../../services/startApollo';
 import { ResolverFnAsync } from '../types/ResolverFn';
+import { MAP_PALETTE, REGIONS_COLOR_GROUPS } from '../../config/map';
 
 type Args = Readonly<{
 	year: number,
@@ -73,14 +75,25 @@ const annualStatsRating: ResolverFnAsync<GqlAnnualStatsRating> = async (
     { $project: { value: '$mainSections.subSections.annualData.value', regionName: '$regionName' } },
   ]);
 
+  const colors = generateColors(MAP_PALETTE as string[], REGIONS_COLOR_GROUPS.length, {});
+
+  const getColor = (regionIndex: number) => {
+    const colorIndex = REGIONS_COLOR_GROUPS
+      .findIndex((groupEdge, groupEdgeIndex) => {
+        return regionIndex < groupEdge && regionIndex >= REGIONS_COLOR_GROUPS[groupEdgeIndex - 1];
+      });
+
+    return colors[colorIndex - 1];
+  };
+
   const gqlRes: GqlAnnualStatsRating = mongoRes
-    // .filter(item => regionNames.includes(item.regionName))
     .map((item, i) => ({
       regionName: item.regionName,
       value: item.value,
       prettyValue: getPrettifiedNumber(item.value) || '',
       regionRank: i + 1,
       regionFlagUrl: getFlagUrl(item.regionName),
+      paletteColor: getColor(i + 1) || '',
     }));
 
   return gqlRes;

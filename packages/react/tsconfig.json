@@ -20,12 +20,12 @@
 		"noEmit": true,
 		"jsx": "react-jsx"
 	},
-	"exclude": [
-		"src/outdated"
-	],
 	"include": [
 		"src",
 		"../../sharedTypes",
-		"./jest.config.ts"
-	]
+		"../../config"
+	],
+	"dependencies": {
+        "@globalConfig": "../../../config"
+    }
 }

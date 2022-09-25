@@ -11,6 +11,7 @@ import Chart, {
   Format,
 } from 'devextreme-react/chart';
 import styles from '../styles/MultipleAxesChart.module.scss';
+import { MAP_PALETTE } from '../config/map';
 
 const continentSources = [
   { value: 'africa', name: 'Africa' },
@@ -90,7 +91,7 @@ const MultipleAxesChart = () => (
   <div className={styles.MultipleAxesChart}>
     <Chart
       id="chart"
-      palette="Vintage"
+      palette={MAP_PALETTE}
       dataSource={populationData}
     >
       <CommonSeriesSettings

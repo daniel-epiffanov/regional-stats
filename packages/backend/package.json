@@ -16,6 +16,7 @@
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
+    "devextreme": "^22.1.5",
     "directory-tree": "^2.2.9",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",

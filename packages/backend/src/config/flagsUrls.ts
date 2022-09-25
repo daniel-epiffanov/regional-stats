@@ -1,4 +1,4 @@
-import { host } from '../../../../config/host.js';
+import { HOST } from "./links";
 
 const EXTESION = 'png';
 
@@ -104,5 +104,5 @@ const regionFlags: RegionFlags = {
 };
 
 export const getFlagUrl = (regionName: string) => {
-  return `${host}/static/flags/${regionFlags[regionName]}.${EXTESION}`;
+  return `${HOST}/static/flags/${regionFlags[regionName]}.${EXTESION}`;
 };

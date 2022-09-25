@@ -7,12 +7,12 @@ import {
   Label,
   ValueAxis,
   Tooltip,
-  Export,
   Title,
   VisualRange,
 } from 'devextreme-react/chart';
 import { useRegionNamesContext } from '../context/RegionNamesContext';
 import { useYearsRangeContext } from '../context/YearsRangeContext';
+import { MAP_PALETTE } from '../config/map';
 
 type Props = Readonly<{
     dataSource: ReadonlyArray<Readonly<{
@@ -56,7 +56,7 @@ const DxMultipleSeriesChart: FC<Props> = (props) => {
           height: 400,
           width: 400,
         }}
-        palette={['#3eaaf5', '#eeacc6', 'red']}
+        palette={MAP_PALETTE as string[]}
         title={title}
       >
         {curRegionNames.map(curRegionName=> (
