@@ -18,7 +18,12 @@ const MapSchema = new Schema<MongoCoordsOfRegion>({
     type: String,
     required: true,
   },
-  dot: [Number],
+  point: {
+    type: {
+      type: String,
+    },
+    coordinates: [Number],
+  },
 });
 
 export default models.Map || model('CoordsOfRegion', MapSchema);

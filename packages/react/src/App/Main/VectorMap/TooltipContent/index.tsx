@@ -2,29 +2,27 @@ import { FC } from 'react';
 import { useYearsContext } from '../../../../context/YearsContext';
 import styles from './TooltipContent.module.scss';
 import _ from 'lodash';
+import { useAnnualStatsContext } from '../../../../context/AnnualStatsContext';
 
 type Props = Readonly<{
   regionName: string,
-  regionFlagUrl: string,
-  prettyValue: string,
-  measure: string,
-  regionRank: number,
-  totalGrowthPercent: number,
-  annualGrowthPercent: number,
 }>
 
 const TooltipContent: FC<Props> = (props) => {
   const {
     regionName,
-    regionFlagUrl,
-    prettyValue,
-    measure,
-    regionRank,
-    totalGrowthPercent,
-    annualGrowthPercent
   } = props;
+  
+  const {years, curYear} = useYearsContext();
+  const {getAnnualDataItem, getAnnualStatsItem} = useAnnualStatsContext();
 
-  const {years} = useYearsContext();
+  const annualStatsItem = getAnnualStatsItem(regionName);
+  const annualDataItem = getAnnualDataItem(regionName, curYear);
+
+  if(!annualDataItem || !annualStatsItem) return null;
+
+  const {prettyValue, regionRank, annualGrowthPercent, totalGrowthPercent} = annualDataItem;
+  const {measure, regionFlagUrl} = annualStatsItem;
   
   return (
     <div className={styles['root']}>

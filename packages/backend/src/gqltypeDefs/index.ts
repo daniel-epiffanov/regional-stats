@@ -4,7 +4,8 @@ import path from 'path';
 
 export default gql`
 	${fs.readFileSync(path.join(__dirname, 'annualStats.graphql'), 'utf8')}
-	${fs.readFileSync(path.join(__dirname, 'coordsPolygons.graphql'), 'utf8')}
+	${fs.readFileSync(path.join(__dirname, 'coordsPolygon.graphql'), 'utf8')}
+	${fs.readFileSync(path.join(__dirname, 'coordsPoint.graphql'), 'utf8')}
 	${fs.readFileSync(path.join(__dirname, 'annualStatsRating.graphql'), 'utf8')}
 
 	input SD {
@@ -26,16 +27,15 @@ export default gql`
 			mainCategoryName: String
 			subCategoryName: String
 		): [String],
-		coordsPolygons(regionType: String): [CoordsPolygons],
+		coordsPolygons(regionType: String): [CoordsPolygon],
+		coordsPoints(regionType: String): [CoordsPoint],
 		annualStatsRating(
 			year: Int,
 			mainCategoryName: String,
 			subCategoryName: String,
 			subSubCategoryName: String,
 			regionType: String
-		): [AnnualStatsRating],
+			): [AnnualStatsRating],
 		
 	}
 	`;
-
-// eslint-disable-next-line max-len

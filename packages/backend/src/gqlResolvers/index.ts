@@ -5,6 +5,7 @@ import annualStatsSubCategoryNames from './annualStatsSubCategoryNames';
 import annualStatsSubSubCategoryNames from './annualStatsSubSubCategoryNames';
 import annualStats from './annualStats';
 import coordsPolygons from './coordsPolygons';
+import coordsPoints from './coordsPoints';
 import annualStatsRating from './annualStatsRating';
 
 const gqlResolvers = {
@@ -15,6 +16,7 @@ const gqlResolvers = {
     annualStatsSubCategoryNames,
     annualStatsSubSubCategoryNames,
     coordsPolygons,
+    coordsPoints,
     annualStats,
     annualStatsRating,
   },

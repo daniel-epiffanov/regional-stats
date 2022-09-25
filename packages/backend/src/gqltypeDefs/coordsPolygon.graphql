@@ -1,0 +1,13 @@
+type PolygonGeometry {
+	type: String,
+	coordinates: [[[Float]]],
+}
+
+type PolygonProperties {
+	regionName: String,
+}
+
+type CoordsPolygon {
+	properties: PolygonProperties,
+	geometry: PolygonGeometry
+}

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import DxVectorMap, {
   Layer,
   Tooltip,
@@ -17,11 +17,12 @@ import { BOUNDS, CENTER, MAX_ZOOM_FACTOR, ZOOM_FACTOR } from '../../../config/ma
 import { useAnnualStatsContext } from '../../../context/AnnualStatsContext';
 import { useYearsContext } from '../../../context/YearsContext';
 import TooltipContent from './TooltipContent';
+import { PALETTE } from '../../../config/theme';
 
 const VectorMap: FC = () => {
-  const { coordsPolygons } = useMapContext();
+  const { coordsPolygons, coordsPoints } = useMapContext();
   const {addCurRegionNames, curRegionNames} = useRegionNamesContext();
-  const { annualStats, getAnnualDataItem, getAnnualStatsItem } = useAnnualStatsContext();
+  const { getAnnualDataItem, getAnnualStatsItem } = useAnnualStatsContext();
   const {curYear} = useYearsContext();
   // const {addCurRegionNames, curRegionNames, mapRegionCoords} = useMapContext();
   // const statRating = useFetchStatRating();
@@ -35,15 +36,9 @@ const VectorMap: FC = () => {
       const element = elements[i];
       const regionName = element.attribute('regionName');
       const annualDataItem = getAnnualDataItem(regionName, curYear);
-      const annualStatsItem = getAnnualStatsItem(regionName);
       if(!annualDataItem) return null;
       element.attribute('value', annualDataItem.value);
-      element.attribute('prettyValue', annualDataItem.prettyValue);
       element.attribute('regionRank', annualDataItem.regionRank);
-      element.attribute('totalGrowthPercent', annualDataItem.totalGrowthPercent);
-      element.attribute('annualGrowthPercent', annualDataItem.annualGrowthPercent);
-      element.attribute('regionFlagUrl', annualStatsItem?.regionFlagUrl);
-      element.attribute('measure', annualStatsItem?.measure);
       if (curRegionNames.includes(regionName)) {
         element.selected(true);
       }
@@ -59,15 +54,7 @@ const VectorMap: FC = () => {
 
   const contentRender = (element: Readonly<{
     attribute: (arg: string) => string | number
-  }>) => <TooltipContent
-    regionName={`${element.attribute('regionName')}`}
-    regionFlagUrl={`${element.attribute('regionFlagUrl')}`}
-    measure={`${element.attribute('measure')}`}
-    prettyValue={`${element.attribute('prettyValue')}`}
-    totalGrowthPercent={element.attribute('totalGrowthPercent') as number}
-    annualGrowthPercent={element.attribute('annualGrowthPercent') as number}
-    regionRank={element.attribute('regionRank') as number}
-  />;
+  }>) => <TooltipContent regionName={`${element.attribute('regionName')}`} />;
 
   // const customizeText = (args: { end: number, start: number, index: number }) => {
   //   const { end, start, index } = args;
@@ -85,12 +72,7 @@ const VectorMap: FC = () => {
   // const curRegionCoords = useCurRegionMarkers();
 
   return (
-    <div
-      className={styles['root']}
-      // style={{
-      //   width: curRegionNames.length ? 'calc(100vw - 460px)' : '100vw'
-      // }}
-    >
+    <div className={styles['root']}>
       <DxVectorMap
         id="vectorMap"
         onClick={mapClickHandler}
@@ -114,7 +96,7 @@ const VectorMap: FC = () => {
           name="regions"
           colorGroupingField="place"
           // colorGroups={colorGroups}
-          palette={['#3eaaf5', '#eeacc6', 'red']}
+          palette={PALETTE}
           selectedBorderWidth={1}
           selectedBorderColor="white"
         >
@@ -131,6 +113,36 @@ const VectorMap: FC = () => {
           <Font color="#fff" />
         </Tooltip>
 
+        <Layer
+          dataSource={{
+            type: 'FeatureCollection',
+            features: curRegionNames.map(regionName => {
+              return coordsPoints.find(coordsPoint => coordsPoint.properties.regionName === regionName);
+            }),
+          }}
+          type="marker"
+          elementType="image"
+          dataField="regionFlagUrl"
+          size={60}>
+          {/* <Label dataField="regionName">
+            <Font size={8} />
+          </Label> */}
+        </Layer>
+        {/* <Layer
+          dataSource={{
+            type: 'FeatureCollection',
+            features: coordsPoints,
+          }}
+          borderColor="#fff"
+          // type="marker"
+          // elementType="image"
+          // dataField="regionFlagUrl"
+          // size={10}
+        >
+          <Label dataField="regionName">
+            <Font size={8} />
+          </Label>
+        </Layer> */}
         {/* <Layer
           dataSource={curRegionCoords}
           color="red"
@@ -149,9 +161,6 @@ const VectorMap: FC = () => {
           <Source layer="regions" grouping="color" />
         </Legend> */}
       </DxVectorMap>
-
-      {/* {curRegionNames.length && <TopLeftAnnotation />} */}
-      {/* <YearSlider /> */}
     </div>
   );
 };

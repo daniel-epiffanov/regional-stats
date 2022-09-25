@@ -1,12 +1,13 @@
 import { gql, useQuery } from '@apollo/client';
 import { jsonToGraphQLQuery, VariableType } from 'json-to-graphql-query';
-import { GqlCoordsPolygons, RegionTypeArg } from '../../../../../sharedTypes/gqlQueries';
+import { GqlCoordsPoints, GqlCoordsPolygons, RegionTypeArg } from '../../../../../sharedTypes/gqlQueries';
 
 type GqlRes = Readonly<{
 	coordsPolygons: GqlCoordsPolygons,
+	coordsPoints: GqlCoordsPoints,
 }>
 
-const useCoordsPolygonsQuery = (regionType: RegionTypeArg) => {
+const useCoordsQueries = (regionType: RegionTypeArg) => {
   const query = gql(jsonToGraphQLQuery({
     query: {
       __variables: {
@@ -23,6 +24,19 @@ const useCoordsPolygonsQuery = (regionType: RegionTypeArg) => {
         properties: {
           regionName: true
         }
+      },
+      coordsPoints: {
+        __args: {
+          regionType: new VariableType('regionType')
+        },
+        geometry: {
+          type: true,
+          coordinates: true
+        },
+        properties: {
+          regionName: true,
+          regionFlagUrl: true
+        }
       }
     }
   }));
@@ -34,8 +48,9 @@ const useCoordsPolygonsQuery = (regionType: RegionTypeArg) => {
   if (loading || error || !data) return null;
 
   if(!data?.coordsPolygons?.length) return null;
+  if(!data?.coordsPoints?.length) return null;
 
-  return data.coordsPolygons;
+  return data;
 };
 
-export default useCoordsPolygonsQuery;
+export default useCoordsQueries;

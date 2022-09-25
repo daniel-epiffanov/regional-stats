@@ -1,0 +1,14 @@
+type PointGeometry {
+	type: String,
+	coordinates: [Float],
+}
+
+type PointProperties {
+	regionName: String,
+    regionFlagUrl: String
+}
+
+type CoordsPoint {
+	properties: PointProperties,
+	geometry: PointGeometry
+}

@@ -1,4 +1,5 @@
-import { GqlCoordsPolygons, RegionTypeArg } from '../../../../../sharedTypes/gqlQueries';
+import { GqlCoordsPoints, RegionTypeArg } from '../../../../../sharedTypes/gqlQueries';
+import { getFlagUrl } from '../../config/flagsUrls';
 import CoordsOfRegionModel from '../../mongoModels/coordsOfRegion';
 import { MongoCoordsOfRegion } from '../../mongoModels/coordsOfRegion/coordsOfRegion';
 import { ResolverFnAsync } from '../types/ResolverFn';
@@ -7,7 +8,7 @@ type Args = Readonly<{
 	regionType: RegionTypeArg,
 }>
 
-const coordsPolygons: ResolverFnAsync<GqlCoordsPolygons> = async (
+const coordsPoints: ResolverFnAsync<GqlCoordsPoints> = async (
   parent: any,
   args: Args,
 ) => {
@@ -19,13 +20,14 @@ const coordsPolygons: ResolverFnAsync<GqlCoordsPolygons> = async (
   if (!Array.isArray(mongoRes)) return null;
 
   const gqlRes = mongoRes.map(coordsOfRegion => ({
-    geometry: coordsOfRegion.polygon,
+    geometry: coordsOfRegion.point,
     properties: {
       regionName: coordsOfRegion.regionName,
+      regionFlagUrl: getFlagUrl(coordsOfRegion.regionName),
     },
   }));
 
   return gqlRes;
 };
 
-export default coordsPolygons;
+export default coordsPoints;

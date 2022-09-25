@@ -1,11 +1,12 @@
-import { createContext, FC, useContext, useState } from 'react';
-import { GqlCoordsPolygons, GqlRegionNames, RegionTypeArg } from '../../../../../sharedTypes/gqlQueries';
+import { createContext, FC, useContext } from 'react';
+import { GqlCoordsPoints, GqlCoordsPolygons, RegionTypeArg } from '../../../../../sharedTypes/gqlQueries';
 import Message from '../../components/Message';
-import useCoordsPolygonsQuery from './useCoordsPolygonsQuery';
+import useCoordsQueries from './useCoordsQueries';
   
   
 type ContextValues = Readonly<{
   coordsPolygons: GqlCoordsPolygons,
+  coordsPoints: GqlCoordsPoints
 }>
 
 type ProviderProps = Readonly<{//Omit<ContextValues, 'setCurRegion'> & {
@@ -21,13 +22,18 @@ export const MapProvider: FC<ProviderProps> = (props) => {
     children, regionType
   } = props;
 
-  const coordsPolygons = useCoordsPolygonsQuery(regionType);
+  const coords = useCoordsQueries(regionType);
 
-  if (!coordsPolygons) return <Message type="message" text="Загрузка координат" positionId="vector-map-container" />;
+  if (!coords) return <Message type="message" text="Загрузка координат" positionId="vector-map-container" />;
   
+  const {coordsPoints, coordsPolygons} = coords;
+
+  console.log({coordsPoints});
+
   return (
     <MapContext.Provider value={{
       coordsPolygons,
+      coordsPoints
     }}
     >
       {children}

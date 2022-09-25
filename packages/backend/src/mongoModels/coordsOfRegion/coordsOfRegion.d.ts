@@ -6,10 +6,13 @@ export type MongoCoordsOfRegion = Readonly<{
 		type: 'Polygon' | 'MultiPolygon',
 		coordinates: ReadonlyArray<
             ReadonlyArray<
-                ReadonlyArray<string>
+                ReadonlyArray<number>
             >
         >
 	}>,
 	regionName: string,
-	dot: ReadonlyArray<number>
+	point: Readonly<{
+		type: 'Point',
+		coordinates: ReadonlyArray<number>
+	}>
 }>
