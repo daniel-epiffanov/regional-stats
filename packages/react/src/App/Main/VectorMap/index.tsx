@@ -18,9 +18,11 @@ import { BOUNDS, CENTER, FEDERAL_DISTRICT_COLOR_GROUPS, MAP_PALETTE, MAX_ZOOM_FA
 import { useAnnualStatsContext } from '../../../context/AnnualStatsContext';
 import { useYearsContext } from '../../../context/YearsContext';
 import TooltipContent from './TooltipContent';
+import { RED_COLOR } from '../../../config/theme';
 
 type EventElement = Readonly<{
-  attribute: (arg: string, toSet?: string | number) => string | number
+  attribute: (arg: string, toSet?: string | number) => string | number,
+  applySettings: (obj: any) => void
 }>
 
 const VectorMap: FC = () => {
@@ -29,7 +31,6 @@ const VectorMap: FC = () => {
   const { getAnnualDataItem } = useAnnualStatsContext();
   const {curYear} = useYearsContext();
 
-  // const colorGroups = [1, 6, 15, 30, 45, 60, 65, 82];
 
   function customizeLayer(elements: ReadonlyArray<EventElement & {
     selected: (isSelected: boolean) => true
@@ -37,10 +38,17 @@ const VectorMap: FC = () => {
     elements.forEach(element=> {
       const regionName = element.attribute('regionName') as string;
       const annualDataItem = getAnnualDataItem(regionName, curYear);
-      if(!annualDataItem) return null;
+      if(!annualDataItem) {
+        element.attribute('noData', 'Нет данных');
+        element.applySettings({
+          color: RED_COLOR,
+          label: { dataField: 'noData' }
+        });
+        return null;
+      }
       const regionsRank = annualDataItem.regionRank;
       element.attribute('value', `${annualDataItem.value}`);
-      element.attribute('regionRank', `${regionsRank}`);
+      element.attribute('regionRank', `${regionsRank || null}`);
       if (curRegionNames.includes(regionName)) {
         element.selected(true);
       }
@@ -129,10 +137,7 @@ const VectorMap: FC = () => {
           opacity={1}
         />
 
-
-        <Legend
-          customizeText={customizeText}
-        >
+        <Legend customizeText={customizeText}>
           <Source layer="regions" grouping="color" />
         </Legend>
       </DxVectorMap>

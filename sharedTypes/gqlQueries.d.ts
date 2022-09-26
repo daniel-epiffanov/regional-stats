@@ -52,12 +52,6 @@ type GqlCoordsPolygon = Readonly<{
 		regionName: string
 	}>,
 }>
-type GqlCoordsPolygon = Readonly<{
-	geometry: Polygon,
-	properties: Readonly<{
-		regionName: string
-	}>,
-}>
 
 type GqlCoordsPoint = Readonly<{
 	geometry: Point,

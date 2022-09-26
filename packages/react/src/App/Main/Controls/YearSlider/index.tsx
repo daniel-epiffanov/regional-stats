@@ -2,7 +2,7 @@ import { Slider } from 'devextreme-react/slider';
 import { NativeEventInfo } from 'devextreme/events';
 import { ValueChangedInfo } from 'devextreme/ui/editor/editor';
 import dxSlider from 'devextreme/ui/slider';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useDebounce } from 'react-use';
 import { useYearsContext } from '../../../../context/YearsContext';
 import styles from './YearSlider.module.scss';
@@ -10,6 +10,10 @@ import styles from './YearSlider.module.scss';
 const YearSlider: FC = () => {
   const {years, curYear, changeCurYear} = useYearsContext();
   const [localCurYear, setLocalCurYear] = useState<number>(curYear);
+
+  useEffect(() => {
+    if(curYear !== localCurYear) setLocalCurYear(curYear);
+  }, [curYear]);
 
   useDebounce(
     () => {

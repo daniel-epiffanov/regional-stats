@@ -19,10 +19,11 @@ const TooltipContent: FC<Props> = (props) => {
   const annualStatsItem = getAnnualStatsItem(regionName);
   const annualDataItem = getAnnualDataItem(regionName, curYear);
 
-  if(!annualDataItem || !annualStatsItem) return null;
+  if(!annualStatsItem) return null;
 
-  const {prettyValue, regionRank, annualGrowthPercent, totalGrowthPercent} = annualDataItem;
   const {measure, regionFlagUrl} = annualStatsItem;
+
+  const {prettyValue, regionRank, annualGrowthPercent, totalGrowthPercent} = annualDataItem || {};
   
   return (
     <div className={styles['root']}>
@@ -36,21 +37,21 @@ const TooltipContent: FC<Props> = (props) => {
         />
         <div>
           <h4 className={styles['title']}>{_.truncate(regionName, {length: 30})}</h4>
-          <p className={styles['value']}>{prettyValue}</p>
+          <p className={styles['value']}>{prettyValue || 'Нет данных'}</p>
           <p className={styles['measure']}>{measure}</p>
         </div>
       </div>
       <div className={styles['indicators-container']}>
         <div>
-          <p>{regionRank}</p>
+          <p>{regionRank || '-'}</p>
           <p>место в рейтнге</p>
         </div>
         <div>
-          <p>{annualGrowthPercent} %</p>
+          <p>{annualGrowthPercent || annualGrowthPercent === 0 ? annualGrowthPercent : '-'} %</p>
           <p>годовой рост показателя</p>
         </div>
         <div>
-          <p>{totalGrowthPercent} %</p>
+          <p>{totalGrowthPercent || totalGrowthPercent === 0 ? totalGrowthPercent : '-'} %</p>
           <p>общий рост показателя с {years[0]} года</p>
         </div>
       </div>
