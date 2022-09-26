@@ -46,6 +46,9 @@ const YearsSlider: FC = () => {
           defaultValue={localYearsRange}
           onValueChanged={yearChangeHandler}
           value={localYearsRange as number[]}
+          hoverStateEnabled={false}
+          focusStateEnabled={false}
+          activeStateEnabled={false}
         />
       </div>
       <p className={styles['value']}>{localYearsRange[1]}</p>

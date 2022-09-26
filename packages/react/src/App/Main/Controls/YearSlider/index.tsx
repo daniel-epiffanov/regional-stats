@@ -36,6 +36,9 @@ const YearSlider: FC = () => {
           defaultValue={localCurYear}
           value={localCurYear}
           onValueChanged={yearChangeHandler}
+          hoverStateEnabled={false}
+          focusStateEnabled={false}
+          activeStateEnabled={false}
         />
       </div>
       <h3 className={styles['value']}>{localCurYear} год</h3>

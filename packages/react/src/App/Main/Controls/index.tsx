@@ -7,8 +7,8 @@ import YearSlider from './YearSlider';
 const Controls: FC = () => {
   return (
     <div className={styles['root']}>
-      <CancelBtn />
       <RegionTypeBtn />
+      <CancelBtn />
       <YearSlider />
     </div>
   );

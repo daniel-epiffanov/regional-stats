@@ -1,11 +1,7 @@
-import { Button, Switch } from 'devextreme-react';
-import { NativeEventInfo } from 'devextreme/events';
+import { Button } from 'devextreme-react';
 import { ClickEvent } from 'devextreme/ui/button';
-import { ValueChangedInfo } from 'devextreme/ui/editor/editor';
-import dxSwitch from 'devextreme/ui/switch';
 import { FC } from 'react';
 import { useRegionNamesContext } from '../../../../context/RegionNamesContext';
-import styles from './RegionTypeSwitch.module.scss';
 
 const RegionTypeBtn: FC = () => {
   const {regionType, changeRegionType, changeCurRegionNames} = useRegionNamesContext();

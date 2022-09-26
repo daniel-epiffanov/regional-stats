@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose'
 
-const validateBboxLength = (val: number[]) => val.length === 4
+// const validateBboxLength = (val: number[]) => val.length === 4
 
 const mapCoordsSchema = new Schema({
 	type: {
