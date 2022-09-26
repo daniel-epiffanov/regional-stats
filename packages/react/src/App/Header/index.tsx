@@ -3,15 +3,24 @@ import { FC } from 'react';
 import styles from './Header.module.scss';
 import Logo from './Logo';
 import toggleTheme from '../../helpers/toggleTheme';
-import { GITHUB_LINK, TELEGRAM_LINK } from '../../config/links';
+import { GITHUB_PROJECT_LINK, AUTHORS_TELEGRAM_LINK } from '../../config/links';
+import { useToggle } from 'react-use';
+import About from './About';
 
 const Header: FC = () => {
-  const myGithubClickHandler = () => window.open(GITHUB_LINK);
-  const myTelegramClickHandler = () => window.open(TELEGRAM_LINK);
+  const [isAboutOpen, toggleIsAboutOpen] = useToggle(false);
+  const closeAbout = () => {
+    toggleIsAboutOpen(false);
+  };
+
+  const myGithubClickHandler = () => window.open(GITHUB_PROJECT_LINK);
+  const myTelegramClickHandler = () => window.open(AUTHORS_TELEGRAM_LINK);
   const themeClickHandler = () => toggleTheme();
+  const aboutClickHandler = () => toggleIsAboutOpen();
 
   return (
     <div className={styles['root']}>
+      <About isOpen={isAboutOpen} closeAbout={closeAbout}/>
       <Toolbar>
         <Item
           location="before"
@@ -48,7 +57,7 @@ const Header: FC = () => {
           location="after"
           widget="dxButton"
           options={{
-            onClick: themeClickHandler,
+            onClick: aboutClickHandler,
             icon: 'fa fa-info-circle',
             text: 'О проекте',
           }}

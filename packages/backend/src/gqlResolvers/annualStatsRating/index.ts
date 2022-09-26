@@ -80,6 +80,8 @@ const annualStatsRating: ResolverFnAsync<GqlAnnualStatsRating> = async (
     MAP_PALETTE as string[], FEDERAL_DISTRICT_COLOR_GROUPS.length, {},
   );
 
+  console.log({ federalDistrictColors });
+
   const getColor = (regionIndex: number) => {
     let colorGroups: ReadonlyArray<number>;
     if (regionType === 'federalDistrict') {
@@ -89,7 +91,7 @@ const annualStatsRating: ResolverFnAsync<GqlAnnualStatsRating> = async (
     }
     const colorIndex = colorGroups
       .findIndex((groupEdge, groupEdgeIndex) => {
-        return regionIndex < groupEdge && regionIndex >= REGIONS_COLOR_GROUPS[groupEdgeIndex - 1];
+        return regionIndex < groupEdge && regionIndex >= colorGroups[groupEdgeIndex - 1];
       });
 
     if (regionType === 'federalDistrict') return federalDistrictColors[colorIndex - 1];

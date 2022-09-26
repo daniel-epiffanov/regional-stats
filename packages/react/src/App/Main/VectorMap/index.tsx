@@ -14,7 +14,7 @@ import { ClickEvent } from 'devextreme/viz/vector_map';
 import styles from './VectorMap.module.scss';
 import { useMapContext } from '../../../context/MapContext';
 import { useRegionNamesContext } from '../../../context/RegionNamesContext';
-import { BOUNDS, CENTER, MAP_PALETTE, MAX_ZOOM_FACTOR, ZOOM_FACTOR } from '../../../config/map';
+import { BOUNDS, CENTER, FEDERAL_DISTRICT_COLOR_GROUPS, MAP_PALETTE, MAX_ZOOM_FACTOR, REGIONS_COLOR_GROUPS, ZOOM_FACTOR } from '../../../config/map';
 import { useAnnualStatsContext } from '../../../context/AnnualStatsContext';
 import { useYearsContext } from '../../../context/YearsContext';
 import TooltipContent from './TooltipContent';
@@ -25,11 +25,11 @@ type EventElement = Readonly<{
 
 const VectorMap: FC = () => {
   const { coordsPolygons, coordsPoints } = useMapContext();
-  const {addCurRegionNames, curRegionNames} = useRegionNamesContext();
+  const {addCurRegionNames, curRegionNames, regionType} = useRegionNamesContext();
   const { getAnnualDataItem } = useAnnualStatsContext();
   const {curYear} = useYearsContext();
 
-  const colorGroups = [1, 6, 15, 30, 45, 60, 65, 82];
+  // const colorGroups = [1, 6, 15, 30, 45, 60, 65, 82];
 
   function customizeLayer(elements: ReadonlyArray<EventElement & {
     selected: (isSelected: boolean) => true
@@ -72,7 +72,6 @@ const VectorMap: FC = () => {
         zoomFactor={ZOOM_FACTOR}
         maxZoomFactor={MAX_ZOOM_FACTOR}
         bounds={BOUNDS}
-        // redrawOnResize
       >
         <Background borderColor="transparent"/>
         <ControlBar enabled={false} />
@@ -86,7 +85,10 @@ const VectorMap: FC = () => {
           selectionMode="multiple"
           name="regions"
           colorGroupingField="regionRank"
-          colorGroups={colorGroups}
+          colorGroups={
+            regionType === 'region' ?
+              REGIONS_COLOR_GROUPS :
+              FEDERAL_DISTRICT_COLOR_GROUPS}
           palette={MAP_PALETTE}
           hoverEnabled
         >
@@ -125,8 +127,7 @@ const VectorMap: FC = () => {
           dataField="regionFlagUrl"
           size={30}
           opacity={1}
-        >
-        </Layer>
+        />
 
 
         <Legend

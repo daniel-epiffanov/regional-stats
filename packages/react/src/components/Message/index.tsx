@@ -10,15 +10,15 @@ interface Props {
 	positionId?: string
 }
 
-// const ERROR_RELOAD_TIMEOUT_IN_MILLISECONDS = ERROR_RELOAD_TIMEOUT_IN_SECONDS * 1000;
+const ERROR_RELOAD_TIMEOUT_IN_MILLISECONDS = ERROR_RELOAD_TIMEOUT_IN_SECONDS * 1000;
 
 const Message: FC<Props> = ({ text, type, positionId }) => {
   useEffect(() => {
     if (type !== 'error') return;
-    // const timeout = setTimeout(() => {
-    //   window.location.reload();
-    // }, ERROR_RELOAD_TIMEOUT_IN_MILLISECONDS);
-    // return () => clearTimeout(timeout);
+    const timeout = setTimeout(() => {
+      window.location.reload();
+    }, ERROR_RELOAD_TIMEOUT_IN_MILLISECONDS);
+    return () => clearTimeout(timeout);
   }, [type]);
 
   if (type === 'message') {
@@ -35,9 +35,13 @@ const Message: FC<Props> = ({ text, type, positionId }) => {
   }
 
   return (
-    <div>
+    <div className={styles['root']}>
+      <LoadIndicator
+        height={40}
+        width={40}
+      />
       <span>{text}</span>
-      <em>Страница будет перезагружена через {ERROR_RELOAD_TIMEOUT_IN_SECONDS} секунд.</em>
+      <em>Страница будет перезагружена.</em>
     </div>
   );
 };

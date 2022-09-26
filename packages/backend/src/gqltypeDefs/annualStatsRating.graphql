@@ -1,8 +1,8 @@
-	type AnnualStatsRating {
-		regionName: String,
-		regionRank: Int,
-		regionFlagUrl: String,
-		value: Float,
-		prettyValue: String,
-		paletteColor: String
-	}
+type AnnualStatsRating {
+	regionName: String,
+	regionRank: Int,
+	regionFlagUrl: String,
+	value: Float,
+	prettyValue: String,
+	paletteColor: String
+}

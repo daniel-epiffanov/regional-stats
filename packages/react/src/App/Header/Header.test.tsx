@@ -5,7 +5,7 @@ import {
   DEFAULT_THEME,
   LIGHT_THEME_NAME,
 } from '../../config/theme';
-import { GITHUB_LINK, TELEGRAM_LINK } from '../../config/links';
+import { GITHUB_PROJECT_LINK, AUTHORS_TELEGRAM_LINK } from '../../config/links';
 
 const spyWindowOpen = jest.spyOn(window, 'open');
 const spyLocalStorageSetItem = jest.spyOn(window.localStorage.__proto__, 'setItem');
@@ -21,7 +21,7 @@ describe('Header', () => {
     fireEvent.click(divElement);
 
     expect(spyWindowOpen).toBeCalledTimes(1);
-    expect(spyWindowOpen).toBeCalledWith(GITHUB_LINK);
+    expect(spyWindowOpen).toBeCalledWith(GITHUB_PROJECT_LINK);
   });
 
   it('telegram link', () => {
@@ -33,7 +33,7 @@ describe('Header', () => {
     fireEvent.click(divElement);
 
     expect(spyWindowOpen).toBeCalledTimes(1);
-    expect(spyWindowOpen).toBeCalledWith(TELEGRAM_LINK);
+    expect(spyWindowOpen).toBeCalledWith(AUTHORS_TELEGRAM_LINK);
   });
 
   it('theme toggle', () => {

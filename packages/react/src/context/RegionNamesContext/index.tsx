@@ -22,11 +22,11 @@ const RegionNamesContext = createContext<ContextValues>({} as ContextValues);
 export const useRegionNamesContext = () => useContext(RegionNamesContext);
 
 export const RegionNamesProvider: FC = ({ children }) => {
-  const [regionType, setRegionType] = useState<RegionTypeArg>('region');
+  const [regionType, setRegionType] = useState<RegionTypeArg>('federalDistrict');
   const [curRegionNames, setCurRegionNames] = useState<GqlRegionNames>([]);
-  
+
   // const regionNames = useRegionNamesQuery(regionType);
-  
+
   const changeRegionType: ChangeRegionType = (newRegionType) => {
     setRegionType(newRegionType);
   };

@@ -8,10 +8,6 @@ export default gql`
 	${fs.readFileSync(path.join(__dirname, 'coordsPoint.graphql'), 'utf8')}
 	${fs.readFileSync(path.join(__dirname, 'annualStatsRating.graphql'), 'utf8')}
 
-	input SD {
-		year: Int
-	}
-
 	type Query {
 		regionNames(regionType: String): [String],
 		annualStatsYears: [Int],
@@ -24,7 +20,7 @@ export default gql`
 			subSubCategoryName: String
 		): [AnnualStatsItem],
 		annualStatsSubSubCategoryNames(
-			mainCategoryName: String
+			mainCategoryName: String,
 			subCategoryName: String
 		): [String],
 		coordsPolygons(regionType: String): [CoordsPolygon],
@@ -35,7 +31,7 @@ export default gql`
 			subCategoryName: String,
 			subSubCategoryName: String,
 			regionType: String
-			): [AnnualStatsRating],
+		): [AnnualStatsRating],
 		
 	}
 	`;

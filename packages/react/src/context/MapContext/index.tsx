@@ -18,9 +18,7 @@ const MapContext = createContext<ContextValues>({} as ContextValues);
 export const useMapContext = () => useContext(MapContext);
   
 export const MapProvider: FC<ProviderProps> = (props) => {
-  const {
-    children, regionType
-  } = props;
+  const { children, regionType } = props;
 
   const coords = useCoordsQueries(regionType);
 
