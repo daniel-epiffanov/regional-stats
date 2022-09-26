@@ -86,3 +86,12 @@ The graphql access point is ```/api```
         ): [AnnualStatsRating],
     }
 ```
+
+Most of graphql resolvers are covered by tests.
+
+# envs
+```
+PORT
+CORS_ORIGIN
+DB_AUTH
+```
