@@ -36,12 +36,21 @@ export const AnnualStatsProvider: FC<ProviderProps> = (props) => {
     curSubCategoryName,
     curSubSubCategoryName
   } = props;
+
+
   const annualStats = useAnnualStatsQuery(
     regionType,
     curMainCategoryName,
     curSubCategoryName,
     curSubSubCategoryName
   );
+
+  if(annualStats === 'loading') {
+    return <Message type="message" text="Загрузка данных статистики." />;
+  }
+  if(annualStats === 'error' || !annualStats) {
+    return <Message type="error" text="Не удалось загрузить данные статистики." />;
+  }
 
   const getAnnualStatsItem: GetAnnualStatsItem = (regionName) => {
     if(!annualStats) return null;
@@ -62,7 +71,6 @@ export const AnnualStatsProvider: FC<ProviderProps> = (props) => {
     return annualDataItem || null;
   };
 
-  if (!annualStats) return <Message type="message" text="Загрузка данных" positionId="vector-map-container" />;
 
   return (
     <AnnualStatsContext.Provider value={{

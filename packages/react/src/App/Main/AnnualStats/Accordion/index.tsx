@@ -3,6 +3,7 @@ import { Accordion as DxAccordion } from 'devextreme-react/accordion';
 import CurYearData from './CurYearData';
 import RatingGrid from '../RatingGrid';
 import AllYearsData from './AllYearsData';
+import { YearsRangeProvider } from '../../../../context/YearsRangeContext';
 
 type DataSource = Readonly<{
     title: string
@@ -16,7 +17,11 @@ const dataSource: DataSource = [
 const itemRedner = (e: DataSource[0]) => {
   if(e.title === 'Данные за текущий год') return <CurYearData />;
   if(e.title === 'Общий рейтинг за текущий год') return <RatingGrid />;
-  if(e.title === 'Данные за все года') return <AllYearsData />;
+  if(e.title === 'Данные за все года') return (
+    <YearsRangeProvider>
+      <AllYearsData />
+    </YearsRangeProvider>
+  );
   return null;
 };
 

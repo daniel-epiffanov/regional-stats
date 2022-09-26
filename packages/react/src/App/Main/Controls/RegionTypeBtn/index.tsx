@@ -8,9 +8,10 @@ import { useRegionNamesContext } from '../../../../context/RegionNamesContext';
 import styles from './RegionTypeSwitch.module.scss';
 
 const RegionTypeBtn: FC = () => {
-  const {regionType, changeRegionType} = useRegionNamesContext();
+  const {regionType, changeRegionType, changeCurRegionNames} = useRegionNamesContext();
   
   const clickHandler = (e: ClickEvent) => {
+    changeCurRegionNames([]);
     changeRegionType(regionType === 'region' ? 'federalDistrict' : 'region');
   };
 

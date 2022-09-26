@@ -18,7 +18,7 @@ const YearsSlider: FC = () => {
     },
     400,
     [localYearsRange]
-  );  
+  );
 
   const yearChangeHandler = (e: ValueChangedEvent) => {
     const newCurYear = e.value;

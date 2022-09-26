@@ -2,13 +2,11 @@ import {
   createContext, FC, useContext, useState,
 } from 'react';
 import { GqlRegionNames, RegionTypeArg } from '../../../../../sharedTypes/gqlQueries';
-import Message from '../../components/Message';
-import useRegionNamesQuery from './useRegionNamesQuery';
 
 type ContextValues = Readonly<{
 	regionType: RegionTypeArg,
   changeRegionType: ChangeRegionType,
-  regionNames: GqlRegionNames,
+  // regionNames: GqlRegionNames,
 
   curRegionNames: GqlRegionNames,
   changeCurRegionNames: ChangeCurRegionNames,
@@ -27,7 +25,7 @@ export const RegionNamesProvider: FC = ({ children }) => {
   const [regionType, setRegionType] = useState<RegionTypeArg>('region');
   const [curRegionNames, setCurRegionNames] = useState<GqlRegionNames>([]);
   
-  const regionNames = useRegionNamesQuery(regionType);
+  // const regionNames = useRegionNamesQuery(regionType);
   
   const changeRegionType: ChangeRegionType = (newRegionType) => {
     setRegionType(newRegionType);
@@ -51,13 +49,13 @@ export const RegionNamesProvider: FC = ({ children }) => {
     });
   };
 
-
-  if (!regionNames) return <Message type="message" text="Не удалось загрузить названия регионов" />;
+  // if(regionNames === 'error' || !regionNames) {
+  //   return <Message type="error" text="Не удалось загрузить названия регионов." />;
+  // }
 
   return (
     <RegionNamesContext.Provider value={{
       regionType,
-      regionNames,
       curRegionNames,
       changeRegionType,
       changeCurRegionNames,

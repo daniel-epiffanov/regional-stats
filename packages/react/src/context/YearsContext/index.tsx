@@ -19,12 +19,17 @@ export const useYearsContext = () => useContext(YearsContext);
 
 export const YearsProvider: FC = ({ children }) => {
   const years = useAnnualStatsYearsQuery();
-  const [curYear, setCurYeat] = useState<number>(2019);
+  const [curYear, setCurYear] = useState<number>(2019);
   const changeCurYear: ChangeCurYear = (newCurYear) => {
-    setCurYeat(newCurYear);
+    setCurYear(newCurYear);
   };
 
-  if (!years) return <Message type="message" text="Не удалось загрузить информацю о годах статистики" />;
+  if(years === 'loading') {
+    return <Message type="message" text="Загружается информация о годах статистики." />;
+  }
+  if(years === 'error' || !years) {
+    return <Message type="error" text="Не удалось загрузить информацю о годах статистики." />;
+  }
 
   return (
     <YearsContext.Provider value={{

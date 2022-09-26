@@ -23,8 +23,11 @@ const useRegionNamesQuery = (regionType: RegionTypeArg) => {
   const { loading, error, data } = useQuery<GqlRes>(query, {
     variables: { regionType }
   });
+
+  if(loading) return 'loading';
+  if(error) return 'error';
   
-  if (loading || error || !data) return null;
+  if (!data) return null;
 
   if(!data?.regionNames?.length) return null;
 

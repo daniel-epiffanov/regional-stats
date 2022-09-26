@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { YearsRangeProvider } from '../../../../../context/YearsRangeContext';
 import YearsSlider from './YearsSlider';
 import DxMultipleSeriesChart, { TooltipContentTemplate } from '../../../../../dxCustomComponents/DxMultipleSeriesChart';
 import { useYearsContext } from '../../../../../context/YearsContext';
 import { useRegionNamesContext } from '../../../../../context/RegionNamesContext';
 import { useAnnualStatsContext } from '../../../../../context/AnnualStatsContext';
+import { useYearsRangeContext } from '../../../../../context/YearsRangeContext';
 
 const tooltipContentTemplateWithPercent: TooltipContentTemplate = (tooltipValue) => {
   return `${tooltipValue.value} %`;
@@ -14,6 +14,7 @@ const AllYearsData: FC = () => {
   const {years} = useYearsContext();
   const {curRegionNames} = useRegionNamesContext();
   const {getAnnualDataItem, annualStats} = useAnnualStatsContext();
+  const {yearsRange} = useYearsRangeContext();
   
   const getDataSource = (
     field: 'regionRank' | 'annualGrowthPercent' | 'totalGrowthPercent' | 'value'
@@ -40,15 +41,19 @@ const AllYearsData: FC = () => {
   };
   
   return (
-    <YearsRangeProvider>
+    <div>
       <YearsSlider />
       <DxMultipleSeriesChart
+        curRegionNames={curRegionNames}
+        yearsRange={yearsRange}
         dataSource={getDataSource('value')}
         title={'Статистика по выбранной категории'}
         seriesType="bar"
         tooltipContentTemplate={tooltipContentTemplateAnnualData}
       />
       <DxMultipleSeriesChart
+        curRegionNames={curRegionNames}
+        yearsRange={yearsRange}
         dataSource={getDataSource('regionRank')}
         title="Место в рейтинге"
         isValueAxisDiscrete
@@ -57,18 +62,22 @@ const AllYearsData: FC = () => {
         isValueAxisInverted
       />
       <DxMultipleSeriesChart
+        curRegionNames={curRegionNames}
+        yearsRange={yearsRange}
         dataSource={getDataSource('annualGrowthPercent')}
         title="Годовой рост показателя (%)"
         seriesType="bar"
         tooltipContentTemplate={tooltipContentTemplateWithPercent}
       />
       <DxMultipleSeriesChart
+        curRegionNames={curRegionNames}
+        yearsRange={yearsRange}
         dataSource={getDataSource('totalGrowthPercent')}
         title={`Общий рост показателя c ${years[0]} года (%)`}
         seriesType="bar"
         tooltipContentTemplate={tooltipContentTemplateWithPercent}
       />
-    </YearsRangeProvider>
+    </div>
   );
 };
   

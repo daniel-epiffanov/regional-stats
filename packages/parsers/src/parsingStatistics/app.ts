@@ -234,11 +234,6 @@ const saveAllMainSections = async () => {
 	console.log('finished')
 }
 
-// const PORT = 5001
-// const listenServer = () => app.listen(PORT, () => {
-// 	console.log(`Server ${process.pid} listening at http://localhost:${PORT}`)
-// })
-
 try {
 	if (!process.env.DB_AUTH) throw new Error('DB_AUTH enviroment variable is undefined')
 	mongoose.connect(process.env.DB_AUTH,

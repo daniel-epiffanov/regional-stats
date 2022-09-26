@@ -28,8 +28,6 @@ export const MapProvider: FC<ProviderProps> = (props) => {
 
   const {coordsPoints, coordsPolygons} = coords;
 
-  console.log({coordsPoints});
-
   return (
     <MapContext.Provider value={{
       coordsPolygons,

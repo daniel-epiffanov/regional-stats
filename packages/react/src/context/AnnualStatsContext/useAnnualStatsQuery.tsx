@@ -52,11 +52,10 @@ const useAnnualStatsQuery = (
     }
   });
 
-  console.log({data});
-  console.log({error});
-  console.log({loading});
+  if(loading) return 'loading';
+  if(error) return 'error';
   
-  if (loading || error || !data) return null;
+  if (!data) return null;
 
   if(!data?.annualStats?.length) return null;
 

@@ -6,7 +6,7 @@ import getPrettifiedNumber from '../../helpers/getPrettifiedNumber';
 import AnnualStatsOfRegionModel from '../../mongoModels/annualStatsOfRegion';
 import { getNewApolloServer } from '../../services/startApollo';
 import { ResolverFnAsync } from '../types/ResolverFn';
-import { MAP_PALETTE, REGIONS_COLOR_GROUPS } from '../../config/map';
+import { FEDERAL_DISTRICT_COLOR_GROUPS, MAP_PALETTE, REGIONS_COLOR_GROUPS } from '../../config/map';
 
 type Args = Readonly<{
 	year: number,
@@ -75,15 +75,25 @@ const annualStatsRating: ResolverFnAsync<GqlAnnualStatsRating> = async (
     ]);
   }
 
-  const colors = generateColors(MAP_PALETTE as string[], REGIONS_COLOR_GROUPS.length, {});
+  const regionColors = generateColors(MAP_PALETTE as string[], REGIONS_COLOR_GROUPS.length, {});
+  const federalDistrictColors = generateColors(
+    MAP_PALETTE as string[], FEDERAL_DISTRICT_COLOR_GROUPS.length, {},
+  );
 
   const getColor = (regionIndex: number) => {
-    const colorIndex = REGIONS_COLOR_GROUPS
+    let colorGroups: ReadonlyArray<number>;
+    if (regionType === 'federalDistrict') {
+      colorGroups = FEDERAL_DISTRICT_COLOR_GROUPS;
+    } else {
+      colorGroups = REGIONS_COLOR_GROUPS;
+    }
+    const colorIndex = colorGroups
       .findIndex((groupEdge, groupEdgeIndex) => {
         return regionIndex < groupEdge && regionIndex >= REGIONS_COLOR_GROUPS[groupEdgeIndex - 1];
       });
 
-    return colors[colorIndex - 1];
+    if (regionType === 'federalDistrict') return federalDistrictColors[colorIndex - 1];
+    return regionColors[colorIndex - 1];
   };
 
   const gqlRes: GqlAnnualStatsRating = mongoRes

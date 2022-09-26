@@ -1,7 +1,7 @@
 import xlsx from 'xlsx'
+import _ from 'lodash'
 import removeExtraSpaces from '../helpers/removeExtraSpaces'
 import Helpers from './helpers'
-import _ from 'lodash'
 
 interface ContentsTree {
 	orderNumber: string,
@@ -43,7 +43,7 @@ export class ContentsSheet extends Sheet {
 		.match(/[0-9][0-9]?\.([0-9][0-9]?\.)?([0-9][0-9]?\.)?/g)
 
 	private removeExtraCharacters = (str: string) => _.trim(
-		str.replace(/[\r\n]/gm, '')
+		str.replace(/[\r\n]/gm, ''),
 	)
 
 	getContentsMap() {
@@ -133,10 +133,7 @@ export class DetailsSheet extends Sheet {
 				if (typeof cell === 'string') return removeExtraSpaces(cell)
 				if (typeof cell === 'number') return Math.round(cell * 100) / 100
 				return null
-				// if (typeof cell === 'string') console.log({ regionName: removeExtraSpaces(cell) })
-				// return r
 			})
-			// console.log({ cellGroupCleanedUp })
 			const yearsHeaders = this.getTopHeaders()
 			if (yearsHeaders) {
 				return this.getObjectFromTwoArrays(yearsHeaders, cellGroupCleanedUp)

@@ -13,8 +13,11 @@ import {
 import { useRegionNamesContext } from '../context/RegionNamesContext';
 import { useYearsRangeContext } from '../context/YearsRangeContext';
 import { MAP_PALETTE } from '../config/map';
+import { GqlRegionNames } from '../../../../sharedTypes/gqlQueries';
 
 type Props = Readonly<{
+    curRegionNames: GqlRegionNames,
+    yearsRange: ReadonlyArray<number>
     dataSource: ReadonlyArray<Readonly<{
         [key: string]: number
     }>>,
@@ -35,6 +38,8 @@ export type TooltipContentTemplate = (tooltipValue: TooltipValue) => string
 
 const DxMultipleSeriesChart: FC<Props> = (props) => {
   const {
+    curRegionNames,
+    yearsRange,
     dataSource,
     title,
     seriesType,
@@ -43,10 +48,8 @@ const DxMultipleSeriesChart: FC<Props> = (props) => {
     tooltipContentTemplate,
     isValueAxisInverted
   } = props;
-  const {curRegionNames} = useRegionNamesContext();
-  const {yearsRange} = useYearsRangeContext();
 
-  if (curRegionNames.length === 0) return <>yo</>;
+  console.log({yearsRange});
 
   return (
     <div>
@@ -85,11 +88,17 @@ const DxMultipleSeriesChart: FC<Props> = (props) => {
           inverted={isValueAxisInverted}
         />
 
-        <ArgumentAxis type="discrete">
-          <VisualRange
+        <ArgumentAxis
+          type="discrete"
+          visualRangeUpdateMode="keep"
+          visualRange={yearsRange}
+          defaultVisualRange={yearsRange}
+        >
+
+          {/* <VisualRange
             startValue={yearsRange[0]}
             endValue={yearsRange[1]}
-          />
+          /> */}
           <Label wordWrap="none" />
           <Title text="год показателя" />
         </ArgumentAxis>
