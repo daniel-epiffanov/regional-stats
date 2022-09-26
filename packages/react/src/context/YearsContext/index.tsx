@@ -46,7 +46,6 @@ export const YearsProvider: FC<ProviderProps> = (props) => {
 
   useEffect(()=> {
     if(Array.isArray(years) && years?.length) {
-      console.log(years.at(-1));
       // @ts-ignore
       setCurYear(years.at(-1));
     }
@@ -61,7 +60,7 @@ export const YearsProvider: FC<ProviderProps> = (props) => {
 
   return (
     <YearsContext.Provider value={{
-      years,
+      years: [...years, 2020],
       curYear,
       changeCurYear
     }}>

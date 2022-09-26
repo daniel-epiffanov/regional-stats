@@ -66,27 +66,29 @@ const PopupContent: FC<Props> = ({closeAbout}) => {
         <span> который с 2017 года публикует данные также в .xlsx формате.</span>
       </p>
 
-      <a target="_blank" href={ROSSTAT_LINK} rel="noreferrer">
-        <Button
-          text="Россстат"
-          icon="link"
-          stylingMode="text"
-        />
-      </a>
-      <a target="_blank" href={RUSSIAN_REGIONS_LINK} rel="noreferrer">
-        <Button
-          text="Регионы России"
-          icon="link"
-          stylingMode="text"
-        />
-      </a>
-      <a target="_blank" href={RUSSIAN_REGIONS_XLSX_RAR_LINK} rel="noreferrer">
-        <Button
-          text="Архив с данными за 2021 год"
-          icon="link"
-          stylingMode="text"
-        />
-      </a>
+      <div className={styles['links-container']}>
+        <a target="_blank" href={ROSSTAT_LINK} rel="noreferrer">
+          <Button
+            text="Россстат"
+            icon="link"
+            stylingMode="text"
+          />
+        </a>
+        <a target="_blank" href={RUSSIAN_REGIONS_LINK} rel="noreferrer">
+          <Button
+            text="Регионы России"
+            icon="link"
+            stylingMode="text"
+          />
+        </a>
+        <a target="_blank" href={RUSSIAN_REGIONS_XLSX_RAR_LINK} rel="noreferrer">
+          <Button
+            text="Архив с данными за 2021 год"
+            icon="link"
+            stylingMode="text"
+          />
+        </a>
+      </div>
 
       <p>
         <span>Первой частью проекта был парсинг xlsx данных в подходящий для mongodb формат. </span>
@@ -97,27 +99,29 @@ const PopupContent: FC<Props> = ({closeAbout}) => {
         <span>Пока что это осталось в планах. </span>
       </p>
 
-      <a target="_blank" href={LERNA_LINK} rel="noreferrer">
-        <Button
-          text="lerna"
-          icon="link"
-          stylingMode="text"
-        />
-      </a>
-      <a target="_blank" href={GRAPHQL_LINK} rel="noreferrer">
-        <Button
-          text="graphql"
-          icon="link"
-          stylingMode="text"
-        />
-      </a>
-      <a target="_blank" href={APOLLO_LINK} rel="noreferrer">
-        <Button
-          text="apollo"
-          icon="link"
-          stylingMode="text"
-        />
-      </a>
+      <div className={styles['links-container']}>
+        <a target="_blank" href={LERNA_LINK} rel="noreferrer">
+          <Button
+            text="lerna"
+            icon="link"
+            stylingMode="text"
+          />
+        </a>
+        <a target="_blank" href={GRAPHQL_LINK} rel="noreferrer">
+          <Button
+            text="graphql"
+            icon="link"
+            stylingMode="text"
+          />
+        </a>
+        <a target="_blank" href={APOLLO_LINK} rel="noreferrer">
+          <Button
+            text="apollo"
+            icon="link"
+            stylingMode="text"
+          />
+        </a>
+      </div>
 
       <p>
         <span>Вторая часть - backend. Я давно хотел попробовать graphql, который давно у всех на слуху, и понять его реальные преимущества перед обычным rest api. </span>
@@ -149,6 +153,7 @@ const PopupContent: FC<Props> = ({closeAbout}) => {
         <li>Создать функционал, направленный на демонстрацию возможностей проекта (подсказки, гайды).</li>
         <li>Дополнить тесты к graphql резолверам, которые ими не покрыты.</li>
         <li>Дополнить тесты к react компонентам.</li>
+        <li>Адаптивный дизайн.</li>
       </ol>
     </div>
 

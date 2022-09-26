@@ -29,6 +29,8 @@ const annualStatsRating: ResolverFnAsync<GqlAnnualStatsRating> = async (
     year, mainCategoryName, subCategoryName, subSubCategoryName, regionType,
   } = args;
 
+  if (!year || !mainCategoryName || !subCategoryName) return null;
+
   const apolloServer = getNewApolloServer();
 
   const response = await apolloServer.executeOperation({

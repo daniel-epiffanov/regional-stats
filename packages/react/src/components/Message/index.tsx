@@ -6,7 +6,7 @@ import { LoadIndicator } from 'devextreme-react';
 
 interface Props {
 	text: string,
-	type: 'error' | 'message',
+	type: 'error' | 'message' | 'info',
 	positionId?: string
 }
 
@@ -21,6 +21,14 @@ const Message: FC<Props> = ({ text, type, positionId }) => {
     // return () => clearTimeout(timeout);
   }, [type]);
 
+  if (type === 'info') {
+    return (
+      <div className={styles['root']}>
+        <span>{text}</span>
+      </div>
+    );
+  }
+  
   if (type === 'message') {
     return (
       <div className={styles['root']}>

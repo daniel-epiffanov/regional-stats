@@ -50,7 +50,10 @@ const useAnnualStatsRatingQuery = (
     }
   });
   
-  if (loading || error || !data) return null;
+  if(loading) return 'loading';
+  if(error) return 'error';
+  
+  if (!data) return null;
 
   if(!data?.annualStatsRating?.length) return null;
 

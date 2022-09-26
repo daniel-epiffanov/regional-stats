@@ -54,8 +54,11 @@ const RatingGrid: FC<Props> = (props) => {
     curSubCategoryName,
     curSubSubCategoryName
   );
+
+  console.log({annualStatsRating});
   
   useEffect(()=>{
+    if (annualStatsRating === 'loading' || annualStatsRating === 'error') return;
     if(!annualStatsRating || !curRegionNames[0]) return;
     const regionIndex = annualStatsRating
       // @ts-ignore
@@ -64,7 +67,15 @@ const RatingGrid: FC<Props> = (props) => {
     setPageIndex(page);
   }, [annualStatsRating, curRegionNames]);
 
-  if (!annualStatsRating) return <Message type="message" text="Загрузка рейтинга регионов" />;
+  if (annualStatsRating === 'loading') {
+    return <Message type="message" text="Загрузка рейтинга регионов" />;
+  }
+  if (annualStatsRating === 'error') {
+    return <Message type="error" text="При загрузке рейтинга произошла ошибка" />;
+  }
+  if (!annualStatsRating) {
+    return <Message type="info" text="Данных для составления рейтинга за текущий год нет" />;
+  }
 
   return (
     <div className={styles['root']}>
