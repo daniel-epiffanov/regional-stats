@@ -10,9 +10,14 @@ export default gql`
 
 	type Query {
 		regionNames(regionType: String): [String],
-		annualStatsYears: [Int],
 		annualStatsMainCategoryNames: [String],
 		annualStatsSubCategoryNames(mainCategoryName: String): [String],
+		annualStatsYears(
+			regionType: String,
+			mainCategoryName: String,
+			subCategoryName: String,
+			subSubCategoryName: String
+		): [Int],
 		annualStats(
 			regionType: String,
 			mainCategoryName: String,

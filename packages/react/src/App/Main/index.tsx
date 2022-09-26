@@ -22,7 +22,12 @@ const Main: FC = () => {
         curSubCategoryName={curSubCategoryName}
         curSubSubCategoryName={curSubSubCategoryName}
       >
-        <YearsProvider>
+        <YearsProvider
+          regionType={regionType}
+          curMainCategoryName={curMainCategoryName}
+          curSubCategoryName={curSubCategoryName}
+          curSubSubCategoryName={curSubSubCategoryName}
+        >
           <AnnualStats />
           <Controls />
           <MapProvider regionType={regionType}>

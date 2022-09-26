@@ -29,18 +29,21 @@ const YearSlider: FC = () => {
 
   return (
     <div className={styles['root']}>
-      <div className={styles['slider-container']}>
-        <Slider
-          min={years[0]}
-          max={years[years.length - 1]}
-          defaultValue={localCurYear}
-          value={localCurYear}
-          onValueChanged={yearChangeHandler}
-          hoverStateEnabled={false}
-          focusStateEnabled={false}
-          activeStateEnabled={false}
-        />
-      </div>
+      {years?.length > 1 && (
+        <div className={styles['slider-container']}>
+          <Slider
+            min={years[0]}
+            // @ts-ignore
+            max={years.at(-1)}
+            defaultValue={localCurYear}
+            value={localCurYear}
+            onValueChanged={yearChangeHandler}
+            hoverStateEnabled={false}
+            focusStateEnabled={false}
+            activeStateEnabled={false}
+          />
+        </div>
+      )}
       <h3 className={styles['value']}>{localCurYear} год</h3>
     </div>
   );

@@ -49,8 +49,6 @@ const DxMultipleSeriesChart: FC<Props> = (props) => {
     isValueAxisInverted
   } = props;
 
-  console.log({yearsRange});
-
   return (
     <div>
       <DxChart

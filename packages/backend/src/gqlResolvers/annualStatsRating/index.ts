@@ -80,8 +80,6 @@ const annualStatsRating: ResolverFnAsync<GqlAnnualStatsRating> = async (
     MAP_PALETTE as string[], FEDERAL_DISTRICT_COLOR_GROUPS.length, {},
   );
 
-  console.log({ federalDistrictColors });
-
   const getColor = (regionIndex: number) => {
     let colorGroups: ReadonlyArray<number>;
     if (regionType === 'federalDistrict') {

@@ -49,7 +49,14 @@ const annualStats: ResolverFnAsync<GqlAnnualStats> = async (
             regionType,
           },
         },
-        annualStatsYears: true,
+        annualStatsYears: {
+          __args: {
+            regionType,
+            mainCategoryName,
+            subCategoryName,
+            subSubCategoryName: subSubCategoryName || null,
+          },
+        },
       },
     }),
   });
