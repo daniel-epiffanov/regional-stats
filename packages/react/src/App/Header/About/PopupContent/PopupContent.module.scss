@@ -1,0 +1,70 @@
+.root {
+    padding: 0 2rem;
+    position: relative;
+
+    >h2 {
+        font-size: 1.6rem;
+        margin-top: 1rem;
+        margin-bottom: 0.3rem;
+        text-align: center;
+    }
+    >h3 {
+        font-size: 1.1rem;
+        margin-top: 0;
+        margin-bottom: 0.3rem;
+        // margin: 0.5rem 0;
+        text-align: center;
+    }
+    >p, ol{
+        font-size: 1rem;
+        line-height: 1.5rem;
+        margin: 1rem 0;
+    }
+    >p {
+        text-indent: 1rem;
+        text-align: justify;
+    }
+    >ol {
+        margin-left: 1rem;
+
+        >li {
+            margin: 0.5rem 0;
+        }
+    }
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 4px solid rgba(219, 219, 219, 0.352);
+    width: 4rem;
+    height: 4rem;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.341);
+    margin: 0.5rem;
+
+    .img{
+        height: 2rem;
+    }
+
+}
+
+.title-container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    // justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.links-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1.3rem;
+    right: 1rem;
+}

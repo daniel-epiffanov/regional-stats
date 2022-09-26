@@ -1,4 +1,4 @@
-import { Popup } from 'devextreme-react';
+import { Popup, ScrollView } from 'devextreme-react';
 import { FC } from 'react';
 import PopupContent from './PopupContent';
 
@@ -8,25 +8,25 @@ type Props = Readonly<{
   closeAbout: () => void
 }>
 
-const contentRender = () => {
-  return (
-    <PopupContent />
-  );
-};
-
 const About: FC<Props> = ({isOpen, closeAbout}) => {
   return (
     <Popup
       visible={isOpen}
-      contentRender={contentRender}
       onHiding={closeAbout}
       closeOnOutsideClick
       maxWidth={850}
       dragEnabled={false}
-      shading={false}
       title="О проекте"
       data-testid="popup"
-    />
+      showTitle={false}
+      height="100vh"
+      width="100vw"
+      shadingColor='#000000b3'
+    >
+      <ScrollView>
+        <PopupContent closeAbout={closeAbout}/>
+      </ScrollView>
+    </Popup>
   );
 };
 
