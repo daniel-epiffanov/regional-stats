@@ -15,10 +15,10 @@ const ERROR_RELOAD_TIMEOUT_IN_MILLISECONDS = ERROR_RELOAD_TIMEOUT_IN_SECONDS * 1
 const Message: FC<Props> = ({ text, type, positionId }) => {
   useEffect(() => {
     if (type !== 'error') return;
-    // const timeout = setTimeout(() => {
-    //   window.location.reload();
-    // }, ERROR_RELOAD_TIMEOUT_IN_MILLISECONDS);
-    // return () => clearTimeout(timeout);
+    const timeout = setTimeout(() => {
+      window.location.reload();
+    }, ERROR_RELOAD_TIMEOUT_IN_MILLISECONDS);
+    return () => clearTimeout(timeout);
   }, [type]);
 
   if (type === 'info') {

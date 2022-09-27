@@ -28,17 +28,26 @@ const RatingGrid: FC<Props> = (props) => {
   const pageSize = props.pageSize || PAGE_SIZE;
 
   const [pageIndex, setPageIndex] = useState(0);
-  const {regionType,curRegionNames, addCurRegionNames} = useRegionNamesContext();
+  const {regionType, curRegionNames, addCurRegionNames} = useRegionNamesContext();
   const {curYear} = useYearsContext();
   const {curCategoryNames} = useCategoriesMenuContext();
   const {annualStats} = useAnnualStatsContext();
   const {curMainCategoryName, curSubCategoryName, curSubSubCategoryName} = curCategoryNames;
 
   const rowPreparedHandler = async (e: RowPreparedEvent<GqlAnnualStatsRatingItem>) => {
-    e.rowElement.style.background = e?.data?.paletteColor;//'#3eaaf5';
-    if(e?.data?.paletteColor === BLACK_COLOR) e.rowElement.style.color = 'white'; 
+    //@ts-ignore
+    e.rowElement.children[0].style.background = e?.data?.paletteColor;
+
+    if(e.rowType ==='data') {
+      //@ts-ignore
+      e.rowElement.children[0].style.color = BLACK_COLOR;
+      //@ts-ignore
+      e.rowElement.children[0].style.fontWeight = 600;
+    }
+
+    // console.log(e);
     if(!curRegionNames.includes(e?.data?.regionName)) return null;
-    e.rowElement.style.background = RED_COLOR;
+    e.rowElement.style.background = e?.data?.paletteColor;
   };
 
   const pageIndexChangeHandler = (newPageIndex: number) => {
@@ -99,6 +108,7 @@ const RatingGrid: FC<Props> = (props) => {
           width={50}
           caption="Место"
           allowSorting={false}
+          alignment="center"
         />
         <Column
           dataField="regionFlagUrl"

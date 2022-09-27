@@ -10,8 +10,7 @@ import {
   Title,
 } from 'devextreme-react/chart';
 import { GqlRegionNames } from '../../../../sharedTypes/gqlQueries';
-import { CHART_PALETTE } from '../config/chart';
-import { MAP_PALETTE } from '../config/map';
+import { CHART_PALETTE } from '../config/theme';
 
 type Props = Readonly<{
     curRegionNames: GqlRegionNames,
@@ -55,7 +54,7 @@ const DxMultipleSeriesChart: FC<Props> = (props) => {
           height: 400,
           width: 400,
         }}
-        palette={MAP_PALETTE as string[]}
+        palette={CHART_PALETTE as string[]}
         title={title}
       >
         {curRegionNames.map(curRegionName=> (

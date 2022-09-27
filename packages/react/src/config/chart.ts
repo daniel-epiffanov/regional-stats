@@ -1,3 +1,0 @@
-import { BLACK_COLOR, BLUE_COLOR, RED_COLOR } from './theme';
-
-export const CHART_PALETTE = [BLUE_COLOR, BLACK_COLOR, RED_COLOR];

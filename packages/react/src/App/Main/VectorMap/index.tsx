@@ -14,11 +14,11 @@ import { ClickEvent } from 'devextreme/viz/vector_map';
 import styles from './VectorMap.module.scss';
 import { useMapContext } from '../../../context/MapContext';
 import { useRegionNamesContext } from '../../../context/RegionNamesContext';
-import { BOUNDS, CENTER, FEDERAL_DISTRICT_COLOR_GROUPS, MAP_PALETTE, MAX_ZOOM_FACTOR, REGIONS_COLOR_GROUPS, ZOOM_FACTOR } from '../../../config/map';
+import { BOUNDS, CENTER, FEDERAL_DISTRICT_COLOR_GROUPS, MAX_ZOOM_FACTOR, REGIONS_COLOR_GROUPS, ZOOM_FACTOR } from '../../../config/map';
 import { useAnnualStatsContext } from '../../../context/AnnualStatsContext';
 import { useYearsContext } from '../../../context/YearsContext';
 import TooltipContent from './TooltipContent';
-import { RED_COLOR } from '../../../config/theme';
+import { MAP_PALETTE, RED_COLOR } from '../../../config/theme';
 
 type EventElement = Readonly<{
   attribute: (arg: string, toSet?: string | number) => string | number,
@@ -101,7 +101,7 @@ const VectorMap: FC = () => {
           hoverEnabled
         >
           <Label enabled dataField="regionName">
-            <Font size={10} weight={600} />
+            <Font size={10} family="Roboto" />
           </Label>
         </Layer>
         <Tooltip
