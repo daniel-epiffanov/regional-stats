@@ -45,11 +45,17 @@ export const AnnualStatsProvider: FC<ProviderProps> = (props) => {
     curSubSubCategoryName
   );
 
+  if(!curSubCategoryName) {
+    return <Message type="info" text="Пожалуйста, выберите подкатегорию." />;
+  }
   if(annualStats === 'loading') {
     return <Message type="message" text="Загрузка данных статистики." />;
   }
-  if(annualStats === 'error' || !annualStats) {
+  if(annualStats === 'error') {
     return <Message type="error" text="Не удалось загрузить данные статистики." />;
+  }
+  if(!annualStats) {
+    return <Message type="info" text={`Раздел <${curSubCategoryName}> имеет подкатегорию. Пожалуйста вернитесь в меню категорий и закончите выбор.`} />;
   }
 
   const getAnnualStatsItem: GetAnnualStatsItem = (regionName) => {

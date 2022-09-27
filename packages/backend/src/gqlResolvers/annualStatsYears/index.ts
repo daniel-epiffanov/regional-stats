@@ -25,7 +25,7 @@ const annualStatsYears: ResolverFnAsync<GqlAnnualStatsYears> = async (
 
   if (!mainCategoryName || !subCategoryName || !regionType) {
     const mongoRes = await AnnualStatsOfRegionModel.distinct('mainSections.subSections.annualData.year');
-    return mongoRes;
+    return mongoRes?.length ? mongoRes : null;
   }
 
   const apolloServer = getNewApolloServer();
@@ -76,7 +76,7 @@ const annualStatsYears: ResolverFnAsync<GqlAnnualStatsYears> = async (
 
   apolloServer.stop();
 
-  return gqlRes;
+  return gqlRes?.length ? gqlRes : null;
 };
 
 export default annualStatsYears;

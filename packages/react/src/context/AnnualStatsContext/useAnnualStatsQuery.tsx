@@ -52,6 +52,7 @@ const useAnnualStatsQuery = (
     }
   });
 
+  console.log({error});
   console.log({data});
 
   if(loading) return 'loading';
