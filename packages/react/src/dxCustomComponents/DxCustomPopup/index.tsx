@@ -47,7 +47,7 @@ const DxCustomPopup: FC<Props> = (props) => {
         visible={isVisible}
         contentRender={contentRenderHandler}
         onHiding={hidingHandler}
-        closeOnOutsideClick
+        // closeOnOutsideClick
         maxWidth={850}
         dragEnabled={false}
         // shading={false}

@@ -68,6 +68,7 @@ export const CategoriesMenuProvider: FC<Partial<ProviderProps>> = (props) => {
     });
   };
   const changeCurSubCategoryName: ChangeCurSubCategoryName = async (newCurSubCategoryName) => {
+    setSubSubCategoryNames(null);
     setCurCategoryName(oldCurCategoryNames => ({
       curMainCategoryName: oldCurCategoryNames.curMainCategoryName,
       curSubCategoryName: newCurSubCategoryName,

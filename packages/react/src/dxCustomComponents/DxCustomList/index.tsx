@@ -25,10 +25,16 @@ const DxCustomList: FC<Props> = ({ items, valueChangeHandler }) => {
       height={350}
       itemRender={ItemRender}
       nextButtonText="Показать ещё"
-      onSelectionChanged={(e) => {
-        const item = e.addedItems[0];
-        return valueChangeHandler && valueChangeHandler(item);
+      onItemClick={(e) => {
+        // console.log(e);
+        // const item = e.addedItems[0];
+        return valueChangeHandler && valueChangeHandler(e.itemData || '');
       }}
+      // onSelectionChanged={(e) => {
+      //   console.log({vce: e});
+      //   const item = e.addedItems[0];
+      //   return valueChangeHandler && valueChangeHandler(item);
+      // }}
     />
   );
 };
