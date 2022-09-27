@@ -64,7 +64,6 @@ const annualStats: ResolverFnAsync<GqlAnnualStats> = async (
   const regionNames: GqlRegionNames = response.data?.regionNames;
   const years: GqlAnnualStatsYears = response.data?.annualStatsYears;
 
-  console.log({ years });
   if (!years) {
     apolloServer.stop();
     return null;

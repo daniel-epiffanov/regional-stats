@@ -8,12 +8,10 @@ import {
   ValueAxis,
   Tooltip,
   Title,
-  VisualRange,
 } from 'devextreme-react/chart';
-import { useRegionNamesContext } from '../context/RegionNamesContext';
-import { useYearsRangeContext } from '../context/YearsRangeContext';
-import { MAP_PALETTE } from '../config/map';
 import { GqlRegionNames } from '../../../../sharedTypes/gqlQueries';
+import { CHART_PALETTE } from '../config/chart';
+import { MAP_PALETTE } from '../config/map';
 
 type Props = Readonly<{
     curRegionNames: GqlRegionNames,

@@ -29,7 +29,7 @@ const annualStatsSubCategoryNames: ResolverFnAsync<GqlAnnualStatsCategoryNames> 
     return _id;
   });
 
-  return rawSubSectionNames;
+  return rawSubSectionNames?.length ? rawSubSectionNames : null;
 };
 
 export default annualStatsSubCategoryNames;

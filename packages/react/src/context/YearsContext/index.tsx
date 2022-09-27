@@ -47,11 +47,9 @@ export const YearsProvider: FC<ProviderProps> = (props) => {
   useEffect(()=> {
     if(Array.isArray(years) && years?.length) {
       const year = years.at(-1);
-      console.log({year});
       // @ts-ignore
       setCurYear(year);
     }
-    console.log({years});
   }, [years]);
 
   if(years === 'loading') {

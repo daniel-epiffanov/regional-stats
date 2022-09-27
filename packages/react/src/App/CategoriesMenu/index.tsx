@@ -7,8 +7,6 @@ import { useCategoriesMenuContext } from '../../context/CategoriesMenuContext';
 import DxCustomPopup from '../../dxCustomComponents/DxCustomPopup';
 import getTitle from './getTitle';
 
-const contentRender = () => <PopupContent />;
-
 const CategoriesMenu: FC = () => {
   const {isPopupVisible, showPopup, hidePopup} = usePopupState();
   const {curCategoryNames} = useCategoriesMenuContext();
@@ -25,7 +23,7 @@ const CategoriesMenu: FC = () => {
 
       <DxCustomPopup
         isVisible={isPopupVisible}
-        contentRender={contentRender}
+        contentRender={() =><PopupContent hidePopup={hidePopup}/>}
         hidingHandler={hidePopup}
         triggerId="#popup-trigger"
         title={getTitle(

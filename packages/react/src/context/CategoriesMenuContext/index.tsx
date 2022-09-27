@@ -2,9 +2,9 @@ import {
   createContext, FC, useContext, useState,
 } from 'react';
 import { GqlAnnualStatsCategoryNames } from '../../../../../sharedTypes/gqlQueries';
+import annualStatsSubSubCategoryNamesQuery from './annualStatsSubSubCategoryNamesQuery';
 import useAnnualStatsMainCategoryNames from './useAnnualStatsMainCategoryNames';
 import useAnnualStatsSubCategoryNames from './useAnnualStatsSubCategoryNames';
-import useAnnualStatsSubSubCategoryNames from './useAnnualStatsSubSubCategoryNames';
 
 type CurCategoryNames = Readonly<{
   curMainCategoryName: string | null,
@@ -25,7 +25,7 @@ type ContextValues = Readonly<{
 }>
 
 type ChangeCurMainCategoryName = (newCurMainCategoryName: string) => void
-type ChangeCurSubCategoryName = (newCurSubCategoryName: string) => void
+type ChangeCurSubCategoryName = (newCurSubCategoryName: string) => Promise<null | GqlAnnualStatsCategoryNames>
 type ChangeCurSubSubCategoryName = (newCurSubSubCategoryName: string) => void
 
 type ProviderProps = Omit<ContextValues, 'changeCurMainCategoryName' | 
@@ -50,13 +50,14 @@ export const CategoriesMenuProvider: FC<Partial<ProviderProps>> = (props) => {
       curSubSubCategoryName: null
     });
 
-  const {curMainCategoryName, curSubCategoryName} = curCategoryNames;
+  const {curMainCategoryName} = curCategoryNames;
 
   const mainCategoryNames = useAnnualStatsMainCategoryNames();
   const subCategoryNames = useAnnualStatsSubCategoryNames(curMainCategoryName);
-  const subSubCategoryNames = useAnnualStatsSubSubCategoryNames(
-    curMainCategoryName, curSubCategoryName
-  );
+  // const subSubCategoryNames = useAnnualStatsSubSubCategoryNames(
+  //   curMainCategoryName, curSubCategoryName
+  // );
+  const [subSubCategoryNames, setSubSubCategoryNames] = useState<GqlAnnualStatsCategoryNames | null>(null);
 	
 
   const changeCurMainCategoryName: ChangeCurMainCategoryName = (newCurMainCategoryName) => {
@@ -66,12 +67,25 @@ export const CategoriesMenuProvider: FC<Partial<ProviderProps>> = (props) => {
       curSubSubCategoryName: null
     });
   };
-  const changeCurSubCategoryName: ChangeCurSubCategoryName = (newCurSubCategoryName) => {
+  const changeCurSubCategoryName: ChangeCurSubCategoryName = async (newCurSubCategoryName) => {
     setCurCategoryName(oldCurCategoryNames => ({
       curMainCategoryName: oldCurCategoryNames.curMainCategoryName,
       curSubCategoryName: newCurSubCategoryName,
       curSubSubCategoryName: null
     }));
+		
+    if(!curMainCategoryName) return null;
+		
+    const newAnnualStatsSubSubCategoryNames = await annualStatsSubSubCategoryNamesQuery(
+      curMainCategoryName, newCurSubCategoryName
+    );
+
+    console.log({newAnnualStatsSubSubCategoryNames});
+
+    setSubSubCategoryNames(newAnnualStatsSubSubCategoryNames);
+
+    return newAnnualStatsSubSubCategoryNames;
+
   };
   const changeCurSubSubCategoryName: ChangeCurSubSubCategoryName = (newCurSubSubCategoryName) => {
     setCurCategoryName(oldCurCategoryNames => ({

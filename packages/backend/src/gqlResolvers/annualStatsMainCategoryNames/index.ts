@@ -10,7 +10,8 @@ const annualStatsMainCategoryNames: ResolverFnAsync<GqlAnnualStatsCategoryNames>
     { $sort: { _id: 1 } },
   ]);
 
-  return mongoRes.map(({ _id: name }) => name);
+  const gqlRes = mongoRes.map(({ _id: name }) => name);
+  return gqlRes?.length ? gqlRes : null;
 };
 
 export default annualStatsMainCategoryNames;

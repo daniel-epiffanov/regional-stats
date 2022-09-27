@@ -12,7 +12,7 @@ import Message from '../../../../components/Message';
 import { GqlAnnualStatsRatingItem } from '../../../../../../../sharedTypes/gqlQueries';
 import { PAGE_SIZE } from '../../../../config/ratingGrid';
 import { useAnnualStatsContext } from '../../../../context/AnnualStatsContext';
-import { RED_COLOR } from '../../../../config/theme';
+import { BLACK_COLOR, RED_COLOR } from '../../../../config/theme';
 
 const renderGridCell = (cellData: Readonly<{value: string}>) => (
   <div>
@@ -36,6 +36,7 @@ const RatingGrid: FC<Props> = (props) => {
 
   const rowPreparedHandler = async (e: RowPreparedEvent<GqlAnnualStatsRatingItem>) => {
     e.rowElement.style.background = e?.data?.paletteColor;//'#3eaaf5';
+    if(e?.data?.paletteColor === BLACK_COLOR) e.rowElement.style.color = 'white'; 
     if(!curRegionNames.includes(e?.data?.regionName)) return null;
     e.rowElement.style.background = RED_COLOR;
   };

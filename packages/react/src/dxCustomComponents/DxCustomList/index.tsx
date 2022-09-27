@@ -24,6 +24,7 @@ const DxCustomList: FC<Props> = ({ items, valueChangeHandler }) => {
       showScrollbar="always"
       height={350}
       itemRender={ItemRender}
+      nextButtonText="Показать ещё"
       onSelectionChanged={(e) => {
         const item = e.addedItems[0];
         return valueChangeHandler && valueChangeHandler(item);

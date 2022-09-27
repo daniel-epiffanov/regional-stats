@@ -1,9 +1,14 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import { useDebounce } from 'react-use';
 import { useCategoriesMenuContext } from '../../../context/CategoriesMenuContext';
 import DxCustomList from '../../../dxCustomComponents/DxCustomList';
 import styles from './PopupContent.module.scss';
 
-const PopupContent: FC = () => {
+type Props = Readonly<{
+	hidePopup: () => void
+}>
+
+const PopupContent: FC<Props> = ({hidePopup}) => {
   const {
     mainCategoryNames,
     subCategoryNames,
@@ -12,6 +17,15 @@ const PopupContent: FC = () => {
     changeCurSubCategoryName,
     changeCurSubSubCategoryName
   } = useCategoriesMenuContext();
+
+  const changeCurSubCategoryNameHandler = async (newValue: string) => {
+    const subSubCategoryNames = await changeCurSubCategoryName(newValue);
+    if(!subSubCategoryNames) hidePopup();
+  };
+  const changeCurSubSubCategoryNameHandler = (newValue: string) => {
+    hidePopup();
+    changeCurSubSubCategoryName(newValue);
+  };
 
   if (!mainCategoryNames) return <p data-testid="no-data-text">Пожалуйста, подождите</p>;
 
@@ -28,7 +42,7 @@ const PopupContent: FC = () => {
       />
       <DxCustomList
         items={subCategoryNames || []}
-        valueChangeHandler={changeCurSubCategoryName}
+        valueChangeHandler={changeCurSubCategoryNameHandler}
       />
 
       <i
@@ -40,7 +54,7 @@ const PopupContent: FC = () => {
       />
       <DxCustomList
         items={subSubCategoryNames || []}
-        valueChangeHandler={changeCurSubSubCategoryName}
+        valueChangeHandler={changeCurSubSubCategoryNameHandler}
       />
     </div>
   );

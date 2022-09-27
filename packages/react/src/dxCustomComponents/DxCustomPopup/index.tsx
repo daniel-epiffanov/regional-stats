@@ -39,26 +39,32 @@ const DxCustomPopup: FC<Props> = (props) => {
 
 
   return (
-    <DxPopup
-      visible={isVisible}
-      contentRender={contentRenderHandler}
-      onHiding={hidingHandler}
-      closeOnOutsideClick
-      maxWidth={850}
-      dragEnabled={false}
-      shading={false}
-      title="Choose a category"
-      // showCloseButton
-      height={getMinHeight(title)}
-      data-testid="popup"
-      titleRender={() => titleRender(title)}
-    >
-      <Position
+    <div style={{
+      left: '1rem'
+    }}>
+
+      <DxPopup
+        visible={isVisible}
+        contentRender={contentRenderHandler}
+        onHiding={hidingHandler}
+        closeOnOutsideClick
+        maxWidth={850}
+        dragEnabled={false}
+        // shading={false}
+        shadingColor='#000000b3'
+        title="Choose a category"
+        // showCloseButton
+        height={getMinHeight(title)}
+        data-testid="popup"
+        titleRender={() => titleRender(title)}
+      >
+        {/* <Position
         at="left top"
         my="left top"
         of={triggerId}
-      />
-    </DxPopup>
+      /> */}
+      </DxPopup>
+    </div>
   );
 };
 
