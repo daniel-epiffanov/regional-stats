@@ -1,13 +1,14 @@
 {
-  "name": "stat_visual_backend",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "build": "tsc",
-    "dev": "ts-node-dev --respawn src/app.ts"
+    "dev": "ts-node-dev --respawn src/app.ts",
+    "build": "rm -rf dist && tsc && cp src/gqltypeDefs/*.graphql dist/gqltypeDefs/",
+    "start": "node dist/app.js"
   },
   "author": "",
   "license": "ISC",
@@ -23,7 +24,8 @@
     "graphql-fields": "^2.0.3",
     "lodash": "^4.17.21",
     "mongoose": "^6.0.7",
-    "xlsx": "^0.16.9"
+    "xlsx": "^0.16.9",
+		"json-to-graphql-query": "^2.2.4"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
