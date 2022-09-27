@@ -61,6 +61,7 @@ export const CategoriesMenuProvider: FC<Partial<ProviderProps>> = (props) => {
 	
 
   const changeCurMainCategoryName: ChangeCurMainCategoryName = (newCurMainCategoryName) => {
+    setSubSubCategoryNames(null);
     setCurCategoryName({
       curMainCategoryName: newCurMainCategoryName,
       curSubCategoryName: null,

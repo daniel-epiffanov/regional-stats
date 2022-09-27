@@ -22,9 +22,14 @@ export const YearsRangeProvider: FC = (props) => {
     setYearsRange(newYearsRange);
   };
 
-  // useEffect(() => {
-		
-  // }, [years]);
+  useEffect(() => {
+    if(!years) return;
+    if(years.length <= 1) return setYearsRange([years[0], years[0]]);
+    // @ts-ignore
+    if(years.length <= 6) return setYearsRange([years[0], years.at(-1)]);
+    // @ts-ignore
+    setYearsRange([years[years.length - 7], years.at(-1)]);
+  }, [years]);
 	
   
   return (
