@@ -8,7 +8,6 @@ type Props = Readonly<{
 }>
 
 const SingleRegion: FC<Props> = ({curRegionName}) => {
-  const {curYear} = useYearsContext();
   const {getRegionFlagUrl} = useAnnualStatsContext();
 
   return (
@@ -17,8 +16,8 @@ const SingleRegion: FC<Props> = ({curRegionName}) => {
         className={styles['img']}
         src={getRegionFlagUrl(curRegionName) || ''}
         alt="moscow"
-        width={150}
-        height={80}
+        width={80}
+        height={50}
       />
       <div className={styles['title']}>
         <h3>{curRegionName}</h3>
