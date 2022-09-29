@@ -82,8 +82,6 @@ export const CategoriesMenuProvider: FC<Partial<ProviderProps>> = (props) => {
       curMainCategoryName, newCurSubCategoryName
     );
 
-    console.log({newAnnualStatsSubSubCategoryNames});
-
     setSubSubCategoryNames(newAnnualStatsSubSubCategoryNames);
 
     return newAnnualStatsSubSubCategoryNames;

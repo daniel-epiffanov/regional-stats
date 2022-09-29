@@ -117,7 +117,6 @@ export class DetailsSheet extends Sheet {
 	getCleanedUpSheet() {
 		const SheetLinesWithCuttedHeaders = this.getSheetLines().splice(this.getYearsHeadersIndex())
 		const topHeaders = this.getTopHeaders()
-		// console.log({ topHeaders })
 
 		const filteredData = SheetLinesWithCuttedHeaders.filter((cellGroup) => {
 			const cellGroupLength = cellGroup.length

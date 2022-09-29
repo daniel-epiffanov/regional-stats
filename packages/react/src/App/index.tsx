@@ -17,6 +17,7 @@ const App = () => {
   if(windowWidth < MAX_WINDOW_SIZE_DESKTOP) return (
     <div className={styles['no-access-root']}>
       <p>Извините, но данное разрешение экрана пока не поддерживается.</p>
+      <p>© Региональная Статистика.</p>
     </div>
   );
 

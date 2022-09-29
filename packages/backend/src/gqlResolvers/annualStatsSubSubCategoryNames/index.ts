@@ -13,9 +13,6 @@ const annualStatsSubSubCategoryNames: ResolverFnAsync<GqlAnnualStatsCategoryName
 ) => {
   const { mainCategoryName, subCategoryName } = args;
 
-  console.log({ mainCategoryName });
-  console.log({ subCategoryName });
-
   if (!mainCategoryName || !subCategoryName) return null;
 
   const mongoRes = await AnnualStatsOfRegionModel
@@ -28,8 +25,6 @@ const annualStatsSubSubCategoryNames: ResolverFnAsync<GqlAnnualStatsCategoryName
       { $group: { _id: '$mainSections.subSections.subSubSections.name' } },
       { $sort: { _id: 1 } },
     ]);
-
-  console.log({ mongoRes });
 
   if (!Array.isArray(mongoRes)) return null;
 

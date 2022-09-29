@@ -1,0 +1,23 @@
+.light {
+    :global {
+        .dx-slider-range.dx-slider-range-visible, .dx-slider-handle::after {
+            background: #212121;
+        }
+       
+        .dx-slider-bar {
+            background: #0000003d;
+        }
+    }
+}
+
+.dark {
+    :global {
+        .dx-slider-range.dx-slider-range-visible, .dx-slider-handle::after {
+            background: #ffffff;
+        }
+       
+        .dx-slider-bar {
+            background: #ffffff3d;
+        }
+    }
+}

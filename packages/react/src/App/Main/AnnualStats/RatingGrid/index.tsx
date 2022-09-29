@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import {
-  DataGrid, Paging, Column, Export
+  DataGrid, Paging, Column
 } from 'devextreme-react/data-grid';
 import styles from './RatingData.module.scss';
 import { RowClickEvent, RowPreparedEvent } from 'devextreme/ui/data_grid';
@@ -12,17 +12,23 @@ import Message from '../../../../components/Message';
 import { GqlAnnualStatsRatingItem } from '../../../../../../../sharedTypes/gqlQueries';
 import { PAGE_SIZE } from '../../../../config/ratingGrid';
 import { useAnnualStatsContext } from '../../../../context/AnnualStatsContext';
-import { BLACK_COLOR, RED_COLOR } from '../../../../config/theme';
+import { BLACK_COLOR, DARK_THEME_NAME, RED_COLOR } from '../../../../config/theme';
+import getCurTheme from '../../../../helpers/getCurTheme';
 
-const renderGridCell = (cellData: Readonly<{value: string}>) => (
+
+
+
+type Props = Readonly<{
+  pageSize?: number
+}>
+
+const renderFlagCell = (cellData: Readonly<{value: string}>) => (
   <div>
     <img src={cellData.value} width={48} height={25}></img>
   </div>
 );
 
-type Props = Readonly<{
-  pageSize?: number
-}>
+const curTheme = getCurTheme();
 
 const RatingGrid: FC<Props> = (props) => {
   const pageSize = props.pageSize || PAGE_SIZE;
@@ -45,8 +51,10 @@ const RatingGrid: FC<Props> = (props) => {
       e.rowElement.children[0].style.fontWeight = 600;
     }
 
-    // console.log(e);
     if(!curRegionNames.includes(e?.data?.regionName)) return null;
+    if(curTheme === DARK_THEME_NAME) {
+      return e.rowElement.style.background = BLACK_COLOR;
+    }
     e.rowElement.style.background = e?.data?.paletteColor;
   };
 
@@ -113,7 +121,7 @@ const RatingGrid: FC<Props> = (props) => {
         <Column
           dataField="regionFlagUrl"
           width={50}
-          cellRender={renderGridCell}
+          cellRender={renderFlagCell}
           caption="Флаг"
           allowSorting={false}
         />
