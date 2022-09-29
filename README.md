@@ -16,9 +16,9 @@ Learna monorepo has an issue when running ```lerna bootstrap``` on heroku enviro
 ## about
 Региональная статистика - это pet project, который нацелен на визуализацию уже имеющийся официальной статистической информации о российский регионах и федеральных округах. Данные взяты из официального сборника росстата - Регионы России, который с 2017 года публикует данные также в .xlsx формате.
 
-[Россстат](https://rosstat.gov.ru/), 
-[Регионы России](https://rosstat.gov.ru/folder/210/document/13204), 
-[Архив с данными за 2021 год](https://rosstat.gov.ru/storage/mediabank/soc_pok_2021.rar)
+[россстат](https://rosstat.gov.ru/), 
+[регионы россии](https://rosstat.gov.ru/folder/210/document/13204), 
+[архив с данными за 2021 год](https://rosstat.gov.ru/storage/mediabank/pril-region2021.rar)
 
 Первой частью проекта был парсинг xlsx данных в подходящий для mongodb формат. В монорепозитории <b>lerna</b> есть отдельный dev проект посвященный этому вопросу. Lerna также позволяет использовать общие типы для frontend и backend, то есть привязать типы данных отправляемых с graphql сервера и типы, получаемые на frontend. Изначально проект подразумевал автоматический web scraping, который будет обновлять mongodb при загрузке новых данных росстатом. Пока что это осталось в планах. 
 
@@ -32,7 +32,7 @@ Learna monorepo has an issue when running ```lerna bootstrap``` on heroku enviro
 
 Третья часть - frontend. Для решения задач визуализации я использовал библиотеку devextreme. В частности она позволяет использовать векторную карту, которая задумывалась как ключевой компонент frontend. Проект написан на React, Typescript. Дополнительно использовались: @apollo/client, Axios, Lodash, Jest. Основная часть компонентов покрыта автотестами.
 
-[Devextreme](https://js.devexpress.com/)
+[devextreme](https://js.devexpress.com/)
 
 ## plans
 1. Автоматизировать процесс обновения статистических данных.
