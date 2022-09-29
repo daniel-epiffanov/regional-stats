@@ -2,18 +2,18 @@ Here is initial 1.0.0 version of Regional Statistics app. It is being developed 
 
 Root URL of the project: https://regional-stats.herokuapp.com/
 
+The graphql access point is ```https://regional-stats.herokuapp.com/api/```
+
 ## packages
 
-[Backend package](https://github.com/daniel-epiffanov/regional-stats/tree/master/packages/backend) The graphql access point is ```/api```
-
-### Frontend
+[Backend package](https://github.com/daniel-epiffanov/regional-stats/tree/master/packages/backend)
 
 [Frontend package](https://github.com/daniel-epiffanov/regional-stats/tree/master/packages/react)
 
 ## deployment
 Learna monorepo has an issue when running ```lerna bootstrap``` on heroku environment. Specifically it doesn't npm install dev dependencies of sub projects. The workaround I've found is moving all dev dependencies into dependencies block.
 
-# About
+## about
 Региональная статистика - это pet project, который нацелен на визуализацию уже имеющийся официальной статистической информации о российский регионах и федеральных округах. Данные взяты из официального сборника росстата - Регионы России, который с 2017 года публикует данные также в .xlsx формате.
 
 [Россстат](https://rosstat.gov.ru/), 
@@ -34,7 +34,7 @@ Learna monorepo has an issue when running ```lerna bootstrap``` on heroku enviro
 
 [Devextreme](https://js.devexpress.com/)
 
-# Plans
+## plans
 1. Автоматизировать процесс обновения статистических данных.
 2. Добавить страницу с описанием api проекта, демонстрации возможности подключения к существующему api.
 3. Ограничение доступа к использованию api проекта третий стороной не на странице самого проекта.
