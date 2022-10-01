@@ -1,6 +1,7 @@
 import {
-  createContext, FC, useContext, useState,
+  createContext, FC, useContext, useEffect, useState,
 } from 'react';
+import { useLocalStorage } from 'react-use';
 import { GqlAnnualStatsCategoryNames } from '../../../../../sharedTypes/gqlQueries';
 import annualStatsSubSubCategoryNamesQuery from './annualStatsSubSubCategoryNamesQuery';
 import useAnnualStatsMainCategoryNames from './useAnnualStatsMainCategoryNames';
@@ -43,12 +44,21 @@ export const CategoriesMenuProvider: FC<Partial<ProviderProps>> = (props) => {
     curCategoryNames: defaultCurCategoryNames
   } = props;
 
+  const [curLocStCategoryNames, setCurLocStCategoryNames] = useLocalStorage<CurCategoryNames | null>(
+    'curCategoryNames',
+    null
+  );
+
   const [curCategoryNames, setCurCategoryName] = useState<CurCategoryNames>(
-    defaultCurCategoryNames || {
-      curMainCategoryName: 'Валовой региональный продукт',
-      curSubCategoryName: 'Валовой региональный продукт',
+    defaultCurCategoryNames || curLocStCategoryNames || {
+      curMainCategoryName: null,
+      curSubCategoryName: null,
       curSubSubCategoryName: null
     });
+
+  useEffect(()=> {
+    setCurLocStCategoryNames(curCategoryNames);
+  }, [curCategoryNames]);
 
   const {curMainCategoryName} = curCategoryNames;
 

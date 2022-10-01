@@ -1,7 +1,15 @@
 import { useToggle } from 'react-use';
+import { useCategoriesMenuContext } from '../../context/CategoriesMenuContext';
 
 const usePopupState = () => {
-  const [isPopupVisible, toggleIsPopupVisible] = useToggle(false);
+  const {curCategoryNames} = useCategoriesMenuContext();
+
+  const isCategoryNamesPresent = !!curCategoryNames.curMainCategoryName &&
+    !!curCategoryNames.curSubCategoryName;
+
+  const [isPopupVisible, toggleIsPopupVisible] = useToggle(
+    !isCategoryNamesPresent
+  );
 
   const showPopup = () => toggleIsPopupVisible(true);
   const hidePopup = () => toggleIsPopupVisible(false);
