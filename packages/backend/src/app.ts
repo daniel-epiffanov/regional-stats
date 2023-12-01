@@ -1,6 +1,7 @@
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
 import { DEFAULT_PORT } from './config/constants';
 import connectToMongo from './services/connectToMongo';
 import startApollo from './services/startApollo';
@@ -11,6 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const expressApp = express();
 
+expressApp.use(cors({ origin: '*' }));
 expressApp.use(cookieParser());
 expressApp.use(express.urlencoded({ extended: true }));
 expressApp.use(express.json());
