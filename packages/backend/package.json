@@ -8,7 +8,8 @@
     "test:watch": "jest --watch",
     "dev": "ts-node-dev --respawn src/app.ts",
     "build": "rm -rf dist && tsc && cp src/gqltypeDefs/*.graphql dist/gqltypeDefs/",
-    "start": "node dist/app.js"
+    "start": "node dist/app.js",
+    "start:rendercom": "npm run build && node dist/app.js"
   },
   "author": "",
   "license": "ISC",
