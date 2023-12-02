@@ -18,9 +18,13 @@ expressApp.use(express.urlencoded({ extended: true }));
 expressApp.use(express.json());
 expressApp.use('/static', express.static(path.join(__dirname, '..', 'static')));
 
-if (process.env.NODE_ENV === 'production') {
-  expressApp.use('/', express.static(path.join(__dirname, '../..', 'react/build')));
-}
+expressApp.get('/', (req, res) => {
+  res.send('regional stats backend');
+});
+
+// if (process.env.NODE_ENV === 'production') {
+//   // expressApp.use('/', express.static(path.join(__dirname, '../..', 'react/build')));
+// }
 
 const port = (process.env.PORT && parseInt(process.env.PORT)) || DEFAULT_PORT;
 
